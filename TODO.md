@@ -4,8 +4,8 @@
 - [ ] Inicializar o repositório Git para o projeto.
 - [ ] Configurar o projeto Frontend (Vue 3 + Vite + Tailwind CSS).
 - [ ] Configurar o projeto Backend (Python + FastAPI).
-- [ ] Configurar o projeto no Supabase (Banco de dados e Autenticação).
-- [ ] Definir e criar a estrutura inicial do banco de dados (Tabelas de Usuários, Partidas, Carteiras).
+- [x] Configurar o projeto no Supabase (Banco de dados e Autenticação).
+- [x] Definir e criar a estrutura inicial do banco de dados (Tabelas de Usuários, Partidas, Carteiras).
 - [ ] Integrar o gateway de pagamento (Pix) e criar webhook para depósitos.
 
 ## 💡 Ideias de Produto e Engajamento (Backlog)
