@@ -1,0 +1,21 @@
+# Ambientes e Variáveis Seguras
+.env
+.env.*
+!.env.example
+
+# Backend (Python)
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/.pytest_cache/
+
+# Frontend (Node)
+frontend/node_modules/
+frontend/dist/
+frontend/.npm/
+
+# IDE e OS
+.vscode/
+.idea/
+.DS_Store
