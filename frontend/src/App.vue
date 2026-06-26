@@ -20,21 +20,27 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#0d0e12] text-white flex flex-col">
+  <div class="min-h-screen bg-canvas text-ink flex flex-col">
     <!-- Navbar Premium -->
     <header 
       v-if="showNavbar" 
-      class="bg-[#161920]/80 backdrop-blur-md border-b border-[#262b35] sticky top-0 z-50 px-6 py-4 flex items-center justify-between"
+      class="bg-surface-1  border-b border-hairline sticky top-0 z-50 px-6 py-4 flex items-center justify-between"
     >
       <div class="flex items-center gap-8">
-        <router-link to="/" class="text-2xl font-black bg-gradient-to-r from-[#00f2fe] to-[#4facfe] bg-clip-text text-transparent hover:opacity-90 transition-opacity">
+        <router-link to="/" class="text-headline font-display font-semibold bg-primary text-primary hover:opacity-90 transition-opacity">
           ARENA-X1
         </router-link>
         <nav class="hidden md:flex items-center gap-6">
-          <router-link to="/" class="text-sm font-medium text-[#8c9ba5] hover:text-white transition-colors" active-class="text-[#00f2fe]">
+          <router-link to="/" class="text-sm font-medium text-ink-subtle hover:text-ink transition-colors" active-class="text-primary">
             Dashboard
           </router-link>
-          <router-link to="/about" class="text-sm font-medium text-[#8c9ba5] hover:text-white transition-colors" active-class="text-[#00f2fe]">
+          <router-link to="/challenges" class="text-sm font-medium text-ink-subtle hover:text-ink transition-colors" active-class="text-primary">
+            Desafios
+          </router-link>
+          <router-link to="/wallet" class="text-sm font-medium text-ink-subtle hover:text-ink transition-colors" active-class="text-primary">
+            Carteira
+          </router-link>
+          <router-link to="/about" class="text-sm font-medium text-ink-subtle hover:text-ink transition-colors" active-class="text-primary">
             Sobre
           </router-link>
         </nav>
@@ -42,12 +48,12 @@ const handleLogout = async () => {
 
       <div class="flex items-center gap-4">
         <!-- Detalhes do Usuário logado -->
-        <span class="text-xs bg-[#1f2430] border border-[#2e3543] px-3 py-1.5 rounded-full text-[#8c9ba5] max-w-[180px] truncate">
+        <span class="text-caption bg-surface-3 border border-hairline-strong px-3 py-1.5 rounded-full text-ink-subtle max-w-[180px] truncate">
           {{ authStore.user?.email }}
         </span>
         <button 
           @click="handleLogout" 
-          class="text-sm font-medium text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 px-4 py-2 rounded-xl transition-all duration-300"
+          class="text-sm font-medium text-ink-muted hover:text-red-300 bg-surface-2 hover:bg-red-500/20 border border-hairline px-4 py-2 rounded-lg transition-all duration-300"
         >
           Sair
         </button>

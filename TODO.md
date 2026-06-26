@@ -1,12 +1,12 @@
 # TODO & Ideias (Roadmap do Projeto)
 
 ## 📌 Tarefas Imediatas (Setup Inicial)
-- [ ] Inicializar o repositório Git para o projeto.
-- [ ] Configurar o projeto Frontend (Vue 3 + Vite + Tailwind CSS).
-- [ ] Configurar o projeto Backend (Python + FastAPI).
+- [x] Inicializar o repositório Git para o projeto.
+- [x] Configurar o projeto Frontend (Vue 3 + Vite + Tailwind CSS).
+- [x] Configurar o projeto Backend (Python + FastAPI).
 - [x] Configurar o projeto no Supabase (Banco de dados e Autenticação).
 - [x] Definir e criar a estrutura inicial do banco de dados (Tabelas de Usuários, Partidas, Carteiras).
-- [ ] Integrar o gateway de pagamento (Pix) e criar webhook para depósitos.
+- [x] Integrar o gateway de pagamento (Pix) e criar webhook para depósitos.
 
 ## 💡 Ideias de Produto e Engajamento (Backlog)
 - [ ] **Sistema de Divisões/Patentes:** Implementar um ranking (Bronze, Prata, Ouro, Elite) baseado nos resultados dos usuários.
