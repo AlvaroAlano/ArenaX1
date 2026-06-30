@@ -1,0 +1,1 @@
+var e=new Intl.NumberFormat(`pt-BR`,{style:`currency`,currency:`BRL`}),t=new Intl.DateTimeFormat(`pt-BR`,{dateStyle:`short`,timeStyle:`short`});function n(t){let n=typeof t==`string`?parseFloat(t):t;return e.format(n||0)}function r(e){return t.format(new Date(e))}export{r as n,n as t};
