@@ -3,11 +3,12 @@ import { ref, computed, watch } from 'vue'
 import { Trophy, Users, UserPlus, Shuffle, Info, Lock } from '@lucide/vue'
 import { useRouter } from 'vue-router'
 import { api } from '@/services/api'
+import { GAME_OPTIONS } from '@/constants/games'
 
 const router = useRouter()
 
 const title = ref('')
-const game = ref('EA Sports FC 25')
+const game = ref(GAME_OPTIONS[0])
 const maxPlayers = ref(4)
 const participantNames = ref<string[]>(['', '', '', ''])
 const randomizeTeams = ref(false)
@@ -93,8 +94,7 @@ const submitTournament = async () => {
                     <div>
                         <label class="block text-sm font-semibold text-ink mb-1.5">Jogo</label>
                         <select v-model="game" class="w-full rounded-lg border border-hairline bg-surface-1 text-ink h-12 px-4 focus:ring-2 focus:ring-primary outline-none transition-all">
-                            <option value="EA Sports FC 25">EA Sports FC 25</option>
-                            <option value="eFootball">eFootball</option>
+                            <option v-for="opt in GAME_OPTIONS" :key="opt" :value="opt">{{ opt }}</option>
                         </select>
                     </div>
                 </div>

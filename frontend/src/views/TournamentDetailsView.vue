@@ -26,7 +26,7 @@ onMounted(() => {
             id: '2',
             title: 'Torneio Noturno eFootball',
             host: 'Liga BR',
-            game: 'eFootball 2024',
+            game: 'eFootball',
             platform: 'PC / Consoles',
             entryFee: 5.00,
             prizePool: 80.00,

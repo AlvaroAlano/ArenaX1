@@ -25,7 +25,7 @@ create table public.challenges (
   opponent_id uuid references public.profiles(id) on delete set null,
   bet_amount numeric(10,2) not null check (bet_amount >= 0),
   platform text not null, -- 'PS5', 'Xbox', 'PC', 'Crossplay'
-  game text not null, -- 'EA FC 25', 'eFootball'
+  game text not null, -- 'EA FC 25', 'EA FC 26', 'eFootball'
   status text not null default 'open', -- 'open', 'accepted', 'in_progress', 'result_submitted', 'disputed', 'completed', 'cancelled'
   creator_result text check (creator_result in ('win', 'loss')),
   opponent_result text check (opponent_result in ('win', 'loss')),

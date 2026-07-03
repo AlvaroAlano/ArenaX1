@@ -67,20 +67,20 @@ const stats = [
 const openChallenges = [
   { creator: '@lukinha77', initials: 'LK', bg: '#2A1E33', fg: '#C89FE5', rating: 4.7, wins: 89, winRate: 71, game: 'EA FC 25', platform: 'PS5', bet: 50 },
   { creator: '@matheuzets', initials: 'MA', bg: '#1E332A', fg: '#7FE5B0', rating: 4.6, wins: 142, winRate: 64, game: 'eFootball', platform: 'Crossplay', bet: 20 },
-  { creator: '@vhgamer_of', initials: 'VH', bg: '#33301E', fg: '#E5D77F', rating: 4.9, wins: 203, winRate: 78, game: 'EA FC 25', platform: 'Xbox', bet: 500 },
+  { creator: '@vhgamer_of', initials: 'VH', bg: '#33301E', fg: '#E5D77F', rating: 4.9, wins: 203, winRate: 78, game: 'EA FC 26', platform: 'Xbox', bet: 500 },
 ]
 
 /* ── Como funciona ── */
 const steps = [
   { n: '01', icon: UserPlus, title: 'Crie sua conta', desc: 'Cadastro grátis em menos de 1 minuto. Só precisa de e-mail e do seu gamertag.' },
   { n: '02', icon: Wallet, title: 'Deposite via Pix', desc: 'A partir de R$ 5. Cai na carteira na hora, protegida por sistema antifraude.' },
-  { n: '03', icon: Swords, title: 'Desafie e jogue', desc: 'Crie ou aceite um X1, combinem a sala e joguem no EA FC ou eFootball. O valor fica travado até o resultado.' },
+  { n: '03', icon: Swords, title: 'Desafie e jogue', desc: 'Crie ou aceite um X1, combinem a sala e joguem no EA FC 25, EA FC 26 ou eFootball. O valor fica travado até o resultado.' },
   { n: '04', icon: Zap, title: 'Ganhou? Saca.', desc: 'O prêmio cai direto na carteira. Saque via Pix, sem burocracia.' },
 ]
 
 /* ── Torneios em destaque (mesmo mock de TournamentsView.vue, sem backend próprio ainda) ── */
 const tournamentsPreview = [
-  { title: 'Copa Final de Semana', game: 'EA FC 25', prize: 80, entryFee: 10, date: 'Hoje, 20:00', enrolled: 4, maxPlayers: 8 },
+  { title: 'Copa Final de Semana', game: 'EA FC 26', prize: 80, entryFee: 10, date: 'Hoje, 20:00', enrolled: 4, maxPlayers: 8 },
   { title: 'Liga Noturna eFootball', game: 'eFootball', prize: 150, entryFee: 15, date: 'Amanhã, 22:00', enrolled: 12, maxPlayers: 16 },
   { title: 'Supercopa de Sexta', game: 'EA FC 25', prize: 500, entryFee: 25, date: 'Sexta, 21:00', enrolled: 16, maxPlayers: 32 },
 ]
@@ -129,7 +129,7 @@ const tools = [
 const faqs = [
   {
     q: 'Como eu combino a partida com meu adversário?',
-    a: 'Depois que o desafio é aceito, vocês têm acesso ao perfil um do outro na tela da partida. Trocam gamertag/ID, combinam a sala e jogam no EA FC ou eFootball. Terminou, cada um reporta o placar na plataforma.',
+    a: 'Depois que o desafio é aceito, vocês têm acesso ao perfil um do outro na tela da partida. Trocam gamertag/ID, combinam a sala e jogam no EA FC 25, EA FC 26 ou eFootball. Terminou, cada um reporta o placar na plataforma.',
   },
   {
     q: 'E se o adversário mentir sobre o resultado?',
@@ -157,6 +157,8 @@ const faqs = [
       <div class="flex flex-col gap-7">
         <div class="flex flex-wrap items-center gap-2.5">
           <span class="text-xs font-bold uppercase tracking-[0.14em] text-primary">EA FC 25</span>
+          <span class="size-1 rounded-full bg-ink/30"></span>
+          <span class="text-xs font-bold uppercase tracking-[0.14em] text-primary">EA FC 26</span>
           <span class="size-1 rounded-full bg-ink/30"></span>
           <span class="text-xs font-bold uppercase tracking-[0.14em] text-primary">eFootball</span>
           <span class="size-1 rounded-full bg-ink/30"></span>

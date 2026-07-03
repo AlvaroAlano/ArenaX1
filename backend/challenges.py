@@ -24,7 +24,7 @@ router = APIRouter(prefix="/api/challenges", tags=["Lobby e Desafios"])
 class ChallengeCreateRequest(BaseModel):
     bet_amount: float
     platform: str  # 'PS5', 'Xbox', 'PC', 'Crossplay'
-    game: str      # 'EA FC 25', 'eFootball'
+    game: str      # 'EA FC 25', 'EA FC 26', 'eFootball'
 
 class ChallengeAcceptRequest(BaseModel):
     challenge_id: str

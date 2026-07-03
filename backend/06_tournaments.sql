@@ -23,7 +23,7 @@ create table public.tournaments (
   id uuid primary key default gen_random_uuid(),
   host_id uuid not null references public.profiles(id) on delete cascade,
   title text not null,
-  game text not null, -- 'EA Sports FC 25', 'eFootball'
+  game text not null, -- 'EA FC 25', 'EA FC 26', 'eFootball'
   format text not null default 'mata_mata' check (format in ('mata_mata')),
   max_players int not null check (max_players in (4, 8, 16)),
   status text not null default 'in_progress' check (status in ('in_progress', 'completed', 'cancelled')),

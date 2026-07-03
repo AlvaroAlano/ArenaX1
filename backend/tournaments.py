@@ -24,7 +24,7 @@ router = APIRouter(prefix="/api/tournaments", tags=["Torneios"])
 # Schemas Pydantic — request
 class TournamentCreateRequest(BaseModel):
     title: str
-    game: str  # 'EA Sports FC 25', 'eFootball'
+    game: str  # 'EA FC 25', 'EA FC 26', 'eFootball'
     max_players: int  # 4, 8 ou 16
     participant_names: List[str]
     randomize_teams: bool = False

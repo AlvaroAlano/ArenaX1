@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Info, Star, Crown, Medal } from '@lucide/vue'
+import { GAME_OPTIONS } from '@/constants/games'
 
 const filter = ref('all') // 'all', 'PS5', 'XBOX', 'PC'
 
 // Gerando 150 jogadores mockados dinamicamente
 const names = ['CarlosFC', 'MateusPro', 'Thiago', 'RafaelBR', 'Lucas_Gamer', 'JoaoP', 'Felipe_X1', 'Alex_FIFA', 'Gustavo_Pro', 'Leo_BR', 'Vini', 'Edu_Sports', 'Henrique', 'Breno', 'Caio_Fut', 'Daniel', 'Victor_Pro', 'Arthur_BR', 'Igor', 'Samuel_X1', 'Gabriel', 'Bruno_FPS', 'Diego', 'Marcelo_G', 'Fernando', 'Rodrigo_Play', 'Andre', 'Renato_BR', 'Luciano', 'Marcos_99']
 const platforms = ['PS5', 'XBOX', 'PC']
-const games = ['EA FC 25', 'eFootball']
+const games = GAME_OPTIONS
 
 const rawData = []
 
 // Inserindo os Top 3 fixos para ter certeza que o pódio fica coerente
 rawData.push({ name: 'CarlosFC_10', game: 'EA FC 25', platform: 'PS5', wins: 180, losses: 15, rating: 4.9 })
 rawData.push({ name: 'MateusPro_99', game: 'eFootball', platform: 'XBOX', wins: 165, losses: 18, rating: 4.8 })
-rawData.push({ name: 'ThiagoBR', game: 'EA FC 25', platform: 'PC', wins: 150, losses: 22, rating: 4.7 })
+rawData.push({ name: 'ThiagoBR', game: 'EA FC 26', platform: 'PC', wins: 150, losses: 22, rating: 4.7 })
 
 for (let i = 3; i < 150; i++) {
     const wins = Math.floor(Math.random() * 120) + 10

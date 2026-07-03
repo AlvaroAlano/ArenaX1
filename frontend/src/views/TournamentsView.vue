@@ -10,18 +10,18 @@ const filter = ref('all') // 'all', 'proximos', 'concluidos'
 
 /* ── Mock (ainda não existe backend de torneios — ver TODO.md "Torneio de Sofá") ── */
 const allTournaments = ref([
-    { id: 1, title: 'Copa Final de Semana', game: 'EA FC 25', prize: 80, entryFee: 10, date: 'Hoje, 20:00', enrolled: 4, maxPlayers: 8, status: 'proximo', private: false },
-    { id: 2, title: 'Liga Noturna eFootball', game: 'eFootball 24', prize: 150, entryFee: 15, date: 'Amanhã, 22:00', enrolled: 12, maxPlayers: 16, status: 'proximo', private: false },
+    { id: 1, title: 'Copa Final de Semana', game: 'EA FC 26', prize: 80, entryFee: 10, date: 'Hoje, 20:00', enrolled: 4, maxPlayers: 8, status: 'proximo', private: false },
+    { id: 2, title: 'Liga Noturna eFootball', game: 'eFootball', prize: 150, entryFee: 15, date: 'Amanhã, 22:00', enrolled: 12, maxPlayers: 16, status: 'proximo', private: false },
     { id: 3, title: 'Torneio Fechado NDAMBA', game: 'EA FC 25', prize: 0, entryFee: 0, date: '25 Nov, 19:00', enrolled: 8, maxPlayers: 8, status: 'proximo', private: true },
-    { id: 4, title: 'Supercopa de Sexta', game: 'EA FC 25', prize: 500, entryFee: 25, date: 'Sexta, 21:00', enrolled: 16, maxPlayers: 32, status: 'proximo', private: false },
-    { id: 5, title: 'Campeonato Mensal Pro', game: 'eFootball 24', prize: 1000, entryFee: 50, date: 'Dia 30, 15:00', enrolled: 45, maxPlayers: 64, status: 'proximo', private: false },
+    { id: 4, title: 'Supercopa de Sexta', game: 'EA FC 26', prize: 500, entryFee: 25, date: 'Sexta, 21:00', enrolled: 16, maxPlayers: 32, status: 'proximo', private: false },
+    { id: 5, title: 'Campeonato Mensal Pro', game: 'eFootball', prize: 1000, entryFee: 50, date: 'Dia 30, 15:00', enrolled: 45, maxPlayers: 64, status: 'proximo', private: false },
     { id: 6, title: 'Taça dos Campeões', game: 'EA FC 25', prize: 200, entryFee: 20, date: 'Ontem, 20:00', enrolled: 16, maxPlayers: 16, status: 'concluido', private: false },
     { id: 7, title: 'Liga Amadora (Série B)', game: 'EA FC 25', prize: 40, entryFee: 5, date: 'Sábado passado', enrolled: 8, maxPlayers: 8, status: 'concluido', private: false },
-    { id: 8, title: 'X1 da Madrugada', game: 'eFootball 24', prize: 30, entryFee: 5, date: 'Domingo passado', enrolled: 8, maxPlayers: 8, status: 'concluido', private: false },
-    { id: 9, title: 'Invitational de Inverno', game: 'EA FC 25', prize: 0, entryFee: 0, date: 'Semana passada', enrolled: 16, maxPlayers: 16, status: 'concluido', private: true },
+    { id: 8, title: 'X1 da Madrugada', game: 'eFootball', prize: 30, entryFee: 5, date: 'Domingo passado', enrolled: 8, maxPlayers: 8, status: 'concluido', private: false },
+    { id: 9, title: 'Invitational de Inverno', game: 'EA FC 26', prize: 0, entryFee: 0, date: 'Semana passada', enrolled: 16, maxPlayers: 16, status: 'concluido', private: true },
     { id: 10, title: 'Copa Novatos', game: 'EA FC 25', prize: 50, entryFee: 5, date: 'Amanhã, 14:00', enrolled: 6, maxPlayers: 16, status: 'proximo', private: false },
-    { id: 11, title: 'Desafio dos 100', game: 'eFootball 24', prize: 100, entryFee: 10, date: 'Hoje, 23:30', enrolled: 10, maxPlayers: 16, status: 'proximo', private: false },
-    { id: 12, title: 'Masters EA FC', game: 'EA FC 25', prize: 400, entryFee: 40, date: 'Mês passado', enrolled: 16, maxPlayers: 16, status: 'concluido', private: false },
+    { id: 11, title: 'Desafio dos 100', game: 'eFootball', prize: 100, entryFee: 10, date: 'Hoje, 23:30', enrolled: 10, maxPlayers: 16, status: 'proximo', private: false },
+    { id: 12, title: 'Masters EA FC', game: 'EA FC 26', prize: 400, entryFee: 40, date: 'Mês passado', enrolled: 16, maxPlayers: 16, status: 'concluido', private: false },
 ])
 
 const filterTabs = computed(() => [
