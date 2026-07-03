@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
+import { api } from '@/services/api'
 import DisputeChat from '@/components/DisputeChat.vue'
 
 const route = useRoute()
@@ -14,8 +15,6 @@ const challenge = ref<any>(null)
 const loading = ref(true)
 const reporting = ref(false)
 let realtimeSub: any = null
-
-const API_URL = 'http://localhost:8000/api/challenges'
 
 const fetchChallenge = async () => {
   try {
@@ -71,22 +70,10 @@ const handleReport = async (result: 'win' | 'loss') => {
 
   reporting.value = true
   try {
-    const res = await fetch(`${API_URL}/report`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        challenge_id: challengeId,
-        user_id: authStore.user?.id,
-        result: result
-      })
+    const resData = await api.post<{ message: string }>('/api/challenges/report', {
+      challenge_id: challengeId,
+      result: result
     })
-
-    if (!res.ok) {
-      const errData = await res.json()
-      throw new Error(errData.detail || 'Erro ao reportar resultado.')
-    }
-
-    const resData = await res.json()
     alert(resData.message)
     await fetchChallenge()
   } catch (err: any) {
@@ -129,7 +116,7 @@ const handleReport = async (result: 'win' | 'loss') => {
         :class="{
           'bg-surface-2 border-hairline text-ink-muted': challenge.status === 'in_progress',
           'bg-surface-2 border-hairline text-semantic-success': challenge.status === 'completed',
-          'bg-surface-2 border-hairline text-ink-muted': challenge.status === 'disputed'
+          'bg-surface-2 border-hairline text-semantic-error': challenge.status === 'disputed'
         }"
       >
         <span v-if="challenge.status === 'in_progress'">Partida em Andamento</span>
@@ -169,7 +156,7 @@ const handleReport = async (result: 'win' | 'loss') => {
           <!-- VS -->
           <div class="flex flex-col items-center">
             <div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-none">
-              <span class="text-ink font-semibold italic text-xl">VS</span>
+              <span class="text-canvas font-bold italic text-xl">VS</span>
             </div>
           </div>
 

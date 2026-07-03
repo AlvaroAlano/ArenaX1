@@ -1,0 +1,833 @@
+
+<!DOCTYPE html>
+<html class="dark" lang="pt" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Levantamentos</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/icons/icon-96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.png">
+
+                <meta name="description" content="The 1vs1 — A plataforma n°1 de partidas competitivas FIFA e eFootball 1v1 por dinheiro real. Desafie jogadores do mundo todo.">
+        <meta name="keywords" content="FIFA 1vs1, eFootball 1vs1, partida competitiva, dinheiro real, desafio FIFA, duelo eFootball, ganhar dinheiro, videogames, PS5, Xbox">
+    <meta name="robots" content="noindex, nofollow">
+
+            <link rel="canonical" href="https://the1vs1.com/pt/retraits">
+
+                            <link rel="alternate" hreflang="fr" href="https://the1vs1.com/fr/retraits">
+            <link rel="alternate" hreflang="en" href="https://the1vs1.com/en/retraits">
+            <link rel="alternate" hreflang="es" href="https://the1vs1.com/es/retraits">
+            <link rel="alternate" hreflang="de" href="https://the1vs1.com/de/retraits">
+            <link rel="alternate" hreflang="pt" href="https://the1vs1.com/pt/retraits">
+            <link rel="alternate" hreflang="tr" href="https://the1vs1.com/tr/retraits">
+            <link rel="alternate" hreflang="ar" href="https://the1vs1.com/ar/retraits">
+                                    <link rel="alternate" hreflang="fr-FR" href="https://the1vs1.com/fr/retraits">
+                    <link rel="alternate" hreflang="fr-BE" href="https://the1vs1.com/fr/retraits">
+                    <link rel="alternate" hreflang="fr-CA" href="https://the1vs1.com/fr/retraits">
+                    <link rel="alternate" hreflang="fr-CH" href="https://the1vs1.com/fr/retraits">
+                    <link rel="alternate" hreflang="fr-SN" href="https://the1vs1.com/fr/retraits">
+                    <link rel="alternate" hreflang="fr-CI" href="https://the1vs1.com/fr/retraits">
+                    <link rel="alternate" hreflang="fr-CM" href="https://the1vs1.com/fr/retraits">
+                    <link rel="alternate" hreflang="fr-CD" href="https://the1vs1.com/fr/retraits">
+                    <link rel="alternate" hreflang="fr-MG" href="https://the1vs1.com/fr/retraits">
+                    <link rel="alternate" hreflang="fr-ML" href="https://the1vs1.com/fr/retraits">
+                    <link rel="alternate" hreflang="fr-TN" href="https://the1vs1.com/fr/retraits">
+                    <link rel="alternate" hreflang="fr-DZ" href="https://the1vs1.com/fr/retraits">
+                    <link rel="alternate" hreflang="fr-MA" href="https://the1vs1.com/fr/retraits">
+                                <link rel="alternate" hreflang="en-US" href="https://the1vs1.com/en/retraits">
+                    <link rel="alternate" hreflang="en-GB" href="https://the1vs1.com/en/retraits">
+                    <link rel="alternate" hreflang="en-CA" href="https://the1vs1.com/en/retraits">
+                    <link rel="alternate" hreflang="en-AU" href="https://the1vs1.com/en/retraits">
+                    <link rel="alternate" hreflang="en-NG" href="https://the1vs1.com/en/retraits">
+                    <link rel="alternate" hreflang="en-GH" href="https://the1vs1.com/en/retraits">
+                    <link rel="alternate" hreflang="en-ZA" href="https://the1vs1.com/en/retraits">
+                    <link rel="alternate" hreflang="en-KE" href="https://the1vs1.com/en/retraits">
+                    <link rel="alternate" hreflang="en-IN" href="https://the1vs1.com/en/retraits">
+                                <link rel="alternate" hreflang="es-ES" href="https://the1vs1.com/es/retraits">
+                    <link rel="alternate" hreflang="es-MX" href="https://the1vs1.com/es/retraits">
+                    <link rel="alternate" hreflang="es-AR" href="https://the1vs1.com/es/retraits">
+                    <link rel="alternate" hreflang="es-CO" href="https://the1vs1.com/es/retraits">
+                    <link rel="alternate" hreflang="es-CL" href="https://the1vs1.com/es/retraits">
+                    <link rel="alternate" hreflang="es-PE" href="https://the1vs1.com/es/retraits">
+                                <link rel="alternate" hreflang="de-DE" href="https://the1vs1.com/de/retraits">
+                    <link rel="alternate" hreflang="de-AT" href="https://the1vs1.com/de/retraits">
+                    <link rel="alternate" hreflang="de-CH" href="https://the1vs1.com/de/retraits">
+                                <link rel="alternate" hreflang="pt-BR" href="https://the1vs1.com/pt/retraits">
+                    <link rel="alternate" hreflang="pt-PT" href="https://the1vs1.com/pt/retraits">
+                    <link rel="alternate" hreflang="pt-AO" href="https://the1vs1.com/pt/retraits">
+                    <link rel="alternate" hreflang="pt-MZ" href="https://the1vs1.com/pt/retraits">
+                                <link rel="alternate" hreflang="tr-TR" href="https://the1vs1.com/tr/retraits">
+                                <link rel="alternate" hreflang="ar-SA" href="https://the1vs1.com/ar/retraits">
+                    <link rel="alternate" hreflang="ar-MA" href="https://the1vs1.com/ar/retraits">
+                    <link rel="alternate" hreflang="ar-DZ" href="https://the1vs1.com/ar/retraits">
+                    <link rel="alternate" hreflang="ar-TN" href="https://the1vs1.com/ar/retraits">
+                    <link rel="alternate" hreflang="ar-EG" href="https://the1vs1.com/ar/retraits">
+                    <link rel="alternate" hreflang="ar-AE" href="https://the1vs1.com/ar/retraits">
+                    <link rel="alternate" hreflang="ar-QA" href="https://the1vs1.com/ar/retraits">
+                    <link rel="alternate" hreflang="ar-KW" href="https://the1vs1.com/ar/retraits">
+                <link rel="alternate" hreflang="x-default" href="https://the1vs1.com/fr/retraits">
+
+        <meta property="og:type" content="website">
+    <meta property="og:title" content="Levantamentos">
+    <meta property="og:description" content="The 1vs1 — A plataforma n°1 de partidas competitivas FIFA e eFootball 1v1 por dinheiro real. Desafie jogadores do mundo todo.">
+    <meta property="og:url" content="https://the1vs1.com/pt/retraits">
+    <meta property="og:image" content="https://the1vs1.com/images/og-default.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="The 1vs1">
+    <meta property="og:locale" content="pt">
+                        <meta property="og:locale:alternate" content="fr">
+                                <meta property="og:locale:alternate" content="en">
+                                <meta property="og:locale:alternate" content="es">
+                                <meta property="og:locale:alternate" content="de">
+                                            <meta property="og:locale:alternate" content="tr">
+                                <meta property="og:locale:alternate" content="ar">
+            
+        <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@the1vs1">
+    <meta name="twitter:title" content="Levantamentos">
+    <meta name="twitter:description" content="The 1vs1 — A plataforma n°1 de partidas competitivas FIFA e eFootball 1v1 por dinheiro real. Desafie jogadores do mundo todo.">
+    <meta name="twitter:image" content="https://the1vs1.com/images/og-default.png">
+
+        <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
+    <meta name="theme-color" content="#0d87f2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="The 1vs1">
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512.png">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    </noscript>
+
+        <style>
+        .material-symbols-outlined{visibility:hidden;display:inline-block;width:1em;height:1em;overflow:hidden;line-height:1}
+        .icons-ready .material-symbols-outlined{visibility:visible;width:auto;height:auto;overflow:visible;line-height:inherit}
+    </style>
+    <script>
+        (function(){
+            var shown=false;
+            function show(){ if(shown){return;} shown=true; document.documentElement.classList.add('icons-ready'); }
+            if(document.fonts&&document.fonts.load){
+                // Déclenche activement le chargement puis révèle (succès OU échec).
+                document.fonts.load('1em "Material Symbols Outlined"').then(show).catch(show);
+                document.fonts.ready.then(show);
+            }
+            // Garde-fous : on ne laisse JAMAIS les icônes masquées indéfiniment.
+            window.addEventListener('load',show);
+            setTimeout(show,3000);
+        })();
+    </script>
+
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+        <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d87f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101a22",
+                        "admin-sidebar": "#0b1219",
+                        "admin-card": "#151f2b",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style>
+    body { font-family: 'Lexend', sans-serif; }
+</style>
+
+    <style>
+    /* Critical CSS — prevent FOUC */
+    body { font-family: 'Lexend', system-ui, -apple-system, sans-serif; }
+    /* Bottom nav filled icon style */
+    .fill-icon { font-variation-settings: 'FILL' 1; }
+    /* Safe area for bottom nav */
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    /* Add bottom padding to body to avoid content hidden behind bottom nav on mobile */
+    @media (max-width: 767px) {
+        body { padding-bottom: 4.5rem; }
+    }
+    </style>
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LN6VWE8TMS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LN6VWE8TMS');
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased" >
+    <div class="relative flex min-h-screen flex-col overflow-x-clip">
+
+                <div id="pwa-banner" class="hidden bg-primary text-white px-4 py-3 items-center justify-between gap-3 text-sm md:hidden z-[9999] relative">
+            <div class="flex items-center gap-3 min-w-0">
+                <span class="material-symbols-outlined text-xl shrink-0">install_mobile</span>
+                <span class="font-medium truncate">Instale o app The 1vs1!</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+                <button id="pwa-install-btn" class="bg-white text-primary font-bold text-xs px-4 py-1.5 rounded-lg whitespace-nowrap">Instalar</button>
+                <button id="pwa-dismiss-btn" class="text-white/70 hover:text-white">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+        </div>
+
+                <div id="pwa-modal" class="hidden fixed inset-0 z-[10000] flex items-end sm:items-center justify-center">
+            <div id="pwa-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+            <div class="relative bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-2xl w-full max-w-md mx-auto p-6 space-y-5 animate-slide-up">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Instalar The 1vs1</h3>
+                    <button id="pwa-modal-close" class="text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                                <div id="pwa-ios" class="hidden space-y-4">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Para instalar o aplicativo no seu iPhone:</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                            <span class="text-sm">Toque no ícone <strong>Compartilhar</strong> <span class='material-symbols-outlined text-sm align-middle'>ios_share</span></span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                            <span class="text-sm">Role para baixo e toque em &#039;Tela de Início&#039;</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                            <span class="text-sm">Toque em &#039;Adicionar&#039; no canto superior direito</span>
+                        </div>
+                    </div>
+                </div>
+
+                                <div id="pwa-android" class="hidden space-y-4">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Instale o aplicativo diretamente no seu celular.</p>
+                    <button id="pwa-native-install" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined">download</span>
+                        Baixar o aplicativo
+                    </button>
+                    <p id="pwa-android-fallback" class="hidden text-xs text-slate-500 text-center">Abra o menu do navegador (⋮) e toque em &#039;Instalar aplicativo&#039;.</p>
+                </div>
+            </div>
+        </div>
+
+                
+                <main class="flex-1">
+            <div class="flex min-h-screen">
+    
+<div class="md:hidden fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur border-b border-slate-700/50">
+    <div class="flex items-center justify-between px-4 h-14">
+        <div class="flex items-center gap-2">
+            <button onclick="document.getElementById('player-sidebar').classList.toggle('-translate-x-full'); document.getElementById('player-overlay').classList.toggle('hidden');" class="text-slate-400 hover:text-white">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <img src="/images/logo.svg" alt="The 1vs1" class="h-6">
+        </div>
+                <span class="text-xs font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-lg">0.00 €</span>
+            </div>
+</div>
+
+<div id="player-overlay" class="md:hidden fixed inset-0 bg-black/50 z-[9994] hidden" onclick="document.getElementById('player-sidebar').classList.add('-translate-x-full'); this.classList.add('hidden');"></div>
+
+<aside id="player-sidebar" class="fixed inset-y-0 left-0 z-[9995] flex w-64 flex-col bg-admin-sidebar border-r border-slate-700/50 transition-transform duration-200 md:translate-x-0 -translate-x-full">
+
+        <div class="flex h-16 items-center gap-3 border-b border-slate-700/50 px-5">
+        <a href="/pt/" class="no-underline">
+            <img src="/images/logo.svg" alt="The 1vs1" class="h-8">
+        </a>
+    </div>
+
+        <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+
+        <div class="px-2 pb-2 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Principal</div>
+
+        <a href="/pt/tableau-de-bord" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">dashboard</span>
+            Painel
+        </a>
+
+        <a href="/pt/defis?filter=mine" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">swords</span>
+            Desafios
+        </a>
+
+        <a href="/pt/mes-tournois" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">emoji_events</span>
+            Torneios
+        </a>
+
+        <a href="/pt/defis/creer" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">add_circle</span>
+            Criar um Desafio
+        </a>
+
+        <a href="/pt/classement" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">leaderboard</span>
+            Classificação
+        </a>
+
+        <div class="px-2 pb-2 pt-4 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Finanças</div>
+
+        <a href="/pt/recharger-portefeuille" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+            Carteira
+        </a>
+
+        <a href="/pt/retraits" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors bg-primary/10 text-primary">
+            <span class="material-symbols-outlined text-[20px]">payments</span>
+            Levantamentos
+        </a>
+
+        <div class="px-2 pb-2 pt-4 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Conta</div>
+
+        <a href="/pt/parametres" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">settings</span>
+            Definições
+        </a>
+
+        <a href="/pt/parrainage" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">group</span>
+            Indicação
+        </a>
+
+                <a href="#" onclick="document.getElementById('player-sidebar').classList.add('-translate-x-full'); document.getElementById('player-overlay').classList.add('hidden'); var t=document.getElementById('support-toggle'); if(t){t.click();} return false;" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">support_agent</span>
+            Suporte
+        </a>
+
+        
+                        <div class="mt-4 rounded-xl bg-slate-800/50 border border-slate-700/50 p-4">
+            <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Saldo</p>
+            <p class="text-xl font-bold text-primary">0.00 €</p>
+            <a href="/pt/recharger-portefeuille" class="mt-3 w-full py-2 text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors block text-center no-underline">
+                Depositar
+            </a>
+        </div>
+            </nav>
+
+        <div class="border-t border-slate-700/50 p-4">
+                <div class="flex items-center gap-3">
+            <div class="h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary shrink-0">ÁA</div>
+            <div class="flex-1 min-w-0">
+                <p class="truncate text-sm font-medium text-slate-200">Álvaro Alano</p>
+                <p class="truncate text-xs text-slate-500">Não configurado • alvarobster@gmail.com</p>
+            </div>
+        </div>
+        <a href="/pt/deconnexion" class="mt-3 flex items-center gap-2 text-xs text-slate-500 hover:text-red-400 transition-colors no-underline">
+            <span class="material-symbols-outlined text-[16px]">logout</span>
+            Sair
+        </a>
+            </div>
+</aside>
+
+<div class="hidden md:block w-64 shrink-0" dir="ltr"></div>
+
+    <div class="flex-1 p-4 md:p-8 overflow-y-auto pt-16 md:pt-8 pb-24 md:pb-8">
+        <div class="max-w-4xl mx-auto flex flex-col gap-8">
+
+                                                
+                        <div class="p-6 rounded-xl bg-gradient-to-br from-primary to-blue-600 text-white shadow-lg shadow-primary/20">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <p class="text-xs font-medium opacity-80 uppercase tracking-wider">Saldo Disponível</p>
+                        <h3 class="text-3xl font-bold mt-1 tracking-tight">0.00 €</h3>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                        <p class="text-xs font-medium opacity-80 uppercase tracking-wider">Montante Levantável (Ganhos)</p>
+                        <h3 class="text-2xl font-bold mt-1 tracking-tight">0.00 €</h3>
+                        <p class="text-[10px] opacity-60 mt-1">Apenas os seus ganhos são levantáveis, não os depósitos</p>
+                    </div>
+                </div>
+            </div>
+
+                        <div class="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-6 lg:p-8">
+                <h2 class="text-xl font-bold mb-6 text-slate-900 dark:text-white flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">send_money</span>
+                    Pedir um Levantamento
+                </h2>
+                <form action="/pt/retraits" method="POST" id="withdrawalForm" class="space-y-6">
+                    <input type="hidden" name="_token" value="b3c08d.5TR_N9zurshAp8JjxzXy0LCU1RY9a2Er5sJyD025hKU.jkUIc5Gt6555k4Atjnqev_jX4ntvIgsf0bQzVSPh8--GYDlHt7r5sguVqQ" />
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Montante a Levantar</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">€</span>
+                                <input name="amount" id="w_amount" class="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all text-slate-900 dark:text-white" placeholder="0.00" type="number" step="0.01" min="5" required/>
+                            </div>
+                            <p class="text-[11px] text-slate-500">Mínimo: 5,00 € • Saldo disponível: 0.00 €</p>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Método de Pagamento</label>
+                            <div class="flex gap-3">
+                                <label class="flex-1 flex items-center gap-3 p-3.5 border-2 border-primary bg-primary/5 rounded-lg">
+                                    <input type="radio" name="method" value="paypal" class="accent-primary" checked />
+                                    <div>
+                                        <div class="text-sm font-bold text-slate-900 dark:text-white">PayPal</div>
+                                        <div class="text-[10px] text-slate-500">Transferência para a sua conta PayPal</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                                        <div id="paypal_details" class="flex flex-col gap-2">
+                        <label class="text-sm font-medium text-slate-700 dark:text-slate-300">
+                            <span class="material-symbols-outlined text-base align-text-bottom mr-1">mail</span>
+                            Endereço de email PayPal
+                        </label>
+                        <input name="withdrawal_details" id="w_paypal_email" type="email" class="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all text-slate-900 dark:text-white" placeholder="seu-email@paypal.com" />
+                        <p class="text-[11px] text-slate-500">Os fundos serão enviados para este endereço PayPal</p>
+                    </div>
+
+                                        <div id="withdrawal-summary" class="hidden p-5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">receipt_long</span>
+                            Estimativa do saque
+                        </h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Valor solicitado</span>
+                                <span id="ws-amount" class="font-bold text-slate-900 dark:text-white">0.00 €</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Taxa de saque</span>
+                                <span id="ws-fee" class="text-orange-400 font-medium">- 0.00 €</span>
+                            </div>
+                            <div class="border-t border-slate-200 dark:border-slate-700 pt-2 flex justify-between">
+                                <span class="font-bold text-slate-900 dark:text-white">Você receberá no seu PayPal</span>
+                                <span id="ws-net" class="font-bold text-green-500 text-lg">0.00 €</span>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-slate-400 leading-relaxed">Uma taxa fixa de 1,00€ é aplicada a cada saque.</p>
+                    </div>
+
+                                        <div class="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/50 flex gap-3">
+                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400">info</span>
+                        <div class="text-xs leading-relaxed text-blue-800 dark:text-blue-300">
+                            <p class="font-bold mb-1">Não tem conta PayPal?</p>
+                            <p>Crie uma gratuitamente em <a href="https://www.paypal.com/signup" target="_blank" rel="noopener" class="underline font-bold hover:text-blue-500">paypal.com</a>, depois associe o seu cartão ou conta bancária para receber os seus levantamentos.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/50 flex gap-3">
+                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400">schedule</span>
+                        <p class="text-xs leading-relaxed text-blue-800 dark:text-blue-300">
+                            Os fundos são processados em 3 a 5 dias úteis para transferências bancárias. Os levantamentos por PayPal e cripto são geralmente mais rápidos.
+                        </p>
+                    </div>
+
+                    <div class="flex justify-end pt-4">
+                        <button type="submit" id="w_submit" disabled class="bg-primary hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed text-white px-8 py-3.5 rounded-lg font-bold text-sm transition-all transform active:scale-95 shadow-lg shadow-primary/20">
+                            Confirmar Levantamento
+                        </button>
+                    </div>
+                </form>
+
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const amountInput = document.getElementById('w_amount');
+                    const paypalInput = document.getElementById('w_paypal_email');
+                    const submitBtn = document.getElementById('w_submit');
+                    const summaryBox = document.getElementById('withdrawal-summary');
+                    const wsAmount = document.getElementById('ws-amount');
+                    const wsFee = document.getElementById('ws-fee');
+                    const wsNet = document.getElementById('ws-net');
+
+                    // Fixed withdrawal fee
+                    const WITHDRAWAL_FEE = 1;
+
+                    function updateSummary() {
+                        const amount = parseFloat(amountInput.value);
+                        if (!isNaN(amount) && amount >= 5) {
+                            const fee = WITHDRAWAL_FEE;
+                            const net = Math.round((amount - fee) * 100) / 100;
+                            wsAmount.textContent = amount.toFixed(2) + ' €';
+                            wsFee.textContent = '- ' + fee.toFixed(2) + ' €';
+                            wsNet.textContent = net.toFixed(2) + ' €';
+                            summaryBox.classList.remove('hidden');
+                        } else {
+                            summaryBox.classList.add('hidden');
+                        }
+                    }
+
+                    function checkForm() {
+                        const amount = parseFloat(amountInput.value);
+                        const validAmount = !isNaN(amount) && amount >= 5;
+                        const validDetails = paypalInput.value.trim() !== '' && paypalInput.value.includes('@');
+                        submitBtn.disabled = !(validAmount && validDetails);
+                    }
+
+                    amountInput.addEventListener('input', function() { checkForm(); updateSummary(); });
+                    paypalInput.addEventListener('input', checkForm);
+                    checkForm();
+                    updateSummary();
+                });
+                </script>
+            </div>
+
+                        <div class="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                <div class="p-6 border-b border-slate-200 dark:border-slate-800">
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white">Histórico de Transações</h2>
+                </div>
+
+                                <div class="text-center py-12">
+                    <span class="material-symbols-outlined text-4xl text-slate-300 dark:text-slate-700">receipt_long</span>
+                    <p class="text-slate-500 mt-2">Sem transações de momento.</p>
+                </div>
+                            </div>
+        </div>
+    </div>
+</div>
+        </main>
+
+                
+                        <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-[9990] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 md:hidden safe-bottom">
+                                    <div class="flex items-center justify-around px-2 py-1.5">
+                                <a href="/pt/" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">home</span>
+                    <span class="text-[10px] font-semibold">Início</span>
+                </a>
+                <a href="/pt/defis" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">swords</span>
+                    <span class="text-[10px] font-semibold">Desafios</span>
+                </a>
+                <a href="/pt/defis/creer" class="flex flex-col items-center gap-0.5 no-underline min-w-[56px]">
+                    <span class="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white shadow-lg shadow-primary/30 -mt-4">
+                        <span class="material-symbols-outlined text-[22px]">add</span>
+                    </span>
+                    <span class="text-[10px] font-semibold text-slate-500">Criar</span>
+                </a>
+                <a href="/pt/tableau-de-bord" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">dashboard</span>
+                    <span class="text-[10px] font-semibold">Painel</span>
+                </a>
+                <a href="/pt/recharger-portefeuille" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-primary">
+                    <span class="material-symbols-outlined text-[22px] fill-icon">account_balance_wallet</span>
+                    <span class="text-[10px] font-semibold">Saldo</span>
+                </a>
+            </div>
+                    </nav>
+        
+                <div id="support-widget" class="fixed right-4 bottom-20 md:right-6 md:bottom-6 z-[9991]">
+    <button id="support-toggle" type="button" aria-label="Precisa de ajuda?"
+        class="relative flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors">
+        <span class="material-symbols-outlined">support_agent</span>
+        <span id="support-badge" class="hidden absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-red-500 text-white text-[11px] font-bold flex items-center justify-center"></span>
+    </button>
+</div>
+
+<div id="support-panel" class="hidden fixed right-4 bottom-20 md:right-6 md:bottom-6 z-[9995] w-[calc(100vw-2rem)] max-w-sm h-[480px] max-h-[calc(100vh-8rem)] flex flex-col rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-3 bg-primary text-white shrink-0">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined">support_agent</span>
+            <span class="font-bold text-sm">Suporte</span>
+        </div>
+        <button id="support-close" type="button" class="text-white/80 hover:text-white" aria-label="Fermer">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+
+        <div id="support-loading" class="flex-1 flex items-center justify-center text-slate-400 text-sm">Carregando...</div>
+
+        <form id="support-form" onsubmit="return false;" class="hidden flex-1 flex flex-col gap-3 p-4 overflow-y-auto">
+        <p class="text-slate-300 text-sm">Ola! Como podemos ajuda-lo?</p>
+        <input id="support-subject" type="text" maxlength="120" placeholder="Assunto do seu pedido"
+            class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/50">
+        <textarea id="support-message" rows="4" maxlength="2000" placeholder="Descreva seu problema..."
+            class="flex-1 resize-none bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+        <button type="submit" class="bg-primary hover:bg-primary/90 text-white rounded-lg py-2.5 text-sm font-bold transition-colors">Enviar</button>
+    </form>
+
+        <div id="support-chat" class="hidden flex-1 flex flex-col overflow-hidden">
+        <div id="support-thread" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+        <form id="support-reply-form" onsubmit="return false;" class="flex gap-2 p-3 border-t border-slate-700 shrink-0">
+            <input id="support-reply-input" type="text" maxlength="2000" autocomplete="off" placeholder="Escrever uma mensagem..."
+                class="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/50">
+            <button type="submit" class="bg-primary hover:bg-primary/90 text-white rounded-lg px-3 flex items-center transition-colors"><span class="material-symbols-outlined text-[20px]">send</span></button>
+        </form>
+    </div>
+</div>
+
+<script>
+(function () {
+    const L = 'pt';
+    const base = '/' + L + '/api/support';
+    const toggle = document.getElementById('support-toggle');
+    const widget = document.getElementById('support-widget');
+    const panel = document.getElementById('support-panel');
+    const badge = document.getElementById('support-badge');
+    const loadingEl = document.getElementById('support-loading');
+    const formEl = document.getElementById('support-form');
+    const chatEl = document.getElementById('support-chat');
+    const threadEl = document.getElementById('support-thread');
+    let ticketId = null, lastId = 0, pollTimer = null, isOpen = false;
+
+    function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+    function showOnly(el) {
+        [loadingEl, formEl, chatEl].forEach(function (x) { x.classList.add('hidden'); });
+        el.classList.remove('hidden');
+    }
+
+    function renderMsg(m) {
+        const admin = m.isFromAdmin;
+        const wrap = document.createElement('div');
+        wrap.className = 'flex ' + (admin ? 'justify-start' : 'justify-end');
+        wrap.innerHTML = '<div class="max-w-[80%] ' + (admin ? 'bg-slate-800 text-slate-200' : 'bg-primary/20 text-primary') + ' rounded-xl px-3 py-2">'
+            + '<p class="text-sm leading-relaxed break-words">' + esc(m.content) + '</p>'
+            + '<p class="text-[10px] mt-1 opacity-60">' + esc(m.createdAt) + '</p></div>';
+        threadEl.appendChild(wrap);
+        if (m.id && m.id > lastId) lastId = m.id;
+    }
+
+    function scrollBottom() { threadEl.scrollTop = threadEl.scrollHeight; }
+
+    function fetchMessages() {
+        if (!ticketId) return;
+        fetch(base + '/ticket/' + ticketId + '/messages?after=' + lastId)
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.messages && d.messages.length) { d.messages.forEach(renderMsg); scrollBottom(); }
+                if (d.status === 'closed') stopPoll();
+            }).catch(function () {});
+    }
+
+    function startPoll() { stopPoll(); pollTimer = setInterval(fetchMessages, 5000); }
+    function stopPoll() { if (pollTimer) { clearInterval(pollTimer); pollTimer = null; } }
+
+    function openChat(id) {
+        ticketId = id; lastId = 0; threadEl.innerHTML = '';
+        showOnly(chatEl);
+        fetchMessages();
+        startPoll();
+    }
+
+    function loadState() {
+        showOnly(loadingEl);
+        fetch(base + '/active-ticket')
+            .then(function (r) { return r.json(); })
+            .then(function (d) { d.ticket ? openChat(d.ticket.id) : showOnly(formEl); })
+            .catch(function () { showOnly(formEl); });
+    }
+
+    function refreshBadge() {
+        fetch(base + '/active-ticket')
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                const n = d.ticket ? d.ticket.unread : 0;
+                if (n > 0) { badge.textContent = n > 9 ? '9+' : n; badge.classList.remove('hidden'); }
+                else badge.classList.add('hidden');
+            }).catch(function () {});
+    }
+
+    function openPanel() { isOpen = true; panel.classList.remove('hidden'); widget.classList.add('hidden'); loadState(); }
+    function closePanel() { isOpen = false; panel.classList.add('hidden'); widget.classList.remove('hidden'); stopPoll(); refreshBadge(); }
+
+    toggle.addEventListener('click', openPanel);
+    document.getElementById('support-close').addEventListener('click', closePanel);
+
+    formEl.addEventListener('submit', function () {
+        const subject = document.getElementById('support-subject').value.trim();
+        const message = document.getElementById('support-message').value.trim();
+        if (!subject || !message) return;
+        fetch(base + '/ticket', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ subject: subject, message: message }) })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.ticketId) {
+                    document.getElementById('support-subject').value = '';
+                    document.getElementById('support-message').value = '';
+                    openChat(d.ticketId);
+                }
+            }).catch(function () {});
+    });
+
+    document.getElementById('support-reply-form').addEventListener('submit', function () {
+        const input = document.getElementById('support-reply-input');
+        const message = input.value.trim();
+        if (!message || !ticketId) return;
+        fetch(base + '/ticket/' + ticketId + '/message', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: message }) })
+            .then(function (r) { return r.json(); })
+            .then(function (d) { if (d.id) { renderMsg(d); scrollBottom(); input.value = ''; } })
+            .catch(function () {});
+    });
+
+    refreshBadge();
+    setInterval(function () { if (!isOpen) refreshBadge(); }, 30000);
+})();
+</script>
+
+    </div>
+
+    
+        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add loading state to all form submit buttons
+        document.querySelectorAll('form').forEach(function(form) {
+            // Skip AJAX forms (those with onsubmit returning false)
+            if (form.getAttribute('onsubmit')) return;
+            // Skip forms in admin support chat
+            if (form.id === 'admin-reply-form') return;
+            // Skip support widget forms (handled by their own AJAX)
+            if (form.id === 'support-form' || form.id === 'support-reply-form') return;
+            // Skip AJAX chat forms (lobby match chat)
+            if (form.id === 'chatForm' || form.id === 'mobileChatForm') return;
+
+            form.addEventListener('submit', function(e) {
+                const btn = form.querySelector('button[type="submit"], button:not([type])');
+                if (!btn || btn.disabled) return;
+
+                // Save original content
+                btn.dataset.originalText = btn.innerHTML;
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+                btn.innerHTML = '<span class="inline-flex items-center gap-2"><svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>' + (btn.dataset.originalText.length < 50 ? btn.dataset.originalText : 'Carregando...') + '</span>';
+
+                // Re-enable after 10s in case of error
+                setTimeout(function() {
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-60', 'cursor-not-allowed');
+                    if (btn.dataset.originalText) btn.innerHTML = btn.dataset.originalText;
+                }, 10000);
+            });
+        });
+
+        // Disable submit buttons when required fields are empty
+        document.querySelectorAll('form').forEach(function(form) {
+            const requiredInputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            const btn = form.querySelector('button[type="submit"], button:not([type])');
+            if (!btn || requiredInputs.length === 0) return;
+            // Skip forms that already have their own validation logic
+            if (form.id === 'forgotForm' || form.id === 'resetForm' || form.id === 'admin-reply-form') return;
+            // Skip support widget forms (handled by their own AJAX)
+            if (form.id === 'support-form' || form.id === 'support-reply-form') return;
+            // Skip AJAX chat forms (lobby match chat)
+            if (form.id === 'chatForm' || form.id === 'mobileChatForm') return;
+
+            function checkRequired() {
+                let allFilled = true;
+                requiredInputs.forEach(function(input) {
+                    if (input.type === 'checkbox') {
+                        if (!input.checked) allFilled = false;
+                    } else if (!input.value.trim()) {
+                        allFilled = false;
+                    }
+                });
+                btn.disabled = !allFilled;
+                if (allFilled) {
+                    btn.classList.remove('opacity-40', 'cursor-not-allowed');
+                } else {
+                    btn.classList.add('opacity-40', 'cursor-not-allowed');
+                }
+            }
+
+            requiredInputs.forEach(function(input) {
+                input.addEventListener('input', checkRequired);
+                input.addEventListener('change', checkRequired);
+            });
+
+            checkRequired();
+        });
+    });
+    </script>
+
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+
+    // ── PWA Install Banner Logic ──
+    (function() {
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+        if (isStandalone) return;
+
+        const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isAndroid = /Android/.test(navigator.userAgent);
+        if (!isIOS && !isAndroid) return;
+
+        const banner = document.getElementById('pwa-banner');
+        const modal = document.getElementById('pwa-modal');
+        const iosSection = document.getElementById('pwa-ios');
+        const androidSection = document.getElementById('pwa-android');
+        let deferredPrompt = null;
+
+        // Show banner
+        banner.classList.remove('hidden');
+        banner.classList.add('flex');
+
+        // Capture beforeinstallprompt for Android
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        // Dismiss (session only — reappears on next page load)
+        document.getElementById('pwa-dismiss-btn').addEventListener('click', function() {
+            banner.classList.add('hidden');
+        });
+
+        // Open modal
+        document.getElementById('pwa-install-btn').addEventListener('click', function() {
+            modal.classList.remove('hidden');
+            if (isIOS) {
+                iosSection.classList.remove('hidden');
+                androidSection.classList.add('hidden');
+            } else {
+                androidSection.classList.remove('hidden');
+                iosSection.classList.add('hidden');
+                if (!deferredPrompt) {
+                    document.getElementById('pwa-native-install').classList.add('hidden');
+                    document.getElementById('pwa-android-fallback').classList.remove('hidden');
+                }
+            }
+        });
+
+        // Close modal
+        function closeModal() { modal.classList.add('hidden'); }
+        document.getElementById('pwa-modal-close').addEventListener('click', closeModal);
+        document.getElementById('pwa-modal-backdrop').addEventListener('click', closeModal);
+
+        // Native Android install
+        document.getElementById('pwa-native-install').addEventListener('click', function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function() {
+                    deferredPrompt = null;
+                    closeModal();
+                    banner.classList.add('hidden');
+                });
+            }
+        });
+    })();
+    </script>
+
+
+</body>
+</html>

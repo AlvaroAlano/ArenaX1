@@ -19,3 +19,6 @@ frontend/.npm/
 .vscode/
 .idea/
 .DS_Store
+
+# Artefatos de automação (Playwright CLI)
+.playwright-cli/

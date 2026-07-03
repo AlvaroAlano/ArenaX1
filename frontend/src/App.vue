@@ -21,48 +21,24 @@ const handleLogout = async () => {
 
 <template>
   <div class="min-h-screen bg-canvas text-ink flex flex-col">
-    <!-- Navbar Premium -->
-    <header 
-      v-if="showNavbar" 
-      class="bg-surface-1  border-b border-hairline sticky top-0 z-50 px-6 py-4 flex items-center justify-between"
-    >
-      <div class="flex items-center gap-8">
-        <router-link to="/" class="text-headline font-display font-semibold bg-primary text-primary hover:opacity-90 transition-opacity">
-          ARENA-X1
-        </router-link>
-        <nav class="hidden md:flex items-center gap-6">
-          <router-link to="/" class="text-sm font-medium text-ink-subtle hover:text-ink transition-colors" active-class="text-primary">
-            Dashboard
-          </router-link>
-          <router-link to="/challenges" class="text-sm font-medium text-ink-subtle hover:text-ink transition-colors" active-class="text-primary">
-            Desafios
-          </router-link>
-          <router-link to="/wallet" class="text-sm font-medium text-ink-subtle hover:text-ink transition-colors" active-class="text-primary">
-            Carteira
-          </router-link>
-          <router-link to="/about" class="text-sm font-medium text-ink-subtle hover:text-ink transition-colors" active-class="text-primary">
-            Sobre
-          </router-link>
-        </nav>
+    <!-- Glow ambiente: teleportado pro <body> pra escapar de qualquer stacking/overflow context do #app.
+         Importante: usa z-0 (nunca z-index negativo) — nesta base de código, elementos fixed com
+         z-index negativo somem por trás do fundo em telas com conteúdo rolável (bug de compositing
+         do Chromium, não descoberto o porquê exato; z-index >= 0 + conteúdo em z-10 é a saída estável). -->
+    <Teleport to="body">
+      <div aria-hidden="true" class="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+          <div class="absolute -left-32 -top-32 h-[480px] w-[480px] rounded-full bg-primary/12 blur-[120px]"></div>
+          <div class="absolute -bottom-40 -right-40 h-[560px] w-[560px] rounded-full bg-accent/12 blur-[130px]"></div>
       </div>
-
-      <div class="flex items-center gap-4">
-        <!-- Detalhes do Usuário logado -->
-        <span class="text-caption bg-surface-3 border border-hairline-strong px-3 py-1.5 rounded-full text-ink-subtle max-w-[180px] truncate">
-          {{ authStore.user?.email }}
-        </span>
-        <button 
-          @click="handleLogout" 
-          class="text-sm font-medium text-ink-muted hover:text-red-300 bg-surface-2 hover:bg-red-500/20 border border-hairline px-4 py-2 rounded-lg transition-all duration-300"
-        >
-          Sair
-        </button>
-      </div>
-    </header>
+    </Teleport>
 
     <!-- Conteúdo da Página -->
-    <main class="flex-1 flex flex-col">
-      <RouterView />
+    <main class="flex-1 flex flex-col relative z-10 overflow-hidden">
+      <router-view v-slot="{ Component }">
+        <transition name="page" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </main>
   </div>
 </template>
@@ -74,5 +50,17 @@ const handleLogout = async () => {
   margin: 0 !important;
   padding: 0 !important;
   width: 100%;
+}
+
+/* Transições Suaves de Rota (Padrão para todas as telas) */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
 }
 </style>

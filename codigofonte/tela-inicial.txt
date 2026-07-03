@@ -1,0 +1,825 @@
+
+<!DOCTYPE html>
+<html class="dark" lang="pt" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 1vs1: Compita 1v1 no FIFA e eFootball por Dinheiro Real</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/icons/icon-96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.png">
+
+                <meta name="description" content="Desafie outros jogadores no EA Sports FC (FIFA) e eFootball por dinheiro real. Prove o seu nível em partidas com apostas, assegure as suas apostas e levante os ganhos instantaneamente.">
+        <meta name="keywords" content="FIFA 1vs1, duelo eFootball, plataforma gaming, partida dinheiro real, desafio online, PS5, Xbox, jogos competitivos">
+    <meta name="robots" content="index, follow">
+
+            <link rel="canonical" href="https://the1vs1.com/pt/">
+
+                            <link rel="alternate" hreflang="fr" href="https://the1vs1.com/fr/">
+            <link rel="alternate" hreflang="en" href="https://the1vs1.com/en/">
+            <link rel="alternate" hreflang="es" href="https://the1vs1.com/es/">
+            <link rel="alternate" hreflang="de" href="https://the1vs1.com/de/">
+            <link rel="alternate" hreflang="pt" href="https://the1vs1.com/pt/">
+            <link rel="alternate" hreflang="tr" href="https://the1vs1.com/tr/">
+            <link rel="alternate" hreflang="ar" href="https://the1vs1.com/ar/">
+                                    <link rel="alternate" hreflang="fr-FR" href="https://the1vs1.com/fr/">
+                    <link rel="alternate" hreflang="fr-BE" href="https://the1vs1.com/fr/">
+                    <link rel="alternate" hreflang="fr-CA" href="https://the1vs1.com/fr/">
+                    <link rel="alternate" hreflang="fr-CH" href="https://the1vs1.com/fr/">
+                    <link rel="alternate" hreflang="fr-SN" href="https://the1vs1.com/fr/">
+                    <link rel="alternate" hreflang="fr-CI" href="https://the1vs1.com/fr/">
+                    <link rel="alternate" hreflang="fr-CM" href="https://the1vs1.com/fr/">
+                    <link rel="alternate" hreflang="fr-CD" href="https://the1vs1.com/fr/">
+                    <link rel="alternate" hreflang="fr-MG" href="https://the1vs1.com/fr/">
+                    <link rel="alternate" hreflang="fr-ML" href="https://the1vs1.com/fr/">
+                    <link rel="alternate" hreflang="fr-TN" href="https://the1vs1.com/fr/">
+                    <link rel="alternate" hreflang="fr-DZ" href="https://the1vs1.com/fr/">
+                    <link rel="alternate" hreflang="fr-MA" href="https://the1vs1.com/fr/">
+                                <link rel="alternate" hreflang="en-US" href="https://the1vs1.com/en/">
+                    <link rel="alternate" hreflang="en-GB" href="https://the1vs1.com/en/">
+                    <link rel="alternate" hreflang="en-CA" href="https://the1vs1.com/en/">
+                    <link rel="alternate" hreflang="en-AU" href="https://the1vs1.com/en/">
+                    <link rel="alternate" hreflang="en-NG" href="https://the1vs1.com/en/">
+                    <link rel="alternate" hreflang="en-GH" href="https://the1vs1.com/en/">
+                    <link rel="alternate" hreflang="en-ZA" href="https://the1vs1.com/en/">
+                    <link rel="alternate" hreflang="en-KE" href="https://the1vs1.com/en/">
+                    <link rel="alternate" hreflang="en-IN" href="https://the1vs1.com/en/">
+                                <link rel="alternate" hreflang="es-ES" href="https://the1vs1.com/es/">
+                    <link rel="alternate" hreflang="es-MX" href="https://the1vs1.com/es/">
+                    <link rel="alternate" hreflang="es-AR" href="https://the1vs1.com/es/">
+                    <link rel="alternate" hreflang="es-CO" href="https://the1vs1.com/es/">
+                    <link rel="alternate" hreflang="es-CL" href="https://the1vs1.com/es/">
+                    <link rel="alternate" hreflang="es-PE" href="https://the1vs1.com/es/">
+                                <link rel="alternate" hreflang="de-DE" href="https://the1vs1.com/de/">
+                    <link rel="alternate" hreflang="de-AT" href="https://the1vs1.com/de/">
+                    <link rel="alternate" hreflang="de-CH" href="https://the1vs1.com/de/">
+                                <link rel="alternate" hreflang="pt-BR" href="https://the1vs1.com/pt/">
+                    <link rel="alternate" hreflang="pt-PT" href="https://the1vs1.com/pt/">
+                    <link rel="alternate" hreflang="pt-AO" href="https://the1vs1.com/pt/">
+                    <link rel="alternate" hreflang="pt-MZ" href="https://the1vs1.com/pt/">
+                                <link rel="alternate" hreflang="tr-TR" href="https://the1vs1.com/tr/">
+                                <link rel="alternate" hreflang="ar-SA" href="https://the1vs1.com/ar/">
+                    <link rel="alternate" hreflang="ar-MA" href="https://the1vs1.com/ar/">
+                    <link rel="alternate" hreflang="ar-DZ" href="https://the1vs1.com/ar/">
+                    <link rel="alternate" hreflang="ar-TN" href="https://the1vs1.com/ar/">
+                    <link rel="alternate" hreflang="ar-EG" href="https://the1vs1.com/ar/">
+                    <link rel="alternate" hreflang="ar-AE" href="https://the1vs1.com/ar/">
+                    <link rel="alternate" hreflang="ar-QA" href="https://the1vs1.com/ar/">
+                    <link rel="alternate" hreflang="ar-KW" href="https://the1vs1.com/ar/">
+                <link rel="alternate" hreflang="x-default" href="https://the1vs1.com/fr/">
+
+        <meta property="og:type" content="website">
+    <meta property="og:title" content="The 1vs1: Compita 1v1 no FIFA e eFootball por Dinheiro Real">
+    <meta property="og:description" content="Desafie outros jogadores no EA Sports FC (FIFA) e eFootball por dinheiro real. Prove o seu nível em partidas com apostas, assegure as suas apostas e levante os ganhos instantaneamente.">
+    <meta property="og:url" content="https://the1vs1.com/pt/">
+    <meta property="og:image" content="https://the1vs1.com/images/og-default.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="The 1vs1">
+    <meta property="og:locale" content="pt">
+                        <meta property="og:locale:alternate" content="fr">
+                                <meta property="og:locale:alternate" content="en">
+                                <meta property="og:locale:alternate" content="es">
+                                <meta property="og:locale:alternate" content="de">
+                                            <meta property="og:locale:alternate" content="tr">
+                                <meta property="og:locale:alternate" content="ar">
+            
+        <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@the1vs1">
+    <meta name="twitter:title" content="The 1vs1: Compita 1v1 no FIFA e eFootball por Dinheiro Real">
+    <meta name="twitter:description" content="Desafie outros jogadores no EA Sports FC (FIFA) e eFootball por dinheiro real. Prove o seu nível em partidas com apostas, assegure as suas apostas e levante os ganhos instantaneamente.">
+    <meta name="twitter:image" content="https://the1vs1.com/images/og-default.png">
+
+        <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
+    <meta name="theme-color" content="#0d87f2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="The 1vs1">
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512.png">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    </noscript>
+
+        <style>
+        .material-symbols-outlined{visibility:hidden;display:inline-block;width:1em;height:1em;overflow:hidden;line-height:1}
+        .icons-ready .material-symbols-outlined{visibility:visible;width:auto;height:auto;overflow:visible;line-height:inherit}
+    </style>
+    <script>
+        (function(){
+            var shown=false;
+            function show(){ if(shown){return;} shown=true; document.documentElement.classList.add('icons-ready'); }
+            if(document.fonts&&document.fonts.load){
+                // Déclenche activement le chargement puis révèle (succès OU échec).
+                document.fonts.load('1em "Material Symbols Outlined"').then(show).catch(show);
+                document.fonts.ready.then(show);
+            }
+            // Garde-fous : on ne laisse JAMAIS les icônes masquées indéfiniment.
+            window.addEventListener('load',show);
+            setTimeout(show,3000);
+        })();
+    </script>
+
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+        <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d87f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101a22",
+                        "admin-sidebar": "#0b1219",
+                        "admin-card": "#151f2b",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "The 1vs1",
+  "url": "https://the1vs1.com",
+  "description": "Desafie outros jogadores no EA Sports FC (FIFA) e eFootball por dinheiro real. Prove o seu nível em partidas com apostas, assegure as suas apostas e levante os ganhos instantaneamente.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://the1vs1.com/pt/defis?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "inLanguage": ["fr", "en", "es", "de", "pt", "tr", "ar"]
+}
+</script>
+
+    <style>
+    /* Critical CSS — prevent FOUC */
+    body { font-family: 'Lexend', system-ui, -apple-system, sans-serif; }
+    /* Bottom nav filled icon style */
+    .fill-icon { font-variation-settings: 'FILL' 1; }
+    /* Safe area for bottom nav */
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    /* Add bottom padding to body to avoid content hidden behind bottom nav on mobile */
+    @media (max-width: 767px) {
+        body { padding-bottom: 4.5rem; }
+    }
+    </style>
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LN6VWE8TMS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LN6VWE8TMS');
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased" >
+    <div class="relative flex min-h-screen flex-col overflow-x-clip">
+
+                <div id="pwa-banner" class="hidden bg-primary text-white px-4 py-3 items-center justify-between gap-3 text-sm md:hidden z-[9999] relative">
+            <div class="flex items-center gap-3 min-w-0">
+                <span class="material-symbols-outlined text-xl shrink-0">install_mobile</span>
+                <span class="font-medium truncate">Instale o app The 1vs1!</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+                <button id="pwa-install-btn" class="bg-white text-primary font-bold text-xs px-4 py-1.5 rounded-lg whitespace-nowrap">Instalar</button>
+                <button id="pwa-dismiss-btn" class="text-white/70 hover:text-white">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+        </div>
+
+                <div id="pwa-modal" class="hidden fixed inset-0 z-[10000] flex items-end sm:items-center justify-center">
+            <div id="pwa-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+            <div class="relative bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-2xl w-full max-w-md mx-auto p-6 space-y-5 animate-slide-up">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Instalar The 1vs1</h3>
+                    <button id="pwa-modal-close" class="text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                                <div id="pwa-ios" class="hidden space-y-4">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Para instalar o aplicativo no seu iPhone:</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                            <span class="text-sm">Toque no ícone <strong>Compartilhar</strong> <span class='material-symbols-outlined text-sm align-middle'>ios_share</span></span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                            <span class="text-sm">Role para baixo e toque em &#039;Tela de Início&#039;</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                            <span class="text-sm">Toque em &#039;Adicionar&#039; no canto superior direito</span>
+                        </div>
+                    </div>
+                </div>
+
+                                <div id="pwa-android" class="hidden space-y-4">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Instale o aplicativo diretamente no seu celular.</p>
+                    <button id="pwa-native-install" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined">download</span>
+                        Baixar o aplicativo
+                    </button>
+                    <p id="pwa-android-fallback" class="hidden text-xs text-slate-500 text-center">Abra o menu do navegador (⋮) e toque em &#039;Instalar aplicativo&#039;.</p>
+                </div>
+            </div>
+        </div>
+
+                            <header class="fixed top-0 left-0 right-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800">
+    <div class="flex items-center justify-between px-6 h-16 lg:px-20">
+        <a href="/pt/" class="flex items-center gap-2 text-primary no-underline">
+            <img src="/images/logo.svg" alt="The 1vs1" class="h-8">
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="text-sm font-medium hover:text-primary transition-colors " href="/pt/defis">Desafios</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors " href="/pt/tournois">Torneios</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors " href="/pt/classement">Classificação</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors " href="/pt/comment-ca-marche">Como Funciona</a>
+        </div>
+        <div class="flex gap-3 items-center ">
+                        <button id="header-hamburger" class="md:hidden text-slate-400 hover:text-white transition-colors" onclick="document.getElementById('header-mobile-menu').classList.toggle('hidden')">
+                <span class="material-symbols-outlined text-2xl">menu</span>
+            </button>
+                        <a href="/pt/connexion" class="hidden md:inline-block px-4 py-2 text-sm font-bold hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors no-underline">Entrar</a>
+            <a href="/pt/inscription" class="hidden md:inline-block bg-primary text-white px-6 py-2 text-sm font-bold rounded-lg hover:brightness-110 transition-all no-underline">Registar</a>
+                    </div>
+    </div>
+
+        <div id="header-mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-700/50 bg-background-light dark:bg-background-dark">
+        <nav class="flex flex-col px-6 py-4 space-y-1">
+            <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors no-underline " href="/pt/defis">
+                <span class="material-symbols-outlined text-[20px] text-primary">swords</span> Desafios
+            </a>
+            <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors no-underline " href="/pt/tournois">
+                <span class="material-symbols-outlined text-[20px] text-primary">emoji_events</span> Torneios
+            </a>
+            <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors no-underline " href="/pt/classement">
+                <span class="material-symbols-outlined text-[20px] text-primary">leaderboard</span> Classificação
+            </a>
+            <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors no-underline " href="/pt/comment-ca-marche">
+                <span class="material-symbols-outlined text-[20px] text-primary">help</span> Como Funciona
+            </a>
+                        <hr class="border-slate-200 dark:border-slate-700/50 my-2">
+            <a class="flex items-center justify-center rounded-lg px-3 py-2.5 text-sm font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors no-underline" href="/pt/connexion">Entrar</a>
+            <a class="flex items-center justify-center rounded-lg px-3 py-2.5 text-sm font-bold bg-primary text-white hover:brightness-110 transition-all no-underline" href="/pt/inscription">Registar</a>
+                    </nav>
+    </div>
+</header>
+                        <div class="h-16"></div>
+        
+                <main class="flex-1">
+            <!-- Hero Section -->
+<section class="px-6 py-12 lg:px-20 lg:py-24">
+<div class="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+<div class="flex flex-col gap-8 order-2 lg:order-1">
+<div class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full w-fit">
+<span class="material-symbols-outlined text-sm">workspace_premium</span>
+<span class="text-xs font-bold uppercase tracking-wider">A Arena Pro</span>
+</div>
+<h1 class="text-[38px] lg:text-[3rem] font-black leading-tight tracking-tight italic">
+    ENFRENTE-SE 1v1 POR <span class="text-primary">DINHEIRO REAL</span>
+</h1>
+
+<div class="relative block lg:hidden">
+<div class="h-[28vw] min-h-[120px] max-h-[180px] w-full rounded-2xl overflow-hidden shadow-2xl bg-slate-800 border border-slate-700">
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 to-transparent"></div>
+<img class="w-full h-full object-cover opacity-80" alt="The 1vs1: Compita 1v1 no FIFA e eFootball por Dinheiro Real" src="/images/hero.jpg" width="640" height="360" fetchpriority="high" decoding="async"/>
+<div class="absolute bottom-4 left-4 right-4 p-4 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/10 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl">trophy</span>
+</div>
+<div>
+<p class="text-[10px] uppercase text-slate-400 font-bold tracking-widest">Prémio Ativo</p>
+<p class="text-lg font-black text-white"><span class="active-pool-amount">24 500,00 €</span></p>
+</div>
+</div>
+<span class="flex h-3 w-3 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+</span>
+</div>
+</div>
+</div>
+
+<p class="text-slate-600 dark:text-slate-400 text-base max-w-xl">
+    O destino definitivo para jogadores competitivos de FIFA / eFootball. Participe em partidas de altas apostas, prove o seu domínio e levante os seus ganhos instantaneamente.
+</p>
+<div class="flex flex-col sm:flex-row gap-4">
+<a href="/pt/connexion" class="bg-primary text-white px-8 py-4 text-lg font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-105 transition-transform text-center no-underline">
+    Começar a Ganhar
+</a>
+<a href="/pt/defis" class="border border-slate-300 dark:border-slate-700 px-8 py-4 text-lg font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-center no-underline">
+    Ver Partidas ao Vivo
+</a>
+</div>
+<div class="flex items-center gap-6 mt-4">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-background-dark overflow-hidden flex items-center justify-center bg-primary/20 shrink-0">
+<img class="w-full h-full object-cover" alt="David Yebas" src="https://api.dicebear.com/7.x/initials/svg?seed=DY&amp;backgroundColor=1e293b&amp;textColor=ffffff&amp;fontSize=40"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark overflow-hidden flex items-center justify-center bg-primary/20 shrink-0">
+<img class="w-full h-full object-cover" alt="Alvin" src="https://api.dicebear.com/7.x/initials/svg?seed=AA&amp;backgroundColor=1e293b&amp;textColor=ffffff&amp;fontSize=40"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark overflow-hidden flex items-center justify-center bg-primary/20 shrink-0">
+<img class="w-full h-full object-cover" alt="Luxembourglucas" src="https://api.dicebear.com/7.x/initials/svg?seed=LL&amp;backgroundColor=1e293b&amp;textColor=ffffff&amp;fontSize=40"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark overflow-hidden flex items-center justify-center bg-primary/20 shrink-0">
+<img class="w-full h-full object-cover" alt="The 1vs1" src="https://api.dicebear.com/7.x/initials/svg?seed=T1&amp;backgroundColor=1e293b&amp;textColor=ffffff&amp;fontSize=40"/>
+</div>
+</div>
+<p class="text-sm font-medium text-slate-500">Junte-se a <span class='text-slate-900 dark:text-slate-100'>+ 6.463</span> jogadores ativos hoje</p>
+</div>
+</div>
+<div class="relative order-1 lg:order-2 hidden lg:block">
+<div class="aspect-video w-full rounded-2xl overflow-hidden shadow-2xl bg-slate-800 border border-slate-700">
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 to-transparent"></div>
+<img class="w-full h-full object-cover opacity-80" alt="The 1vs1: Compita 1v1 no FIFA e eFootball por Dinheiro Real" src="/images/hero.jpg" width="640" height="360" fetchpriority="high" decoding="async"/>
+<div class="absolute bottom-6 left-6 right-6 p-6 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/10 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white">trophy</span>
+</div>
+<div>
+<p class="text-xs uppercase text-slate-400 font-bold tracking-widest">Prémio Ativo</p>
+<p class="text-2xl font-black text-white"><span class="active-pool-amount">24 500,00 €</span></p>
+</div>
+</div>
+<span class="flex h-3 w-3 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Comment ça marche en 3 étapes -->
+<section class="bg-slate-100 dark:bg-slate-900/50 py-20 px-6">
+<div class="max-w-5xl mx-auto">
+<div class="mb-12 text-center">
+<h2 class="text-3xl font-bold mb-4">Como ganhar dinheiro real em 3 passos jogando FIFA e eFootball?</h2>
+<p class="text-slate-500 max-w-xl mx-auto">The 1vs1 é a plataforma mais simples e de confiança para apostar no FIFA e eFootball. Em 3 passos rápidos, comece a competir e ganhar dinheiro real.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="bg-background-light dark:bg-background-dark p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl flex flex-col items-center gap-4 text-center">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white text-xl font-bold">1</div>
+<h3 class="text-xl font-bold">Registe-se gratuitamente</h3>
+<p class="text-sm text-slate-500">Crie a sua conta em segundos e deposite fundos na sua carteira via PayPal. Sem subscrição, sem compromisso. Só joga quando quiser.</p>
+</div>
+<div class="bg-background-light dark:bg-background-dark p-8 rounded-2xl border-2 border-primary shadow-2xl shadow-primary/10 flex flex-col items-center gap-4 text-center">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white text-xl font-bold">2</div>
+<h3 class="text-xl font-bold">Encontre um adversário (Wager)</h3>
+<p class="text-sm text-slate-500">Crie um desafio wager ou junte-se a um existente. Escolha a sua aposta (a partir de 1€) e a sua plataforma (PS5, Xbox, PC). Matchmaking ativo 24/7.</p>
+</div>
+<div class="bg-background-light dark:bg-background-dark p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl flex flex-col items-center gap-4 text-center">
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white text-xl font-bold">3</div>
+<h3 class="text-xl font-bold">Ganhe e levante</h3>
+<p class="text-sm text-slate-500">Jogue o seu match 1v1, envie o seu resultado e receba os ganhos instantaneamente. Levante para PayPal em poucos cliques.</p>
+</div>
+</div>
+<div class="mt-8 text-center">
+    <a href="https://the1vs1.com/fr/comment-ca-marche" class="inline-flex items-center gap-2 text-primary font-semibold hover:underline no-underline">
+        En savoir plus
+        <span class="material-symbols-outlined text-base">arrow_forward</span>
+    </a>
+</div>
+</div>
+</section>
+
+<!-- Défis Récents -->
+<section class="py-16 px-6 lg:px-20 max-w-7xl mx-auto">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-2xl font-bold">Desafios Recentes</h2>
+<a href="/pt/defis" class="text-primary font-semibold text-sm hover:underline no-underline">Ver tudo →</a>
+</div>
+<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-wider px-2 py-1 rounded
+bg-green-500/10 text-green-400
+">
+Aberto
+</span>
+<span class="text-xs text-slate-500">efootball</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm">
+P
+</div>
+<div>
+<p class="font-semibold text-sm">ProWagerKing</p>
+<p class="text-xs text-slate-500">Xbox</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800">
+<span class="text-primary font-bold text-lg">50.00 €</span>
+<span class="text-xs font-bold text-slate-400 italic">Partida privada</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-wider px-2 py-1 rounded
+bg-yellow-500/10 text-yellow-400
+">
+Em curso
+</span>
+<span class="text-xs text-slate-500">EA Sports FC 25</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm">
+B
+</div>
+<div>
+<p class="font-semibold text-sm">BlueLionFC</p>
+<p class="text-xs text-slate-500">PC</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800">
+<span class="text-primary font-bold text-lg">20.00 €</span>
+<span class="text-xs font-bold text-slate-400 italic">Partida privada</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-wider px-2 py-1 rounded
+bg-yellow-500/10 text-yellow-400
+">
+Em curso
+</span>
+<span class="text-xs text-slate-500">EA Sports FC 26</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm">
+R
+</div>
+<div>
+<p class="font-semibold text-sm">RonaldoFC7</p>
+<p class="text-xs text-slate-500">Xbox</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800">
+<span class="text-primary font-bold text-lg">20.00 €</span>
+<span class="text-xs font-bold text-slate-400 italic">Partida privada</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-wider px-2 py-1 rounded
+bg-green-500/10 text-green-400
+">
+Aberto
+</span>
+<span class="text-xs text-slate-500">EA Sports FC 25</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm">
+A
+</div>
+<div>
+<p class="font-semibold text-sm">Alexy</p>
+<p class="text-xs text-slate-500">PS5</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800">
+<span class="text-primary font-bold text-lg">5.00 €</span>
+<a href="/pt/challenges/41/live" class="text-xs font-bold text-primary hover:underline no-underline">Ver →</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Grid -->
+<section class="py-24 px-6 lg:px-20 max-w-7xl mx-auto">
+<h2 class="text-3xl font-bold text-center mb-16">Uma plataforma de Wager segura e rápida</h2>
+<div class="grid md:grid-cols-3 gap-12">
+<div class="flex flex-col gap-4">
+<div class="text-primary">
+<span class="material-symbols-outlined text-4xl">payments</span>
+</div>
+<h3 class="text-2xl font-bold italic uppercase tracking-tighter">Pagamentos Instantâneos</h3>
+<p class="text-slate-500">Deposite via PayPal num clique, receba os seus ganhos instantaneamente após o jogo. Levante para PayPal — sem atrasos, sem complicações.</p>
+</div>
+<div class="flex flex-col gap-4">
+<div class="text-primary">
+<span class="material-symbols-outlined text-4xl">shield</span>
+</div>
+<h3 class="text-2xl font-bold italic uppercase tracking-tighter">Motor Anti-Batota e Disputas</h3>
+<p class="text-slate-500">Cada resultado é duplamente verificado. Em caso de desacordo, o nosso sistema de disputas (com envio de capturas de ecrã) intervem. Tolerância zero com a batota.</p>
+</div>
+<div class="flex flex-col gap-4">
+<div class="text-primary">
+<span class="material-symbols-outlined text-4xl">groups</span>
+</div>
+<h3 class="text-2xl font-bold italic uppercase tracking-tighter">Matchmaking Ativo 24/7</h3>
+<p class="text-slate-500">Seja a que hora for, encontre um adversário em segundos. PS5, Xbox, PC — todas as plataformas suportadas com emparelhamento ativo 24h.</p>
+</div>
+</div>
+</section>
+<!-- Footer CTA -->
+<section class="mx-6 mb-20">
+<div class="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-r from-primary to-blue-600 p-12 lg:p-20 text-center flex flex-col items-center gap-8 overflow-hidden relative">
+<div class="absolute inset-0 opacity-20 pointer-events-none">
+<img class="w-full h-full object-cover" alt="The 1vs1: Compita 1v1 no FIFA e eFootball por Dinheiro Real" loading="lazy" decoding="async" width="640" height="360" src="/images/hero.jpg"/>
+</div>
+<h2 class="text-2xl sm:text-4xl lg:text-6xl font-black text-white italic max-w-3xl leading-tight relative z-10">
+    PRONTO PARA TRANSFORMAR SUA PAIXÃO EM DINHEIRO?
+</h2>
+<a href="/pt/inscription" class="relative z-10 bg-white text-primary px-8 py-3 text-base sm:px-12 sm:py-5 sm:text-xl font-black rounded-full shadow-2xl hover:scale-105 transition-transform no-underline inline-block">
+    CRIE SEU DESAFIO AGORA!
+</a>
+</div>
+</section>
+
+<script>
+(function(){
+    const base = 24500;
+    const range = 3500;
+    let current = base;
+    const els = document.querySelectorAll('.active-pool-amount');
+    function fmt(v) {
+        return v.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' €';
+    }
+    function tick() {
+        const delta = (Math.random() - 0.45) * 150;
+        current = Math.min(base + range, Math.max(base - range, current + delta));
+        els.forEach(function(el){ el.textContent = fmt(current); });
+    }
+    setInterval(tick, 3000 + Math.random() * 2000);
+})();
+</script>
+        </main>
+
+                            <footer class="border-t border-slate-200 dark:border-slate-800 px-6 py-12 lg:px-20 bg-slate-50 dark:bg-slate-900/20">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12">
+        <div class="flex flex-col gap-4">
+            <a href="/pt/" class="flex items-center gap-2 text-primary no-underline">
+                <img src="/images/logo.svg" alt="The 1vs1" class="h-6">
+            </a>
+            <p class="text-sm text-slate-500 max-w-xs">Criado por gamers, para gamers. A plataforma n°1 para partidas competitivas 1v1.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+            <div class="flex flex-col gap-4">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">Plataforma</h4>
+                <a class="text-sm hover:text-primary" href="/pt/defis">Desafios</a>
+                <a class="text-sm hover:text-primary" href="/pt/tournois">Torneios</a>
+                <a class="text-sm hover:text-primary" href="/pt/classement">Classificação</a>
+                <a class="text-sm hover:text-primary" href="/pt/comment-ca-marche">Como Funciona</a>
+                                <a class="text-sm hover:text-primary" href="/pt/a-propos">Sobre nós</a>
+                <a class="text-sm hover:text-primary" href="/pt/pourquoi-the1vs1">Por que The 1vs1</a>
+                <a class="text-sm hover:text-primary" href="/pt/devenir-partenaire">Tornar-se parceiro</a>
+            </div>
+            <div class="flex flex-col gap-4">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">Suporte</h4>
+                <a class="text-sm hover:text-primary" href="/pt/mentions-legales">Aviso Legal</a>
+                <a class="text-sm hover:text-primary" href="/pt/politique-confidentialite">Política de Privacidade</a>
+                <a class="text-sm hover:text-primary" href="/pt/cgu">Termos de Utilização</a>
+                <a class="text-sm hover:text-primary" href="/pt/cgv">Termos de Venda</a>
+                <a class="text-sm hover:text-primary" href="/pt/politique-retrait">Política de Levantamentos</a>
+                <a class="text-sm hover:text-primary" href="mailto:contact@the1vs1.com">Contacte-nos</a>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-xs text-slate-500 order-last md:order-first">&copy; 2026 The 1vs1.</p>
+        <form method="get" class="flex items-center h-full ">
+            <div class="relative flex items-center h-full ">
+                <img src="/flags/pt.svg" alt="pt" class="w-5 h-5 rounded-full border border-slate-300 dark:border-slate-600 absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none">
+                <select onchange="window.location.href=this.value" class="appearance-none pl-8 pr-6 py-1 rounded border text-sm bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary h-8">
+                                                                                                                                                                                        <option value="/fr/" >Français</option>
+                                                                                                                                                <option value="/en/" >English</option>
+                                                                                                                                                <option value="/pt/" selected>Português</option>
+                                                                                                                                                <option value="/ar/" >العربية</option>
+                                                                                                                                                <option value="/es/" >Español</option>
+                                                                                                                                                <option value="/de/" >Deutsch</option>
+                                                                                                                                                <option value="/tr/" >Türkçe</option>
+                                    </select>
+            </div>
+        </form>
+        <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded px-2 py-1">
+                <svg class="w-8 h-5" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="32" rx="4" fill="#1A1F71"/>
+                    <text x="24" y="20" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="sans-serif">VISA</text>
+                </svg>
+            </div>
+                        <div class="flex items-center gap-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded px-2 py-1">
+                <svg class="w-8 h-5" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="32" rx="4" fill="#252525"/>
+                    <circle cx="19" cy="16" r="8" fill="#EB001B" opacity="0.9"/>
+                    <circle cx="29" cy="16" r="8" fill="#F79E1B" opacity="0.9"/>
+                    <path d="M24 10.5a8 8 0 0 1 0 11" fill="#FF5F00"/>
+                </svg>
+            </div>
+                        <div class="flex items-center gap-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded px-2 py-1">
+                <svg class="w-8 h-5" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="32" rx="4" fill="#003087"/>
+                    <text x="24" y="13" text-anchor="middle" fill="#009cde" font-size="7" font-weight="bold" font-family="sans-serif">Pay</text>
+                    <text x="24" y="23" text-anchor="middle" fill="#012169" font-size="7" font-weight="bold" font-family="sans-serif">Pal</text>
+                </svg>
+            </div>
+                        <div class="flex items-center gap-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded px-2 py-1">
+                <svg class="w-8 h-5" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="32" rx="4" fill="#34A853"/>
+                    <text x="24" y="14" text-anchor="middle" fill="white" font-size="6" font-weight="bold" font-family="sans-serif">Mobile</text>
+                    <text x="24" y="23" text-anchor="middle" fill="white" font-size="6" font-weight="bold" font-family="sans-serif">Money</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+                        <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-[9990] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 md:hidden safe-bottom">
+                                    <div class="flex items-center justify-around px-2 py-1.5">
+                                <a href="/pt/" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-primary">
+                    <span class="material-symbols-outlined text-[22px] fill-icon">home</span>
+                    <span class="text-[10px] font-semibold">Início</span>
+                </a>
+                <a href="/pt/defis" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">swords</span>
+                    <span class="text-[10px] font-semibold">Desafios</span>
+                </a>
+                <a href="/pt/connexion?_target_path=/pt/defis/creer" class="flex flex-col items-center gap-0.5 no-underline min-w-[56px]">
+                    <span class="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white shadow-lg shadow-primary/30 -mt-4">
+                        <span class="material-symbols-outlined text-[22px]">add</span>
+                    </span>
+                    <span class="text-[10px] font-semibold text-slate-500">Criar</span>
+                </a>
+                <a href="/pt/classement" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">leaderboard</span>
+                    <span class="text-[10px] font-semibold">Ranking</span>
+                </a>
+                <a href="/pt/connexion" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">login</span>
+                    <span class="text-[10px] font-semibold">Entrar</span>
+                </a>
+            </div>
+                    </nav>
+        
+    </div>
+
+    
+        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add loading state to all form submit buttons
+        document.querySelectorAll('form').forEach(function(form) {
+            // Skip AJAX forms (those with onsubmit returning false)
+            if (form.getAttribute('onsubmit')) return;
+            // Skip forms in admin support chat
+            if (form.id === 'admin-reply-form') return;
+            // Skip AJAX chat forms (lobby match chat)
+            if (form.id === 'chatForm' || form.id === 'mobileChatForm') return;
+
+            form.addEventListener('submit', function(e) {
+                const btn = form.querySelector('button[type="submit"], button:not([type])');
+                if (!btn || btn.disabled) return;
+
+                // Save original content
+                btn.dataset.originalText = btn.innerHTML;
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+                btn.innerHTML = '<span class="inline-flex items-center gap-2"><svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>' + (btn.dataset.originalText.length < 50 ? btn.dataset.originalText : 'Carregando...') + '</span>';
+
+                // Re-enable after 10s in case of error
+                setTimeout(function() {
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-60', 'cursor-not-allowed');
+                    if (btn.dataset.originalText) btn.innerHTML = btn.dataset.originalText;
+                }, 10000);
+            });
+        });
+
+        // Disable submit buttons when required fields are empty
+        document.querySelectorAll('form').forEach(function(form) {
+            const requiredInputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            const btn = form.querySelector('button[type="submit"], button:not([type])');
+            if (!btn || requiredInputs.length === 0) return;
+            // Skip forms that already have their own validation logic
+            if (form.id === 'forgotForm' || form.id === 'resetForm' || form.id === 'admin-reply-form') return;
+            // Skip AJAX chat forms (lobby match chat)
+            if (form.id === 'chatForm' || form.id === 'mobileChatForm') return;
+
+            function checkRequired() {
+                let allFilled = true;
+                requiredInputs.forEach(function(input) {
+                    if (input.type === 'checkbox') {
+                        if (!input.checked) allFilled = false;
+                    } else if (!input.value.trim()) {
+                        allFilled = false;
+                    }
+                });
+                btn.disabled = !allFilled;
+                if (allFilled) {
+                    btn.classList.remove('opacity-40', 'cursor-not-allowed');
+                } else {
+                    btn.classList.add('opacity-40', 'cursor-not-allowed');
+                }
+            }
+
+            requiredInputs.forEach(function(input) {
+                input.addEventListener('input', checkRequired);
+                input.addEventListener('change', checkRequired);
+            });
+
+            checkRequired();
+        });
+    });
+    </script>
+
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+
+    // ── PWA Install Banner Logic ──
+    (function() {
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+        if (isStandalone) return;
+
+        const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isAndroid = /Android/.test(navigator.userAgent);
+        if (!isIOS && !isAndroid) return;
+
+        const banner = document.getElementById('pwa-banner');
+        const modal = document.getElementById('pwa-modal');
+        const iosSection = document.getElementById('pwa-ios');
+        const androidSection = document.getElementById('pwa-android');
+        let deferredPrompt = null;
+
+        // Show banner
+        banner.classList.remove('hidden');
+        banner.classList.add('flex');
+
+        // Capture beforeinstallprompt for Android
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        // Dismiss (session only — reappears on next page load)
+        document.getElementById('pwa-dismiss-btn').addEventListener('click', function() {
+            banner.classList.add('hidden');
+        });
+
+        // Open modal
+        document.getElementById('pwa-install-btn').addEventListener('click', function() {
+            modal.classList.remove('hidden');
+            if (isIOS) {
+                iosSection.classList.remove('hidden');
+                androidSection.classList.add('hidden');
+            } else {
+                androidSection.classList.remove('hidden');
+                iosSection.classList.add('hidden');
+                if (!deferredPrompt) {
+                    document.getElementById('pwa-native-install').classList.add('hidden');
+                    document.getElementById('pwa-android-fallback').classList.remove('hidden');
+                }
+            }
+        });
+
+        // Close modal
+        function closeModal() { modal.classList.add('hidden'); }
+        document.getElementById('pwa-modal-close').addEventListener('click', closeModal);
+        document.getElementById('pwa-modal-backdrop').addEventListener('click', closeModal);
+
+        // Native Android install
+        document.getElementById('pwa-native-install').addEventListener('click', function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function() {
+                    deferredPrompt = null;
+                    closeModal();
+                    banner.classList.add('hidden');
+                });
+            }
+        });
+    })();
+    </script>
+
+
+</body>
+</html>

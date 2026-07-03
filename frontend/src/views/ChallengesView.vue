@@ -1,415 +1,395 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import { supabase } from '@/services/supabase'
+import { ref, computed, onMounted } from 'vue'
+import {
+  User,
+  List,
+  Swords,
+  PlayCircle,
+  CheckCircle2,
+  Mail,
+  CalendarDays,
+  Wallet,
+  Users,
+  Trophy,
+  UserPlus,
+  Plus,
+  SearchX,
+  Star,
+  ShieldAlert,
+} from '@lucide/vue'
+import { vReveal } from '@/composables/useReveal'
 import { useAuthStore } from '@/stores/auth'
+import { api } from '@/services/api'
+import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
-const activeTab = ref<'open' | 'my' | 'history'>('open')
+const router = useRouter()
+
+/**
+ * Formato alinhado ao contrato real do backend (ver backend/challenges.py):
+ * GET /api/challenges/open (público) e GET /api/challenges/my-challenges
+ * (autenticado) devolvem exatamente esta forma.
+ */
+type ChallengeStatus = 'open' | 'in_progress' | 'completed' | 'disputed'
+interface ChallengeProfile { username: string; fair_play_rating: number }
+interface Challenge {
+    id: string
+    creator_id: string
+    opponent_id: string | null
+    bet_amount: number
+    platform: string
+    game: string
+    status: ChallengeStatus
+    winner_id: string | null
+    created_at: string
+    creator_profile: ChallengeProfile
+    opponent_profile: ChallengeProfile | null
+}
+
+const filter = ref(authStore.user ? 'meus' : 'all') // Default filter
 const loading = ref(true)
+const loadError = ref('')
 
-// Listas de Desafios
-const openChallenges = ref<any[]>([])
-const myChallenges = ref<any[]>([])
+/* ── Tempo relativo a partir de um timestamp real (created_at) ── */
+function timeAgo(iso: string): string {
+    const mins = Math.floor((Date.now() - new Date(iso).getTime()) / 60_000)
+    if (mins < 1) return 'Agora mesmo'
+    if (mins < 60) return `Há ${mins} min`
+    const hours = Math.floor(mins / 60)
+    if (hours < 24) return hours === 1 ? 'Há 1 hora' : `Há ${hours} horas`
+    const days = Math.floor(hours / 24)
+    return days === 1 ? 'Ontem' : `Há ${days} dias`
+}
 
-// Modal de Criação
-const showCreateModal = ref(false)
-const game = ref('EA FC 25')
-const platform = ref('PS5')
-const betAmount = ref<number | null>(null)
-const creating = ref(false)
+const MY_ID = authStore.user?.id || null
 
-const API_URL = 'http://localhost:8000/api/challenges'
+const allChallenges = ref<Challenge[]>([])
 
-// Carregar desafios abertos
-const loadOpenChallenges = async () => {
-  try {
-    const res = await fetch(`${API_URL}/open`)
-    if (res.ok) {
-      openChallenges.value = await res.json()
+/* ── Carrega dados reais: /open é público, /my-challenges só quando logado.
+   "Ao vivo"/"Terminados" só cobrem partidas do próprio usuário porque não
+   existe (ainda) um endpoint de partidas em andamento de outros jogadores. ── */
+const loadChallenges = async () => {
+    loading.value = true
+    loadError.value = ''
+    try {
+        const requests: Promise<Challenge[]>[] = [api.get<Challenge[]>('/api/challenges/open')]
+        if (authStore.user) requests.push(api.get<Challenge[]>('/api/challenges/my-challenges'))
+
+        const results = await Promise.all(requests)
+        const merged = new Map<string, Challenge>()
+        results.flat().forEach((c) => merged.set(c.id, c))
+        allChallenges.value = Array.from(merged.values())
+    } catch (err: any) {
+        loadError.value = err.message || 'Erro ao carregar os desafios.'
+    } finally {
+        loading.value = false
     }
-  } catch (err) {
-    console.error('Erro ao carregar desafios abertos:', err)
-  }
 }
 
-// Carregar meus desafios (ativos + histórico)
-const loadMyChallenges = async () => {
-  if (!authStore.user) return
-  try {
-    const res = await fetch(`${API_URL}/my-challenges?user_id=${authStore.user.id}`)
-    if (res.ok) {
-      myChallenges.value = await res.json()
+onMounted(loadChallenges)
+
+const acceptingId = ref<string | null>(null)
+
+const handleAccept = async (c: Challenge) => {
+    if (!authStore.user) {
+        router.push('/register')
+        return
     }
-  } catch (err) {
-    console.error('Erro ao carregar meus desafios:', err)
-  }
-}
+    if (!confirm(`Confirmar aposta de R$ ${c.bet_amount.toFixed(2)} contra ${c.creator_profile.username}?`)) return
 
-// Criar desafio
-const handleCreateChallenge = async () => {
-  if (!betAmount.value || betAmount.value <= 0) {
-    alert('Insira um valor de aposta válido.')
-    return
-  }
-
-  creating.value = true
-  try {
-    const res = await fetch(`${API_URL}/create`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        creator_id: authStore.user?.id,
-        bet_amount: betAmount.value,
-        platform: platform.value,
-        game: game.value
-      })
-    })
-
-    if (!res.ok) {
-      const errData = await res.json()
-      throw new Error(errData.detail || 'Erro ao criar desafio.')
+    acceptingId.value = c.id
+    try {
+        await api.post('/api/challenges/accept', { challenge_id: c.id })
+        router.push(`/match/${c.id}`)
+    } catch (err: any) {
+        alert(err.message || 'Erro ao aceitar o desafio.')
+        await loadChallenges() // outro jogador pode ter aceitado primeiro
+    } finally {
+        acceptingId.value = null
     }
-
-    showCreateModal.value = false
-    betAmount.value = null
-    await loadMyChallenges()
-    await loadOpenChallenges()
-  } catch (err: any) {
-    alert(err.message)
-  } finally {
-    creating.value = false
-  }
 }
 
-// Aceitar desafio
-const handleAcceptChallenge = async (challengeId: string) => {
-  if (!confirm('Deseja aceitar este desafio? O valor da aposta será congelado de sua carteira.')) {
-    return
-  }
-
-  try {
-    const res = await fetch(`${API_URL}/accept`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        challenge_id: challengeId,
-        opponent_id: authStore.user?.id
-      })
-    })
-
-    if (!res.ok) {
-      const errData = await res.json()
-      throw new Error(errData.detail || 'Erro ao aceitar desafio.')
-    }
-
-    alert('Desafio aceito com sucesso! Prepare seu time e adicione o adversário.')
-    activeTab.value = 'my'
-    await loadMyChallenges()
-    await loadOpenChallenges()
-  } catch (err: any) {
-    alert(err.message)
-  }
-}
-
-// Compartilhar link do desafio
-const handleShare = (challengeId: string) => {
-  const link = `${window.location.origin}/challenges?id=${challengeId}`
-  navigator.clipboard.writeText(link)
-  alert('Link do desafio copiado! Envie nos grupos de WhatsApp/Telegram para chamar pro X1.')
-}
-
-// Supabase Realtime Channels para Lobby Reativo
-let lobbySub: any = null
-
-const setupRealtime = () => {
-  lobbySub = supabase
-    .channel('lobby-db-changes')
-    .on(
-      'postgres_changes',
-      { event: '*', schema: 'public', table: 'challenges' },
-      () => {
-        loadOpenChallenges()
-        loadMyChallenges()
-      }
-    )
-    .subscribe()
-}
-
-onMounted(async () => {
-  loading.value = true
-  await Promise.all([loadOpenChallenges(), loadMyChallenges()])
-  setupRealtime()
-  loading.value = false
+const filteredChallenges = computed(() => {
+    if (filter.value === 'meus') return allChallenges.value.filter(c => c.creator_id === MY_ID || c.opponent_id === MY_ID)
+    if (filter.value === 'all') return allChallenges.value.filter(c => c.status === 'open' || c.status === 'in_progress')
+    if (filter.value === 'abertos') return allChallenges.value.filter(c => c.status === 'open')
+    if (filter.value === 'em_curso') return allChallenges.value.filter(c => c.status === 'in_progress')
+    if (filter.value === 'terminados') return allChallenges.value.filter(c => c.status === 'completed' || c.status === 'disputed')
+    if (filter.value === 'convites') return [] // Sem endpoint de convites ainda
+    return []
 })
 
-onUnmounted(() => {
-  if (lobbySub) supabase.removeChannel(lobbySub)
+/* ── Stats ao vivo (derivadas dos dados reais carregados) ── */
+const openCount = computed(() => allChallenges.value.filter(c => c.status === 'open').length)
+const livePoolFmt = computed(() => {
+    const pool = allChallenges.value
+        .filter(c => c.status === 'open' || c.status === 'in_progress')
+        .reduce((sum, c) => sum + c.bet_amount * 1.8, 0)
+    return pool.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 })
 })
+const activePlayers = computed(() => {
+    const set = new Set<string>()
+    allChallenges.value
+        .filter(c => c.status === 'open' || c.status === 'in_progress')
+        .forEach(c => { set.add(c.creator_id); if (c.opponent_id) set.add(c.opponent_id) })
+    return set.size
+})
+
+/* ── Filtros (com contagem) ── */
+const filterTabs = computed(() => {
+    const tabs = [
+        { key: 'meus', label: 'Os meus', icon: User, count: allChallenges.value.filter(c => c.creator_id === MY_ID || c.opponent_id === MY_ID).length, authOnly: true },
+        { key: 'all', label: 'Todos', icon: List, count: allChallenges.value.filter(c => c.status === 'open' || c.status === 'in_progress').length, authOnly: false },
+        { key: 'abertos', label: 'Abertos', icon: Swords, count: openCount.value, authOnly: false },
+        { key: 'em_curso', label: 'Ao vivo', icon: PlayCircle, count: allChallenges.value.filter(c => c.status === 'in_progress').length, authOnly: false },
+        { key: 'terminados', label: 'Terminados', icon: CheckCircle2, count: allChallenges.value.filter(c => c.status === 'completed' || c.status === 'disputed').length, authOnly: true },
+        { key: 'convites', label: 'Convites', icon: Mail, count: 0, authOnly: true, badge: 2 },
+    ]
+    return authStore.user ? tabs : tabs.filter(t => !t.authOnly)
+})
+
+/* ── Status visual (chaves alinhadas ao enum real do backend) ── */
+const statusMeta: Record<ChallengeStatus, { label: string; dot: string; text: string; bg: string }> = {
+    open: { label: 'Aberto', dot: 'bg-semantic-success', text: 'text-semantic-success', bg: 'bg-semantic-success/10 border-semantic-success/20' },
+    in_progress: { label: 'Ao vivo', dot: 'bg-accent', text: 'text-accent', bg: 'bg-accent/10 border-accent/20' },
+    completed: { label: 'Concluído', dot: 'bg-ink-tertiary', text: 'text-ink-tertiary', bg: 'bg-surface-3 border-hairline' },
+    disputed: { label: 'Em disputa', dot: 'bg-semantic-error', text: 'text-semantic-error', bg: 'bg-semantic-error/10 border-semantic-error/20' },
+}
+const getStatusMeta = (status: ChallengeStatus) => statusMeta[status] ?? statusMeta.completed
+
+/* ── Cor por plataforma (consistente com a Classificação) ── */
+const platformColor: Record<string, string> = {
+    PS5: '#00439C',
+    Xbox: '#107C10',
+    PC: '#52525b',
+    Crossplay: '#8b5cf6',
+}
+const ringStyle = (platform: string) => ({
+    boxShadow: `0 0 0 2px var(--canvas), 0 0 0 4px ${platformColor[platform] || '#52525b'}`,
+})
+
+/* ── Prêmio: mesma regra do backend (rake_percentage = 0.10 em challenges.py) ── */
+const totalPrize = (c: Challenge) => c.bet_amount * 1.8
+const netProfit = (c: Challenge) => c.bet_amount * 0.8
+const winnerName = (c: Challenge) => {
+    if (c.winner_id === c.creator_id) return c.creator_profile.username
+    if (c.opponent_profile && c.winner_id === c.opponent_id) return c.opponent_profile.username
+    return c.opponent_profile?.username || c.creator_profile.username
+}
 </script>
 
 <template>
-  <div class="flex-1 p-6 md:p-10 max-w-7xl mx-auto w-full space-y-8">
-    
-    <!-- Header e Ação de Criar Sala -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      <div>
-        <h1 class="text-display-md font-display font-semibold tracking-tight text-ink uppercase">Lobby de Desafios</h1>
-        <p class="text-ink-subtle text-sm mt-1">Crie salas de apostas ou aceite desafios abertos em consoles/PC.</p>
-      </div>
-      <button 
-        @click="showCreateModal = true"
-        class="bg-primary hover:bg-primary-hover text-ink font-semibold px-6 py-3.5 rounded-lg shadow-none shadow-none transition-all duration-300 flex items-center justify-center gap-2 text-sm"
-      >
-        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
-        </svg>
-        Criar Desafio X1
-      </button>
-    </div>
-
-    <!-- Navegação por Abas -->
-    <div class="flex border-b border-hairline">
-      <button 
-        @click="activeTab = 'open'"
-        :class="[activeTab === 'open' ? 'border-[#00f2fe] text-primary bg-surface-2' : 'border-transparent text-ink-subtle hover:text-ink']"
-        class="px-6 py-4 font-bold text-sm border-b-2 transition-all"
-      >
-        Salas Abertas ({{ openChallenges.length }})
-      </button>
-      <button 
-        @click="activeTab = 'my'"
-        :class="[activeTab === 'my' ? 'border-[#00f2fe] text-primary bg-surface-2' : 'border-transparent text-ink-subtle hover:text-ink']"
-        class="px-6 py-4 font-bold text-sm border-b-2 transition-all"
-      >
-        Meus Desafios Ativos
-      </button>
-    </div>
-
-    <!-- FEED DE DESAFIOS -->
-    <div v-if="loading" class="flex flex-col items-center justify-center py-20">
-      <svg class="animate-spin h-10 w-10 text-primary mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
-      <p class="text-ink-subtle text-sm">Carregando feed de partidas...</p>
-    </div>
-
-    <div v-else class="space-y-6">
-      
-      <!-- ABA: SALAS ABERTAS -->
-      <div v-if="activeTab === 'open'" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-if="openChallenges.length === 0" class="col-span-full py-16 text-center bg-surface-1 border border-hairline rounded-lg">
-          <p class="text-ink-subtle text-sm">Nenhuma sala aberta no momento.</p>
-          <p class="text-caption text-ink-tertiary mt-1">Seja o primeiro a criar um desafio clicando no botão acima!</p>
+  <div class="px-6 lg:px-20 py-8 space-y-8">
+    <!-- Cabeçalho -->
+    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div>
+            <span class="text-eyebrow uppercase tracking-widest text-accent">Arena ao vivo</span>
+            <h1 class="mt-2 font-display text-headline font-black uppercase tracking-tight text-ink">Desafios abertos</h1>
+            <p class="mt-1 text-body-sm text-ink-subtle">Escolhe o oponente, fecha o valor e prova em campo. Aqui conversa fiada não paga boleto.</p>
         </div>
-
-        <!-- Cards de Sala -->
-        <div 
-          v-for="ch in openChallenges" 
-          :key="ch.id" 
-          class="bg-surface-1 border border-hairline hover:border-primary p-6 rounded-lg shadow-none transition-all duration-300 relative group flex flex-col justify-between"
+        <router-link
+            :to="authStore.user ? '/create-challenge' : '/register'"
+            class="group inline-flex w-fit items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-button font-semibold text-canvas no-underline shadow-glow-primary transition-all duration-200 hover:bg-primary-hover"
         >
-          <div>
-            <div class="flex justify-between items-center mb-4">
-              <span class="text-[10px] font-bold uppercase tracking-wider bg-surface-3 border border-hairline-strong px-2.5 py-1 rounded-full text-ink-subtle">
-                {{ ch.game }}
-              </span>
-              <span class="text-[10px] font-bold uppercase tracking-wider bg-primary-focus/10 border border-primary px-2.5 py-1 rounded-full text-primary">
-                {{ ch.platform }}
-              </span>
-            </div>
+            <Plus :size="18" class="transition-transform duration-200 group-hover:rotate-90" />
+            {{ authStore.user ? 'Criar Desafio' : 'Criar conta para desafiar' }}
+        </router-link>
+    </div>
 
-            <div class="space-y-1">
-              <h3 class="text-ink font-semibold text-lg flex items-center gap-1.5">
-                {{ ch.profiles?.username || 'Desafiante' }}
-              </h3>
-              <p class="text-caption text-ink-subtle">Fair Play: <span class="text-ink-muted font-bold">{{ ch.profiles?.fair_play_rating?.toFixed(1) || '5.0' }} ★</span></p>
-            </div>
-
-            <!-- Dados da Aposta -->
-            <div class="mt-6 p-4 rounded-lg bg-surface-2 border border-hairline flex justify-between items-center">
-              <div>
-                <span class="text-[10px] text-ink-subtle uppercase tracking-wider block">Aposta</span>
-                <span class="text-md font-bold text-ink">R$ {{ parseFloat(ch.bet_amount).toFixed(2) }}</span>
-              </div>
-              <div class="text-right">
-                <span class="text-[10px] text-semantic-success uppercase tracking-wider block">Prêmio (Pote - Rake)</span>
-                <!-- Prêmio estimado = aposta x 2 - Rake de 10% -->
-                <span class="text-md font-bold text-semantic-success">R$ {{ (parseFloat(ch.bet_amount) * 2 * 0.9).toFixed(2) }}</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ações do Card -->
-          <div class="grid grid-cols-2 gap-3 mt-6">
-            <button 
-              @click="handleShare(ch.id)"
-              class="bg-surface-3 hover:bg-[#2e3543] border border-hairline-strong text-ink py-2.5 rounded-lg font-bold transition-all text-caption flex items-center justify-center gap-1.5"
-            >
-              Compartilhar
-            </button>
-            <button 
-              v-if="ch.creator_id !== authStore.user?.id"
-              @click="handleAcceptChallenge(ch.id)"
-              class="bg-primary hover:bg-primary-hover text-ink py-2.5 rounded-lg font-bold shadow-md shadow-none/10 transition-all text-caption"
-            >
-              Aceitar
-            </button>
-            <span 
-              v-else 
-              class="bg-surface-2 border border-hairline text-ink-tertiary py-2.5 rounded-lg font-bold text-caption text-center block leading-loose"
-            >
-              Sua Sala
+    <!-- Barra de stats ao vivo -->
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div class="glass flex items-center gap-3 rounded-xl border border-hairline px-4 py-3.5">
+            <span class="grid size-9 shrink-0 place-items-center rounded-lg bg-semantic-success/10 text-semantic-success">
+                <Swords :size="18" />
             </span>
-          </div>
+            <div class="leading-tight">
+                <p class="font-display text-lg font-bold tabular-nums text-ink">{{ openCount }}</p>
+                <p class="text-caption text-ink-tertiary">desafios abertos agora</p>
+            </div>
         </div>
-      </div>
-
-      <!-- ABA: MEUS DESAFIOS ATIVOS -->
-      <div v-if="activeTab === 'my'" class="space-y-4">
-        <div v-if="myChallenges.filter(ch => ch.status !== 'completed' && ch.status !== 'cancelled').length === 0" class="py-16 text-center bg-surface-1 border border-hairline rounded-lg">
-          <p class="text-ink-subtle text-sm">Você não tem nenhum desafio ativo no momento.</p>
+        <div class="glass flex items-center gap-3 rounded-xl border border-hairline px-4 py-3.5">
+            <span class="grid size-9 shrink-0 place-items-center rounded-lg bg-accent/10 text-accent">
+                <Wallet :size="18" />
+            </span>
+            <div class="leading-tight">
+                <p class="font-display text-lg font-bold tabular-nums text-ink">{{ livePoolFmt }}</p>
+                <p class="text-caption text-ink-tertiary">em jogo neste momento</p>
+            </div>
         </div>
-
-        <div 
-          v-for="ch in myChallenges.filter(ch => ch.status !== 'completed' && ch.status !== 'cancelled')" 
-          :key="ch.id"
-          class="bg-surface-1 border border-hairline p-5 rounded-lg flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-primary transition-all"
-        >
-          <div>
-            <div class="flex items-center gap-2.5">
-              <span class="text-[10px] font-bold uppercase tracking-wider bg-surface-3 border border-hairline-strong px-2.5 py-0.5 rounded-full text-ink-subtle">
-                {{ ch.game }}
-              </span>
-              <span class="text-[10px] font-bold uppercase tracking-wider bg-[#4facfe]/10 border border-[#4facfe]/20 px-2.5 py-0.5 rounded-full text-[#4facfe]">
-                {{ ch.platform }}
-              </span>
-              <!-- Status Badge -->
-              <span 
-                :class="[
-                  ch.status === 'open' ? 'bg-surface-2 text-ink-muted border-hairline' : 'bg-surface-2 text-semantic-success border-hairline'
-                ]"
-                class="text-[10px] font-bold uppercase tracking-wider border px-2.5 py-0.5 rounded-full"
-              >
-                {{ ch.status === 'open' ? 'Aguardando Oponente' : 'Em Andamento' }}
-              </span>
+        <div class="glass flex items-center gap-3 rounded-xl border border-hairline px-4 py-3.5">
+            <span class="grid size-9 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary">
+                <Users :size="18" />
+            </span>
+            <div class="leading-tight">
+                <p class="font-display text-lg font-bold tabular-nums text-ink">{{ activePlayers }}</p>
+                <p class="text-caption text-ink-tertiary">jogadores ativos</p>
             </div>
-
-            <!-- Detalhes do Desafio -->
-            <div class="mt-3 flex items-center gap-2">
-              <span class="text-sm font-semibold text-ink">
-                {{ ch.creator_profile?.username }} 
-              </span>
-              <span class="text-caption text-ink-subtle">vs</span>
-              <span class="text-sm font-semibold text-ink">
-                {{ ch.opponent_profile?.username || '?' }}
-              </span>
-            </div>
-            <p class="text-[11px] text-ink-tertiary mt-1">Sala ID: {{ ch.id }}</p>
-          </div>
-
-          <!-- Pote Financeiro -->
-          <div class="flex items-center gap-6">
-            <div class="text-right">
-              <span class="text-[10px] text-ink-subtle uppercase tracking-wider block">Valor Apostado</span>
-              <span class="text-sm font-bold text-ink">R$ {{ parseFloat(ch.bet_amount).toFixed(2) }}</span>
-            </div>
-
-            <div class="flex gap-2">
-              <button 
-                v-if="ch.status === 'open'"
-                @click="handleShare(ch.id)"
-                class="bg-surface-3 hover:bg-[#2e3543] border border-hairline-strong text-ink font-bold px-4 py-2 rounded-lg text-caption transition-all"
-              >
-                Compartilhar Link
-              </button>
-              <button 
-                v-else
-                @click="$router.push(`/match/${ch.id}`)"
-                class="bg-primary hover:bg-primary-hover text-ink font-bold px-5 py-2.5 rounded-lg text-caption shadow-md shadow-none/10 transition-all"
-              >
-                Abrir Sala
-              </button>
-            </div>
-          </div>
         </div>
-      </div>
-
     </div>
 
-    <!-- MODAL DE CRIAÇÃO DE DESAFIO -->
-    <div 
-      v-if="showCreateModal" 
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 "
-    >
-      <div 
-        class="w-full max-w-md bg-surface-1 border border-hairline p-6 rounded-lg shadow-none space-y-6"
-      >
-        <div class="flex justify-between items-center">
-          <h3 class="text-xl font-bold text-ink uppercase tracking-tight">Criar Sala de X1</h3>
-          <button 
-            @click="showCreateModal = false"
-            class="text-ink-subtle hover:text-ink transition-colors"
-          >
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-
-        <div class="space-y-4">
-          <!-- Seleção de Jogo -->
-          <div>
-            <label class="block text-caption font-semibold text-ink-subtle uppercase tracking-wider mb-2">Jogo</label>
-            <select 
-              v-model="game"
-              class="w-full bg-surface-2 border border-hairline-strong rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-[#4facfe] transition-colors text-sm"
+    <!-- Filtros -->
+    <div class="sticky top-16 z-40 -mx-6 px-6 pb-4 pt-2 md:top-[76px] lg:-mx-20 lg:px-20">
+        <div class="custom-scrollbar flex gap-2 overflow-x-auto pb-1">
+            <button
+                v-for="tab in filterTabs"
+                :key="tab.key"
+                @click="filter = tab.key"
+                :class="filter === tab.key
+                    ? 'border-primary/40 bg-primary/15 text-primary shadow-glow-primary'
+                    : 'border-hairline-strong bg-surface-1/60 text-ink-subtle hover:bg-surface-2 hover:text-ink'"
+                class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full border px-4 py-2 text-body-sm font-semibold transition-all duration-200"
             >
-              <option value="EA FC 25">EA FC 25</option>
-              <option value="eFootball">eFootball</option>
-            </select>
-          </div>
-
-          <!-- Seleção de Plataforma -->
-          <div>
-            <label class="block text-caption font-semibold text-ink-subtle uppercase tracking-wider mb-2">Plataforma</label>
-            <select 
-              v-model="platform"
-              class="w-full bg-surface-2 border border-hairline-strong rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-[#4facfe] transition-colors text-sm"
-            >
-              <option value="PS5">PlayStation 5</option>
-              <option value="Xbox">Xbox Series X/S</option>
-              <option value="PC">PC</option>
-              <option value="Crossplay">Crossplay (Todas)</option>
-            </select>
-          </div>
-
-          <!-- Valor da Aposta -->
-          <div>
-            <label class="block text-caption font-semibold text-ink-subtle uppercase tracking-wider mb-2">Valor da Aposta (R$)</label>
-            <input 
-              v-model.number="betAmount"
-              type="number"
-              placeholder="Digite o valor de sua aposta"
-              class="w-full bg-surface-2 border border-hairline-strong rounded-lg px-4 py-3 text-ink placeholder-[#515c6e] focus:outline-none focus:border-[#4facfe] transition-colors text-sm"
-            />
-            <p class="text-[10px] text-ink-subtle mt-1.5">Esse valor será congelado temporariamente de sua carteira.</p>
-          </div>
+                <component :is="tab.icon" :size="14" />
+                {{ tab.label }}
+                <span
+                    v-if="tab.count > 0"
+                    class="rounded-full bg-surface-3 px-1.5 py-0.5 text-[10px] font-bold tabular-nums text-ink-subtle"
+                    :class="filter === tab.key ? 'bg-primary/20 text-primary' : ''"
+                >{{ tab.count }}</span>
+                <span v-if="tab.badge" class="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-semantic-error text-[9px] font-bold text-white">{{ tab.badge }}</span>
+            </button>
         </div>
-
-        <!-- Botão de Criação -->
-        <button 
-          @click="handleCreateChallenge"
-          :disabled="creating"
-          class="w-full bg-primary text-ink font-semibold py-3.5 rounded-lg shadow-none transition-all text-sm disabled:opacity-50"
-        >
-          {{ creating ? 'Criando sala...' : 'Publicar Desafio' }}
-        </button>
-      </div>
     </div>
 
+    <!-- Carregando -->
+    <div v-if="loading" class="flex items-center justify-center py-24">
+        <svg class="h-8 w-8 animate-spin text-primary" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+    </div>
+
+    <!-- Erro ao carregar -->
+    <div v-else-if="loadError" class="flex flex-col items-center gap-3 py-24 text-center">
+        <p class="font-semibold text-semantic-error">{{ loadError }}</p>
+        <button @click="loadChallenges" class="mt-2 text-body-sm font-semibold text-primary hover:underline">Tentar novamente</button>
+    </div>
+
+    <!-- Estado vazio -->
+    <div v-else-if="filteredChallenges.length === 0" class="flex flex-col items-center gap-3 py-24 text-center">
+        <span class="grid size-14 place-items-center rounded-2xl bg-surface-2 text-ink-tertiary">
+            <SearchX :size="26" />
+        </span>
+        <p class="font-semibold text-ink">Arena vazia por aqui</p>
+        <p class="max-w-xs text-body-sm text-ink-subtle">Ninguém abriu desafio nesse filtro. Abre o teu e deixa a galera correr atrás.</p>
+        <button @click="filter = 'all'" class="mt-2 text-body-sm font-semibold text-primary hover:underline">Ver todos os desafios</button>
+    </div>
+
+    <!-- Grid de desafios -->
+    <div v-else class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-3">
+        <div
+            v-for="(c, i) in filteredChallenges"
+            :key="c.id"
+            v-reveal="`${(i % 6) * 60}ms`"
+            class="glow-border group flex flex-col gap-4 rounded-2xl border border-hairline bg-surface-1/60 p-5 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-hairline-strong"
+            :class="c.status === 'completed' ? 'opacity-70' : ''"
+        >
+            <!-- Topo: jogo + plataforma + status -->
+            <div class="flex items-start justify-between gap-3">
+                <div>
+                    <h3 class="font-semibold text-ink">{{ c.game }}</h3>
+                    <span class="text-caption text-ink-tertiary">{{ c.platform }} · 1v1</span>
+                </div>
+                <span
+                    class="inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider"
+                    :class="[getStatusMeta(c.status).bg, getStatusMeta(c.status).text]"
+                >
+                    <span class="relative flex size-1.5">
+                        <span v-if="c.status === 'in_progress'" class="absolute inline-flex size-full animate-ping rounded-full opacity-75" :class="getStatusMeta(c.status).dot"></span>
+                        <span class="relative inline-flex size-1.5 rounded-full" :class="getStatusMeta(c.status).dot"></span>
+                    </span>
+                    {{ getStatusMeta(c.status).label }}
+                </span>
+            </div>
+
+            <!-- Confronto -->
+            <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+                <div class="flex flex-col items-center gap-1.5 text-center">
+                    <div
+                        class="grid size-11 place-items-center rounded-full bg-primary/15 text-sm font-bold uppercase text-primary"
+                        :style="ringStyle(c.platform)"
+                    >{{ c.creator_profile.username.charAt(0) }}</div>
+                    <span class="max-w-[88px] truncate text-body-sm font-medium text-ink">{{ c.creator_profile.username }}</span>
+                    <span class="inline-flex items-center gap-0.5 text-[10px] font-semibold text-amber-500">
+                        <Star :size="10" fill="currentColor" />{{ c.creator_profile.fair_play_rating.toFixed(1) }}
+                    </span>
+                </div>
+
+                <span class="grid size-7 shrink-0 place-items-center rounded-full border border-hairline-strong text-[10px] font-bold text-ink-tertiary">VS</span>
+
+                <template v-if="c.opponent_profile">
+                    <div class="flex flex-col items-center gap-1.5 text-center">
+                        <div
+                            class="grid size-11 place-items-center rounded-full bg-primary/15 text-sm font-bold uppercase text-primary"
+                            :style="ringStyle(c.platform)"
+                        >{{ c.opponent_profile.username.charAt(0) }}</div>
+                        <span class="max-w-[88px] truncate text-body-sm font-medium text-ink">{{ c.opponent_profile.username }}</span>
+                        <span class="inline-flex items-center gap-0.5 text-[10px] font-semibold text-amber-500">
+                            <Star :size="10" fill="currentColor" />{{ c.opponent_profile.fair_play_rating.toFixed(1) }}
+                        </span>
+                    </div>
+                </template>
+                <div v-else-if="c.creator_id === MY_ID" class="flex flex-col items-center gap-1.5 text-center">
+                    <div class="grid size-11 place-items-center rounded-full border-2 border-dashed border-hairline-strong text-ink-tertiary">
+                        <UserPlus :size="18" />
+                    </div>
+                    <span class="text-body-sm font-medium text-ink-tertiary">Seu desafio</span>
+                </div>
+                <router-link
+                    v-else-if="!authStore.user"
+                    to="/register"
+                    class="flex flex-col items-center gap-1.5 text-center no-underline"
+                >
+                    <div class="grid size-11 place-items-center rounded-full border-2 border-dashed border-accent/40 text-accent transition-colors duration-200 group-hover:border-accent group-hover:bg-accent/10">
+                        <UserPlus :size="18" />
+                    </div>
+                    <span class="text-body-sm font-medium text-accent">Vaga aberta</span>
+                </router-link>
+                <button
+                    v-else
+                    type="button"
+                    @click="handleAccept(c)"
+                    :disabled="acceptingId === c.id"
+                    class="flex flex-col items-center gap-1.5 text-center disabled:cursor-wait disabled:opacity-60"
+                >
+                    <div class="grid size-11 place-items-center rounded-full border-2 border-dashed border-accent/40 text-accent transition-colors duration-200 group-hover:border-accent group-hover:bg-accent/10">
+                        <svg v-if="acceptingId === c.id" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                        </svg>
+                        <UserPlus v-else :size="18" />
+                    </div>
+                    <span class="text-body-sm font-medium text-accent">{{ acceptingId === c.id ? 'Aceitando...' : 'Aceitar desafio' }}</span>
+                </button>
+            </div>
+
+            <!-- Rodapé: horário + aposta/prêmio -->
+            <div class="flex items-center justify-between border-t border-hairline pt-3.5 text-body-sm">
+                <span class="inline-flex items-center gap-1.5 text-ink-tertiary">
+                    <CalendarDays :size="14" />
+                    {{ timeAgo(c.created_at) }}
+                </span>
+                <div class="flex items-center gap-2">
+                    <span class="text-caption text-ink-tertiary">R$ {{ c.bet_amount.toFixed(2) }}</span>
+                    <span class="text-ink-tertiary">→</span>
+                    <span class="font-bold" :class="c.status === 'completed' ? 'text-ink-subtle' : 'text-semantic-success'">R$ {{ totalPrize(c).toFixed(2) }}</span>
+                </div>
+            </div>
+
+            <!-- Vencedor (concluído) -->
+            <div v-if="c.status === 'completed'" class="flex items-center gap-2 rounded-xl border border-semantic-success/20 bg-semantic-success/5 px-3.5 py-2.5 text-body-sm">
+                <Trophy :size="16" class="text-semantic-success" />
+                <span class="text-ink-subtle">Vencedor:</span>
+                <span class="font-bold text-semantic-success">{{ winnerName(c) }}</span>
+                <span class="ml-auto font-bold text-semantic-success">+R$ {{ netProfit(c).toFixed(2) }}</span>
+            </div>
+
+            <!-- Em disputa -->
+            <div v-else-if="c.status === 'disputed'" class="flex items-center gap-2 rounded-xl border border-semantic-error/20 bg-semantic-error/5 px-3.5 py-2.5 text-body-sm">
+                <ShieldAlert :size="16" class="text-semantic-error" />
+                <span class="text-ink-subtle">Resultados divergentes — em mediação pela ArenaX1.</span>
+            </div>
+        </div>
+    </div>
   </div>
 </template>
-
-<style scoped>
-</style>

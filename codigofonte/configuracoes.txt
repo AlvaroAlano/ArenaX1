@@ -1,0 +1,1328 @@
+
+<!DOCTYPE html>
+<html class="dark" lang="pt" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Definições da Conta</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/icons/icon-96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.png">
+
+                <meta name="description" content="The 1vs1 — A plataforma n°1 de partidas competitivas FIFA e eFootball 1v1 por dinheiro real. Desafie jogadores do mundo todo.">
+        <meta name="keywords" content="FIFA 1vs1, eFootball 1vs1, partida competitiva, dinheiro real, desafio FIFA, duelo eFootball, ganhar dinheiro, videogames, PS5, Xbox">
+    <meta name="robots" content="noindex, nofollow">
+
+            <link rel="canonical" href="https://the1vs1.com/pt/parametres">
+
+                            <link rel="alternate" hreflang="fr" href="https://the1vs1.com/fr/parametres">
+            <link rel="alternate" hreflang="en" href="https://the1vs1.com/en/parametres">
+            <link rel="alternate" hreflang="es" href="https://the1vs1.com/es/parametres">
+            <link rel="alternate" hreflang="de" href="https://the1vs1.com/de/parametres">
+            <link rel="alternate" hreflang="pt" href="https://the1vs1.com/pt/parametres">
+            <link rel="alternate" hreflang="tr" href="https://the1vs1.com/tr/parametres">
+            <link rel="alternate" hreflang="ar" href="https://the1vs1.com/ar/parametres">
+                                    <link rel="alternate" hreflang="fr-FR" href="https://the1vs1.com/fr/parametres">
+                    <link rel="alternate" hreflang="fr-BE" href="https://the1vs1.com/fr/parametres">
+                    <link rel="alternate" hreflang="fr-CA" href="https://the1vs1.com/fr/parametres">
+                    <link rel="alternate" hreflang="fr-CH" href="https://the1vs1.com/fr/parametres">
+                    <link rel="alternate" hreflang="fr-SN" href="https://the1vs1.com/fr/parametres">
+                    <link rel="alternate" hreflang="fr-CI" href="https://the1vs1.com/fr/parametres">
+                    <link rel="alternate" hreflang="fr-CM" href="https://the1vs1.com/fr/parametres">
+                    <link rel="alternate" hreflang="fr-CD" href="https://the1vs1.com/fr/parametres">
+                    <link rel="alternate" hreflang="fr-MG" href="https://the1vs1.com/fr/parametres">
+                    <link rel="alternate" hreflang="fr-ML" href="https://the1vs1.com/fr/parametres">
+                    <link rel="alternate" hreflang="fr-TN" href="https://the1vs1.com/fr/parametres">
+                    <link rel="alternate" hreflang="fr-DZ" href="https://the1vs1.com/fr/parametres">
+                    <link rel="alternate" hreflang="fr-MA" href="https://the1vs1.com/fr/parametres">
+                                <link rel="alternate" hreflang="en-US" href="https://the1vs1.com/en/parametres">
+                    <link rel="alternate" hreflang="en-GB" href="https://the1vs1.com/en/parametres">
+                    <link rel="alternate" hreflang="en-CA" href="https://the1vs1.com/en/parametres">
+                    <link rel="alternate" hreflang="en-AU" href="https://the1vs1.com/en/parametres">
+                    <link rel="alternate" hreflang="en-NG" href="https://the1vs1.com/en/parametres">
+                    <link rel="alternate" hreflang="en-GH" href="https://the1vs1.com/en/parametres">
+                    <link rel="alternate" hreflang="en-ZA" href="https://the1vs1.com/en/parametres">
+                    <link rel="alternate" hreflang="en-KE" href="https://the1vs1.com/en/parametres">
+                    <link rel="alternate" hreflang="en-IN" href="https://the1vs1.com/en/parametres">
+                                <link rel="alternate" hreflang="es-ES" href="https://the1vs1.com/es/parametres">
+                    <link rel="alternate" hreflang="es-MX" href="https://the1vs1.com/es/parametres">
+                    <link rel="alternate" hreflang="es-AR" href="https://the1vs1.com/es/parametres">
+                    <link rel="alternate" hreflang="es-CO" href="https://the1vs1.com/es/parametres">
+                    <link rel="alternate" hreflang="es-CL" href="https://the1vs1.com/es/parametres">
+                    <link rel="alternate" hreflang="es-PE" href="https://the1vs1.com/es/parametres">
+                                <link rel="alternate" hreflang="de-DE" href="https://the1vs1.com/de/parametres">
+                    <link rel="alternate" hreflang="de-AT" href="https://the1vs1.com/de/parametres">
+                    <link rel="alternate" hreflang="de-CH" href="https://the1vs1.com/de/parametres">
+                                <link rel="alternate" hreflang="pt-BR" href="https://the1vs1.com/pt/parametres">
+                    <link rel="alternate" hreflang="pt-PT" href="https://the1vs1.com/pt/parametres">
+                    <link rel="alternate" hreflang="pt-AO" href="https://the1vs1.com/pt/parametres">
+                    <link rel="alternate" hreflang="pt-MZ" href="https://the1vs1.com/pt/parametres">
+                                <link rel="alternate" hreflang="tr-TR" href="https://the1vs1.com/tr/parametres">
+                                <link rel="alternate" hreflang="ar-SA" href="https://the1vs1.com/ar/parametres">
+                    <link rel="alternate" hreflang="ar-MA" href="https://the1vs1.com/ar/parametres">
+                    <link rel="alternate" hreflang="ar-DZ" href="https://the1vs1.com/ar/parametres">
+                    <link rel="alternate" hreflang="ar-TN" href="https://the1vs1.com/ar/parametres">
+                    <link rel="alternate" hreflang="ar-EG" href="https://the1vs1.com/ar/parametres">
+                    <link rel="alternate" hreflang="ar-AE" href="https://the1vs1.com/ar/parametres">
+                    <link rel="alternate" hreflang="ar-QA" href="https://the1vs1.com/ar/parametres">
+                    <link rel="alternate" hreflang="ar-KW" href="https://the1vs1.com/ar/parametres">
+                <link rel="alternate" hreflang="x-default" href="https://the1vs1.com/fr/parametres">
+
+        <meta property="og:type" content="website">
+    <meta property="og:title" content="Definições da Conta">
+    <meta property="og:description" content="The 1vs1 — A plataforma n°1 de partidas competitivas FIFA e eFootball 1v1 por dinheiro real. Desafie jogadores do mundo todo.">
+    <meta property="og:url" content="https://the1vs1.com/pt/parametres">
+    <meta property="og:image" content="https://the1vs1.com/images/og-default.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="The 1vs1">
+    <meta property="og:locale" content="pt">
+                        <meta property="og:locale:alternate" content="fr">
+                                <meta property="og:locale:alternate" content="en">
+                                <meta property="og:locale:alternate" content="es">
+                                <meta property="og:locale:alternate" content="de">
+                                            <meta property="og:locale:alternate" content="tr">
+                                <meta property="og:locale:alternate" content="ar">
+            
+        <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@the1vs1">
+    <meta name="twitter:title" content="Definições da Conta">
+    <meta name="twitter:description" content="The 1vs1 — A plataforma n°1 de partidas competitivas FIFA e eFootball 1v1 por dinheiro real. Desafie jogadores do mundo todo.">
+    <meta name="twitter:image" content="https://the1vs1.com/images/og-default.png">
+
+        <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
+    <meta name="theme-color" content="#0d87f2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="The 1vs1">
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512.png">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    </noscript>
+
+        <style>
+        .material-symbols-outlined{visibility:hidden;display:inline-block;width:1em;height:1em;overflow:hidden;line-height:1}
+        .icons-ready .material-symbols-outlined{visibility:visible;width:auto;height:auto;overflow:visible;line-height:inherit}
+    </style>
+    <script>
+        (function(){
+            var shown=false;
+            function show(){ if(shown){return;} shown=true; document.documentElement.classList.add('icons-ready'); }
+            if(document.fonts&&document.fonts.load){
+                // Déclenche activement le chargement puis révèle (succès OU échec).
+                document.fonts.load('1em "Material Symbols Outlined"').then(show).catch(show);
+                document.fonts.ready.then(show);
+            }
+            // Garde-fous : on ne laisse JAMAIS les icônes masquées indéfiniment.
+            window.addEventListener('load',show);
+            setTimeout(show,3000);
+        })();
+    </script>
+
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+        <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d87f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101a22",
+                        "admin-sidebar": "#0b1219",
+                        "admin-card": "#151f2b",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style>
+    body { font-family: 'Lexend', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+    html { scroll-behavior: smooth; }
+</style>
+
+    <style>
+    /* Critical CSS — prevent FOUC */
+    body { font-family: 'Lexend', system-ui, -apple-system, sans-serif; }
+    /* Bottom nav filled icon style */
+    .fill-icon { font-variation-settings: 'FILL' 1; }
+    /* Safe area for bottom nav */
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    /* Add bottom padding to body to avoid content hidden behind bottom nav on mobile */
+    @media (max-width: 767px) {
+        body { padding-bottom: 4.5rem; }
+    }
+    </style>
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LN6VWE8TMS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LN6VWE8TMS');
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased" >
+    <div class="relative flex min-h-screen flex-col overflow-x-clip">
+
+                <div id="pwa-banner" class="hidden bg-primary text-white px-4 py-3 items-center justify-between gap-3 text-sm md:hidden z-[9999] relative">
+            <div class="flex items-center gap-3 min-w-0">
+                <span class="material-symbols-outlined text-xl shrink-0">install_mobile</span>
+                <span class="font-medium truncate">Instale o app The 1vs1!</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+                <button id="pwa-install-btn" class="bg-white text-primary font-bold text-xs px-4 py-1.5 rounded-lg whitespace-nowrap">Instalar</button>
+                <button id="pwa-dismiss-btn" class="text-white/70 hover:text-white">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+        </div>
+
+                <div id="pwa-modal" class="hidden fixed inset-0 z-[10000] flex items-end sm:items-center justify-center">
+            <div id="pwa-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+            <div class="relative bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-2xl w-full max-w-md mx-auto p-6 space-y-5 animate-slide-up">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Instalar The 1vs1</h3>
+                    <button id="pwa-modal-close" class="text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                                <div id="pwa-ios" class="hidden space-y-4">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Para instalar o aplicativo no seu iPhone:</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                            <span class="text-sm">Toque no ícone <strong>Compartilhar</strong> <span class='material-symbols-outlined text-sm align-middle'>ios_share</span></span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                            <span class="text-sm">Role para baixo e toque em &#039;Tela de Início&#039;</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                            <span class="text-sm">Toque em &#039;Adicionar&#039; no canto superior direito</span>
+                        </div>
+                    </div>
+                </div>
+
+                                <div id="pwa-android" class="hidden space-y-4">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Instale o aplicativo diretamente no seu celular.</p>
+                    <button id="pwa-native-install" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined">download</span>
+                        Baixar o aplicativo
+                    </button>
+                    <p id="pwa-android-fallback" class="hidden text-xs text-slate-500 text-center">Abra o menu do navegador (⋮) e toque em &#039;Instalar aplicativo&#039;.</p>
+                </div>
+            </div>
+        </div>
+
+                
+                <main class="flex-1">
+            <div class="flex min-h-screen">
+    
+<div class="md:hidden fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur border-b border-slate-700/50">
+    <div class="flex items-center justify-between px-4 h-14">
+        <div class="flex items-center gap-2">
+            <button onclick="document.getElementById('player-sidebar').classList.toggle('-translate-x-full'); document.getElementById('player-overlay').classList.toggle('hidden');" class="text-slate-400 hover:text-white">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <img src="/images/logo.svg" alt="The 1vs1" class="h-6">
+        </div>
+                <span class="text-xs font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-lg">0.00 €</span>
+            </div>
+</div>
+
+<div id="player-overlay" class="md:hidden fixed inset-0 bg-black/50 z-[9994] hidden" onclick="document.getElementById('player-sidebar').classList.add('-translate-x-full'); this.classList.add('hidden');"></div>
+
+<aside id="player-sidebar" class="fixed inset-y-0 left-0 z-[9995] flex w-64 flex-col bg-admin-sidebar border-r border-slate-700/50 transition-transform duration-200 md:translate-x-0 -translate-x-full">
+
+        <div class="flex h-16 items-center gap-3 border-b border-slate-700/50 px-5">
+        <a href="/pt/" class="no-underline">
+            <img src="/images/logo.svg" alt="The 1vs1" class="h-8">
+        </a>
+    </div>
+
+        <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+
+        <div class="px-2 pb-2 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Principal</div>
+
+        <a href="/pt/tableau-de-bord" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">dashboard</span>
+            Painel
+        </a>
+
+        <a href="/pt/defis?filter=mine" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">swords</span>
+            Desafios
+        </a>
+
+        <a href="/pt/mes-tournois" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">emoji_events</span>
+            Torneios
+        </a>
+
+        <a href="/pt/defis/creer" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">add_circle</span>
+            Criar um Desafio
+        </a>
+
+        <a href="/pt/classement" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">leaderboard</span>
+            Classificação
+        </a>
+
+        <div class="px-2 pb-2 pt-4 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Finanças</div>
+
+        <a href="/pt/recharger-portefeuille" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+            Carteira
+        </a>
+
+        <a href="/pt/retraits" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">payments</span>
+            Levantamentos
+        </a>
+
+        <div class="px-2 pb-2 pt-4 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Conta</div>
+
+        <a href="/pt/parametres" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors bg-primary/10 text-primary">
+            <span class="material-symbols-outlined text-[20px]">settings</span>
+            Definições
+        </a>
+
+        <a href="/pt/parrainage" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">group</span>
+            Indicação
+        </a>
+
+                <a href="#" onclick="document.getElementById('player-sidebar').classList.add('-translate-x-full'); document.getElementById('player-overlay').classList.add('hidden'); var t=document.getElementById('support-toggle'); if(t){t.click();} return false;" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">support_agent</span>
+            Suporte
+        </a>
+
+        
+                        <div class="mt-4 rounded-xl bg-slate-800/50 border border-slate-700/50 p-4">
+            <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Saldo</p>
+            <p class="text-xl font-bold text-primary">0.00 €</p>
+            <a href="/pt/recharger-portefeuille" class="mt-3 w-full py-2 text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors block text-center no-underline">
+                Depositar
+            </a>
+        </div>
+            </nav>
+
+        <div class="border-t border-slate-700/50 p-4">
+                <div class="flex items-center gap-3">
+            <div class="h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary shrink-0">ÁA</div>
+            <div class="flex-1 min-w-0">
+                <p class="truncate text-sm font-medium text-slate-200">Álvaro Alano</p>
+                <p class="truncate text-xs text-slate-500">Não configurado • alvarobster@gmail.com</p>
+            </div>
+        </div>
+        <a href="/pt/deconnexion" class="mt-3 flex items-center gap-2 text-xs text-slate-500 hover:text-red-400 transition-colors no-underline">
+            <span class="material-symbols-outlined text-[16px]">logout</span>
+            Sair
+        </a>
+            </div>
+</aside>
+
+<div class="hidden md:block w-64 shrink-0" dir="ltr"></div>
+
+    <div class="flex-1 overflow-y-auto custom-scrollbar pt-16 md:pt-0 pb-24 md:pb-0" id="settings-scroll-container">
+        <div class="p-6 md:p-8 max-w-[1000px] mx-auto space-y-6">
+
+                        <div id="profile-header-card" class="flex flex-col gap-6 md:flex-row md:items-center justify-between bg-slate-50 dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+                <div class="flex gap-5 items-center">
+                    <div class="relative">
+                        <div class="size-20 rounded-full bg-primary/10 border-4 border-primary/30 flex items-center justify-center"><span class="font-bold text-2xl text-primary">ÁA</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-2xl font-bold">Álvaro Alano</h1>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">alvarobster@gmail.com &bull; Não configurado</p>
+                        <div class="mt-2 flex gap-2 flex-wrap">
+                                                            <span class="px-2.5 py-0.5 rounded-full bg-slate-500/10 text-slate-400 text-xs font-semibold flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-xs">warning</span>
+                                    Conta não verificada
+                                </span>
+                                                                                        <span class="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-semibold">Email verificado</span>
+                                                    </div>
+                    </div>
+                </div>
+            </div>
+
+                                                            
+                        <div id="settings-nav" class="space-y-3">
+                <nav class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                    <button type="button" data-target="section-profile" class="mobile-nav-btn flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-800 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 w-full text-left">
+                        <span class="material-symbols-outlined text-primary text-lg">person</span>
+                        Informações do Perfil
+                        <span class="material-symbols-outlined text-slate-400 text-sm ml-auto">chevron_right</span>
+                    </button>
+                    <button type="button" data-target="section-linked" class="mobile-nav-btn flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-800 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 w-full text-left">
+                        <span class="material-symbols-outlined text-primary text-lg">link</span>
+                        Contas Vinculadas
+                        <span class="material-symbols-outlined text-slate-400 text-sm ml-auto">chevron_right</span>
+                    </button>
+                                        <button type="button" data-target="section-identity" class="mobile-nav-btn flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-800 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 w-full text-left">
+                        <span class="material-symbols-outlined text-primary text-lg">verified_user</span>
+                        Verificação de Identidade
+                        <span class="material-symbols-outlined text-slate-400 text-sm ml-auto">chevron_right</span>
+                    </button>
+                    <button type="button" data-target="section-stats" class="mobile-nav-btn flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-800 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 w-full text-left">
+                        <span class="material-symbols-outlined text-primary text-lg">bar_chart</span>
+                        Estatísticas
+                        <span class="material-symbols-outlined text-slate-400 text-sm ml-auto">chevron_right</span>
+                    </button>
+                    <button type="button" data-target="section-responsible" class="mobile-nav-btn flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-800 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 w-full text-left">
+                        <span class="material-symbols-outlined text-amber-400 text-lg">psychology_alt</span>
+                        Jogo Responsável
+                        <span class="material-symbols-outlined text-slate-400 text-sm ml-auto">chevron_right</span>
+                    </button>
+                    <button type="button" data-target="section-2fa" class="mobile-nav-btn flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 w-full text-left">
+                        <span class="material-symbols-outlined text-primary text-lg">security</span>
+                        Autenticação de dois fatores
+                        <span class="material-symbols-outlined text-slate-400 text-sm ml-auto">chevron_right</span>
+                    </button>
+                </nav>
+
+                                <button type="button" data-target="section-danger" class="mobile-nav-btn flex items-center gap-3 px-4 py-3 bg-red-500/5 border border-red-500/20 rounded-xl text-sm font-medium hover:bg-red-500/10 w-full text-left">
+                    <span class="material-symbols-outlined text-red-400 text-lg">warning</span>
+                    <span class="text-red-400 font-bold">Zona de Perigo</span>
+                    <span class="material-symbols-outlined text-red-400 text-sm ml-auto">chevron_right</span>
+                </button>
+            </div>
+
+            <div class="hidden" id="settings-grid">
+                                <div id="settings-col-left" class="space-y-6">
+
+                                        <form id="section-profile" method="post" class="settings-section bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 space-y-5 scroll-mt-20">
+                        <button type="button" class="mobile-back-btn flex items-center gap-1 text-sm text-primary font-medium mb-3">
+                            <span class="material-symbols-outlined text-sm">arrow_back</span>
+                            Voltar
+                        </button>
+                        <input type="hidden" name="action" value="update_profile">
+                        <input type="hidden" name="_token" value="4ed0e3c92aaca0b6bdda96.1QuiFbp9q15Evlw03S2OMzjLF7cr2w7-21WN2a939ew.4EfzfN4Q5jM8ighBkxX_XgmzX8Fj7FGzjhb0gc4BnpqAbMk4iRT-GgzSZA">
+                        <h3 class="font-bold flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">person</span>
+                            Informações do Perfil
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">Nome Completo</label>
+                                <input type="text" name="full_name" value="Álvaro Alano"
+                                    class="w-full h-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">EA Sports ID</label>
+                                <input type="text" name="ea_id" value="alvarobster@gmail.com" placeholder="O seu ID EA Sports..."
+                                    class="w-full h-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">Plataforma</label>
+                                <select name="platform"
+                                    class="w-full h-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
+                                    <option value="">— Escolher —</option>
+                                    <option value="PS5" >PS5</option>
+                                    <option value="PS4" >PS4</option>
+                                    <option value="Xbox Series" >Xbox Series</option>
+                                    <option value="Xbox One" >Xbox One</option>
+                                    <option value="PC" >PC</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">Email</label>
+                                <input type="email" value="alvarobster@gmail.com" disabled
+                                    class="w-full h-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/50 px-3 text-sm text-slate-400 cursor-not-allowed">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">Código de indicação (editável apenas uma vez)</label>
+                                <input type="text" name="referral_code" value=""  placeholder="Digite o seu novo código"
+                                    class="w-full h-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
+                                                                    <p class="mt-1 text-xs text-slate-500">Se você se registou com Google, pode inserir o seu código aqui.</p>
+                                                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="px-6 py-2.5 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold text-sm transition-colors">
+                                Guardar Alterações
+                            </button>
+                        </div>
+                    </form>
+
+                                        <div id="section-linked" class="settings-section bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden scroll-mt-20">
+                        <div class="p-5 border-b border-slate-200 dark:border-slate-800">
+                            <button type="button" class="mobile-back-btn flex items-center gap-1 text-sm text-primary font-medium mb-3">
+                                <span class="material-symbols-outlined text-sm">arrow_back</span>
+                                Voltar
+                            </button>
+                            <h3 class="font-bold flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">link</span>
+                                Contas Vinculadas
+                            </h3>
+                        </div>
+                                                <div class="flex items-center justify-between p-4 border-b border-slate-100 dark:border-slate-800">
+                            <div class="flex items-center gap-4">
+                                <div class="size-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-primary">
+                                    <span class="material-symbols-outlined text-lg">sports_soccer</span>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm">EA Sports ID</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">alvarobster@gmail.com</p>
+                                </div>
+                            </div>
+                            <span class="text-xs text-slate-400">✓ Configurado</span>
+                        </div>
+                                                <div class="flex items-center justify-between p-4 border-b border-slate-100 dark:border-slate-800">
+                            <div class="flex items-center gap-4">
+                                <div class="size-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm">Google</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">Conectado</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                                                    <span class="text-xs text-green-400">✓ Ligado</span>
+                                    <form method="post" class="inline">
+                                        <input type="hidden" name="action" value="unlink_google">
+                                        <input type="hidden" name="_token" value="1b30febc3de49d12889.Ev_1sCAU-mBi1Mrjag37sgLz5TYF-xzD4TnlW02R-0I.ZbKanWh3m01RhZXbPlSx9zChoWYyqkyNk1KLBH_ri3JntoKGFGXODFu2oQ">
+                                        <button type="submit" class="text-xs text-red-400 hover:text-red-300 font-medium ml-2">Desligar</button>
+                                    </form>
+                                                            </div>
+                        </div>
+                                                <div class="flex items-center justify-between p-4">
+                            <div class="flex items-center gap-4">
+                                <div class="size-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-[#9146FF]">
+                                    <span class="material-symbols-outlined text-lg">live_tv</span>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm">Twitch</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">Não conectado</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                                                    <a href="/pt/connect/twitch" class="text-xs bg-purple-500/10 text-purple-400 px-3 py-1.5 rounded-lg font-bold no-underline hover:bg-purple-500/20 transition-colors">Ligar</a>
+                                                            </div>
+                        </div>
+                    </div>
+
+                                                        </div>
+
+                                <div id="settings-col-right" class="space-y-6 mt-6">
+
+                                        <div id="section-identity" class="settings-section bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 space-y-4 scroll-mt-20">
+                        <button type="button" class="mobile-back-btn flex items-center gap-1 text-sm text-primary font-medium mb-3">
+                            <span class="material-symbols-outlined text-sm">arrow_back</span>
+                            Voltar
+                        </button>
+                        <h3 class="font-bold text-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">verified_user</span>
+                            Verificação de Identidade
+                        </h3>
+
+                                                                                <div class="bg-slate-100 dark:bg-slate-800/50 rounded-lg p-4 space-y-2">
+                                <p class="text-xs text-slate-400">Submeta um documento de identidade válido (cartão de cidadão, passaporte ou carta de condução).</p>
+                                <div class="text-xs text-slate-500 space-y-1">
+                                    <p class="flex items-center gap-1"><span class="material-symbols-outlined text-xs text-primary">check</span> Identidade Aprovada</p>
+                                    <p class="flex items-center gap-1"><span class="material-symbols-outlined text-xs text-primary">check</span> partidas necessárias</p>
+                                </div>
+                            </div>
+                            <form method="post" enctype="multipart/form-data" class="space-y-3">
+                                <input type="hidden" name="action" value="submit_identity">
+                                <input type="hidden" name="_token" value="1e81.gzkGafF3CykV5jFGPAVDqA-75O-p7NR-HYOTGHcNjT4.xw8yLcQccXpQqGYHa2kykGPC06rCgOI7Su3UVg1bwWfaYV8vgE48eFKxUg">
+                                <div data-controller="id-capture"
+     data-id-capture-facing-value="environment"
+     data-id-capture-unavailable-value="Câmara indisponível — envie um ficheiro."
+     data-id-capture-error-value="Acesso à câmara negado — envie um ficheiro."
+     class="space-y-2">
+
+    <label class="block text-xs text-slate-500">Frente *</label>
+
+        <input type="file" name="identity_front" accept="image/*"
+           capture="environment"
+           data-id-capture-target="input"
+           class="hidden w-full text-xs file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+
+    <div class="relative rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-800 aspect-video flex items-center justify-center">
+        <span class="material-symbols-outlined text-3xl text-slate-400 dark:text-slate-600 pointer-events-none">photo_camera</span>
+        <video data-id-capture-target="video" playsinline muted class="hidden absolute inset-0 w-full h-full object-cover"></video>
+        <img data-id-capture-target="preview" alt="" class="hidden absolute inset-0 w-full h-full object-contain bg-black">
+        <canvas data-id-capture-target="canvas" class="hidden"></canvas>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+        <button type="button" data-id-capture-target="startBtn" data-action="id-capture#start"
+            class="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+            <span class="material-symbols-outlined text-sm">photo_camera</span>Abrir a câmara
+        </button>
+        <button type="button" data-id-capture-target="captureBtn" data-action="id-capture#capture"
+            class="hidden flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold bg-primary text-white hover:bg-primary/90 transition-colors">
+            <span class="material-symbols-outlined text-sm">radio_button_checked</span>Tirar foto
+        </button>
+        <button type="button" data-id-capture-target="retakeBtn" data-action="id-capture#retake"
+            class="hidden flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors">
+            <span class="material-symbols-outlined text-sm">refresh</span>Repetir
+        </button>
+    </div>
+
+    <p data-id-capture-target="status" class="hidden text-xs text-amber-500"></p>
+</div>
+
+                                <div data-controller="id-capture"
+     data-id-capture-facing-value="environment"
+     data-id-capture-unavailable-value="Câmara indisponível — envie um ficheiro."
+     data-id-capture-error-value="Acesso à câmara negado — envie um ficheiro."
+     class="space-y-2">
+
+    <label class="block text-xs text-slate-500">Verso (opcional)</label>
+
+        <input type="file" name="identity_back" accept="image/*"
+           capture="environment"
+           data-id-capture-target="input"
+           class="hidden w-full text-xs file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+
+    <div class="relative rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-800 aspect-video flex items-center justify-center">
+        <span class="material-symbols-outlined text-3xl text-slate-400 dark:text-slate-600 pointer-events-none">photo_camera</span>
+        <video data-id-capture-target="video" playsinline muted class="hidden absolute inset-0 w-full h-full object-cover"></video>
+        <img data-id-capture-target="preview" alt="" class="hidden absolute inset-0 w-full h-full object-contain bg-black">
+        <canvas data-id-capture-target="canvas" class="hidden"></canvas>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+        <button type="button" data-id-capture-target="startBtn" data-action="id-capture#start"
+            class="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+            <span class="material-symbols-outlined text-sm">photo_camera</span>Abrir a câmara
+        </button>
+        <button type="button" data-id-capture-target="captureBtn" data-action="id-capture#capture"
+            class="hidden flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold bg-primary text-white hover:bg-primary/90 transition-colors">
+            <span class="material-symbols-outlined text-sm">radio_button_checked</span>Tirar foto
+        </button>
+        <button type="button" data-id-capture-target="retakeBtn" data-action="id-capture#retake"
+            class="hidden flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors">
+            <span class="material-symbols-outlined text-sm">refresh</span>Repetir
+        </button>
+    </div>
+
+    <p data-id-capture-target="status" class="hidden text-xs text-amber-500"></p>
+</div>
+
+                                <div data-controller="id-capture"
+     data-id-capture-facing-value="user"
+     data-id-capture-unavailable-value="Câmara indisponível — envie um ficheiro."
+     data-id-capture-error-value="Acesso à câmara negado — envie um ficheiro."
+     class="space-y-2">
+
+    <label class="block text-xs text-slate-500">Selfie com o documento *</label>
+
+        <input type="file" name="identity_selfie" accept="image/*"
+           capture="user"
+           data-id-capture-target="input"
+           class="hidden w-full text-xs file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+
+    <div class="relative rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-800 aspect-video flex items-center justify-center">
+        <span class="material-symbols-outlined text-3xl text-slate-400 dark:text-slate-600 pointer-events-none">face</span>
+        <video data-id-capture-target="video" playsinline muted class="hidden absolute inset-0 w-full h-full object-cover"></video>
+        <img data-id-capture-target="preview" alt="" class="hidden absolute inset-0 w-full h-full object-contain bg-black">
+        <canvas data-id-capture-target="canvas" class="hidden"></canvas>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+        <button type="button" data-id-capture-target="startBtn" data-action="id-capture#start"
+            class="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+            <span class="material-symbols-outlined text-sm">photo_camera</span>Abrir a câmara
+        </button>
+        <button type="button" data-id-capture-target="captureBtn" data-action="id-capture#capture"
+            class="hidden flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold bg-primary text-white hover:bg-primary/90 transition-colors">
+            <span class="material-symbols-outlined text-sm">radio_button_checked</span>Tirar foto
+        </button>
+        <button type="button" data-id-capture-target="retakeBtn" data-action="id-capture#retake"
+            class="hidden flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors">
+            <span class="material-symbols-outlined text-sm">refresh</span>Repetir
+        </button>
+    </div>
+
+    <p data-id-capture-target="status" class="hidden text-xs text-amber-500"></p>
+</div>
+
+                                <button type="submit" class="w-full py-2.5 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold text-sm transition-colors flex items-center justify-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">upload</span>
+                                    Submeter a minha identidade
+                                </button>
+                            </form>
+                        
+                                                                        <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                            <p class="text-[10px] text-slate-500 font-semibold uppercase tracking-wider mb-2">Progression</p>
+                            <div class="space-y-1.5">
+                                <div class="flex items-center gap-2 text-xs">
+                                    <span class="material-symbols-outlined text-xs text-slate-600">radio_button_unchecked</span>
+                                    <span class="text-slate-400">O seu documento de identidade foi submetido e está em análise.</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-xs">
+                                    <span class="material-symbols-outlined text-xs text-slate-600">radio_button_unchecked</span>
+                                    <span class="text-slate-400">Identidade Aprovada</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-xs">
+                                    <span class="material-symbols-outlined text-xs text-slate-600">radio_button_unchecked</span>
+                                    <span class="text-slate-400">Partidas Jogadas</span>
+                                </div>
+                            </div>
+                        </div>
+                                            </div>
+
+                                        <div id="section-stats" class="settings-section bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 space-y-3 scroll-mt-20">
+                        <button type="button" class="mobile-back-btn flex items-center gap-1 text-sm text-primary font-medium mb-3">
+                            <span class="material-symbols-outlined text-sm">arrow_back</span>
+                            Voltar
+                        </button>
+                        <h3 class="font-bold text-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">bar_chart</span>
+                            Estatísticas
+                        </h3>
+                        <div class="space-y-2.5">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Partidas Jogadas</span>
+                                <span class="font-semibold">0</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Vitórias</span>
+                                <span class="font-semibold text-green-400">0</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Derrotas</span>
+                                <span class="font-semibold text-red-400">0</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Fair Play</span>
+                                <span class="font-semibold text-green-400">5.00/5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                                        <div id="section-responsible" class="settings-section bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 space-y-4 scroll-mt-20">
+                        <button type="button" class="mobile-back-btn flex items-center gap-1 text-sm text-primary font-medium mb-3">
+                            <span class="material-symbols-outlined text-sm">arrow_back</span>
+                            Voltar
+                        </button>
+                        <h3 class="font-bold text-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined text-amber-400 text-lg">psychology_alt</span>
+                            Jogo Responsável
+                        </h3>
+
+                                                
+                                                                            <div class="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4 space-y-2">
+                                <p class="text-xs text-amber-400 font-semibold flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-xs">warning</span>
+                                    Por favor, insira sua data de nascimento (obrigatório)
+                                </p>
+                                <form method="post" class="flex gap-2">
+                                    <input type="hidden" name="action" value="update_birthdate">
+                                    <input type="hidden" name="_token" value="d7b23ac.hqv_AI5tuzJFnW2VNZgPjs2MMeXpVX2yuBs-Ea3PClE.wcOYNeoU3n4O_wileapaxpi6XNWzFw_41GNfQ_KXeCLI7blwvh73ZArFVQ">
+                                    <input type="date" name="birth_date" required max="2026-06-30"
+                                        class="flex-1 h-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-sm focus:ring-2 focus:ring-primary/50 transition-colors">
+                                    <button type="submit" class="px-4 h-10 bg-primary hover:bg-primary/90 text-white rounded-lg text-xs font-bold transition-colors">Salvar</button>
+                                </form>
+                            </div>
+                        
+                                                <div class="pt-2 border-t border-slate-200 dark:border-slate-700 space-y-3">
+                            <p class="text-xs font-semibold text-slate-400">Limites de depósito</p>
+                            <form method="post" class="space-y-3">
+                                <input type="hidden" name="action" value="update_deposit_limits">
+                                <input type="hidden" name="_token" value="83de.Q-SxM7DsVphiu6POZHoRz1fx7ThZW_qT7zc2cZVp1uA.E93YA4W_OtU3_Mr3ECJYliWcnlk8Lq6gqX9PKaAvm6YIo8tc4akGziSI7g">
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div>
+                                        <label class="block text-[10px] text-slate-500 mb-1">Diário (€)</label>
+                                        <input type="number" name="daily_limit" min="5" step="1" placeholder="--"
+                                            value=""
+                                            class="w-full h-9 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2 text-xs text-center focus:ring-2 focus:ring-primary/50 transition-colors">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] text-slate-500 mb-1">Semanal (€)</label>
+                                        <input type="number" name="weekly_limit" min="5" step="1" placeholder="--"
+                                            value=""
+                                            class="w-full h-9 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2 text-xs text-center focus:ring-2 focus:ring-primary/50 transition-colors">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] text-slate-500 mb-1">Mensal (€)</label>
+                                        <input type="number" name="monthly_limit" min="5" step="1" placeholder="--"
+                                            value=""
+                                            class="w-full h-9 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2 text-xs text-center focus:ring-2 focus:ring-primary/50 transition-colors">
+                                    </div>
+                                </div>
+                                <button type="submit" class="w-full py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 rounded-lg text-xs font-bold transition-colors">
+                                    Atualizar limites
+                                </button>
+                            </form>
+                        </div>
+
+                                                                        <div class="pt-2 border-t border-slate-200 dark:border-slate-700 space-y-3">
+                            <p class="text-xs font-semibold text-slate-400">Auto-exclusão</p>
+                            <p class="text-[10px] text-slate-500">Bloqueie temporariamente seu acesso a desafios e depósitos.</p>
+                            <form method="post" class="space-y-3" onsubmit="return confirm('Tem certeza? A auto-exclusão não pode ser cancelada.')">
+                                <input type="hidden" name="action" value="self_exclude">
+                                <input type="hidden" name="_token" value="c36d5b531a2bf182c50420be8a078a.nYqCTLo7MyCqfhrZQtm4ggECXeoyH1sEmdKgX0j94ro.18zEJdVUA2PLFXerLpPR5kR2NL4FeWhwy-Hpcj2JgJek8-V_y3FeRu0WWw">
+                                <select name="duration" required class="w-full h-9 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2 text-xs focus:ring-2 focus:ring-primary/50 transition-colors">
+                                    <option value="">-- Escolher duração --</option>
+                                    <option value="24h">24 horas</option>
+                                    <option value="7d">7 dias</option>
+                                    <option value="30d">30 dias</option>
+                                    <option value="90d">90 dias</option>
+                                </select>
+                                <input type="text" name="reason" placeholder="Motivo (opcional)"
+                                    class="w-full h-9 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-xs focus:ring-2 focus:ring-primary/50 transition-colors">
+                                <button type="submit" class="w-full py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-xs font-bold transition-colors">
+                                    Ativar auto-exclusão
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div class="pt-2 border-t border-slate-200 dark:border-slate-700">
+                            <p class="text-[10px] text-slate-500 text-center">Precisa de ajuda? Visite: www.jogadorresponsavel.pt</p>
+                        </div>
+                    </div>
+
+                                        <div id="section-2fa" class="settings-section bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 space-y-4 scroll-mt-20">
+                        <button type="button" class="mobile-back-btn flex items-center gap-1 text-sm text-primary font-medium mb-3">
+                            <span class="material-symbols-outlined text-sm">arrow_back</span>
+                            Voltar
+                        </button>
+                        <h3 class="font-bold text-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">security</span>
+                            Autenticação de dois fatores
+                        </h3>
+
+                                                    <div class="bg-slate-100 dark:bg-slate-800/50 rounded-lg p-4 space-y-2">
+                                <p class="text-xs text-slate-400">Adicione uma camada extra de segurança. Um código será enviado ao seu email a cada login.</p>
+                                <div class="text-xs text-slate-500 space-y-1">
+                                    <p class="flex items-center gap-1"><span class="material-symbols-outlined text-xs text-primary">check</span> Proteção contra acessos não autorizados</p>
+                                    <p class="flex items-center gap-1"><span class="material-symbols-outlined text-xs text-primary">check</span> Código único a cada login</p>
+                                    <p class="flex items-center gap-1"><span class="material-symbols-outlined text-xs text-primary">check</span> Enviado diretamente ao seu email</p>
+                                </div>
+                            </div>
+                            <form method="post">
+                                <input type="hidden" name="action" value="toggle_2fa">
+                                <input type="hidden" name="_token" value="d90cb62d2f9b591f76e.MtCCxF37cwjUZGtJsz5QNHn7PRcLzmKGOjPkA0ibK-U.VePrrwuNPmqtCSwrwg40dxSZREU9pxL3CAXTbxvYc613mfvzHKsGUYs7Og">
+                                <button type="submit" class="w-full py-2.5 bg-primary hover:bg-primary/90 text-white rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">lock</span>
+                                    Ativar 2FA
+                                </button>
+                            </form>
+                                            </div>
+
+                                        <div id="section-danger" class="settings-section bg-red-500/5 border border-red-500/20 rounded-xl p-5 space-y-3">
+                        <button type="button" class="mobile-back-btn flex items-center gap-1 text-sm text-primary font-medium mb-3">
+                            <span class="material-symbols-outlined text-sm">arrow_back</span>
+                            Voltar
+                        </button>
+                        <h3 class="font-bold text-sm text-red-400 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">warning</span>
+                            Zona de Perigo
+                        </h3>
+                        <p class="text-xs text-slate-500">A eliminação da conta é definitiva e irreversível.</p>
+
+                                                                        
+                                                
+                                                    <button type="button" id="btn-delete-account" class="w-full py-2.5 bg-red-500/20 text-red-400 rounded-lg text-sm font-bold hover:bg-red-500/30 transition-colors">
+                                Eliminar Conta
+                            </button>
+                                            </div>
+
+                                        <div id="delete-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
+                        <div class="bg-background-card border border-red-500/30 rounded-2xl p-6 max-w-sm w-full mx-4 space-y-4">
+                            <h3 class="text-lg font-bold text-red-400 flex items-center gap-2">
+                                <span class="material-symbols-outlined">warning</span>
+                                Confirmar eliminação
+                            </h3>
+                            <p class="text-sm text-slate-400">Todos os seus dados serão permanentemente eliminados. Esta ação é irreversível.</p>
+                            <div class="flex gap-3">
+                                <button type="button" id="btn-cancel-delete" class="flex-1 py-2.5 bg-slate-700 text-white rounded-lg text-sm font-bold hover:bg-slate-600 transition-colors">
+                                    Cancelar
+                                </button>
+                                <form method="post" action="/pt/parametres" class="flex-1">
+                                    <input type="hidden" name="action" value="delete_account">
+                                    <input type="hidden" name="_token" value="81159f790898ddffdc6fad85.l1gRLQy-ozl3v_EF_Tpq9YyCrDo9bnEgJ_BRq4gJQ-A.4DF2b2nR9lES5royk0BHzO347lxWKBpHQqlpksNiMpanMUBoX9_5DQX8wQ">
+                                    <button type="submit" class="w-full py-2.5 bg-red-600 text-white rounded-lg text-sm font-bold hover:bg-red-700 transition-colors">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // ── Delete account modal ──
+    const btnDelete = document.getElementById('btn-delete-account');
+    const modal = document.getElementById('delete-modal');
+    const btnCancel = document.getElementById('btn-cancel-delete');
+    if (btnDelete && modal) {
+        btnDelete.addEventListener('click', () => modal.classList.remove('hidden'));
+        btnCancel.addEventListener('click', () => modal.classList.add('hidden'));
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+    }
+
+    // ── Settings SPA Navigation (all screen sizes) ──
+    const nav = document.getElementById('settings-nav');
+    const profileHeader = document.getElementById('profile-header-card');
+    const settingsGrid = document.getElementById('settings-grid');
+    const colLeft = document.getElementById('settings-col-left');
+    const colRight = document.getElementById('settings-col-right');
+    const sections = document.querySelectorAll('.settings-section');
+
+    function showNav() {
+        // Show nav and profile header
+        nav.classList.remove('hidden');
+        if (profileHeader) profileHeader.classList.remove('hidden');
+        // Hide the sections container
+        settingsGrid.classList.add('hidden');
+        sections.forEach(s => {
+            s.classList.add('hidden');
+            s.classList.remove('block');
+        });
+    }
+
+    function showSection(id) {
+        // Hide nav and profile header
+        nav.classList.add('hidden');
+        if (profileHeader) profileHeader.classList.add('hidden');
+        // Show the container
+        settingsGrid.classList.remove('hidden');
+        colLeft.classList.remove('hidden');
+        colRight.classList.remove('hidden');
+        // Show only the target section
+        sections.forEach(s => {
+            if (s.id === id) {
+                s.classList.remove('hidden');
+                s.classList.add('block');
+            } else {
+                s.classList.add('hidden');
+                s.classList.remove('block');
+            }
+        });
+        // Scroll to top
+        document.getElementById('settings-scroll-container').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Initial state: hide the grid, show nav
+    settingsGrid.classList.add('hidden');
+    sections.forEach(s => {
+        s.classList.add('hidden');
+        s.classList.remove('block');
+    });
+
+    // Nav button clicks
+    document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => showSection(btn.dataset.target));
+    });
+
+    // Back button clicks
+    document.querySelectorAll('.mobile-back-btn').forEach(btn => {
+        btn.addEventListener('click', showNav);
+    });
+    // Profile form: full_name required
+    (function() {
+        const form = document.querySelector('input[name="action"][value="update_profile"]')?.closest('form');
+        if (!form) return;
+        const btn = form.querySelector('button[type="submit"]');
+        const nameInput = form.querySelector('input[name="full_name"]');
+        function check() {
+            btn.disabled = !nameInput.value.trim();
+            btn.classList.toggle('opacity-40', btn.disabled);
+            btn.classList.toggle('cursor-not-allowed', btn.disabled);
+        }
+        check();
+        nameInput.addEventListener('input', check);
+    })();
+
+    // Password form: all 3 fields required + new must match confirm
+    (function() {
+        const form = document.querySelector('input[name="action"][value="change_password"]')?.closest('form');
+        if (!form) return;
+        const btn = form.querySelector('button[type="submit"]');
+        const cur = form.querySelector('input[name="current_password"]');
+        const newP = form.querySelector('input[name="new_password"]');
+        const conf = form.querySelector('input[name="confirm_password"]');
+        function check() {
+            const valid = cur.value.trim() && newP.value.length >= 6 && conf.value.length >= 6 && newP.value === conf.value;
+            btn.disabled = !valid;
+            btn.classList.toggle('opacity-40', btn.disabled);
+            btn.classList.toggle('cursor-not-allowed', btn.disabled);
+        }
+        check();
+        [cur, newP, conf].forEach(i => i.addEventListener('input', check));
+    })();
+
+    // Identity forms: recto + selfie obligatoires
+    document.querySelectorAll('input[name="action"][value="submit_identity"]').forEach(function(hidden) {
+        const form = hidden.closest('form');
+        if (!form) return;
+        const btn = form.querySelector('button[type="submit"]');
+        const front = form.querySelector('input[name="identity_front"]');
+        const selfie = form.querySelector('input[name="identity_selfie"]');
+        function check() {
+            btn.disabled = !(front && front.files.length) || !(selfie && selfie.files.length);
+            btn.classList.toggle('opacity-40', btn.disabled);
+            btn.classList.toggle('cursor-not-allowed', btn.disabled);
+        }
+        check();
+        if (front) front.addEventListener('change', check);
+        if (selfie) selfie.addEventListener('change', check);
+    });
+});
+</script>
+        </main>
+
+                
+                        <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-[9990] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 md:hidden safe-bottom">
+                                    <div class="flex items-center justify-around px-2 py-1.5">
+                                <a href="/pt/" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">home</span>
+                    <span class="text-[10px] font-semibold">Início</span>
+                </a>
+                <a href="/pt/defis" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">swords</span>
+                    <span class="text-[10px] font-semibold">Desafios</span>
+                </a>
+                <a href="/pt/defis/creer" class="flex flex-col items-center gap-0.5 no-underline min-w-[56px]">
+                    <span class="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white shadow-lg shadow-primary/30 -mt-4">
+                        <span class="material-symbols-outlined text-[22px]">add</span>
+                    </span>
+                    <span class="text-[10px] font-semibold text-slate-500">Criar</span>
+                </a>
+                <a href="/pt/tableau-de-bord" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">dashboard</span>
+                    <span class="text-[10px] font-semibold">Painel</span>
+                </a>
+                <a href="/pt/recharger-portefeuille" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">account_balance_wallet</span>
+                    <span class="text-[10px] font-semibold">Saldo</span>
+                </a>
+            </div>
+                    </nav>
+        
+                <div id="support-widget" class="fixed right-4 bottom-20 md:right-6 md:bottom-6 z-[9991]">
+    <button id="support-toggle" type="button" aria-label="Precisa de ajuda?"
+        class="relative flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors">
+        <span class="material-symbols-outlined">support_agent</span>
+        <span id="support-badge" class="hidden absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-red-500 text-white text-[11px] font-bold flex items-center justify-center"></span>
+    </button>
+</div>
+
+<div id="support-panel" class="hidden fixed right-4 bottom-20 md:right-6 md:bottom-6 z-[9995] w-[calc(100vw-2rem)] max-w-sm h-[480px] max-h-[calc(100vh-8rem)] flex flex-col rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-3 bg-primary text-white shrink-0">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined">support_agent</span>
+            <span class="font-bold text-sm">Suporte</span>
+        </div>
+        <button id="support-close" type="button" class="text-white/80 hover:text-white" aria-label="Fermer">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+
+        <div id="support-loading" class="flex-1 flex items-center justify-center text-slate-400 text-sm">Carregando...</div>
+
+        <form id="support-form" onsubmit="return false;" class="hidden flex-1 flex flex-col gap-3 p-4 overflow-y-auto">
+        <p class="text-slate-300 text-sm">Ola! Como podemos ajuda-lo?</p>
+        <input id="support-subject" type="text" maxlength="120" placeholder="Assunto do seu pedido"
+            class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/50">
+        <textarea id="support-message" rows="4" maxlength="2000" placeholder="Descreva seu problema..."
+            class="flex-1 resize-none bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+        <button type="submit" class="bg-primary hover:bg-primary/90 text-white rounded-lg py-2.5 text-sm font-bold transition-colors">Enviar</button>
+    </form>
+
+        <div id="support-chat" class="hidden flex-1 flex flex-col overflow-hidden">
+        <div id="support-thread" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+        <form id="support-reply-form" onsubmit="return false;" class="flex gap-2 p-3 border-t border-slate-700 shrink-0">
+            <input id="support-reply-input" type="text" maxlength="2000" autocomplete="off" placeholder="Escrever uma mensagem..."
+                class="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/50">
+            <button type="submit" class="bg-primary hover:bg-primary/90 text-white rounded-lg px-3 flex items-center transition-colors"><span class="material-symbols-outlined text-[20px]">send</span></button>
+        </form>
+    </div>
+</div>
+
+<script>
+(function () {
+    const L = 'pt';
+    const base = '/' + L + '/api/support';
+    const toggle = document.getElementById('support-toggle');
+    const widget = document.getElementById('support-widget');
+    const panel = document.getElementById('support-panel');
+    const badge = document.getElementById('support-badge');
+    const loadingEl = document.getElementById('support-loading');
+    const formEl = document.getElementById('support-form');
+    const chatEl = document.getElementById('support-chat');
+    const threadEl = document.getElementById('support-thread');
+    let ticketId = null, lastId = 0, pollTimer = null, isOpen = false;
+
+    function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+    function showOnly(el) {
+        [loadingEl, formEl, chatEl].forEach(function (x) { x.classList.add('hidden'); });
+        el.classList.remove('hidden');
+    }
+
+    function renderMsg(m) {
+        const admin = m.isFromAdmin;
+        const wrap = document.createElement('div');
+        wrap.className = 'flex ' + (admin ? 'justify-start' : 'justify-end');
+        wrap.innerHTML = '<div class="max-w-[80%] ' + (admin ? 'bg-slate-800 text-slate-200' : 'bg-primary/20 text-primary') + ' rounded-xl px-3 py-2">'
+            + '<p class="text-sm leading-relaxed break-words">' + esc(m.content) + '</p>'
+            + '<p class="text-[10px] mt-1 opacity-60">' + esc(m.createdAt) + '</p></div>';
+        threadEl.appendChild(wrap);
+        if (m.id && m.id > lastId) lastId = m.id;
+    }
+
+    function scrollBottom() { threadEl.scrollTop = threadEl.scrollHeight; }
+
+    function fetchMessages() {
+        if (!ticketId) return;
+        fetch(base + '/ticket/' + ticketId + '/messages?after=' + lastId)
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.messages && d.messages.length) { d.messages.forEach(renderMsg); scrollBottom(); }
+                if (d.status === 'closed') stopPoll();
+            }).catch(function () {});
+    }
+
+    function startPoll() { stopPoll(); pollTimer = setInterval(fetchMessages, 5000); }
+    function stopPoll() { if (pollTimer) { clearInterval(pollTimer); pollTimer = null; } }
+
+    function openChat(id) {
+        ticketId = id; lastId = 0; threadEl.innerHTML = '';
+        showOnly(chatEl);
+        fetchMessages();
+        startPoll();
+    }
+
+    function loadState() {
+        showOnly(loadingEl);
+        fetch(base + '/active-ticket')
+            .then(function (r) { return r.json(); })
+            .then(function (d) { d.ticket ? openChat(d.ticket.id) : showOnly(formEl); })
+            .catch(function () { showOnly(formEl); });
+    }
+
+    function refreshBadge() {
+        fetch(base + '/active-ticket')
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                const n = d.ticket ? d.ticket.unread : 0;
+                if (n > 0) { badge.textContent = n > 9 ? '9+' : n; badge.classList.remove('hidden'); }
+                else badge.classList.add('hidden');
+            }).catch(function () {});
+    }
+
+    function openPanel() { isOpen = true; panel.classList.remove('hidden'); widget.classList.add('hidden'); loadState(); }
+    function closePanel() { isOpen = false; panel.classList.add('hidden'); widget.classList.remove('hidden'); stopPoll(); refreshBadge(); }
+
+    toggle.addEventListener('click', openPanel);
+    document.getElementById('support-close').addEventListener('click', closePanel);
+
+    formEl.addEventListener('submit', function () {
+        const subject = document.getElementById('support-subject').value.trim();
+        const message = document.getElementById('support-message').value.trim();
+        if (!subject || !message) return;
+        fetch(base + '/ticket', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ subject: subject, message: message }) })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.ticketId) {
+                    document.getElementById('support-subject').value = '';
+                    document.getElementById('support-message').value = '';
+                    openChat(d.ticketId);
+                }
+            }).catch(function () {});
+    });
+
+    document.getElementById('support-reply-form').addEventListener('submit', function () {
+        const input = document.getElementById('support-reply-input');
+        const message = input.value.trim();
+        if (!message || !ticketId) return;
+        fetch(base + '/ticket/' + ticketId + '/message', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: message }) })
+            .then(function (r) { return r.json(); })
+            .then(function (d) { if (d.id) { renderMsg(d); scrollBottom(); input.value = ''; } })
+            .catch(function () {});
+    });
+
+    refreshBadge();
+    setInterval(function () { if (!isOpen) refreshBadge(); }, 30000);
+})();
+</script>
+
+    </div>
+
+    
+        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add loading state to all form submit buttons
+        document.querySelectorAll('form').forEach(function(form) {
+            // Skip AJAX forms (those with onsubmit returning false)
+            if (form.getAttribute('onsubmit')) return;
+            // Skip forms in admin support chat
+            if (form.id === 'admin-reply-form') return;
+            // Skip support widget forms (handled by their own AJAX)
+            if (form.id === 'support-form' || form.id === 'support-reply-form') return;
+            // Skip AJAX chat forms (lobby match chat)
+            if (form.id === 'chatForm' || form.id === 'mobileChatForm') return;
+
+            form.addEventListener('submit', function(e) {
+                const btn = form.querySelector('button[type="submit"], button:not([type])');
+                if (!btn || btn.disabled) return;
+
+                // Save original content
+                btn.dataset.originalText = btn.innerHTML;
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+                btn.innerHTML = '<span class="inline-flex items-center gap-2"><svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>' + (btn.dataset.originalText.length < 50 ? btn.dataset.originalText : 'Carregando...') + '</span>';
+
+                // Re-enable after 10s in case of error
+                setTimeout(function() {
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-60', 'cursor-not-allowed');
+                    if (btn.dataset.originalText) btn.innerHTML = btn.dataset.originalText;
+                }, 10000);
+            });
+        });
+
+        // Disable submit buttons when required fields are empty
+        document.querySelectorAll('form').forEach(function(form) {
+            const requiredInputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            const btn = form.querySelector('button[type="submit"], button:not([type])');
+            if (!btn || requiredInputs.length === 0) return;
+            // Skip forms that already have their own validation logic
+            if (form.id === 'forgotForm' || form.id === 'resetForm' || form.id === 'admin-reply-form') return;
+            // Skip support widget forms (handled by their own AJAX)
+            if (form.id === 'support-form' || form.id === 'support-reply-form') return;
+            // Skip AJAX chat forms (lobby match chat)
+            if (form.id === 'chatForm' || form.id === 'mobileChatForm') return;
+
+            function checkRequired() {
+                let allFilled = true;
+                requiredInputs.forEach(function(input) {
+                    if (input.type === 'checkbox') {
+                        if (!input.checked) allFilled = false;
+                    } else if (!input.value.trim()) {
+                        allFilled = false;
+                    }
+                });
+                btn.disabled = !allFilled;
+                if (allFilled) {
+                    btn.classList.remove('opacity-40', 'cursor-not-allowed');
+                } else {
+                    btn.classList.add('opacity-40', 'cursor-not-allowed');
+                }
+            }
+
+            requiredInputs.forEach(function(input) {
+                input.addEventListener('input', checkRequired);
+                input.addEventListener('change', checkRequired);
+            });
+
+            checkRequired();
+        });
+    });
+    </script>
+
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+
+    // ── PWA Install Banner Logic ──
+    (function() {
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+        if (isStandalone) return;
+
+        const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isAndroid = /Android/.test(navigator.userAgent);
+        if (!isIOS && !isAndroid) return;
+
+        const banner = document.getElementById('pwa-banner');
+        const modal = document.getElementById('pwa-modal');
+        const iosSection = document.getElementById('pwa-ios');
+        const androidSection = document.getElementById('pwa-android');
+        let deferredPrompt = null;
+
+        // Show banner
+        banner.classList.remove('hidden');
+        banner.classList.add('flex');
+
+        // Capture beforeinstallprompt for Android
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        // Dismiss (session only — reappears on next page load)
+        document.getElementById('pwa-dismiss-btn').addEventListener('click', function() {
+            banner.classList.add('hidden');
+        });
+
+        // Open modal
+        document.getElementById('pwa-install-btn').addEventListener('click', function() {
+            modal.classList.remove('hidden');
+            if (isIOS) {
+                iosSection.classList.remove('hidden');
+                androidSection.classList.add('hidden');
+            } else {
+                androidSection.classList.remove('hidden');
+                iosSection.classList.add('hidden');
+                if (!deferredPrompt) {
+                    document.getElementById('pwa-native-install').classList.add('hidden');
+                    document.getElementById('pwa-android-fallback').classList.remove('hidden');
+                }
+            }
+        });
+
+        // Close modal
+        function closeModal() { modal.classList.add('hidden'); }
+        document.getElementById('pwa-modal-close').addEventListener('click', closeModal);
+        document.getElementById('pwa-modal-backdrop').addEventListener('click', closeModal);
+
+        // Native Android install
+        document.getElementById('pwa-native-install').addEventListener('click', function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function() {
+                    deferredPrompt = null;
+                    closeModal();
+                    banner.classList.add('hidden');
+                });
+            }
+        });
+    })();
+    </script>
+
+
+</body>
+</html>

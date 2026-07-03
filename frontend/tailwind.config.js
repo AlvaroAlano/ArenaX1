@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "class",
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
@@ -7,27 +8,43 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#1A56DB",
-        "primary-hover": "#1E40AF",
-        "primary-focus": "#1E3A8A",
+        // Rebrand 2026-07: verde-limão neon como cor única de marca (mono-lime),
+        // fundo cinza-escuro (NÃO preto absoluto). Ver design-direction memory.
+        // Botões preenchidos com `primary` usam texto ESCURO (text-canvas), nunca branco.
+        primary: "#C8F03C", // Verde-limão — cor principal (CTAs, destaques)
+        "primary-hover": "#DAFB60",
+        "primary-focus": "#aad42f", // Limão mais fechado — fim de gradiente / pressed
+        accent: "#C8F03C", // Mesmo limão — esquema mono
+        "accent-hover": "#DAFB60",
+        "accent-soft": "#dbf87a",
         "brand-green": "#059669",
-        canvas: "#010102",
-        "surface-1": "#0f1011",
-        "surface-2": "#141516",
-        "surface-3": "#18191a",
-        "surface-4": "#191a1b",
-        hairline: "#23252a",
-        "hairline-strong": "#34343a",
-        "hairline-tertiary": "#3e3e44",
-        ink: "#f7f8f8",
-        "ink-muted": "#d0d6e0",
-        "ink-subtle": "#8a8f98",
-        "ink-tertiary": "#62666d",
+        "background-light": "#f5f7f8",
+        "background-dark": "#15181e", // Cinza-escuro (= canvas)
+        "admin-sidebar": "#101319",
+        "admin-card": "#21252e",
+        canvas: "#15181e", // Cinza-escuro neutro-frio (base — não preto absoluto)
+        "surface-1": "#1b1f26", // Bandas de seção alternadas (um passo acima do canvas)
+        "surface-2": "#21252e", // Cards
+        "surface-3": "#282d37",
+        "surface-4": "#2f353f",
+        hairline: "#323844",
+        "hairline-strong": "#3f4651",
+        "hairline-tertiary": "#4b525e",
+        ink: "#f2f5f7",
+        "ink-muted": "#d3d8de",
+        "ink-subtle": "#969ba3",
+        "ink-tertiary": "#666c76",
         "semantic-success": "#27a644",
+        "semantic-error": "#ef4444",
+        // Aliases de limão mantidos (LandingViewV2 os usava; agora == primary/accent)
+        lime: "#C8F03C",
+        "lime-hover": "#DAFB60",
+        "lime-soft": "rgba(200, 240, 60, 0.14)",
       },
       fontFamily: {
         sans: ["Inter", "SF Pro Display", "system-ui", "sans-serif"],
-        display: ["Inter", "SF Pro Display", "system-ui", "sans-serif"],
+        display: ["Archivo", "sans-serif"], // Títulos — geométrica, uppercase peso 900
+        archivo: ["Archivo", "sans-serif"],
         mono: ["JetBrains Mono", "ui-monospace", "SF Mono", "monospace"],
       },
       fontSize: {
@@ -62,6 +79,14 @@ export default {
         xl: "16px",
         xxl: "24px",
         pill: "9999px",
+      },
+      boxShadow: {
+        "glow-primary": "0 0 40px -8px rgba(200, 240, 60, 0.45)",
+        "glow-accent": "0 0 40px -8px rgba(200, 240, 60, 0.45)",
+        "card-premium": "0 24px 60px -24px rgba(0, 0, 0, 0.7)",
+      },
+      backgroundImage: {
+        "radial-fade": "radial-gradient(closest-side, var(--tw-gradient-stops))",
       },
     },
   },

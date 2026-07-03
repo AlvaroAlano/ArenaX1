@@ -1,0 +1,969 @@
+
+<!DOCTYPE html>
+<html class="dark" lang="pt" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar um Desafio</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/icons/icon-96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.png">
+
+                <meta name="description" content="The 1vs1 — A plataforma n°1 de partidas competitivas FIFA e eFootball 1v1 por dinheiro real. Desafie jogadores do mundo todo.">
+        <meta name="keywords" content="FIFA 1vs1, eFootball 1vs1, partida competitiva, dinheiro real, desafio FIFA, duelo eFootball, ganhar dinheiro, videogames, PS5, Xbox">
+    <meta name="robots" content="index, follow">
+
+            <link rel="canonical" href="https://the1vs1.com/pt/defis/creer">
+
+                            <link rel="alternate" hreflang="fr" href="https://the1vs1.com/fr/defis/creer">
+            <link rel="alternate" hreflang="en" href="https://the1vs1.com/en/defis/creer">
+            <link rel="alternate" hreflang="es" href="https://the1vs1.com/es/defis/creer">
+            <link rel="alternate" hreflang="de" href="https://the1vs1.com/de/defis/creer">
+            <link rel="alternate" hreflang="pt" href="https://the1vs1.com/pt/defis/creer">
+            <link rel="alternate" hreflang="tr" href="https://the1vs1.com/tr/defis/creer">
+            <link rel="alternate" hreflang="ar" href="https://the1vs1.com/ar/defis/creer">
+                                    <link rel="alternate" hreflang="fr-FR" href="https://the1vs1.com/fr/defis/creer">
+                    <link rel="alternate" hreflang="fr-BE" href="https://the1vs1.com/fr/defis/creer">
+                    <link rel="alternate" hreflang="fr-CA" href="https://the1vs1.com/fr/defis/creer">
+                    <link rel="alternate" hreflang="fr-CH" href="https://the1vs1.com/fr/defis/creer">
+                    <link rel="alternate" hreflang="fr-SN" href="https://the1vs1.com/fr/defis/creer">
+                    <link rel="alternate" hreflang="fr-CI" href="https://the1vs1.com/fr/defis/creer">
+                    <link rel="alternate" hreflang="fr-CM" href="https://the1vs1.com/fr/defis/creer">
+                    <link rel="alternate" hreflang="fr-CD" href="https://the1vs1.com/fr/defis/creer">
+                    <link rel="alternate" hreflang="fr-MG" href="https://the1vs1.com/fr/defis/creer">
+                    <link rel="alternate" hreflang="fr-ML" href="https://the1vs1.com/fr/defis/creer">
+                    <link rel="alternate" hreflang="fr-TN" href="https://the1vs1.com/fr/defis/creer">
+                    <link rel="alternate" hreflang="fr-DZ" href="https://the1vs1.com/fr/defis/creer">
+                    <link rel="alternate" hreflang="fr-MA" href="https://the1vs1.com/fr/defis/creer">
+                                <link rel="alternate" hreflang="en-US" href="https://the1vs1.com/en/defis/creer">
+                    <link rel="alternate" hreflang="en-GB" href="https://the1vs1.com/en/defis/creer">
+                    <link rel="alternate" hreflang="en-CA" href="https://the1vs1.com/en/defis/creer">
+                    <link rel="alternate" hreflang="en-AU" href="https://the1vs1.com/en/defis/creer">
+                    <link rel="alternate" hreflang="en-NG" href="https://the1vs1.com/en/defis/creer">
+                    <link rel="alternate" hreflang="en-GH" href="https://the1vs1.com/en/defis/creer">
+                    <link rel="alternate" hreflang="en-ZA" href="https://the1vs1.com/en/defis/creer">
+                    <link rel="alternate" hreflang="en-KE" href="https://the1vs1.com/en/defis/creer">
+                    <link rel="alternate" hreflang="en-IN" href="https://the1vs1.com/en/defis/creer">
+                                <link rel="alternate" hreflang="es-ES" href="https://the1vs1.com/es/defis/creer">
+                    <link rel="alternate" hreflang="es-MX" href="https://the1vs1.com/es/defis/creer">
+                    <link rel="alternate" hreflang="es-AR" href="https://the1vs1.com/es/defis/creer">
+                    <link rel="alternate" hreflang="es-CO" href="https://the1vs1.com/es/defis/creer">
+                    <link rel="alternate" hreflang="es-CL" href="https://the1vs1.com/es/defis/creer">
+                    <link rel="alternate" hreflang="es-PE" href="https://the1vs1.com/es/defis/creer">
+                                <link rel="alternate" hreflang="de-DE" href="https://the1vs1.com/de/defis/creer">
+                    <link rel="alternate" hreflang="de-AT" href="https://the1vs1.com/de/defis/creer">
+                    <link rel="alternate" hreflang="de-CH" href="https://the1vs1.com/de/defis/creer">
+                                <link rel="alternate" hreflang="pt-BR" href="https://the1vs1.com/pt/defis/creer">
+                    <link rel="alternate" hreflang="pt-PT" href="https://the1vs1.com/pt/defis/creer">
+                    <link rel="alternate" hreflang="pt-AO" href="https://the1vs1.com/pt/defis/creer">
+                    <link rel="alternate" hreflang="pt-MZ" href="https://the1vs1.com/pt/defis/creer">
+                                <link rel="alternate" hreflang="tr-TR" href="https://the1vs1.com/tr/defis/creer">
+                                <link rel="alternate" hreflang="ar-SA" href="https://the1vs1.com/ar/defis/creer">
+                    <link rel="alternate" hreflang="ar-MA" href="https://the1vs1.com/ar/defis/creer">
+                    <link rel="alternate" hreflang="ar-DZ" href="https://the1vs1.com/ar/defis/creer">
+                    <link rel="alternate" hreflang="ar-TN" href="https://the1vs1.com/ar/defis/creer">
+                    <link rel="alternate" hreflang="ar-EG" href="https://the1vs1.com/ar/defis/creer">
+                    <link rel="alternate" hreflang="ar-AE" href="https://the1vs1.com/ar/defis/creer">
+                    <link rel="alternate" hreflang="ar-QA" href="https://the1vs1.com/ar/defis/creer">
+                    <link rel="alternate" hreflang="ar-KW" href="https://the1vs1.com/ar/defis/creer">
+                <link rel="alternate" hreflang="x-default" href="https://the1vs1.com/fr/defis/creer">
+
+        <meta property="og:type" content="website">
+    <meta property="og:title" content="Criar um Desafio">
+    <meta property="og:description" content="The 1vs1 — A plataforma n°1 de partidas competitivas FIFA e eFootball 1v1 por dinheiro real. Desafie jogadores do mundo todo.">
+    <meta property="og:url" content="https://the1vs1.com/pt/defis/creer">
+    <meta property="og:image" content="https://the1vs1.com/images/og-default.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="The 1vs1">
+    <meta property="og:locale" content="pt">
+                        <meta property="og:locale:alternate" content="fr">
+                                <meta property="og:locale:alternate" content="en">
+                                <meta property="og:locale:alternate" content="es">
+                                <meta property="og:locale:alternate" content="de">
+                                            <meta property="og:locale:alternate" content="tr">
+                                <meta property="og:locale:alternate" content="ar">
+            
+        <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@the1vs1">
+    <meta name="twitter:title" content="Criar um Desafio">
+    <meta name="twitter:description" content="The 1vs1 — A plataforma n°1 de partidas competitivas FIFA e eFootball 1v1 por dinheiro real. Desafie jogadores do mundo todo.">
+    <meta name="twitter:image" content="https://the1vs1.com/images/og-default.png">
+
+        <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
+    <meta name="theme-color" content="#0d87f2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="The 1vs1">
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512.png">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    </noscript>
+
+        <style>
+        .material-symbols-outlined{visibility:hidden;display:inline-block;width:1em;height:1em;overflow:hidden;line-height:1}
+        .icons-ready .material-symbols-outlined{visibility:visible;width:auto;height:auto;overflow:visible;line-height:inherit}
+    </style>
+    <script>
+        (function(){
+            var shown=false;
+            function show(){ if(shown){return;} shown=true; document.documentElement.classList.add('icons-ready'); }
+            if(document.fonts&&document.fonts.load){
+                // Déclenche activement le chargement puis révèle (succès OU échec).
+                document.fonts.load('1em "Material Symbols Outlined"').then(show).catch(show);
+                document.fonts.ready.then(show);
+            }
+            // Garde-fous : on ne laisse JAMAIS les icônes masquées indéfiniment.
+            window.addEventListener('load',show);
+            setTimeout(show,3000);
+        })();
+    </script>
+
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+        <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d87f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101a22",
+                        "admin-sidebar": "#0b1219",
+                        "admin-card": "#151f2b",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    
+    <style>
+    /* Critical CSS — prevent FOUC */
+    body { font-family: 'Lexend', system-ui, -apple-system, sans-serif; }
+    /* Bottom nav filled icon style */
+    .fill-icon { font-variation-settings: 'FILL' 1; }
+    /* Safe area for bottom nav */
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    /* Add bottom padding to body to avoid content hidden behind bottom nav on mobile */
+    @media (max-width: 767px) {
+        body { padding-bottom: 4.5rem; }
+    }
+    </style>
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LN6VWE8TMS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LN6VWE8TMS');
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased" >
+    <div class="relative flex min-h-screen flex-col overflow-x-clip">
+
+                <div id="pwa-banner" class="hidden bg-primary text-white px-4 py-3 items-center justify-between gap-3 text-sm md:hidden z-[9999] relative">
+            <div class="flex items-center gap-3 min-w-0">
+                <span class="material-symbols-outlined text-xl shrink-0">install_mobile</span>
+                <span class="font-medium truncate">Instale o app The 1vs1!</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+                <button id="pwa-install-btn" class="bg-white text-primary font-bold text-xs px-4 py-1.5 rounded-lg whitespace-nowrap">Instalar</button>
+                <button id="pwa-dismiss-btn" class="text-white/70 hover:text-white">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+        </div>
+
+                <div id="pwa-modal" class="hidden fixed inset-0 z-[10000] flex items-end sm:items-center justify-center">
+            <div id="pwa-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+            <div class="relative bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-2xl w-full max-w-md mx-auto p-6 space-y-5 animate-slide-up">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Instalar The 1vs1</h3>
+                    <button id="pwa-modal-close" class="text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                                <div id="pwa-ios" class="hidden space-y-4">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Para instalar o aplicativo no seu iPhone:</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                            <span class="text-sm">Toque no ícone <strong>Compartilhar</strong> <span class='material-symbols-outlined text-sm align-middle'>ios_share</span></span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                            <span class="text-sm">Role para baixo e toque em &#039;Tela de Início&#039;</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                            <span class="text-sm">Toque em &#039;Adicionar&#039; no canto superior direito</span>
+                        </div>
+                    </div>
+                </div>
+
+                                <div id="pwa-android" class="hidden space-y-4">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Instale o aplicativo diretamente no seu celular.</p>
+                    <button id="pwa-native-install" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined">download</span>
+                        Baixar o aplicativo
+                    </button>
+                    <p id="pwa-android-fallback" class="hidden text-xs text-slate-500 text-center">Abra o menu do navegador (⋮) e toque em &#039;Instalar aplicativo&#039;.</p>
+                </div>
+            </div>
+        </div>
+
+                
+                <main class="flex-1">
+            <div class="flex min-h-screen">
+    
+<div class="md:hidden fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur border-b border-slate-700/50">
+    <div class="flex items-center justify-between px-4 h-14">
+        <div class="flex items-center gap-2">
+            <button onclick="document.getElementById('player-sidebar').classList.toggle('-translate-x-full'); document.getElementById('player-overlay').classList.toggle('hidden');" class="text-slate-400 hover:text-white">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <img src="/images/logo.svg" alt="The 1vs1" class="h-6">
+        </div>
+                <span class="text-xs font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-lg">0.00 €</span>
+            </div>
+</div>
+
+<div id="player-overlay" class="md:hidden fixed inset-0 bg-black/50 z-[9994] hidden" onclick="document.getElementById('player-sidebar').classList.add('-translate-x-full'); this.classList.add('hidden');"></div>
+
+<aside id="player-sidebar" class="fixed inset-y-0 left-0 z-[9995] flex w-64 flex-col bg-admin-sidebar border-r border-slate-700/50 transition-transform duration-200 md:translate-x-0 -translate-x-full">
+
+        <div class="flex h-16 items-center gap-3 border-b border-slate-700/50 px-5">
+        <a href="/pt/" class="no-underline">
+            <img src="/images/logo.svg" alt="The 1vs1" class="h-8">
+        </a>
+    </div>
+
+        <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+
+        <div class="px-2 pb-2 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Principal</div>
+
+        <a href="/pt/tableau-de-bord" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">dashboard</span>
+            Painel
+        </a>
+
+        <a href="/pt/defis?filter=mine" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">swords</span>
+            Desafios
+        </a>
+
+        <a href="/pt/mes-tournois" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">emoji_events</span>
+            Torneios
+        </a>
+
+        <a href="/pt/defis/creer" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors bg-primary/10 text-primary">
+            <span class="material-symbols-outlined text-[20px]">add_circle</span>
+            Criar um Desafio
+        </a>
+
+        <a href="/pt/classement" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">leaderboard</span>
+            Classificação
+        </a>
+
+        <div class="px-2 pb-2 pt-4 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Finanças</div>
+
+        <a href="/pt/recharger-portefeuille" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+            Carteira
+        </a>
+
+        <a href="/pt/retraits" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">payments</span>
+            Levantamentos
+        </a>
+
+        <div class="px-2 pb-2 pt-4 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Conta</div>
+
+        <a href="/pt/parametres" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">settings</span>
+            Definições
+        </a>
+
+        <a href="/pt/parrainage" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">group</span>
+            Indicação
+        </a>
+
+                <a href="#" onclick="document.getElementById('player-sidebar').classList.add('-translate-x-full'); document.getElementById('player-overlay').classList.add('hidden'); var t=document.getElementById('support-toggle'); if(t){t.click();} return false;" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span class="material-symbols-outlined text-[20px]">support_agent</span>
+            Suporte
+        </a>
+
+        
+                        <div class="mt-4 rounded-xl bg-slate-800/50 border border-slate-700/50 p-4">
+            <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Saldo</p>
+            <p class="text-xl font-bold text-primary">0.00 €</p>
+            <a href="/pt/recharger-portefeuille" class="mt-3 w-full py-2 text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors block text-center no-underline">
+                Depositar
+            </a>
+        </div>
+            </nav>
+
+        <div class="border-t border-slate-700/50 p-4">
+                <div class="flex items-center gap-3">
+            <div class="h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary shrink-0">ÁA</div>
+            <div class="flex-1 min-w-0">
+                <p class="truncate text-sm font-medium text-slate-200">Álvaro Alano</p>
+                <p class="truncate text-xs text-slate-500">Não configurado • alvarobster@gmail.com</p>
+            </div>
+        </div>
+        <a href="/pt/deconnexion" class="mt-3 flex items-center gap-2 text-xs text-slate-500 hover:text-red-400 transition-colors no-underline">
+            <span class="material-symbols-outlined text-[16px]">logout</span>
+            Sair
+        </a>
+            </div>
+</aside>
+
+<div class="hidden md:block w-64 shrink-0" dir="ltr"></div>
+
+    <div class="flex-1 p-4 md:p-8 overflow-y-auto pt-16 md:pt-8 pb-24 md:pb-8">
+        <div class="max-w-2xl mx-auto flex flex-col gap-8">
+
+                                    
+            <section>
+                <h1 class="text-4xl font-black tracking-tight mb-2">Criar um Desafio</h1>
+                <p class="text-slate-500 dark:text-slate-400">Defina a Sua Aposta. Saldo atual : <span class="text-primary font-bold">0.00 €</span></p>
+            </section>
+
+            <form action="/pt/defis/creer" method="POST">
+                <input type="hidden" name="_token" value="f78dc.RI2gE4aThjCsmDpkHTOedUO4oM51ARaZ0YoQ1yAcZ_Q.Pr_OTNGhtVf-q3Y7JAP8OSXb54EsOVv1h9tXlUMkVIcq-8VRtdTXdN3bSQ">
+                                <section class="flex flex-col gap-4 mb-8">
+                    <div class="flex items-center gap-2">
+                        <span class="flex size-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">1</span>
+                        <h2 class="text-xl font-bold">Defina a Sua Aposta</h2>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                                <label class="cursor-pointer">
+                            <input checked class="peer sr-only" name="stake" type="radio" value="5"/>
+                            <div class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 peer-checked:border-primary peer-checked:bg-primary/5 transition-all">
+                                <span class="text-lg font-bold">5 €</span>
+                            </div>
+                        </label>
+                                                <label class="cursor-pointer">
+                            <input  class="peer sr-only" name="stake" type="radio" value="10"/>
+                            <div class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 peer-checked:border-primary peer-checked:bg-primary/5 transition-all">
+                                <span class="text-lg font-bold">10 €</span>
+                            </div>
+                        </label>
+                                                <label class="cursor-pointer">
+                            <input  class="peer sr-only" name="stake" type="radio" value="20"/>
+                            <div class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 peer-checked:border-primary peer-checked:bg-primary/5 transition-all">
+                                <span class="text-lg font-bold">20 €</span>
+                            </div>
+                        </label>
+                                                <label class="cursor-pointer">
+                            <input  class="peer sr-only" name="stake" type="radio" value="50"/>
+                            <div class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 peer-checked:border-primary peer-checked:bg-primary/5 transition-all">
+                                <span class="text-lg font-bold">50 €</span>
+                            </div>
+                        </label>
+                                            </div>
+                </section>
+
+                                <section class="flex flex-col gap-4 mb-8">
+                    <div class="flex items-center gap-2">
+                        <span class="flex size-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">2</span>
+                        <h2 class="text-xl font-bold">Informações da Partida</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="game" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Jogo</label>
+                            <select name="game" id="game" class="w-full rounded-lg border border-slate-300 dark:border-slate-700 h-12 px-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white">
+                                <option value="EA Sports FC 25">EA Sports FC 25</option>
+                                <option value="EA Sports FC 26">EA Sports FC 26</option>
+                                <option value="efootball">eFootball</option>
+                            </select>
+                            <style>
+                            select#wallet, select#game, select#platform {
+                                background-color: #f8fafc;
+                                color: #0f172a;
+                                border-radius: 0.75rem;
+                                border: 2px solid #e2e8f0;
+                                height: 3rem;
+                                padding-left: 1rem;
+                                padding-right: 1rem;
+                                font-size: 1rem;
+                                font-weight: 500;
+                                transition: border-color 0.2s, box-shadow 0.2s;
+                            }
+                            select#game:focus, select#platform:focus {
+                                border-color: #2563eb;
+                                box-shadow: 0 0 0 2px #2563eb33;
+                                outline: none;
+                            }
+                            @media (prefers-color-scheme: dark) {
+                                select#game, select#platform {
+                                    background-color: #1e293b;
+                                    color: #f1f5f9;
+                                    border-color: #334155;
+                                }
+                            }
+                            </style>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="platform" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Plataforma</label>
+                            <select name="platform" id="platform" class="w-full rounded-lg border border-slate-300 dark:border-slate-700 h-12 px-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white">
+                                <option value="PS5">PS5</option>
+                                <option value="PS4">PS4</option>
+                                <option value="Xbox">Xbox</option>
+                                <option value="Mobile">Mobile</option>
+                                <option value="PC">PC</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="p-5 rounded-xl bg-slate-200 dark:bg-slate-800/30 border border-slate-300 dark:border-slate-800">
+                        <h3 class="font-bold mb-3 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">info</span>
+                            Regras da partida:
+                        </h3>
+                        <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-3">
+                            <li class="flex gap-3">
+                                <span class="font-bold text-slate-900 dark:text-slate-100">1.</span>
+                                <span>Jogo : <strong id="rule-game">EA Sports FC 25</strong> — Plataforma : <strong id="rule-platform">PS5</strong></span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="font-bold text-slate-900 dark:text-slate-100">2.</span>
+                                <span>O vencedor leva o prémio (2× a aposta) menos 1% de comissão.</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="font-bold text-slate-900 dark:text-slate-100">3.</span>
+                                <span>Após a partida, cada jogador declara o resultado. Em caso de desacordo → disputa.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <script>
+                // Met à jour dynamiquement la règle 1 selon la sélection
+                document.addEventListener('DOMContentLoaded', function() {
+                    const gameSelect = document.getElementById('game');
+                    const platformSelect = document.getElementById('platform');
+                    const ruleGame = document.getElementById('rule-game');
+                    const rulePlatform = document.getElementById('rule-platform');
+                    function updateRule() {
+                        ruleGame.textContent = gameSelect.value;
+                        rulePlatform.textContent = platformSelect.value;
+                    }
+                    gameSelect.addEventListener('change', updateRule);
+                    platformSelect.addEventListener('change', updateRule);
+                    updateRule();
+                });
+                </script>
+
+                                <section class="flex flex-col gap-4 mb-8">
+                    <div class="flex items-center gap-2">
+                        <span class="flex size-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">3</span>
+                        <h2 class="text-xl font-bold">O Seu ID de Jogo</h2>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">EA ID / Gamertag <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">tag</span>
+                            <input name="game_id" value="alvarobster@gmail.com" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg h-12 pl-11 pr-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white" placeholder="Ex: EA_ProGamer42" type="text" required maxlength="100"/>
+                        </div>
+                        <p class="text-[11px] text-slate-500 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">info</span>
+                            Este ID será usado para o identificar nas capturas de ecrã em caso de disputa.
+                        </p>
+                    </div>
+                </section>
+
+                                <section class="flex flex-col gap-4 mb-8">
+                    <div class="flex items-center gap-2">
+                        <span class="flex size-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">4</span>
+                        <h2 class="text-xl font-bold">Convidar um adversário</h2>
+                        <span class="text-xs text-slate-500 ml-1">(opcional)</span>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Procurar um jogador na plataforma</label>
+                        <div class="relative" id="opponent-search-wrapper">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">person_search</span>
+                            <input type="text" id="opponent-search" autocomplete="off" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg h-12 pl-11 pr-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white" placeholder="Escreva um nome para procurar..." />
+                            <input type="hidden" name="invited_opponent_id" id="invited-opponent-id" value="" />
+                            <div id="opponent-results" class="absolute z-50 left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg shadow-xl max-h-48 overflow-y-auto hidden"></div>
+                        </div>
+                        <div id="selected-opponent" class="hidden flex items-center gap-3 p-3 rounded-lg bg-primary/5 border border-primary/20">
+                            <span class="material-symbols-outlined text-primary">person</span>
+                            <span id="selected-opponent-name" class="font-semibold text-sm"></span>
+                            <span id="selected-opponent-platform" class="text-xs text-slate-500"></span>
+                            <button type="button" id="clear-opponent" class="ml-auto text-slate-400 hover:text-red-500 transition-colors">
+                                <span class="material-symbols-outlined text-lg">close</span>
+                            </button>
+                        </div>
+                        <p class="text-[11px] text-slate-500 flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">lock</span>
+                            Se convidar um jogador, o desafio será privado e apenas esse jogador poderá participar.
+                        </p>
+                    </div>
+                </section>
+
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const searchInput = document.getElementById('opponent-search');
+                    const resultsDiv = document.getElementById('opponent-results');
+                    const hiddenInput = document.getElementById('invited-opponent-id');
+                    const selectedDiv = document.getElementById('selected-opponent');
+                    const selectedName = document.getElementById('selected-opponent-name');
+                    const selectedPlatform = document.getElementById('selected-opponent-platform');
+                    const clearBtn = document.getElementById('clear-opponent');
+                    let debounce = null;
+
+                    searchInput.addEventListener('input', function() {
+                        clearTimeout(debounce);
+                        const q = this.value.trim();
+                        if (q.length < 2) { resultsDiv.classList.add('hidden'); return; }
+                        debounce = setTimeout(function() {
+                            fetch('/pt/api/users/search?q=' + encodeURIComponent(q))
+                                .then(r => r.json())
+                                .then(users => {
+                                    if (!users.length) {
+                                        resultsDiv.innerHTML = '<div class="p-3 text-sm text-slate-500">Nenhum jogador encontrado</div>';
+                                    } else {
+                                        resultsDiv.innerHTML = users.map(u =>
+                                            '<button type="button" class="w-full text-left px-4 py-3 hover:bg-primary/5 flex items-center gap-3 transition-colors" data-id="' + u.id + '" data-name="' + u.name + '" data-platform="' + (u.platform || '') + '">' +
+                                            '<span class="material-symbols-outlined text-slate-400">person</span>' +
+                                            '<span class="font-medium text-sm">' + u.name + '</span>' +
+                                            (u.eaId ? '<span class="text-xs text-slate-400">(ID: ' + u.eaId + ')</span>' : '') +
+                                            '<span class="text-xs text-slate-500 ml-auto">' + (u.platform || '') + '</span>' +
+                                            '</button>'
+                                        ).join('');
+                                    }
+                                    resultsDiv.classList.remove('hidden');
+                                });
+                        }, 300);
+                    });
+
+                    resultsDiv.addEventListener('click', function(e) {
+                        const btn = e.target.closest('button[data-id]');
+                        if (!btn) return;
+                        hiddenInput.value = btn.dataset.id;
+                        selectedName.textContent = btn.dataset.name;
+                        selectedPlatform.textContent = btn.dataset.platform;
+                        selectedDiv.classList.remove('hidden');
+                        document.getElementById('opponent-search-wrapper').classList.add('hidden');
+                        resultsDiv.classList.add('hidden');
+                    });
+
+                    clearBtn.addEventListener('click', function() {
+                        hiddenInput.value = '';
+                        selectedDiv.classList.add('hidden');
+                        document.getElementById('opponent-search-wrapper').classList.remove('hidden');
+                        searchInput.value = '';
+                        searchInput.focus();
+                    });
+
+                    document.addEventListener('click', function(e) {
+                        if (!document.getElementById('opponent-search-wrapper').contains(e.target)) {
+                            resultsDiv.classList.add('hidden');
+                        }
+                    });
+                });
+                </script>
+
+                                <div class="pt-4 border-t border-slate-200 dark:border-slate-800">
+                    <button id="submit-defi-btn" type="submit" data-submitting="A criar..." class="w-full py-4 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold text-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined">swords</span>
+                        <span id="submit-defi-text">Criar o Desafio</span>
+                        <span id="submit-defi-loader" class="hidden animate-spin ml-2">
+                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                            </svg>
+                        </span>
+                    </button>
+                    <p class="text-center text-[10px] text-slate-500 uppercase tracking-widest mt-3">A aposta será bloqueada na sua carteira • 1% de comissão sobre o prémio do vencedor</p>
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const form = document.querySelector('form[action="/pt/defis/creer"]');
+                        const submitBtn = document.getElementById('submit-defi-btn');
+                        const loader = document.getElementById('submit-defi-loader');
+                        const text = document.getElementById('submit-defi-text');
+                        const gameIdInput = form.querySelector('input[name="game_id"]');
+                        const stakeInputs = form.querySelectorAll('input[name="stake"]');
+                        const gameSelect = form.querySelector('select[name="game"]');
+                        const platformSelect = form.querySelector('select[name="platform"]');
+
+                        function checkRequired() {
+                            let stakeChecked = false;
+                            stakeInputs.forEach(input => { if (input.checked) stakeChecked = true; });
+                            const allFilled = stakeChecked && gameSelect.value && platformSelect.value && gameIdInput.value.trim().length > 0;
+                            submitBtn.disabled = !allFilled;
+                        }
+
+                        // Initial check
+                        checkRequired();
+                        // Listeners
+                        stakeInputs.forEach(input => input.addEventListener('change', checkRequired));
+                        gameSelect.addEventListener('change', checkRequired);
+                        platformSelect.addEventListener('change', checkRequired);
+                        gameIdInput.addEventListener('input', checkRequired);
+
+                        if (form && submitBtn && loader && text) {
+                            form.addEventListener('submit', function(e) {
+                                submitBtn.disabled = true;
+                                loader.classList.remove('hidden');
+                                text.textContent = submitBtn.dataset.submitting;
+                            });
+                        }
+                    });
+                    </script>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+        </main>
+
+                
+                        <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-[9990] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 md:hidden safe-bottom">
+                                    <div class="flex items-center justify-around px-2 py-1.5">
+                                <a href="/pt/" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">home</span>
+                    <span class="text-[10px] font-semibold">Início</span>
+                </a>
+                <a href="/pt/defis" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">swords</span>
+                    <span class="text-[10px] font-semibold">Desafios</span>
+                </a>
+                <a href="/pt/defis/creer" class="flex flex-col items-center gap-0.5 no-underline min-w-[56px]">
+                    <span class="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white shadow-lg shadow-primary/30 -mt-4">
+                        <span class="material-symbols-outlined text-[22px]">add</span>
+                    </span>
+                    <span class="text-[10px] font-semibold text-primary">Criar</span>
+                </a>
+                <a href="/pt/tableau-de-bord" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">dashboard</span>
+                    <span class="text-[10px] font-semibold">Painel</span>
+                </a>
+                <a href="/pt/recharger-portefeuille" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">account_balance_wallet</span>
+                    <span class="text-[10px] font-semibold">Saldo</span>
+                </a>
+            </div>
+                    </nav>
+        
+                <div id="support-widget" class="fixed right-4 bottom-20 md:right-6 md:bottom-6 z-[9991]">
+    <button id="support-toggle" type="button" aria-label="Precisa de ajuda?"
+        class="relative flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors">
+        <span class="material-symbols-outlined">support_agent</span>
+        <span id="support-badge" class="hidden absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-red-500 text-white text-[11px] font-bold flex items-center justify-center"></span>
+    </button>
+</div>
+
+<div id="support-panel" class="hidden fixed right-4 bottom-20 md:right-6 md:bottom-6 z-[9995] w-[calc(100vw-2rem)] max-w-sm h-[480px] max-h-[calc(100vh-8rem)] flex flex-col rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-3 bg-primary text-white shrink-0">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined">support_agent</span>
+            <span class="font-bold text-sm">Suporte</span>
+        </div>
+        <button id="support-close" type="button" class="text-white/80 hover:text-white" aria-label="Fermer">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+
+        <div id="support-loading" class="flex-1 flex items-center justify-center text-slate-400 text-sm">Carregando...</div>
+
+        <form id="support-form" onsubmit="return false;" class="hidden flex-1 flex flex-col gap-3 p-4 overflow-y-auto">
+        <p class="text-slate-300 text-sm">Ola! Como podemos ajuda-lo?</p>
+        <input id="support-subject" type="text" maxlength="120" placeholder="Assunto do seu pedido"
+            class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/50">
+        <textarea id="support-message" rows="4" maxlength="2000" placeholder="Descreva seu problema..."
+            class="flex-1 resize-none bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+        <button type="submit" class="bg-primary hover:bg-primary/90 text-white rounded-lg py-2.5 text-sm font-bold transition-colors">Enviar</button>
+    </form>
+
+        <div id="support-chat" class="hidden flex-1 flex flex-col overflow-hidden">
+        <div id="support-thread" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+        <form id="support-reply-form" onsubmit="return false;" class="flex gap-2 p-3 border-t border-slate-700 shrink-0">
+            <input id="support-reply-input" type="text" maxlength="2000" autocomplete="off" placeholder="Escrever uma mensagem..."
+                class="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/50">
+            <button type="submit" class="bg-primary hover:bg-primary/90 text-white rounded-lg px-3 flex items-center transition-colors"><span class="material-symbols-outlined text-[20px]">send</span></button>
+        </form>
+    </div>
+</div>
+
+<script>
+(function () {
+    const L = 'pt';
+    const base = '/' + L + '/api/support';
+    const toggle = document.getElementById('support-toggle');
+    const widget = document.getElementById('support-widget');
+    const panel = document.getElementById('support-panel');
+    const badge = document.getElementById('support-badge');
+    const loadingEl = document.getElementById('support-loading');
+    const formEl = document.getElementById('support-form');
+    const chatEl = document.getElementById('support-chat');
+    const threadEl = document.getElementById('support-thread');
+    let ticketId = null, lastId = 0, pollTimer = null, isOpen = false;
+
+    function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+    function showOnly(el) {
+        [loadingEl, formEl, chatEl].forEach(function (x) { x.classList.add('hidden'); });
+        el.classList.remove('hidden');
+    }
+
+    function renderMsg(m) {
+        const admin = m.isFromAdmin;
+        const wrap = document.createElement('div');
+        wrap.className = 'flex ' + (admin ? 'justify-start' : 'justify-end');
+        wrap.innerHTML = '<div class="max-w-[80%] ' + (admin ? 'bg-slate-800 text-slate-200' : 'bg-primary/20 text-primary') + ' rounded-xl px-3 py-2">'
+            + '<p class="text-sm leading-relaxed break-words">' + esc(m.content) + '</p>'
+            + '<p class="text-[10px] mt-1 opacity-60">' + esc(m.createdAt) + '</p></div>';
+        threadEl.appendChild(wrap);
+        if (m.id && m.id > lastId) lastId = m.id;
+    }
+
+    function scrollBottom() { threadEl.scrollTop = threadEl.scrollHeight; }
+
+    function fetchMessages() {
+        if (!ticketId) return;
+        fetch(base + '/ticket/' + ticketId + '/messages?after=' + lastId)
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.messages && d.messages.length) { d.messages.forEach(renderMsg); scrollBottom(); }
+                if (d.status === 'closed') stopPoll();
+            }).catch(function () {});
+    }
+
+    function startPoll() { stopPoll(); pollTimer = setInterval(fetchMessages, 5000); }
+    function stopPoll() { if (pollTimer) { clearInterval(pollTimer); pollTimer = null; } }
+
+    function openChat(id) {
+        ticketId = id; lastId = 0; threadEl.innerHTML = '';
+        showOnly(chatEl);
+        fetchMessages();
+        startPoll();
+    }
+
+    function loadState() {
+        showOnly(loadingEl);
+        fetch(base + '/active-ticket')
+            .then(function (r) { return r.json(); })
+            .then(function (d) { d.ticket ? openChat(d.ticket.id) : showOnly(formEl); })
+            .catch(function () { showOnly(formEl); });
+    }
+
+    function refreshBadge() {
+        fetch(base + '/active-ticket')
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                const n = d.ticket ? d.ticket.unread : 0;
+                if (n > 0) { badge.textContent = n > 9 ? '9+' : n; badge.classList.remove('hidden'); }
+                else badge.classList.add('hidden');
+            }).catch(function () {});
+    }
+
+    function openPanel() { isOpen = true; panel.classList.remove('hidden'); widget.classList.add('hidden'); loadState(); }
+    function closePanel() { isOpen = false; panel.classList.add('hidden'); widget.classList.remove('hidden'); stopPoll(); refreshBadge(); }
+
+    toggle.addEventListener('click', openPanel);
+    document.getElementById('support-close').addEventListener('click', closePanel);
+
+    formEl.addEventListener('submit', function () {
+        const subject = document.getElementById('support-subject').value.trim();
+        const message = document.getElementById('support-message').value.trim();
+        if (!subject || !message) return;
+        fetch(base + '/ticket', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ subject: subject, message: message }) })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.ticketId) {
+                    document.getElementById('support-subject').value = '';
+                    document.getElementById('support-message').value = '';
+                    openChat(d.ticketId);
+                }
+            }).catch(function () {});
+    });
+
+    document.getElementById('support-reply-form').addEventListener('submit', function () {
+        const input = document.getElementById('support-reply-input');
+        const message = input.value.trim();
+        if (!message || !ticketId) return;
+        fetch(base + '/ticket/' + ticketId + '/message', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: message }) })
+            .then(function (r) { return r.json(); })
+            .then(function (d) { if (d.id) { renderMsg(d); scrollBottom(); input.value = ''; } })
+            .catch(function () {});
+    });
+
+    refreshBadge();
+    setInterval(function () { if (!isOpen) refreshBadge(); }, 30000);
+})();
+</script>
+
+    </div>
+
+    
+        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add loading state to all form submit buttons
+        document.querySelectorAll('form').forEach(function(form) {
+            // Skip AJAX forms (those with onsubmit returning false)
+            if (form.getAttribute('onsubmit')) return;
+            // Skip forms in admin support chat
+            if (form.id === 'admin-reply-form') return;
+            // Skip support widget forms (handled by their own AJAX)
+            if (form.id === 'support-form' || form.id === 'support-reply-form') return;
+            // Skip AJAX chat forms (lobby match chat)
+            if (form.id === 'chatForm' || form.id === 'mobileChatForm') return;
+
+            form.addEventListener('submit', function(e) {
+                const btn = form.querySelector('button[type="submit"], button:not([type])');
+                if (!btn || btn.disabled) return;
+
+                // Save original content
+                btn.dataset.originalText = btn.innerHTML;
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+                btn.innerHTML = '<span class="inline-flex items-center gap-2"><svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>' + (btn.dataset.originalText.length < 50 ? btn.dataset.originalText : 'Carregando...') + '</span>';
+
+                // Re-enable after 10s in case of error
+                setTimeout(function() {
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-60', 'cursor-not-allowed');
+                    if (btn.dataset.originalText) btn.innerHTML = btn.dataset.originalText;
+                }, 10000);
+            });
+        });
+
+        // Disable submit buttons when required fields are empty
+        document.querySelectorAll('form').forEach(function(form) {
+            const requiredInputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            const btn = form.querySelector('button[type="submit"], button:not([type])');
+            if (!btn || requiredInputs.length === 0) return;
+            // Skip forms that already have their own validation logic
+            if (form.id === 'forgotForm' || form.id === 'resetForm' || form.id === 'admin-reply-form') return;
+            // Skip support widget forms (handled by their own AJAX)
+            if (form.id === 'support-form' || form.id === 'support-reply-form') return;
+            // Skip AJAX chat forms (lobby match chat)
+            if (form.id === 'chatForm' || form.id === 'mobileChatForm') return;
+
+            function checkRequired() {
+                let allFilled = true;
+                requiredInputs.forEach(function(input) {
+                    if (input.type === 'checkbox') {
+                        if (!input.checked) allFilled = false;
+                    } else if (!input.value.trim()) {
+                        allFilled = false;
+                    }
+                });
+                btn.disabled = !allFilled;
+                if (allFilled) {
+                    btn.classList.remove('opacity-40', 'cursor-not-allowed');
+                } else {
+                    btn.classList.add('opacity-40', 'cursor-not-allowed');
+                }
+            }
+
+            requiredInputs.forEach(function(input) {
+                input.addEventListener('input', checkRequired);
+                input.addEventListener('change', checkRequired);
+            });
+
+            checkRequired();
+        });
+    });
+    </script>
+
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+
+    // ── PWA Install Banner Logic ──
+    (function() {
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+        if (isStandalone) return;
+
+        const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isAndroid = /Android/.test(navigator.userAgent);
+        if (!isIOS && !isAndroid) return;
+
+        const banner = document.getElementById('pwa-banner');
+        const modal = document.getElementById('pwa-modal');
+        const iosSection = document.getElementById('pwa-ios');
+        const androidSection = document.getElementById('pwa-android');
+        let deferredPrompt = null;
+
+        // Show banner
+        banner.classList.remove('hidden');
+        banner.classList.add('flex');
+
+        // Capture beforeinstallprompt for Android
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        // Dismiss (session only — reappears on next page load)
+        document.getElementById('pwa-dismiss-btn').addEventListener('click', function() {
+            banner.classList.add('hidden');
+        });
+
+        // Open modal
+        document.getElementById('pwa-install-btn').addEventListener('click', function() {
+            modal.classList.remove('hidden');
+            if (isIOS) {
+                iosSection.classList.remove('hidden');
+                androidSection.classList.add('hidden');
+            } else {
+                androidSection.classList.remove('hidden');
+                iosSection.classList.add('hidden');
+                if (!deferredPrompt) {
+                    document.getElementById('pwa-native-install').classList.add('hidden');
+                    document.getElementById('pwa-android-fallback').classList.remove('hidden');
+                }
+            }
+        });
+
+        // Close modal
+        function closeModal() { modal.classList.add('hidden'); }
+        document.getElementById('pwa-modal-close').addEventListener('click', closeModal);
+        document.getElementById('pwa-modal-backdrop').addEventListener('click', closeModal);
+
+        // Native Android install
+        document.getElementById('pwa-native-install').addEventListener('click', function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function() {
+                    deferredPrompt = null;
+                    closeModal();
+                    banner.classList.add('hidden');
+                });
+            }
+        });
+    })();
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,1299 @@
+
+<!DOCTYPE html>
+<html class="dark" lang="pt" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Como Funciona</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/icons/icon-96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.png">
+
+                <meta name="description" content="Como funciona o The 1vs1? Crie um desafio, encontre um oponente, jogue e ganhe dinheiro real.">
+        <meta name="keywords" content="como jogar FIFA por dinheiro, funcionamento 1vs1, tutorial desafio, guia plataforma gaming">
+    <meta name="robots" content="index, follow">
+
+            <link rel="canonical" href="https://the1vs1.com/pt/comment-ca-marche">
+
+                            <link rel="alternate" hreflang="fr" href="https://the1vs1.com/fr/comment-ca-marche">
+            <link rel="alternate" hreflang="en" href="https://the1vs1.com/en/comment-ca-marche">
+            <link rel="alternate" hreflang="es" href="https://the1vs1.com/es/comment-ca-marche">
+            <link rel="alternate" hreflang="de" href="https://the1vs1.com/de/comment-ca-marche">
+            <link rel="alternate" hreflang="pt" href="https://the1vs1.com/pt/comment-ca-marche">
+            <link rel="alternate" hreflang="tr" href="https://the1vs1.com/tr/comment-ca-marche">
+            <link rel="alternate" hreflang="ar" href="https://the1vs1.com/ar/comment-ca-marche">
+                                    <link rel="alternate" hreflang="fr-FR" href="https://the1vs1.com/fr/comment-ca-marche">
+                    <link rel="alternate" hreflang="fr-BE" href="https://the1vs1.com/fr/comment-ca-marche">
+                    <link rel="alternate" hreflang="fr-CA" href="https://the1vs1.com/fr/comment-ca-marche">
+                    <link rel="alternate" hreflang="fr-CH" href="https://the1vs1.com/fr/comment-ca-marche">
+                    <link rel="alternate" hreflang="fr-SN" href="https://the1vs1.com/fr/comment-ca-marche">
+                    <link rel="alternate" hreflang="fr-CI" href="https://the1vs1.com/fr/comment-ca-marche">
+                    <link rel="alternate" hreflang="fr-CM" href="https://the1vs1.com/fr/comment-ca-marche">
+                    <link rel="alternate" hreflang="fr-CD" href="https://the1vs1.com/fr/comment-ca-marche">
+                    <link rel="alternate" hreflang="fr-MG" href="https://the1vs1.com/fr/comment-ca-marche">
+                    <link rel="alternate" hreflang="fr-ML" href="https://the1vs1.com/fr/comment-ca-marche">
+                    <link rel="alternate" hreflang="fr-TN" href="https://the1vs1.com/fr/comment-ca-marche">
+                    <link rel="alternate" hreflang="fr-DZ" href="https://the1vs1.com/fr/comment-ca-marche">
+                    <link rel="alternate" hreflang="fr-MA" href="https://the1vs1.com/fr/comment-ca-marche">
+                                <link rel="alternate" hreflang="en-US" href="https://the1vs1.com/en/comment-ca-marche">
+                    <link rel="alternate" hreflang="en-GB" href="https://the1vs1.com/en/comment-ca-marche">
+                    <link rel="alternate" hreflang="en-CA" href="https://the1vs1.com/en/comment-ca-marche">
+                    <link rel="alternate" hreflang="en-AU" href="https://the1vs1.com/en/comment-ca-marche">
+                    <link rel="alternate" hreflang="en-NG" href="https://the1vs1.com/en/comment-ca-marche">
+                    <link rel="alternate" hreflang="en-GH" href="https://the1vs1.com/en/comment-ca-marche">
+                    <link rel="alternate" hreflang="en-ZA" href="https://the1vs1.com/en/comment-ca-marche">
+                    <link rel="alternate" hreflang="en-KE" href="https://the1vs1.com/en/comment-ca-marche">
+                    <link rel="alternate" hreflang="en-IN" href="https://the1vs1.com/en/comment-ca-marche">
+                                <link rel="alternate" hreflang="es-ES" href="https://the1vs1.com/es/comment-ca-marche">
+                    <link rel="alternate" hreflang="es-MX" href="https://the1vs1.com/es/comment-ca-marche">
+                    <link rel="alternate" hreflang="es-AR" href="https://the1vs1.com/es/comment-ca-marche">
+                    <link rel="alternate" hreflang="es-CO" href="https://the1vs1.com/es/comment-ca-marche">
+                    <link rel="alternate" hreflang="es-CL" href="https://the1vs1.com/es/comment-ca-marche">
+                    <link rel="alternate" hreflang="es-PE" href="https://the1vs1.com/es/comment-ca-marche">
+                                <link rel="alternate" hreflang="de-DE" href="https://the1vs1.com/de/comment-ca-marche">
+                    <link rel="alternate" hreflang="de-AT" href="https://the1vs1.com/de/comment-ca-marche">
+                    <link rel="alternate" hreflang="de-CH" href="https://the1vs1.com/de/comment-ca-marche">
+                                <link rel="alternate" hreflang="pt-BR" href="https://the1vs1.com/pt/comment-ca-marche">
+                    <link rel="alternate" hreflang="pt-PT" href="https://the1vs1.com/pt/comment-ca-marche">
+                    <link rel="alternate" hreflang="pt-AO" href="https://the1vs1.com/pt/comment-ca-marche">
+                    <link rel="alternate" hreflang="pt-MZ" href="https://the1vs1.com/pt/comment-ca-marche">
+                                <link rel="alternate" hreflang="tr-TR" href="https://the1vs1.com/tr/comment-ca-marche">
+                                <link rel="alternate" hreflang="ar-SA" href="https://the1vs1.com/ar/comment-ca-marche">
+                    <link rel="alternate" hreflang="ar-MA" href="https://the1vs1.com/ar/comment-ca-marche">
+                    <link rel="alternate" hreflang="ar-DZ" href="https://the1vs1.com/ar/comment-ca-marche">
+                    <link rel="alternate" hreflang="ar-TN" href="https://the1vs1.com/ar/comment-ca-marche">
+                    <link rel="alternate" hreflang="ar-EG" href="https://the1vs1.com/ar/comment-ca-marche">
+                    <link rel="alternate" hreflang="ar-AE" href="https://the1vs1.com/ar/comment-ca-marche">
+                    <link rel="alternate" hreflang="ar-QA" href="https://the1vs1.com/ar/comment-ca-marche">
+                    <link rel="alternate" hreflang="ar-KW" href="https://the1vs1.com/ar/comment-ca-marche">
+                <link rel="alternate" hreflang="x-default" href="https://the1vs1.com/fr/comment-ca-marche">
+
+        <meta property="og:type" content="website">
+    <meta property="og:title" content="Como Funciona">
+    <meta property="og:description" content="Como funciona o The 1vs1? Crie um desafio, encontre um oponente, jogue e ganhe dinheiro real.">
+    <meta property="og:url" content="https://the1vs1.com/pt/comment-ca-marche">
+    <meta property="og:image" content="https://the1vs1.com/images/og-default.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="The 1vs1">
+    <meta property="og:locale" content="pt">
+                        <meta property="og:locale:alternate" content="fr">
+                                <meta property="og:locale:alternate" content="en">
+                                <meta property="og:locale:alternate" content="es">
+                                <meta property="og:locale:alternate" content="de">
+                                            <meta property="og:locale:alternate" content="tr">
+                                <meta property="og:locale:alternate" content="ar">
+            
+        <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@the1vs1">
+    <meta name="twitter:title" content="Como Funciona">
+    <meta name="twitter:description" content="Como funciona o The 1vs1? Crie um desafio, encontre um oponente, jogue e ganhe dinheiro real.">
+    <meta name="twitter:image" content="https://the1vs1.com/images/og-default.png">
+
+        <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
+    <meta name="theme-color" content="#0d87f2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="The 1vs1">
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512.png">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    </noscript>
+
+        <style>
+        .material-symbols-outlined{visibility:hidden;display:inline-block;width:1em;height:1em;overflow:hidden;line-height:1}
+        .icons-ready .material-symbols-outlined{visibility:visible;width:auto;height:auto;overflow:visible;line-height:inherit}
+    </style>
+    <script>
+        (function(){
+            var shown=false;
+            function show(){ if(shown){return;} shown=true; document.documentElement.classList.add('icons-ready'); }
+            if(document.fonts&&document.fonts.load){
+                // Déclenche activement le chargement puis révèle (succès OU échec).
+                document.fonts.load('1em "Material Symbols Outlined"').then(show).catch(show);
+                document.fonts.ready.then(show);
+            }
+            // Garde-fous : on ne laisse JAMAIS les icônes masquées indéfiniment.
+            window.addEventListener('load',show);
+            setTimeout(show,3000);
+        })();
+    </script>
+
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+        <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d87f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101a22",
+                        "admin-sidebar": "#0b1219",
+                        "admin-card": "#151f2b",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* FAQ accordion */
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; padding-top: 0; padding-bottom: 0; }
+        .faq-answer.open { max-height: 500px; padding-top: 1rem; padding-bottom: 1rem; }
+        .faq-icon { transition: transform 0.3s ease; }
+        .faq-icon.rotate { transform: rotate(180deg); }
+        .step-line { position: relative; padding-left: 2rem; }
+        .step-line::before { content: ''; position: absolute; left: 0.65rem; top: 2rem; bottom: 0; width: 2px; background: rgba(13, 135, 242, 0.3); }
+        .step-line:last-child::before { display: none; }
+        .step-dot { position: absolute; left: 0; top: 0.35rem; width: 1.4rem; height: 1.4rem; border-radius: 50%; background: #0D87F2; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; font-weight: bold; }
+    </style>
+
+    <style>
+    /* Critical CSS — prevent FOUC */
+    body { font-family: 'Lexend', system-ui, -apple-system, sans-serif; }
+    /* Bottom nav filled icon style */
+    .fill-icon { font-variation-settings: 'FILL' 1; }
+    /* Safe area for bottom nav */
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    /* Add bottom padding to body to avoid content hidden behind bottom nav on mobile */
+    @media (max-width: 767px) {
+        body { padding-bottom: 4.5rem; }
+    }
+    </style>
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LN6VWE8TMS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LN6VWE8TMS');
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased" >
+    <div class="relative flex min-h-screen flex-col overflow-x-clip">
+
+                <div id="pwa-banner" class="hidden bg-primary text-white px-4 py-3 items-center justify-between gap-3 text-sm md:hidden z-[9999] relative">
+            <div class="flex items-center gap-3 min-w-0">
+                <span class="material-symbols-outlined text-xl shrink-0">install_mobile</span>
+                <span class="font-medium truncate">Instale o app The 1vs1!</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+                <button id="pwa-install-btn" class="bg-white text-primary font-bold text-xs px-4 py-1.5 rounded-lg whitespace-nowrap">Instalar</button>
+                <button id="pwa-dismiss-btn" class="text-white/70 hover:text-white">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+        </div>
+
+                <div id="pwa-modal" class="hidden fixed inset-0 z-[10000] flex items-end sm:items-center justify-center">
+            <div id="pwa-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+            <div class="relative bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-2xl w-full max-w-md mx-auto p-6 space-y-5 animate-slide-up">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Instalar The 1vs1</h3>
+                    <button id="pwa-modal-close" class="text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                                <div id="pwa-ios" class="hidden space-y-4">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Para instalar o aplicativo no seu iPhone:</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                            <span class="text-sm">Toque no ícone <strong>Compartilhar</strong> <span class='material-symbols-outlined text-sm align-middle'>ios_share</span></span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                            <span class="text-sm">Role para baixo e toque em &#039;Tela de Início&#039;</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                            <span class="w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                            <span class="text-sm">Toque em &#039;Adicionar&#039; no canto superior direito</span>
+                        </div>
+                    </div>
+                </div>
+
+                                <div id="pwa-android" class="hidden space-y-4">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Instale o aplicativo diretamente no seu celular.</p>
+                    <button id="pwa-native-install" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined">download</span>
+                        Baixar o aplicativo
+                    </button>
+                    <p id="pwa-android-fallback" class="hidden text-xs text-slate-500 text-center">Abra o menu do navegador (⋮) e toque em &#039;Instalar aplicativo&#039;.</p>
+                </div>
+            </div>
+        </div>
+
+                            <header class="fixed top-0 left-0 right-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800">
+    <div class="flex items-center justify-between px-6 h-16 lg:px-20">
+        <a href="/pt/" class="flex items-center gap-2 text-primary no-underline">
+            <img src="/images/logo.svg" alt="The 1vs1" class="h-8">
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="text-sm font-medium hover:text-primary transition-colors " href="/pt/defis">Desafios</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors " href="/pt/tournois">Torneios</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors " href="/pt/classement">Classificação</a>
+            <a class="text-sm font-medium hover:text-primary transition-colors text-primary" href="/pt/comment-ca-marche">Como Funciona</a>
+        </div>
+        <div class="flex gap-3 items-center ">
+                        <button id="header-hamburger" class="md:hidden text-slate-400 hover:text-white transition-colors" onclick="document.getElementById('header-mobile-menu').classList.toggle('hidden')">
+                <span class="material-symbols-outlined text-2xl">menu</span>
+            </button>
+                        <a href="/pt/connexion" class="hidden md:inline-block px-4 py-2 text-sm font-bold hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors no-underline">Entrar</a>
+            <a href="/pt/inscription" class="hidden md:inline-block bg-primary text-white px-6 py-2 text-sm font-bold rounded-lg hover:brightness-110 transition-all no-underline">Registar</a>
+                    </div>
+    </div>
+
+        <div id="header-mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-700/50 bg-background-light dark:bg-background-dark">
+        <nav class="flex flex-col px-6 py-4 space-y-1">
+            <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors no-underline " href="/pt/defis">
+                <span class="material-symbols-outlined text-[20px] text-primary">swords</span> Desafios
+            </a>
+            <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors no-underline " href="/pt/tournois">
+                <span class="material-symbols-outlined text-[20px] text-primary">emoji_events</span> Torneios
+            </a>
+            <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors no-underline " href="/pt/classement">
+                <span class="material-symbols-outlined text-[20px] text-primary">leaderboard</span> Classificação
+            </a>
+            <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors no-underline text-primary bg-slate-100 dark:bg-slate-800" href="/pt/comment-ca-marche">
+                <span class="material-symbols-outlined text-[20px] text-primary">help</span> Como Funciona
+            </a>
+                        <hr class="border-slate-200 dark:border-slate-700/50 my-2">
+            <a class="flex items-center justify-center rounded-lg px-3 py-2.5 text-sm font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors no-underline" href="/pt/connexion">Entrar</a>
+            <a class="flex items-center justify-center rounded-lg px-3 py-2.5 text-sm font-bold bg-primary text-white hover:brightness-110 transition-all no-underline" href="/pt/inscription">Registar</a>
+                    </nav>
+    </div>
+</header>
+                        <div class="h-16"></div>
+        
+                <main class="flex-1">
+            <div class="px-4 md:px-20 lg:px-40 flex flex-1 justify-center py-10">
+<div class="flex flex-col max-w-[1200px] flex-1">
+
+<!-- Hero Section -->
+<div class="@container mb-12">
+<div class="@[480px]:py-3">
+<div class="bg-gradient-to-br from-primary/40 to-background-dark border border-primary/20 flex flex-col justify-center items-center overflow-hidden @[480px]:rounded-xl min-h-[320px] relative text-center px-6" style='background-image: linear-gradient(135deg, rgba(13, 135, 242, 0.2) 0%, rgba(16, 26, 34, 0.9) 100%), url("/images/hero.jpg"); background-size: cover; background-position: center;'>
+<h1 class="text-white tracking-tight text-4xl md:text-5xl font-black leading-tight max-w-2xl mb-4">Domine o Campo com Confiança</h1>
+<p class="text-slate-200 text-lg font-normal leading-normal max-w-xl">
+                    Descubra como o nosso sistema de custódia 1v1 e a validação do Twitch criam o ambiente mais seguro para partidas FIFA / eFootball competitivas.
+                </p>
+</div>
+</div>
+</div>
+<!-- 1v1 Concept Section -->
+<section class="mb-16">
+<div class="flex flex-col gap-2 mb-8">
+<h2 class="text-slate-900 dark:text-slate-100 text-3xl font-bold leading-tight tracking-tight">O Conceito 1v1</h2>
+<div class="h-1 w-20 bg-primary rounded-full"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Step 1 -->
+<div class="flex flex-col gap-4 rounded-xl border border-primary/10 bg-primary/5 p-6 hover:border-primary/40 transition-all group">
+<div class="bg-primary/20 text-primary rounded-lg size-12 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">swords</span>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-slate-900 dark:text-slate-100 text-xl font-bold">1. Desafio</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                                    Explore os desafios ativos ou crie o seu. Defina as suas apostas, as regras da partida e encontre um adversário ao seu nível.
+                                </p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col gap-4 rounded-xl border border-primary/10 bg-primary/5 p-6 hover:border-primary/40 transition-all group">
+<div class="bg-primary/20 text-primary rounded-lg size-12 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-xl">videogame_asset</span>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-slate-900 dark:text-slate-100 text-xl font-bold">2. Jogar</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                                    Inicie sessão na sua consola ou PC. Comece a sua partida. A nossa plataforma acompanha o estado do jogo e garante um terreno justo para ambas as partes.
+                                </p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col gap-4 rounded-xl border border-primary/10 bg-primary/5 p-6 hover:border-primary/40 transition-all group">
+<div class="bg-primary/20 text-primary rounded-lg size-12 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">trophy</span>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-slate-900 dark:text-slate-100 text-xl font-bold">3. Ganhar</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                                    Assim que o resultado for verificado pelos nossos sistemas automatizados ou pela validação do stream Twitch, o vencedor leva o prémio instantaneamente.
+                                </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Escrow & Twitch Section -->
+<section class="mb-16 bg-primary/5 rounded-2xl p-8 border border-primary/10">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-6">
+<div class="flex flex-col gap-2">
+<h2 class="text-slate-900 dark:text-slate-100 text-3xl font-bold leading-tight tracking-tight">O Sistema de Custódia</h2>
+<p class="text-primary font-medium">Custódia Segura</p>
+</div>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                                Atuamos como um terceiro neutral para guardar todas as apostas. Assim que um desafio é aceite, ambos os jogadores depositam as suas apostas no nosso cofre de custódia seguro. Chega de preocupações com caloteiros.
+                            </p>
+<ul class="space-y-3">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+<span class="text-slate-700 dark:text-slate-300">Bloqueio automático de fundos</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+<span class="text-slate-700 dark:text-slate-300">Distribuição instantânea ao vencedor</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+<span class="text-slate-700 dark:text-slate-300">Protocolo de resolução de disputas</span>
+</li>
+</ul>
+</div>
+<div class="relative">
+<div class="aspect-video bg-background-dark rounded-xl overflow-hidden border border-primary/30 flex items-center justify-center">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
+<span class="material-symbols-outlined text-primary text-6xl">verified_user</span>
+</div>
+<div class="absolute -bottom-4 -right-4 bg-background-dark border border-primary p-4 rounded-lg shadow-xl">
+<div class="flex items-center gap-2">
+<span class="size-3 bg-green-500 rounded-full animate-pulse"></span>
+<p class="text-xs font-bold text-white uppercase tracking-wider">Cofre Seguro Ativo</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Security Features Grid -->
+<section id="exemple-tournoi-poules-elimination" class="mb-16 scroll-mt-24">
+<div class="flex flex-col gap-2 mb-10 text-center">
+<h2 class="text-slate-900 dark:text-slate-100 text-3xl font-bold">Segurança Sem Compromissos</h2>
+<p class="text-slate-600 dark:text-slate-400">Os seus dados e ativos estão protegidos por protocolos de última geração.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Twitch Validation -->
+<div class="flex gap-5 p-6 bg-background-light dark:bg-background-dark border border-slate-200 dark:border-primary/10 rounded-xl">
+<div class="flex-shrink-0">
+<div class="size-12 rounded-lg bg-[#9146FF]/10 text-[#9146FF] flex items-center justify-center">
+<span class="material-symbols-outlined">live_tv</span>
+</div>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-slate-100 font-bold mb-2">Validação de Stream Twitch</h4>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Partidas de altas apostas requerem stream ao vivo. A nossa IA analisa o stream em tempo real para confirmar o resultado final e verificar a integridade da partida.</p>
+</div>
+</div>
+<!-- Data Protection -->
+<div class="flex gap-5 p-6 bg-background-light dark:bg-background-dark border border-slate-200 dark:border-primary/10 rounded-xl">
+<div class="flex-shrink-0">
+<div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">encrypted</span>
+</div>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-slate-100 font-bold mb-2">Encriptação de Grau Militar</h4>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Todos os dados do utilizador, registos de transações e informações pessoais são encriptados com o padrão AES-256. A sua privacidade nunca é comprometida.</p>
+</div>
+</div>
+<!-- Fair Play -->
+<div class="flex gap-5 p-6 bg-background-light dark:bg-background-dark border border-slate-200 dark:border-primary/10 rounded-xl">
+<div class="flex-shrink-0">
+<div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">gavel</span>
+</div>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-slate-100 font-bold mb-2">Monitorização Anti-Batota</h4>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Monitorizamos o comportamento dos jogadores e os resultados das partidas. Qualquer atividade suspeita desencadeia uma revisão manual automática pela nossa equipa de segurança.</p>
+</div>
+</div>
+<!-- 2FA -->
+<div class="flex gap-5 p-6 bg-background-light dark:bg-background-dark border border-slate-200 dark:border-primary/10 rounded-xl">
+<div class="flex-shrink-0">
+<div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">authenticator</span>
+</div>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-slate-100 font-bold mb-2">Autenticação de Dois Fatores</h4>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Proteja a sua conta com 2FA para todos os levantamentos e alterações importantes do perfil, adicionando uma camada extra de proteção aos seus fundos.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- ═══ SECTION DÉFI : EXEMPLE CONCRET ═══ -->
+<section class="mb-16">
+<div class="flex flex-col gap-2 mb-8">
+<h2 class="text-slate-900 dark:text-slate-100 text-3xl font-bold leading-tight tracking-tight">Exemplo concreto: O Desafio 1v1</h2>
+<p class="text-slate-600 dark:text-slate-400">Siga passo a passo como funciona um desafio, da criação à distribuição de fundos.</p>
+<div class="h-1 w-20 bg-primary rounded-full"></div>
+</div>
+
+<div class="bg-background-light dark:bg-background-dark border border-slate-200 dark:border-primary/10 rounded-2xl p-6 md:p-8 space-y-0">
+<div class="step-line mb-6">
+<div class="step-dot">1</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Criação do desafio</h4>
+<p class="text-slate-400 text-sm">Alex cria um desafio com uma aposta de 10 € no FC 25 (PS5). O desafio é publicado e visível para todos.</p>
+<div class="mt-3 bg-primary/5 border border-primary/20 rounded-lg p-4 text-sm">
+<div class="flex items-center gap-2 text-primary font-bold mb-2">
+<span class="material-symbols-outlined text-base">swords</span>
+Desafio criado por Alex
+</div>
+<div class="grid grid-cols-2 gap-2 text-slate-400">
+<span>🎮 Jogo: FC 25</span>
+<span>🕹️ Plataforma: PS5</span>
+<span>💰 Aposta: 10,00 €</span>
+<span>📊 Comissão: 1 %</span>
+</div>
+</div>
+</div>
+</div>
+<div class="step-line mb-6">
+<div class="step-dot">2</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Um adversário junta-se</h4>
+<p class="text-slate-400 text-sm">Kylian procura desafios disponíveis e pede para se juntar ao de Alex. Alex aceita. Os 10 € de cada jogador são bloqueados em custódia.</p>
+</div>
+</div>
+<div class="step-line mb-6">
+<div class="step-dot">3</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Os fundos são bloqueados</h4>
+<p class="text-slate-400 text-sm">As duas apostas (10 € + 10 €) são bloqueadas automaticamente pela plataforma. Ninguém pode tocá-las até o jogo terminar.</p>
+<div class="mt-3 flex flex-wrap gap-3">
+<div class="bg-green-500/10 border border-green-500/30 rounded-lg px-4 py-2 text-sm">
+<span class="text-green-400 font-bold">🔒 20,00 € em custódia</span>
+</div>
+</div>
+</div>
+</div>
+<div class="step-line mb-6">
+<div class="step-dot">4</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">O jogo é disputado</h4>
+<p class="text-slate-400 text-sm">Alex e Kylian jogam o seu jogo na PS5. Cada um confirma que está pronto e começam a partida.</p>
+</div>
+</div>
+<div class="step-line mb-6">
+<div class="step-dot">5</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Declaração de resultados</h4>
+<p class="text-slate-400 text-sm">Após o jogo, cada jogador declara o seu resultado. Alex declara vitória, Kylian declara derrota. Os resultados coincidem → validação automática!</p>
+</div>
+</div>
+<div class="step-line">
+<div class="step-dot">6</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Distribuição de ganhos</h4>
+<p class="text-slate-400 text-sm mb-3">Alex ganhou! A plataforma distribui automaticamente os fundos:</p>
+<div class="bg-primary/5 border border-primary/20 rounded-lg p-4">
+<div class="flex items-center gap-2 text-primary font-bold text-sm mb-3">
+<span class="material-symbols-outlined text-base">payments</span>
+Distribuição dos fundos
+</div>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between text-slate-400">
+<span>Pote total (10 € × 2)</span>
+<span class="text-white font-bold">20,00 €</span>
+</div>
+<div class="flex justify-between text-slate-400">
+<span>Comissão da plataforma (1 %)</span>
+<span class="text-yellow-400">-0,20 €</span>
+</div>
+<div class="border-t border-primary/20 pt-2 flex justify-between">
+<span class="text-green-400 font-bold">Alex recebe</span>
+<span class="text-green-400 font-bold">19,80 €</span>
+</div>
+<div class="flex justify-between text-slate-500 text-xs mt-1">
+<span>Kylian perde a sua aposta</span>
+<span>-10,00 €</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ SECTION TOURNOI : EXEMPLE CONCRET 8 JOUEURS ═══ -->
+<section class="mb-16">
+<div class="flex flex-col gap-2 mb-8">
+<h2 class="text-slate-900 dark:text-slate-100 text-3xl font-bold leading-tight tracking-tight">Exemplo concreto: Torneio Grupos + Eliminação</h2>
+<p class="text-slate-600 dark:text-slate-400">Descubra o fluxo completo de um torneio de 8 jogadores (2 grupos de 4), da criação à distribuição de prémios.</p>
+<div class="h-1 w-20 bg-primary rounded-full"></div>
+</div>
+
+<div class="bg-background-light dark:bg-background-dark border border-slate-200 dark:border-primary/10 rounded-2xl p-6 md:p-8 space-y-0">
+<div class="step-line mb-6">
+<div class="step-dot">1</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">O anfitrião cria o torneio</h4>
+<p class="text-slate-400 text-sm">Coach Zidane cria um torneio FC 25 na PS5 com 8 vagas e 10 € de inscrição.</p>
+<div class="mt-3 bg-primary/5 border border-primary/20 rounded-lg p-4 text-sm">
+<div class="flex items-center gap-2 text-primary font-bold mb-2">
+<span class="material-symbols-outlined text-base">emoji_events</span>
+Torneio &quot;Knockout Cup 8&quot;
+</div>
+<div class="grid grid-cols-2 gap-2 text-slate-400">
+<span>📋 Formato: Grupos + Elim.</span>
+<span>👥 Jogadores: 8</span>
+<span>💰 Inscrição: 10,00 €</span>
+<span>🏦 Prémio: 80,00 €</span>
+</div>
+<div class="mt-2 pt-2 border-t border-primary/10 grid grid-cols-3 gap-2 text-slate-400 text-xs">
+<span>🥇 1º: 40,00 €</span>
+<span>🥈 2º: 20,00 €</span>
+<span>🥉 3º: 10,00 €</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="step-line mb-6">
+<div class="step-dot">2</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Os jogadores inscrevem-se</h4>
+<p class="text-slate-400 text-sm">8 jogadores inscrevem-se e pagam 10 € cada. Os fundos (80 €) são bloqueados em custódia pelo The 1vs1. O anfitrião não tem acesso.</p>
+</div>
+</div>
+
+<div class="step-line mb-6">
+<div class="step-dot">3</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Fase de grupos</h4>
+<p class="text-slate-400 text-sm mb-3">O anfitrião lança o sorteio. Os 8 jogadores são distribuídos em 2 grupos de 4. Cada jogador enfrenta os outros 3. Os 2 primeiros qualificam-se.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<div class="bg-primary/5 border border-primary/20 rounded-lg p-3">
+<div class="text-primary font-bold text-sm mb-2">Grupo A</div>
+<div class="space-y-1 text-xs text-slate-400">
+<div class="flex justify-between"><span>🏆 Alex — 3V 0D</span><span class="text-green-400">9 pts</span></div>
+<div class="flex justify-between"><span>✅ Neymar — 2V 1D</span><span class="text-green-400">6 pts</span></div>
+<div class="flex justify-between"><span>❌ Messi — 1V 2D</span><span class="text-red-400">3 pts</span></div>
+<div class="flex justify-between"><span>❌ Ronaldo — 0V 3D</span><span class="text-red-400">0 pts</span></div>
+</div>
+</div>
+<div class="bg-primary/5 border border-primary/20 rounded-lg p-3">
+<div class="text-primary font-bold text-sm mb-2">Grupo B</div>
+<div class="space-y-1 text-xs text-slate-400">
+<div class="flex justify-between"><span>🏆 Kylian — 3V 0D</span><span class="text-green-400">9 pts</span></div>
+<div class="flex justify-between"><span>✅ Haaland — 2V 1D</span><span class="text-green-400">6 pts</span></div>
+<div class="flex justify-between"><span>❌ Salah — 1V 2D</span><span class="text-red-400">3 pts</span></div>
+<div class="flex justify-between"><span>❌ Vinicius — 0V 3D</span><span class="text-red-400">0 pts</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="step-line mb-6">
+<div class="step-dot">4</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Fase eliminatória</h4>
+<p class="text-slate-400 text-sm mb-3">Os 4 classificados enfrentam-se em eliminação direta. O 1º de um grupo enfrenta o 2º do outro.</p>
+<div class="bg-primary/5 border border-primary/20 rounded-lg p-4 text-sm">
+<div class="space-y-3">
+<div>
+<div class="text-primary font-bold text-xs uppercase tracking-wider mb-1">Semifinais</div>
+<div class="space-y-1 text-slate-400 text-xs">
+<div>SF1: Alex (1º A) vs Haaland (2º B) → Alex vence 3-1</div>
+<div>SF2: Kylian (1º B) vs Neymar (2º A) → Kylian vence 2-0</div>
+</div>
+</div>
+<div>
+<div class="text-primary font-bold text-xs uppercase tracking-wider mb-1">Jogo pelo 3º lugar</div>
+<div class="text-slate-400 text-xs">Haaland vs Neymar → Neymar vence 2-1</div>
+</div>
+<div>
+<div class="text-primary font-bold text-xs uppercase tracking-wider mb-1">Final</div>
+<div class="text-slate-400 text-xs">Alex vs Kylian → Alex vence 4-2 🏆</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="step-line mb-6">
+<div class="step-dot">5</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Classificação final</h4>
+<p class="text-slate-400 text-sm">O torneio terminou. O anfitrião finaliza os resultados.</p>
+<div class="mt-3 flex flex-wrap gap-2">
+<div class="bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-1.5 text-xs">
+<span class="text-yellow-400 font-bold">🥇 Alex — Campeão</span>
+</div>
+<div class="bg-slate-500/10 border border-slate-500/30 rounded-lg px-3 py-1.5 text-xs">
+<span class="text-slate-300 font-bold">🥈 Kylian — Finalista</span>
+</div>
+<div class="bg-orange-500/10 border border-orange-500/30 rounded-lg px-3 py-1.5 text-xs">
+<span class="text-orange-400 font-bold">🥉 Neymar — 3º lugar</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="step-line">
+<div class="step-dot">6</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Distribuição de fundos</h4>
+<p class="text-slate-400 text-sm mb-3">O anfitrião clica em &quot;Distribuir fundos&quot;. A plataforma distribui automaticamente:</p>
+<div class="bg-primary/5 border border-primary/20 rounded-lg p-4">
+<div class="flex items-center gap-2 text-primary font-bold text-sm mb-3">
+<span class="material-symbols-outlined text-base">payments</span>
+Distribuição do prémio
+</div>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between text-slate-400">
+<span>Prémio total (8 × 10 €)</span>
+<span class="text-white font-bold">80,00 €</span>
+</div>
+<div class="border-t border-primary/10 pt-2 space-y-1">
+<div class="flex justify-between text-slate-400">
+<span>🥇 1º (Alex)</span>
+<span class="text-green-400 font-bold">40,00 €</span>
+</div>
+<div class="flex justify-between text-slate-400">
+<span>🥈 2º (Kylian)</span>
+<span class="text-green-400">20,00 €</span>
+</div>
+<div class="flex justify-between text-slate-400">
+<span>🥉 3º (Neymar)</span>
+<span class="text-green-400">10,00 €</span>
+</div>
+</div>
+<div class="border-t border-primary/10 pt-2 space-y-1">
+<div class="flex justify-between text-slate-400">
+<span>Comissão anfitrião (bruto)</span>
+<span class="text-white">10,00 €</span>
+</div>
+<div class="flex justify-between text-slate-400 text-xs">
+<span>Comissão plataforma (2 %)</span>
+<span class="text-yellow-400">-0,20 €</span>
+</div>
+<div class="flex justify-between text-slate-400">
+<span class="text-blue-400 font-bold">O anfitrião recebe</span>
+<span class="text-blue-400 font-bold">9,80 €</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ SECTION TOURNOI GRATUIT ═══ -->
+<section id="tournoi-gratuit" class="mb-16 scroll-mt-24">
+<div class="flex flex-col gap-2 mb-8">
+<h2 class="text-slate-900 dark:text-slate-100 text-3xl font-bold leading-tight tracking-tight">Variant: The Free Tournament</h2>
+<p class="text-slate-600 dark:text-slate-400">Run an open competition with no stake and no commission, with custom rewards.</p>
+<div class="h-1 w-20 bg-primary rounded-full"></div>
+</div>
+
+<div class="bg-background-light dark:bg-background-dark border border-slate-200 dark:border-primary/10 rounded-2xl p-6 md:p-8">
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">In addition to real-money tournaments, The 1vs1 offers a second competition system: the free tournament. Registration is completely free, no money is staked or held in escrow, and the platform takes no commission. Instead of a cash prize pool, the host freely defines text-described rewards (a LAN final slot, a physical prize, a gift card, a simple honorary title, etc.). The competitive flow is identical to a paid tournament.</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+<div class="rounded-xl border border-primary/20 bg-primary/5 p-5">
+<div class="flex items-center gap-2 text-primary font-bold mb-3">
+<span class="material-symbols-outlined text-base">payments</span>
+Paid tournament
+</div>
+<ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+<li class="flex gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span>Entry fee, stake locked in escrow</li>
+<li class="flex gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span>Real-money prize pool split between 1st, 2nd and 3rd</li>
+<li class="flex gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span>2% platform commission on the host&#039;s commission</li>
+</ul>
+</div>
+<div class="rounded-xl border border-green-500/30 bg-green-500/5 p-5">
+<div class="flex items-center gap-2 text-green-400 font-bold mb-3">
+<span class="material-symbols-outlined text-base">volunteer_activism</span>
+Free tournament
+</div>
+<ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+<li class="flex gap-2"><span class="material-symbols-outlined text-green-400 text-sm">check_circle</span>€0 entry, no escrow, no financial risk</li>
+<li class="flex gap-2"><span class="material-symbols-outlined text-green-400 text-sm">check_circle</span>Free-text rewards defined by the organizer</li>
+<li class="flex gap-2"><span class="material-symbols-outlined text-green-400 text-sm">check_circle</span>No commission: the platform takes nothing</li>
+</ul>
+</div>
+</div>
+
+<div class="space-y-0">
+<div class="step-line mb-6">
+<div class="step-dot">1</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">The host creates a free tournament</h4>
+<p class="text-slate-400 text-sm">Coach Zidane creates an FC 25 tournament on PS5, selects the &quot;Free&quot; entry type and describes the rewards. Like any tournament, it is subject to admin approval before publication.</p>
+<div class="mt-3 bg-green-500/5 border border-green-500/20 rounded-lg p-4 text-sm">
+<div class="flex items-center gap-2 text-green-400 font-bold mb-2">
+<span class="material-symbols-outlined text-base">emoji_events</span>
+Tournament &quot;Community Cup&quot;
+</div>
+<div class="grid grid-cols-2 gap-2 text-slate-400">
+<span>📋 Format: Groups + Knockout</span>
+<span>👥 Players: 16</span>
+<span>💰 Entry: Free</span>
+<span>📊 Commission: None</span>
+</div>
+<div class="mt-2 pt-2 border-t border-green-500/10 grid grid-cols-1 gap-1 text-slate-400 text-xs">
+<span>🥇 1st: Qualifying slot for the LAN final</span>
+<span>🥈 2nd: Signed jersey</span>
+<span>🥉 3rd: &quot;Veteran&quot; profile badge</span>
+</div>
+</div>
+</div>
+</div>
+<div class="step-line mb-6">
+<div class="step-dot">2</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Players register for free</h4>
+<p class="text-slate-400 text-sm">16 players join the tournament without paying anything. No amount is deducted from their wallet and no funds are locked. For a private tournament, the host approves each request.</p>
+</div>
+</div>
+<div class="step-line mb-6">
+<div class="step-dot">3</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">The tournament is played normally</h4>
+<p class="text-slate-400 text-sm">Draw, groups, knockout stage, result declaration, conflict resolution by the host, forfeit after 1h absence: the competitive flow is exactly the same as a paid tournament.</p>
+</div>
+</div>
+<div class="step-line">
+<div class="step-dot">4</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Reward attribution</h4>
+<p class="text-slate-400 text-sm mb-3">At closing, the platform automatically assigns each winner the reward described by the organizer. No money is distributed and no commission is taken — the organizer is responsible for actually delivering the announced rewards.</p>
+<div class="flex flex-wrap gap-2">
+<div class="bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-1.5 text-xs">
+<span class="text-yellow-400 font-bold">🥇 LAN final slot</span>
+</div>
+<div class="bg-slate-500/10 border border-slate-500/30 rounded-lg px-3 py-1.5 text-xs">
+<span class="text-slate-300 font-bold">🥈 Signed jersey</span>
+</div>
+<div class="bg-orange-500/10 border border-orange-500/30 rounded-lg px-3 py-1.5 text-xs">
+<span class="text-orange-400 font-bold">🥉 &quot;Veteran&quot; badge</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ SECTION TOURNOI CAGNOTTE FINANCÉE PAR L'HÔTE ═══ -->
+<section id="tournoi-cagnotte-hote" class="mb-16 scroll-mt-24">
+<div class="flex flex-col gap-2 mb-8">
+<h2 class="text-slate-900 dark:text-slate-100 text-3xl font-bold leading-tight tracking-tight">Third system: the Host-Funded Prize Pool</h2>
+<p class="text-slate-600 dark:text-slate-400">The host puts up the money: free entry for players, real-money prizes funded by the organizer.</p>
+<div class="h-1 w-20 bg-primary rounded-full"></div>
+</div>
+
+<div class="bg-background-light dark:bg-background-dark border border-slate-200 dark:border-primary/10 rounded-2xl p-6 md:p-8">
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">This is The 1vs1&#039;s third competition system, halfway between the paid and the free tournament. Players register for free, but the prizes are real money: the host fully funds the prize pool from their own wallet. At creation, the total prizes plus a 2% platform commission is debited from the host&#039;s wallet and held in escrow by The 1vs1. The competitive flow is identical to the other tournaments; at closing, the top 3 share the pool funded by the host.</p>
+
+<div class="space-y-0">
+<div class="step-line mb-6">
+<div class="step-dot">1</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">The host creates the tournament and funds the pool</h4>
+<p class="text-slate-400 text-sm">Coach Zidane creates an FC 25 tournament on PS5, selects the &quot;Host-funded pool&quot; entry type and sets the prizes himself: €50 / €30 / €20 (total €100).</p>
+<div class="mt-3 bg-blue-500/5 border border-blue-500/20 rounded-lg p-4 text-sm">
+<div class="flex items-center gap-2 text-blue-400 font-bold mb-2">
+<span class="material-symbols-outlined text-base">volunteer_activism</span>
+Tournament &quot;Sponsor Cup&quot;
+</div>
+<div class="grid grid-cols-2 gap-2 text-slate-400">
+<span>📋 Format: Single elim.</span>
+<span>👥 Players: 8</span>
+<span>💰 Entry: Free</span>
+<span>🏦 Pool: €100.00 (host-funded)</span>
+</div>
+<div class="mt-2 pt-2 border-t border-blue-500/10 grid grid-cols-3 gap-2 text-slate-400 text-xs">
+<span>🥇 1st: €50.00</span>
+<span>🥈 2nd: €30.00</span>
+<span>🥉 3rd: €20.00</span>
+</div>
+</div>
+</div>
+</div>
+<div class="step-line mb-6">
+<div class="step-dot">2</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">The host&#039;s funds are locked</h4>
+<p class="text-slate-400 text-sm">At creation, €102 is debited from the host&#039;s wallet (€100 prizes + €2 platform commission) and held in escrow by The 1vs1. If the tournament is rejected by an admin, cancelled or suspended, the host is fully refunded.</p>
+<div class="mt-3 flex flex-wrap gap-3">
+<div class="bg-blue-500/10 border border-blue-500/30 rounded-lg px-4 py-2 text-sm">
+<span class="text-blue-400 font-bold">🔒 €102.00 debited from host and escrowed</span>
+</div>
+</div>
+</div>
+</div>
+<div class="step-line mb-6">
+<div class="step-dot">3</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Players register for free</h4>
+<p class="text-slate-400 text-sm">8 players join the tournament without paying anything. No amount is deducted from their wallet: the pool is already funded by the host.</p>
+</div>
+</div>
+<div class="step-line mb-6">
+<div class="step-dot">4</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">The tournament is played normally</h4>
+<p class="text-slate-400 text-sm">Draw, matches, result declaration, conflict resolution by the host, forfeit after 1h absence: the competitive flow is exactly the same as the other tournaments.</p>
+</div>
+</div>
+<div class="step-line">
+<div class="step-dot">5</div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1">Fund distribution</h4>
+<p class="text-slate-400 text-sm mb-3">At closing, the platform automatically distributes the host&#039;s pool to the top 3. The host gets nothing back (they sponsored the tournament); The 1vs1 keeps the 2% commission.</p>
+<div class="bg-blue-500/5 border border-blue-500/20 rounded-lg p-4">
+<div class="flex items-center gap-2 text-blue-400 font-bold text-sm mb-3">
+<span class="material-symbols-outlined text-base">payments</span>
+Prize pool breakdown
+</div>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between text-slate-400">
+<span>Total debited from host (€100 prizes + €2 commission)</span>
+<span class="text-white font-bold">102,00 €</span>
+</div>
+<div class="border-t border-blue-500/10 pt-2 space-y-1">
+<div class="flex justify-between text-slate-400">
+<span>🥇 1st receives</span>
+<span class="text-green-400 font-bold">50,00 €</span>
+</div>
+<div class="flex justify-between text-slate-400">
+<span>🥈 2nd receives</span>
+<span class="text-green-400">30,00 €</span>
+</div>
+<div class="flex justify-between text-slate-400">
+<span>🥉 3rd receives</span>
+<span class="text-green-400">20,00 €</span>
+</div>
+</div>
+<div class="border-t border-blue-500/10 pt-2 flex justify-between text-slate-400 text-xs">
+<span>Platform commission (2%)</span>
+<span class="text-yellow-400">2,00 €</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FAQ/Accordions Preview -->
+<section class="mb-16">
+<h2 class="text-slate-900 dark:text-slate-100 text-2xl font-bold mb-6">Perguntas Frequentes sobre Segurança</h2>
+<div class="space-y-4">
+<div class="border border-slate-200 dark:border-primary/20 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 transition-colors">
+<span class="font-bold text-slate-900 dark:text-slate-100">O que acontece se o meu adversário se desligar?</span>
+<span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+</button>
+<div class="faq-answer px-6 text-sm text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-primary/10">
+                    O nosso sistema deteta o ponto de desconexão. Se um jogador se desligar intencionalmente enquanto perde, perde a partida por forfait. Se for um erro técnico, oferecemos um protocolo de revanche.
+                </div>
+</div>
+<div class="border border-slate-200 dark:border-primary/20 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 transition-colors">
+<span class="font-bold text-slate-900 dark:text-slate-100">Quão rápidos são os pagamentos?</span>
+<span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+</button>
+<div class="faq-answer px-6 text-sm text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-primary/10">
+                    Os ganhos são creditados instantaneamente na sua carteira após a validação do resultado. Os levantamentos para a sua conta bancária ou PayPal são processados em 24 a 48 horas.
+                </div>
+</div>
+<div class="border border-slate-200 dark:border-primary/20 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 transition-colors">
+<span class="font-bold text-slate-900 dark:text-slate-100">Posso jogar sem conta Twitch?</span>
+<span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+</button>
+<div class="faq-answer px-6 text-sm text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-primary/10">
+                    Sim, pode jogar sem Twitch para partidas standard. No entanto, para partidas de altas apostas (50€+), é necessário um stream ao vivo no Twitch como prova de integridade.
+                </div>
+</div>
+<div class="border border-slate-200 dark:border-primary/20 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 transition-colors">
+<span class="font-bold text-slate-900 dark:text-slate-100">Como funciona o sistema de disputas?</span>
+<span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+</button>
+<div class="faq-answer px-6 text-sm text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-primary/10">
+                    Se ambos os jogadores afirmarem ter ganho, é aberta uma disputa automaticamente. A nossa equipa revê as provas (capturas, replay Twitch) e emite uma decisão em 24 horas. Os fundos permanecem em custódia durante a resolução.
+                </div>
+</div>
+<div class="border border-slate-200 dark:border-primary/20 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 transition-colors">
+<span class="font-bold text-slate-900 dark:text-slate-100">Como funciona a verificação de identidade (KYC)?</span>
+<span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+</button>
+<div class="faq-answer px-6 text-sm text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-primary/10">
+                    Para criar um torneio ou efetuar o seu primeiro levantamento, deve submeter um documento de identidade válido (cartão de cidadão, passaporte ou carta de condução). A nossa equipa verifica o seu documento em 24 a 48 horas. Os seus documentos são armazenados de forma segura e eliminados após validação.
+                </div>
+</div>
+<div class="border border-slate-200 dark:border-primary/20 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 transition-colors">
+<span class="font-bold text-slate-900 dark:text-slate-100">Posso organizar o meu próprio torneio?</span>
+<span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+</button>
+<div class="faq-answer px-6 text-sm text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-primary/10">
+                    Sim! Qualquer utilizador verificado (identidade validada, conta Google vinculada, 2FA ativada) pode criar um torneio. Define o formato (eliminação direta ou grupos), o número de jogadores, a taxa de inscrição e a distribuição de prémios. Os fundos dos participantes são assegurados em custódia pelo The 1vs1.
+                </div>
+</div>
+<div class="border border-slate-200 dark:border-primary/20 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 transition-colors">
+<span class="font-bold text-slate-900 dark:text-slate-100">O que acontece se um torneio for cancelado?</span>
+<span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+</button>
+<div class="faq-answer px-6 text-sm text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-primary/10">
+                    Se o anfitrião ou o The 1vs1 cancelar um torneio, todos os participantes confirmados são integralmente reembolsados. As taxas de inscrição regressam automaticamente à sua carteira. Não são cobradas taxas em caso de cancelamento.
+                </div>
+</div>
+<div class="border border-slate-200 dark:border-primary/20 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 transition-colors">
+<span class="font-bold text-slate-900 dark:text-slate-100">Como são calculadas as comissões?</span>
+<span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+</button>
+<div class="faq-answer px-6 text-sm text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-primary/10">
+                    Para os desafios, a comissão (geralmente 1%) é deduzida do pote total e o restante vai para o vencedor. Para os torneios, o anfitrião recebe a diferença entre as inscrições e os prémios, menos uma comissão de plataforma de 2%. Todas as taxas são apresentadas de forma transparente antes de cada transação.
+                </div>
+</div>
+<div class="border border-slate-200 dark:border-primary/20 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 transition-colors">
+<span class="font-bold text-slate-900 dark:text-slate-100">Qual é a idade mínima para jogar?</span>
+<span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+</button>
+<div class="faq-answer px-6 text-sm text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-primary/10">
+                    Deve ter pelo menos 18 anos para se registar e participar no The 1vs1. Isto é verificado durante o registo e pode ser confirmado pela verificação de identidade (KYC). As contas de menores serão suspensas e os fundos reembolsados.
+                </div>
+</div>
+<div class="border border-slate-200 dark:border-primary/20 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 transition-colors">
+<span class="font-bold text-slate-900 dark:text-slate-100">O que é a autenticação de dois fatores (2FA)?</span>
+<span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+</button>
+<div class="faq-answer px-6 text-sm text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-primary/10">
+                    A 2FA adiciona uma camada extra de segurança à sua conta. A cada login, um código único é enviado para o seu email. Deve introduzi-lo para aceder à sua conta. Recomendamos vivamente ativar a 2FA, especialmente se tiver fundos na sua carteira.
+                </div>
+</div>
+<div class="border border-slate-200 dark:border-primary/20 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 transition-colors">
+<span class="font-bold text-slate-900 dark:text-slate-100">What is a free tournament and who delivers the rewards?</span>
+<span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+</button>
+<div class="faq-answer px-6 text-sm text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-primary/10">
+                    A free tournament works like a regular tournament (formats, groups, brackets, conflict handling) but with no stake: registration is €0, no funds are held in escrow and The 1vs1 takes no commission. Rewards are not monetary: they are freely described in text by the organizer (a prize, an event slot, an honorary title, etc.). Actually delivering these rewards is the sole responsibility of the tournament organizer; The 1vs1 only acts as a technical platform and does not take part in their distribution.
+                </div>
+</div>
+<div class="border border-slate-200 dark:border-primary/20 rounded-lg overflow-hidden bg-background-light dark:bg-background-dark">
+<button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary/5 transition-colors">
+<span class="font-bold text-slate-900 dark:text-slate-100">How does the host-funded prize pool tournament work?</span>
+<span class="material-symbols-outlined text-primary faq-icon">expand_more</span>
+</button>
+<div class="faq-answer px-6 text-sm text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-primary/10">
+                    In this third system, entry is free for players but the prizes are real money, funded by the organizer. When the tournament is created, the total prizes (1st + 2nd + 3rd) plus a 2% platform commission is debited from the host&#039;s wallet and held in escrow by The 1vs1. Players register without paying anything. At closing, the top 3 share the pool; the host receives no commission (they are the sponsor) and The 1vs1 keeps the 2%. If the tournament is rejected by an admin, cancelled or suspended, the host is fully refunded.
+                </div>
+</div>
+</div>
+</section>
+<!-- Call to Action -->
+<section class="bg-primary rounded-2xl p-10 text-center mb-10 shadow-lg shadow-primary/20">
+<h2 class="text-white text-3xl font-bold mb-4">Pronto para Provar as Suas Competências?</h2>
+<p class="text-white/80 mb-8 max-w-xl mx-auto">Junte-se a milhares de jogadores FIFA / eFootball e compita num ambiente seguro e profissional.</p>
+<div class="flex flex-wrap justify-center gap-4">
+<a href="/pt/defis/creer" class="px-8 py-3 bg-white text-primary font-bold rounded-lg hover:bg-slate-100 transition-colors">Lançar um Desafio</a>
+<a href="/pt/defis" class="px-8 py-3 border-2 border-white/30 text-white font-bold rounded-lg hover:bg-white/10 transition-colors">Ver Partidas ao Vivo</a>
+</div>
+</section>
+
+</div></div>        </main>
+
+                            <footer class="border-t border-slate-200 dark:border-slate-800 px-6 py-12 lg:px-20 bg-slate-50 dark:bg-slate-900/20">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12">
+        <div class="flex flex-col gap-4">
+            <a href="/pt/" class="flex items-center gap-2 text-primary no-underline">
+                <img src="/images/logo.svg" alt="The 1vs1" class="h-6">
+            </a>
+            <p class="text-sm text-slate-500 max-w-xs">Criado por gamers, para gamers. A plataforma n°1 para partidas competitivas 1v1.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+            <div class="flex flex-col gap-4">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">Plataforma</h4>
+                <a class="text-sm hover:text-primary" href="/pt/defis">Desafios</a>
+                <a class="text-sm hover:text-primary" href="/pt/tournois">Torneios</a>
+                <a class="text-sm hover:text-primary" href="/pt/classement">Classificação</a>
+                <a class="text-sm hover:text-primary" href="/pt/comment-ca-marche">Como Funciona</a>
+                                <a class="text-sm hover:text-primary" href="/pt/a-propos">Sobre nós</a>
+                <a class="text-sm hover:text-primary" href="/pt/pourquoi-the1vs1">Por que The 1vs1</a>
+                <a class="text-sm hover:text-primary" href="/pt/devenir-partenaire">Tornar-se parceiro</a>
+            </div>
+            <div class="flex flex-col gap-4">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">Suporte</h4>
+                <a class="text-sm hover:text-primary" href="/pt/mentions-legales">Aviso Legal</a>
+                <a class="text-sm hover:text-primary" href="/pt/politique-confidentialite">Política de Privacidade</a>
+                <a class="text-sm hover:text-primary" href="/pt/cgu">Termos de Utilização</a>
+                <a class="text-sm hover:text-primary" href="/pt/cgv">Termos de Venda</a>
+                <a class="text-sm hover:text-primary" href="/pt/politique-retrait">Política de Levantamentos</a>
+                <a class="text-sm hover:text-primary" href="mailto:contact@the1vs1.com">Contacte-nos</a>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-xs text-slate-500 order-last md:order-first">&copy; 2026 The 1vs1.</p>
+        <form method="get" class="flex items-center h-full ">
+            <div class="relative flex items-center h-full ">
+                <img src="/flags/pt.svg" alt="pt" class="w-5 h-5 rounded-full border border-slate-300 dark:border-slate-600 absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none">
+                <select onchange="window.location.href=this.value" class="appearance-none pl-8 pr-6 py-1 rounded border text-sm bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary h-8">
+                                                                                                                                                                                        <option value="/fr/comment-ca-marche" >Français</option>
+                                                                                                                                                <option value="/en/comment-ca-marche" >English</option>
+                                                                                                                                                <option value="/pt/comment-ca-marche" selected>Português</option>
+                                                                                                                                                <option value="/ar/comment-ca-marche" >العربية</option>
+                                                                                                                                                <option value="/es/comment-ca-marche" >Español</option>
+                                                                                                                                                <option value="/de/comment-ca-marche" >Deutsch</option>
+                                                                                                                                                <option value="/tr/comment-ca-marche" >Türkçe</option>
+                                    </select>
+            </div>
+        </form>
+        <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded px-2 py-1">
+                <svg class="w-8 h-5" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="32" rx="4" fill="#1A1F71"/>
+                    <text x="24" y="20" text-anchor="middle" fill="white" font-size="12" font-weight="bold" font-family="sans-serif">VISA</text>
+                </svg>
+            </div>
+                        <div class="flex items-center gap-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded px-2 py-1">
+                <svg class="w-8 h-5" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="32" rx="4" fill="#252525"/>
+                    <circle cx="19" cy="16" r="8" fill="#EB001B" opacity="0.9"/>
+                    <circle cx="29" cy="16" r="8" fill="#F79E1B" opacity="0.9"/>
+                    <path d="M24 10.5a8 8 0 0 1 0 11" fill="#FF5F00"/>
+                </svg>
+            </div>
+                        <div class="flex items-center gap-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded px-2 py-1">
+                <svg class="w-8 h-5" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="32" rx="4" fill="#003087"/>
+                    <text x="24" y="13" text-anchor="middle" fill="#009cde" font-size="7" font-weight="bold" font-family="sans-serif">Pay</text>
+                    <text x="24" y="23" text-anchor="middle" fill="#012169" font-size="7" font-weight="bold" font-family="sans-serif">Pal</text>
+                </svg>
+            </div>
+                        <div class="flex items-center gap-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded px-2 py-1">
+                <svg class="w-8 h-5" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="32" rx="4" fill="#34A853"/>
+                    <text x="24" y="14" text-anchor="middle" fill="white" font-size="6" font-weight="bold" font-family="sans-serif">Mobile</text>
+                    <text x="24" y="23" text-anchor="middle" fill="white" font-size="6" font-weight="bold" font-family="sans-serif">Money</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+                        <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-[9990] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 md:hidden safe-bottom">
+                                    <div class="flex items-center justify-around px-2 py-1.5">
+                                <a href="/pt/" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">home</span>
+                    <span class="text-[10px] font-semibold">Início</span>
+                </a>
+                <a href="/pt/defis" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">swords</span>
+                    <span class="text-[10px] font-semibold">Desafios</span>
+                </a>
+                <a href="/pt/connexion?_target_path=/pt/defis/creer" class="flex flex-col items-center gap-0.5 no-underline min-w-[56px]">
+                    <span class="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white shadow-lg shadow-primary/30 -mt-4">
+                        <span class="material-symbols-outlined text-[22px]">add</span>
+                    </span>
+                    <span class="text-[10px] font-semibold text-slate-500">Criar</span>
+                </a>
+                <a href="/pt/classement" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">leaderboard</span>
+                    <span class="text-[10px] font-semibold">Ranking</span>
+                </a>
+                <a href="/pt/connexion" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg transition-colors no-underline min-w-[56px] text-slate-500 hover:text-primary">
+                    <span class="material-symbols-outlined text-[22px] ">login</span>
+                    <span class="text-[10px] font-semibold">Entrar</span>
+                </a>
+            </div>
+                    </nav>
+        
+    </div>
+
+    <script>
+document.querySelectorAll('.faq-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var answer = this.nextElementSibling;
+        var icon = this.querySelector('.faq-icon');
+        answer.classList.toggle('open');
+        icon.classList.toggle('rotate');
+    });
+});
+</script>
+
+        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add loading state to all form submit buttons
+        document.querySelectorAll('form').forEach(function(form) {
+            // Skip AJAX forms (those with onsubmit returning false)
+            if (form.getAttribute('onsubmit')) return;
+            // Skip forms in admin support chat
+            if (form.id === 'admin-reply-form') return;
+            // Skip AJAX chat forms (lobby match chat)
+            if (form.id === 'chatForm' || form.id === 'mobileChatForm') return;
+
+            form.addEventListener('submit', function(e) {
+                const btn = form.querySelector('button[type="submit"], button:not([type])');
+                if (!btn || btn.disabled) return;
+
+                // Save original content
+                btn.dataset.originalText = btn.innerHTML;
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+                btn.innerHTML = '<span class="inline-flex items-center gap-2"><svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>' + (btn.dataset.originalText.length < 50 ? btn.dataset.originalText : 'Carregando...') + '</span>';
+
+                // Re-enable after 10s in case of error
+                setTimeout(function() {
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-60', 'cursor-not-allowed');
+                    if (btn.dataset.originalText) btn.innerHTML = btn.dataset.originalText;
+                }, 10000);
+            });
+        });
+
+        // Disable submit buttons when required fields are empty
+        document.querySelectorAll('form').forEach(function(form) {
+            const requiredInputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            const btn = form.querySelector('button[type="submit"], button:not([type])');
+            if (!btn || requiredInputs.length === 0) return;
+            // Skip forms that already have their own validation logic
+            if (form.id === 'forgotForm' || form.id === 'resetForm' || form.id === 'admin-reply-form') return;
+            // Skip AJAX chat forms (lobby match chat)
+            if (form.id === 'chatForm' || form.id === 'mobileChatForm') return;
+
+            function checkRequired() {
+                let allFilled = true;
+                requiredInputs.forEach(function(input) {
+                    if (input.type === 'checkbox') {
+                        if (!input.checked) allFilled = false;
+                    } else if (!input.value.trim()) {
+                        allFilled = false;
+                    }
+                });
+                btn.disabled = !allFilled;
+                if (allFilled) {
+                    btn.classList.remove('opacity-40', 'cursor-not-allowed');
+                } else {
+                    btn.classList.add('opacity-40', 'cursor-not-allowed');
+                }
+            }
+
+            requiredInputs.forEach(function(input) {
+                input.addEventListener('input', checkRequired);
+                input.addEventListener('change', checkRequired);
+            });
+
+            checkRequired();
+        });
+    });
+    </script>
+
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+
+    // ── PWA Install Banner Logic ──
+    (function() {
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+        if (isStandalone) return;
+
+        const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isAndroid = /Android/.test(navigator.userAgent);
+        if (!isIOS && !isAndroid) return;
+
+        const banner = document.getElementById('pwa-banner');
+        const modal = document.getElementById('pwa-modal');
+        const iosSection = document.getElementById('pwa-ios');
+        const androidSection = document.getElementById('pwa-android');
+        let deferredPrompt = null;
+
+        // Show banner
+        banner.classList.remove('hidden');
+        banner.classList.add('flex');
+
+        // Capture beforeinstallprompt for Android
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        // Dismiss (session only — reappears on next page load)
+        document.getElementById('pwa-dismiss-btn').addEventListener('click', function() {
+            banner.classList.add('hidden');
+        });
+
+        // Open modal
+        document.getElementById('pwa-install-btn').addEventListener('click', function() {
+            modal.classList.remove('hidden');
+            if (isIOS) {
+                iosSection.classList.remove('hidden');
+                androidSection.classList.add('hidden');
+            } else {
+                androidSection.classList.remove('hidden');
+                iosSection.classList.add('hidden');
+                if (!deferredPrompt) {
+                    document.getElementById('pwa-native-install').classList.add('hidden');
+                    document.getElementById('pwa-android-fallback').classList.remove('hidden');
+                }
+            }
+        });
+
+        // Close modal
+        function closeModal() { modal.classList.add('hidden'); }
+        document.getElementById('pwa-modal-close').addEventListener('click', closeModal);
+        document.getElementById('pwa-modal-backdrop').addEventListener('click', closeModal);
+
+        // Native Android install
+        document.getElementById('pwa-native-install').addEventListener('click', function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function() {
+                    deferredPrompt = null;
+                    closeModal();
+                    banner.classList.add('hidden');
+                });
+            }
+        });
+    })();
+    </script>
+
+
+</body>
+</html>

@@ -1,392 +1,639 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import amigos from '@/assets/amigos.png'
+import { vReveal, prefersReduce } from '@/composables/useReveal'
+import {
+  ArrowRight,
+  Gamepad2,
+  Star,
+  CheckCircle2,
+  Goal,
+  Award,
+  UserPlus,
+  Swords,
+  Wallet,
+  Lock,
+  Gavel,
+  Zap,
+  Clock,
+  Trophy,
+  BadgeCheck,
+  Dices,
+  Network,
+  Users,
+  QrCode,
+  Crown,
+  Share2,
+} from '@lucide/vue'
 
-const isNavOpen = ref(false)
-const scrolled = ref(false)
+/* ── Prêmio "ao vivo" (apenas decorativo, transmite atividade) ── */
+const prizePool = ref(24500)
+const prizePoolFmt = computed(() =>
+  prizePool.value.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    maximumFractionDigits: 0,
+  }),
+)
+let prizeTimer: number | undefined
 
 onMounted(() => {
-  window.addEventListener('scroll', () => {
-    scrolled.value = window.scrollY > 20
-  })
+  if (prefersReduce()) return
+  prizeTimer = window.setInterval(() => {
+    const delta = (Math.random() - 0.4) * 220
+    prizePool.value = Math.min(28000, Math.max(21000, Math.round(prizePool.value + delta)))
+  }, 2600)
+})
+onBeforeUnmount(() => {
+  if (prizeTimer) clearInterval(prizeTimer)
 })
 
-const features = [
-  {
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />`,
-    title: 'Pix Instantâneo',
-    description: 'Deposite e saque em segundos. Sem taxas de conversão, sem espera. Seu dinheiro na hora.'
-  },
-  {
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />`,
-    title: 'Anti-Fraude Robusto',
-    description: 'Sistema de duplo check de resultados com chat de mediação e análise de provas em tempo real.'
-  },
-  {
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />`,
-    title: 'Desafie Seus Amigos',
-    description: 'Gere links privados de desafio e compartilhe direto no WhatsApp, Discord ou Telegram.'
-  },
-  {
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />`,
-    title: 'Rake Justo',
-    description: 'Zero taxa de depósito e saque. Cobramos apenas uma pequena taxa sobre o pote da partida.'
-  },
-  {
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />`,
-    title: 'PC, Console & Mobile',
-    description: 'Jogue no PS5, Xbox, PC ou Steam. Acesse a plataforma de qualquer dispositivo, em qualquer lugar.'
-  },
-  {
-    icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />`,
-    title: 'Torneios & Rankings',
-    description: 'Participe de torneios com premiações reais e suba no ranking da comunidade brasileira.'
-  }
+/* ── Conteúdo ── */
+const stats = [
+  { value: 'R$ 1,2M+', label: 'Pago em prêmios' },
+  { value: '48 mil', label: 'Partidas disputadas' },
+  { value: '6.463', label: 'Jogadores ativos' },
+  { value: '< 5 min', label: 'Tempo médio de saque' },
 ]
 
 const steps = [
-  { number: '01', title: 'Crie sua Conta', description: 'Cadastre-se em segundos e vincule seu EA ID, PSN ou Xbox Live.' },
-  { number: '02', title: 'Deposite via Pix', description: 'Gere um QR Code Pix e seu saldo atualiza instantaneamente.' },
-  { number: '03', title: 'Desafie ou Aceite', description: 'Crie uma sala pública ou envie um link privado para seu amigo.' },
-  { number: '04', title: 'Jogue & Ganhe', description: 'Vença a partida, confirme o resultado e receba o prêmio na hora.' }
+  {
+    n: '01',
+    icon: UserPlus,
+    title: 'Crie sua conta grátis',
+    desc: 'Cadastro em segundos, sem mensalidade e sem burocracia. É só criar e começar.',
+  },
+  {
+    n: '02',
+    icon: Swords,
+    title: 'Crie ou entre num desafio',
+    desc: 'Escolha o jogo (EA FC ou eFootball), a plataforma (PS5, Xbox, PC) e a aposta. O matchmaking acha seu rival na hora.',
+  },
+  {
+    n: '03',
+    icon: Wallet,
+    title: 'Vença e receba o prêmio',
+    desc: 'Reporte o placar, a plataforma valida e o prêmio cai na sua carteira. Saque quando quiser, com segurança.',
+  },
+]
+
+const features = [
+  {
+    icon: Lock,
+    title: 'Carteira protegida',
+    desc: 'Os valores ficam retidos pela ArenaX1 e só são liberados ao vencedor. Ninguém toca no dinheiro dos outros.',
+  },
+  {
+    icon: Gavel,
+    title: 'Antifraude & disputas',
+    desc: 'Todo resultado passa por duplo check. Deu divergência? A mediação com provas resolve. Tolerância zero com batota.',
+  },
+  {
+    icon: Zap,
+    title: 'Saque sem complicação',
+    desc: 'Depósito e saque sem taxas escondidas e sem letras miúdas. Seu dinheiro, do seu jeito.',
+  },
+  {
+    icon: Clock,
+    title: 'Matchmaking 24/7',
+    desc: 'Tem sempre alguém pra jogar. Encontre adversário do seu nível a qualquer hora do dia.',
+  },
+]
+
+const tourneyFeatures = [
+  {
+    icon: Trophy,
+    title: 'Estatísticas automáticas',
+    desc: 'Melhor ataque, pior defesa, saldo de gols e ranking de vitórias — calculados a partir dos placares que vocês lançam.',
+  },
+  {
+    icon: BadgeCheck,
+    title: 'Card do Campeão',
+    desc: 'No fim do torneio geramos um card do vencedor com os números da campanha — pronto pra postar nos Stories.',
+  },
+  {
+    icon: Dices,
+    title: 'Roleta de Times & Draft',
+    desc: 'Sorteia quem joga com cada time e acaba com a briga eterna por PSG ou Real Madrid.',
+  },
+]
+
+const championStats = [
+  { k: 'GF', v: '14' },
+  { k: 'GS', v: '3' },
+  { k: 'SG', v: '+11' },
+  { k: 'VIT', v: '3' },
+  { k: 'JOG', v: '3' },
+  { k: '%V', v: '100' },
+]
+
+const tools = [
+  { icon: Dices, title: 'Roleta de Times', desc: 'Sorteie os times de cada jogador.' },
+  { icon: Network, title: 'Gerador de Chave', desc: 'Monte o mata-mata em 1 clique.' },
+  { icon: Users, title: 'Roleta de Draft', desc: 'Distribua jogadores entre os capitães.' },
 ]
 </script>
 
 <template>
-  <div class="min-h-screen bg-canvas text-ink relative overflow-hidden">
+  <div class="overflow-x-clip">
+    <!-- ══════════════════ HERO ══════════════════ -->
+    <section class="relative -mt-16 overflow-hidden">
+      <!-- Orbs ambiente -->
+      <div
+        class="pointer-events-none absolute -left-24 top-44 h-72 w-72 rounded-full bg-primary/20 blur-[110px]"
+      ></div>
+      <div
+        class="pointer-events-none absolute -right-10 bottom-0 h-80 w-80 rounded-full bg-accent/20 blur-[120px]"
+      ></div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- NAVEGAÇÃO FIXA                              -->
-    <!-- ═══════════════════════════════════════════ -->
-    <nav 
-      :class="[
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        scrolled ? 'bg-canvas/90 backdrop-blur-xl border-b border-hairline' : 'bg-transparent'
-      ]"
-    >
-      <div class="max-w-[1280px] mx-auto px-6 lg:px-12 h-14 flex items-center justify-between">
-        <!-- Logo -->
-        <div class="flex items-center gap-3">
-          <svg class="w-7 h-7 text-primary" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M21.58 6.91a2 2 0 0 0-1.28-1.12c-2.31-.76-7.85-1.52-8.3-1.52s-5.99.76-8.3 1.52A2 2 0 0 0 2.42 6.91C1.04 10.97 1 15.68 1 15.68a2 2 0 0 0 1.28 1.55c1.33.44 4.09.87 6.44 1.15.54.06.94.57.87 1.11-.06.49-.48.86-.97.86h-1.18a.75.75 0 0 0 0 1.5h9.12a.75.75 0 0 0 0-1.5h-1.18c-.49 0-.91-.37-.97-.86-.07-.54.33-1.05.87-1.11 2.35-.28 5.11-.71 6.44-1.15a2 2 0 0 0 1.28-1.55s.04-4.71-1.34-8.77zM9.5 12a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-          </svg>
-          <span class="font-display font-semibold text-body-lg tracking-tight">Arena X1</span>
-        </div>
-
-        <!-- Links Desktop -->
-        <div class="hidden md:flex items-center gap-8 text-body-sm text-ink-subtle">
-          <a href="#como-funciona" class="hover:text-ink transition-colors">Como Funciona</a>
-          <a href="#recursos" class="hover:text-ink transition-colors">Recursos</a>
-          <a href="#faq" class="hover:text-ink transition-colors">FAQ</a>
-        </div>
-
-        <!-- CTAs Desktop -->
-        <div class="hidden md:flex items-center gap-3">
-          <router-link to="/login" class="bg-surface-1 hover:bg-surface-2 border border-hairline text-ink px-4 py-2 rounded-md text-button font-medium transition-colors">
-            Entrar
-          </router-link>
-          <router-link to="/register" class="bg-primary hover:bg-primary-hover text-ink px-4 py-2 rounded-md text-button font-medium transition-colors">
-            Criar Conta
-          </router-link>
-        </div>
-
-        <!-- Hamburger Mobile -->
-        <button @click="isNavOpen = !isNavOpen" class="md:hidden text-ink p-2 -mr-2">
-          <svg v-if="!isNavOpen" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-          <svg v-else class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-        </button>
-      </div>
-
-      <!-- Menu Mobile -->
-      <transition
-        enter-active-class="transition duration-200 ease-out"
-        enter-from-class="opacity-0 -translate-y-2"
-        enter-to-class="opacity-100 translate-y-0"
-        leave-active-class="transition duration-150 ease-in"
-        leave-from-class="opacity-100 translate-y-0"
-        leave-to-class="opacity-0 -translate-y-2"
+      <div
+        class="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-20 pt-32 lg:grid-cols-2 lg:px-20 lg:pb-28 lg:pt-44"
       >
-        <div v-if="isNavOpen" class="md:hidden bg-surface-1 border-b border-hairline px-6 py-6 space-y-4">
-          <a href="#como-funciona" @click="isNavOpen = false" class="block text-body-sm text-ink-subtle hover:text-ink transition-colors">Como Funciona</a>
-          <a href="#recursos" @click="isNavOpen = false" class="block text-body-sm text-ink-subtle hover:text-ink transition-colors">Recursos</a>
-          <a href="#faq" @click="isNavOpen = false" class="block text-body-sm text-ink-subtle hover:text-ink transition-colors">FAQ</a>
-          <div class="pt-4 border-t border-hairline flex flex-col gap-3">
-            <router-link to="/login" class="bg-surface-2 border border-hairline text-ink text-center px-4 py-3 rounded-md text-button font-medium">Entrar</router-link>
-            <router-link to="/register" class="bg-primary text-ink text-center px-4 py-3 rounded-md text-button font-medium">Criar Conta</router-link>
-          </div>
-        </div>
-      </transition>
-    </nav>
+        <!-- Coluna de texto -->
+        <div class="flex flex-col gap-7">
+          <span
+            class="inline-flex w-fit items-center gap-2 rounded-pill border border-hairline bg-surface-1/70 px-3 py-1.5 text-eyebrow uppercase tracking-widest text-ink-muted backdrop-blur"
+          >
+            <span class="size-1.5 rounded-full bg-accent shadow-glow-accent"></span>
+            Skill-gaming • EA FC e eFootball
+          </span>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- HERO                                        -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section class="relative pt-32 pb-20 lg:pt-44 lg:pb-32 px-6 lg:px-12">
-      <!-- Efeito de gradiente de fundo sutil -->
-      <div class="absolute inset-0 pointer-events-none overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/[0.04] rounded-full blur-[120px]"></div>
-      </div>
-
-      <div class="max-w-[1280px] mx-auto relative z-10">
-        <div class="max-w-3xl mx-auto text-center">
-          <!-- Eyebrow -->
-          <div class="inline-flex items-center gap-2 bg-surface-1 border border-hairline rounded-pill px-4 py-1.5 mb-8">
-            <span class="w-2 h-2 rounded-full bg-semantic-success animate-pulse"></span>
-            <span class="text-caption text-ink-subtle font-medium">Plataforma aberta — Cadastre-se agora</span>
-          </div>
-
-          <!-- Título Principal -->
-          <h1 class="text-display-lg md:text-display-xl font-display font-semibold tracking-tight leading-tight mb-6">
-            O X1 de Futebol<br class="hidden sm:block" /> Virtual com <span class="text-primary">Dinheiro Real</span>
+          <h1 class="font-display text-[40px] font-bold leading-[1.05] tracking-tight text-ink sm:text-[52px] lg:text-[62px]">
+            Transforme cada partida de futebol em
+            <span class="text-gradient-blue">dinheiro real</span>.
           </h1>
 
-          <!-- Subtítulo -->
-          <p class="text-body-lg md:text-subhead text-ink-subtle max-w-xl mx-auto mb-10 leading-relaxed">
-            Desafie jogadores, aposte no seu talento e saque seus ganhos instantaneamente via Pix. EA FC e eFootball. PS5, Xbox e PC.
+          <p class="max-w-xl text-body-lg text-ink-subtle">
+            X1, torneios e resenha entre amigos — com a segurança de uma fintech e a
+            praticidade que a resenha pede. Você joga, a ArenaX1 cuida do resto.
           </p>
 
-          <!-- CTAs do Hero -->
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <router-link to="/register" class="w-full sm:w-auto bg-primary hover:bg-primary-hover text-ink px-8 py-4 rounded-md text-button font-medium transition-all text-center">
-              Começar Agora — É Grátis
+          <div class="flex flex-col gap-3 sm:flex-row sm:gap-4">
+            <router-link
+              to="/register"
+              class="group inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-4 text-button font-semibold text-white no-underline shadow-glow-primary transition-all duration-200 hover:bg-primary-hover hover:shadow-[0_0_50px_-6px_rgba(59,130,246,0.6)]"
+            >
+              Criar conta grátis
+              <ArrowRight :size="20" class="transition-transform duration-200 group-hover:translate-x-0.5" />
             </router-link>
-            <a href="#como-funciona" class="w-full sm:w-auto bg-surface-1 hover:bg-surface-2 border border-hairline text-ink px-8 py-4 rounded-md text-button font-medium transition-colors text-center">
-              Como Funciona
-            </a>
+            <router-link
+              to="/desafios"
+              class="inline-flex items-center justify-center gap-2 rounded-xl border border-hairline-strong bg-surface-1/50 px-7 py-4 text-button font-semibold text-ink no-underline backdrop-blur transition-colors duration-200 hover:border-hairline-tertiary hover:bg-surface-2"
+            >
+              <Gamepad2 :size="20" class="text-accent" />
+              Ver partidas ao vivo
+            </router-link>
           </div>
 
-          <!-- Social proof micro -->
-          <div class="mt-12 flex items-center justify-center gap-6 text-caption text-ink-tertiary">
-            <div class="flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-              <span>Saldo Protegido</span>
+          <!-- Prova social -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <div class="flex -space-x-2.5">
+              <span
+                v-for="(initials, i) in ['DY', 'AL', 'LU', 'T1']"
+                :key="i"
+                class="grid size-9 place-items-center rounded-full border-2 border-canvas bg-surface-3 text-[11px] font-bold text-ink-muted"
+              >{{ initials }}</span>
             </div>
-            <div class="w-px h-3 bg-hairline"></div>
-            <div class="flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-              <span>Pix Instantâneo</span>
-            </div>
-            <div class="w-px h-3 bg-hairline hidden sm:block"></div>
-            <div class="hidden sm:flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              <span>Anti-Fraude</span>
-            </div>
+            <p class="text-body-sm text-ink-subtle">
+              <span class="font-semibold text-ink">+6.463</span> jogando agora
+              <span class="mx-1.5 text-ink-tertiary">·</span>
+              <span class="inline-flex items-center gap-1 text-accent">
+                <Star :size="16" fill="currentColor" />4,9
+              </span>
+            </p>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- COMO FUNCIONA                               -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section id="como-funciona" class="py-20 lg:py-28 px-6 lg:px-12">
-      <div class="max-w-[1280px] mx-auto">
-        <!-- Header da Seção -->
-        <div class="text-center mb-16">
-          <span class="text-eyebrow text-primary uppercase tracking-widest mb-3 block">Como Funciona</span>
-          <h2 class="text-display-md font-display font-semibold tracking-tight mb-4">Do cadastro ao saque em 4 passos</h2>
-          <p class="text-body-lg text-ink-subtle max-w-lg mx-auto">Simples, rápido e seguro. Crie sua conta e comece a jogar em minutos.</p>
-        </div>
-
-        <!-- Steps Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div 
-            v-for="(step, index) in steps" 
-            :key="index"
-            class="bg-surface-1 border border-hairline rounded-lg p-6 relative group hover:border-primary/30 transition-all duration-300"
-          >
-            <span class="text-display-lg font-display font-semibold text-surface-3 group-hover:text-primary/20 transition-colors absolute top-4 right-6">
-              {{ step.number }}
+          <!-- Chips de confiança -->
+          <div class="flex flex-wrap gap-x-5 gap-y-2 text-caption text-ink-tertiary">
+            <span class="inline-flex items-center gap-1.5">
+              <CheckCircle2 :size="16" class="text-semantic-success" />
+              Sem taxa de saque
             </span>
-            <div class="relative z-10">
-              <h3 class="text-card-title font-display font-medium mb-2 mt-8">{{ step.title }}</h3>
-              <p class="text-body-sm text-ink-subtle leading-relaxed">{{ step.description }}</p>
-            </div>
+            <span class="inline-flex items-center gap-1.5">
+              <CheckCircle2 :size="16" class="text-semantic-success" />
+              Saque simplificado
+            </span>
+            <span class="inline-flex items-center gap-1.5">
+              <CheckCircle2 :size="16" class="text-semantic-success" />
+              Antifraude 24/7
+            </span>
+          </div>
+
+          <!-- Jogos e plataformas suportados -->
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-t border-hairline pt-5 text-caption text-ink-tertiary">
+            <span class="inline-flex items-center gap-1.5 font-medium text-ink-subtle">
+              <Goal :size="18" class="text-accent" />
+              EA FC (FIFA)
+            </span>
+            <span class="text-ink-tertiary/60">·</span>
+            <span class="font-medium text-ink-subtle">eFootball</span>
+            <span class="text-ink-tertiary/60">·</span>
+            <span>PS5 · Xbox · PC</span>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- RECURSOS / FEATURES                         -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section id="recursos" class="py-20 lg:py-28 px-6 lg:px-12">
-      <div class="max-w-[1280px] mx-auto">
-        <!-- Header da Seção -->
-        <div class="text-center mb-16">
-          <span class="text-eyebrow text-primary uppercase tracking-widest mb-3 block">Recursos</span>
-          <h2 class="text-display-md font-display font-semibold tracking-tight mb-4">Tudo que você precisa para competir</h2>
-          <p class="text-body-lg text-ink-subtle max-w-lg mx-auto">Construímos cada detalhe pensando na experiência do jogador brasileiro.</p>
-        </div>
-
-        <!-- Features Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div 
-            v-for="(feature, index) in features" 
-            :key="index"
-            class="bg-surface-1 border border-hairline rounded-lg p-6 group hover:border-primary/30 transition-all duration-300"
+        <!-- Coluna visual (desktop): amigos no sofá -->
+        <div class="relative hidden lg:block">
+          <div
+            class="animate-float relative overflow-hidden rounded-3xl border border-hairline-strong shadow-card-premium ring-1 ring-white/5"
           >
-            <div class="w-10 h-10 rounded-md bg-surface-2 border border-hairline flex items-center justify-center mb-5 group-hover:border-primary/40 transition-colors">
-              <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" v-html="feature.icon"></svg>
+            <img
+              :src="amigos"
+              alt="Amigos jogando juntos no sofá"
+              class="aspect-[16/11] w-full object-cover"
+            />
+            <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-canvas/80 via-canvas/10 to-transparent"
+            ></div>
+          </div>
+
+          <!-- Card AO VIVO (prêmio em jogo) -->
+          <div
+            class="glass-strong animate-pulse-glow absolute -bottom-6 -left-6 w-60 rounded-2xl border border-primary/25 p-5"
+          >
+            <div class="mb-3 flex items-center justify-between">
+              <span class="text-eyebrow uppercase tracking-widest text-ink-subtle">Prêmio em jogo agora</span>
+              <span class="relative flex size-2.5">
+                <span class="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-75"></span>
+                <span class="relative inline-flex size-2.5 rounded-full bg-accent"></span>
+              </span>
             </div>
-            <h3 class="text-card-title font-display font-medium mb-2">{{ feature.title }}</h3>
-            <p class="text-body-sm text-ink-subtle leading-relaxed">{{ feature.description }}</p>
+            <p class="font-display text-[28px] font-bold tabular-nums text-ink">{{ prizePoolFmt }}</p>
+            <p class="mt-1 text-caption text-ink-tertiary">em 312 partidas abertas</p>
+          </div>
+
+          <!-- Mini chip de resultado -->
+          <div
+            class="glass absolute -right-4 top-6 flex items-center gap-3 rounded-xl border border-hairline px-4 py-3"
+          >
+            <div class="grid size-9 place-items-center rounded-lg bg-primary/15 text-primary">
+              <Award :size="20" />
+            </div>
+            <div class="leading-tight">
+              <p class="text-caption text-ink-tertiary">Vitória de @rapha</p>
+              <p class="text-body-sm font-semibold text-semantic-success">+ R$ 50,00</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card AO VIVO compacto (mobile) -->
+        <div
+          class="glass-strong flex items-center justify-between rounded-2xl border border-accent/20 p-4 lg:hidden"
+        >
+          <div>
+            <p class="text-eyebrow uppercase tracking-widest text-ink-subtle">Prêmio em jogo agora</p>
+            <p class="font-display text-2xl font-bold tabular-nums text-ink">{{ prizePoolFmt }}</p>
+          </div>
+          <span class="relative flex size-3">
+            <span class="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-75"></span>
+            <span class="relative inline-flex size-3 rounded-full bg-accent"></span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════ BARRA DE STATS ══════════════════ -->
+    <section class="border-y border-hairline bg-surface-1/40">
+      <div class="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 lg:grid-cols-4 lg:px-20">
+        <div
+          v-for="(s, i) in stats"
+          :key="s.label"
+          v-reveal="`${i * 80}ms`"
+          class="flex flex-col items-center gap-1 px-4 py-8 text-center"
+        >
+          <span class="font-display text-3xl font-bold tabular-nums text-ink lg:text-4xl">{{ s.value }}</span>
+          <span class="text-caption uppercase tracking-widest text-ink-tertiary">{{ s.label }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════ COMO FUNCIONA ══════════════════ -->
+    <section class="mx-auto max-w-7xl px-6 py-24 lg:px-20 lg:py-section">
+      <div v-reveal class="mx-auto mb-16 max-w-2xl text-center">
+        <span class="text-eyebrow uppercase tracking-widest text-accent">Como funciona</span>
+        <h2 class="mt-3 font-display text-display-md font-bold text-ink">Do controle ao prêmio em 3 passos</h2>
+        <p class="mt-4 text-body text-ink-subtle">
+          Simples como deveria ser. Sem planilha, sem confiança cega, sem dor de cabeça.
+        </p>
+      </div>
+
+      <div class="relative grid gap-6 md:grid-cols-3">
+        <!-- linha conectora -->
+        <div
+          class="absolute left-0 right-0 top-9 hidden h-px bg-gradient-to-r from-transparent via-hairline-strong to-transparent md:block"
+        ></div>
+        <div
+          v-for="(step, i) in steps"
+          :key="step.n"
+          v-reveal="`${i * 120}ms`"
+          class="glow-border relative rounded-2xl border border-hairline bg-surface-1/60 p-7 backdrop-blur transition-colors duration-300 hover:border-hairline-strong"
+        >
+          <div class="mb-5 flex items-center justify-between">
+            <span
+              class="grid size-12 place-items-center rounded-xl bg-primary/15 text-primary ring-1 ring-primary/20"
+            >
+              <component :is="step.icon" />
+            </span>
+            <span class="font-display text-4xl font-bold text-hairline-tertiary">{{ step.n }}</span>
+          </div>
+          <h3 class="mb-2 text-card-title font-semibold text-ink">{{ step.title }}</h3>
+          <p class="text-body-sm text-ink-subtle">{{ step.desc }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════ TORNEIO DE SOFÁ ══════════════════ -->
+    <section class="relative overflow-hidden border-y border-hairline">
+      <!-- ambiente -->
+      <div class="absolute inset-0 bg-gradient-to-b from-surface-1/30 via-canvas to-canvas"></div>
+      <div
+        class="pointer-events-none absolute right-0 top-1/4 h-80 w-80 rounded-full bg-accent/10 blur-[120px]"
+      ></div>
+
+      <div class="relative mx-auto max-w-7xl px-6 py-24 lg:px-20 lg:py-section">
+        <div v-reveal class="mb-14 max-w-2xl">
+          <span
+            class="inline-flex items-center gap-2 rounded-pill bg-accent/15 px-3 py-1 text-eyebrow font-semibold uppercase tracking-widest text-accent"
+          >
+            <Zap :size="15" />
+            Novo · Grátis pra sempre
+          </span>
+          <h2 class="mt-4 font-display text-display-md font-bold leading-tight text-ink">
+            O Torneio de Sofá
+          </h2>
+          <p class="mt-4 text-body-lg text-ink-subtle">
+            Juntou a galera? Em 30 segundos você monta a chave, joga e bate o chinelo na resenha.
+            <span class="text-ink">Só o anfitrião precisa de conta</span> — digite os nomes dos 4, 8
+            ou 16 e o sistema sorteia tudo na hora.
+          </p>
+        </div>
+
+        <div class="grid items-start gap-12 lg:grid-cols-2">
+          <!-- Esquerda: conteúdo -->
+          <div class="flex flex-col gap-8">
+            <!-- chips de formato -->
+            <div class="flex flex-wrap gap-2.5">
+              <span
+                v-for="f in ['4 jogadores', '8 jogadores', '16 jogadores', 'Mata-mata', 'Fase de grupos']"
+                :key="f"
+                class="rounded-pill border border-hairline-strong bg-surface-2/60 px-3.5 py-1.5 text-body-sm font-medium text-ink-muted"
+              >{{ f }}</span>
+            </div>
+
+            <!-- features do torneio -->
+            <div class="flex flex-col gap-5">
+              <div
+                v-for="(t, i) in tourneyFeatures"
+                :key="t.title"
+                v-reveal="`${i * 100}ms`"
+                class="flex gap-4"
+              >
+                <span
+                  class="grid size-11 shrink-0 place-items-center rounded-xl bg-accent/15 text-accent ring-1 ring-accent/20"
+                >
+                  <component :is="t.icon" :size="22" />
+                </span>
+                <div>
+                  <h3 class="text-card-title font-semibold text-ink">{{ t.title }}</h3>
+                  <p class="mt-1 text-body-sm text-ink-subtle">{{ t.desc }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Upsell sutil -->
+            <div
+              v-reveal
+              class="relative overflow-hidden rounded-2xl border border-accent/25 bg-gradient-to-br from-accent/10 to-transparent p-5"
+            >
+              <div class="flex items-start gap-3">
+                <QrCode class="text-accent" />
+                <div>
+                  <p class="text-body-sm font-semibold text-ink">
+                    Quer deixar a resenha mais séria?
+                  </p>
+                  <p class="mt-1 text-body-sm text-ink-subtle">
+                    Transforme o torneio grátis em disputa por dinheiro real: a galera lê o QR Code,
+                    paga a entrada online e o anfitrião ainda ganha
+                    <span class="font-semibold text-accent">cashback</span> no fechamento do pote.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-3 sm:flex-row">
+              <router-link
+                to="/register"
+                class="group inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-7 py-3.5 text-button font-semibold text-white no-underline shadow-glow-accent transition-all duration-200 hover:bg-accent-hover"
+              >
+                Criar Torneio Rápido
+                <ArrowRight :size="20" class="transition-transform duration-200 group-hover:translate-x-0.5" />
+              </router-link>
+              <router-link
+                to="/como-funciona"
+                class="inline-flex items-center justify-center gap-2 rounded-xl border border-hairline-strong px-7 py-3.5 text-button font-semibold text-ink no-underline transition-colors duration-200 hover:bg-surface-2"
+              >
+                Ver exemplo de chave
+              </router-link>
+            </div>
+          </div>
+
+          <!-- Direita: mockup do chaveamento + card do campeão -->
+          <div v-reveal="'120ms'" class="flex flex-col gap-6">
+            <!-- Painel de chaveamento (glass) -->
+            <div class="glass-strong rounded-2xl border border-hairline p-5 shadow-card-premium sm:p-6">
+              <div class="mb-5 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <Network class="text-accent" />
+                  <span class="text-body-sm font-semibold text-ink">Resenha de Sábado</span>
+                </div>
+                <span class="rounded-pill bg-surface-3 px-2.5 py-1 text-caption text-ink-subtle">
+                  Mata-mata · 4
+                </span>
+              </div>
+
+              <!-- Bracket -->
+              <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Semifinais -->
+                <div class="flex-1 space-y-3">
+                  <div class="rounded-lg border border-hairline bg-surface-2/80 p-2.5">
+                    <div class="flex items-center justify-between rounded-md bg-accent/15 px-2 py-1 text-body-sm font-semibold text-ink">
+                      <span>João</span><span class="tabular-nums text-accent">3</span>
+                    </div>
+                    <div class="flex items-center justify-between px-2 py-1 text-body-sm text-ink-subtle">
+                      <span>Bruno</span><span class="tabular-nums">1</span>
+                    </div>
+                  </div>
+                  <div class="rounded-lg border border-hairline bg-surface-2/80 p-2.5">
+                    <div class="flex items-center justify-between px-2 py-1 text-body-sm text-ink-subtle">
+                      <span>Léo</span><span class="tabular-nums">2</span>
+                    </div>
+                    <div class="flex items-center justify-between rounded-md bg-accent/15 px-2 py-1 text-body-sm font-semibold text-ink">
+                      <span>Caio</span><span class="tabular-nums text-accent">4</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- conector -->
+                <div class="flex w-4 shrink-0 items-center sm:w-6">
+                  <div class="h-px w-full bg-gradient-to-r from-hairline-strong to-accent/60"></div>
+                </div>
+
+                <!-- Final -->
+                <div class="flex-1">
+                  <p class="mb-1.5 text-center text-caption uppercase tracking-widest text-ink-tertiary">Final</p>
+                  <div class="rounded-lg border border-accent/30 bg-surface-2/80 p-2.5 shadow-glow-accent">
+                    <div class="flex items-center justify-between rounded-md bg-accent/20 px-2 py-1 text-body-sm font-semibold text-ink">
+                      <span>João</span><span class="tabular-nums text-accent">2</span>
+                    </div>
+                    <div class="flex items-center justify-between px-2 py-1 text-body-sm text-ink-subtle">
+                      <span>Caio</span><span class="tabular-nums">1</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- rodapé: estatística -->
+              <div class="mt-5 flex items-center justify-between border-t border-hairline pt-4 text-body-sm">
+                <span class="flex items-center gap-1.5 text-ink-subtle">
+                  <Goal :size="18" class="text-accent" />
+                  Melhor ataque
+                </span>
+                <span class="font-semibold text-ink">João · 14 gols</span>
+              </div>
+            </div>
+
+            <!-- Card do Campeão (estilo Ultimate Team) -->
+            <div class="flex justify-end">
+              <div
+                class="w-48 rounded-2xl bg-gradient-to-b from-amber-300/70 via-accent/40 to-transparent p-px shadow-glow-accent sm:rotate-3"
+              >
+                <div class="rounded-2xl bg-surface-2/95 p-4 backdrop-blur">
+                  <div class="flex items-start justify-between text-amber-300">
+                    <div class="leading-none">
+                      <p class="font-display text-3xl font-bold">94</p>
+                      <p class="text-caption font-semibold tracking-widest">OVR</p>
+                    </div>
+                    <Crown fill="currentColor" />
+                  </div>
+                  <div class="my-3 grid h-16 place-items-center">
+                    <span class="grid size-14 place-items-center rounded-full bg-gradient-to-b from-amber-300/30 to-transparent font-display text-xl font-bold text-ink ring-1 ring-amber-300/40">JO</span>
+                  </div>
+                  <p class="text-center font-display text-body-sm font-bold tracking-wide text-ink">JOÃO “O REI”</p>
+                  <p class="mb-3 text-center text-[10px] uppercase tracking-widest text-amber-300/80">Campeão da rodada</p>
+                  <div class="grid grid-cols-3 gap-x-2 gap-y-1.5 text-center">
+                    <div v-for="cs in championStats" :key="cs.k">
+                      <p class="font-display text-body-sm font-bold tabular-nums text-ink">{{ cs.v }}</p>
+                      <p class="text-[9px] uppercase tracking-wider text-ink-tertiary">{{ cs.k }}</p>
+                    </div>
+                  </div>
+                  <div class="mt-3 flex items-center justify-center gap-1 text-[10px] font-semibold text-accent">
+                    <Share2 :size="14" />
+                    Compartilhar nos Stories
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- CTA BANNER                                  -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section class="py-20 lg:py-28 px-6 lg:px-12">
-      <div class="max-w-[1280px] mx-auto">
-        <div class="bg-surface-1 border border-hairline rounded-lg p-10 md:p-16 text-center relative overflow-hidden">
-          <!-- Efeito decorativo de fundo -->
-          <div class="absolute inset-0 pointer-events-none">
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-primary/[0.03] rounded-full blur-[80px]"></div>
-          </div>
+    <!-- ══════════════════ POR QUE ARENAX1 (features) ══════════════════ -->
+    <section class="mx-auto max-w-7xl px-6 py-24 lg:px-20 lg:py-section">
+      <div v-reveal class="mx-auto mb-16 max-w-2xl text-center">
+        <span class="text-eyebrow uppercase tracking-widest text-accent">Confiança em primeiro lugar</span>
+        <h2 class="mt-3 font-display text-display-md font-bold text-ink">
+          Feito pra você apostar sua habilidade — não sua sorte
+        </h2>
+        <p class="mt-4 text-body text-ink-subtle">
+          Fuga total do visual poluído de site de aposta. Aqui é tipo painel de fintech: limpo, seguro e direto ao ponto.
+        </p>
+      </div>
 
-          <div class="relative z-10">
-            <h2 class="text-display-md md:text-display-lg font-display font-semibold tracking-tight mb-4">
-              Pronto para entrar na Arena?
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div
+          v-for="(f, i) in features"
+          :key="f.title"
+          v-reveal="`${(i % 2) * 100}ms`"
+          class="glow-border group rounded-2xl border border-hairline bg-surface-1/60 p-7 transition-colors duration-300 hover:border-hairline-strong"
+        >
+          <span
+            class="mb-5 grid size-12 place-items-center rounded-xl bg-primary/15 text-primary ring-1 ring-primary/20 transition-transform duration-300 group-hover:scale-105"
+          >
+            <component :is="f.icon" :size="26" />
+          </span>
+          <h3 class="mb-2 text-card-title font-semibold text-ink">{{ f.title }}</h3>
+          <p class="text-body-sm text-ink-subtle">{{ f.desc }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════ FERRAMENTAS GRÁTIS ══════════════════ -->
+    <section class="border-t border-hairline bg-surface-1/30">
+      <div class="mx-auto max-w-7xl px-6 py-20 lg:px-20">
+        <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+          <div v-reveal class="max-w-md">
+            <span class="text-eyebrow uppercase tracking-widest text-accent">Ferramentas grátis</span>
+            <h2 class="mt-3 font-display text-headline font-bold text-ink">
+              Resolva a treta antes de começar
             </h2>
-            <p class="text-body-lg text-ink-subtle max-w-md mx-auto mb-8">
-              Crie sua conta em segundos, deposite via Pix e comece a competir agora mesmo.
+            <p class="mt-3 text-body-sm text-ink-subtle">
+              Utilitários rápidos pra qualquer rolê — sem cadastro. Use, compartilhe e quando quiser
+              valer dinheiro de verdade, é só criar a conta.
             </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <router-link to="/register" class="w-full sm:w-auto bg-primary hover:bg-primary-hover text-ink px-8 py-4 rounded-md text-button font-medium transition-all text-center">
-                Criar Conta Grátis
-              </router-link>
-              <router-link to="/login" class="w-full sm:w-auto bg-surface-2 hover:bg-surface-3 border border-hairline text-ink px-8 py-4 rounded-md text-button font-medium transition-colors text-center">
-                Já tenho conta
-              </router-link>
+          </div>
+          <div class="grid flex-1 gap-4 sm:grid-cols-3">
+            <div
+              v-for="(tool, i) in tools"
+              :key="tool.title"
+              v-reveal="`${i * 90}ms`"
+              class="group cursor-pointer rounded-2xl border border-hairline bg-surface-2/60 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/30"
+            >
+              <component :is="tool.icon" :size="28" class="mb-3 text-accent" />
+              <h3 class="text-body font-semibold text-ink">{{ tool.title }}</h3>
+              <p class="mt-1 text-caption text-ink-tertiary">{{ tool.desc }}</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- FAQ                                         -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section id="faq" class="py-20 lg:py-28 px-6 lg:px-12">
-      <div class="max-w-[800px] mx-auto">
-        <div class="text-center mb-16">
-          <span class="text-eyebrow text-primary uppercase tracking-widest mb-3 block">FAQ</span>
-          <h2 class="text-display-md font-display font-semibold tracking-tight">Perguntas Frequentes</h2>
-        </div>
-
-        <div class="space-y-4">
-          <details class="group bg-surface-1 border border-hairline rounded-lg">
-            <summary class="cursor-pointer px-6 py-5 flex items-center justify-between text-body font-medium text-ink list-none">
-              Como funciona o depósito e saque?
-              <svg class="w-5 h-5 text-ink-subtle group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-            </summary>
-            <div class="px-6 pb-5 text-body-sm text-ink-subtle leading-relaxed">
-              Tudo é feito via Pix. Para depositar, você gera um QR Code na plataforma e paga pelo app do seu banco. O saldo atualiza em segundos. Para sacar, informe sua chave Pix e o dinheiro cai na hora. Sem taxas de depósito ou saque.
-            </div>
-          </details>
-
-          <details class="group bg-surface-1 border border-hairline rounded-lg">
-            <summary class="cursor-pointer px-6 py-5 flex items-center justify-between text-body font-medium text-ink list-none">
-              Quais jogos são suportados?
-              <svg class="w-5 h-5 text-ink-subtle group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-            </summary>
-            <div class="px-6 pb-5 text-body-sm text-ink-subtle leading-relaxed">
-              Atualmente suportamos EA FC (FIFA) e eFootball (PES) em todas as plataformas: PlayStation 5, Xbox Series X|S, PC (Steam e EA App).
-            </div>
-          </details>
-
-          <details class="group bg-surface-1 border border-hairline rounded-lg">
-            <summary class="cursor-pointer px-6 py-5 flex items-center justify-between text-body font-medium text-ink list-none">
-              O que acontece se houver uma disputa no resultado?
-              <svg class="w-5 h-5 text-ink-subtle group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-            </summary>
-            <div class="px-6 pb-5 text-body-sm text-ink-subtle leading-relaxed">
-              Se os resultados reportados divergirem, o pote fica retido e um chat de mediação é aberto. Os jogadores podem enviar fotos ou vídeos comprovando o placar real. A equipe de suporte analisa as provas e libera o prêmio para o vencedor legítimo. Fraudadores são banidos e perdem o saldo.
-            </div>
-          </details>
-
-          <details class="group bg-surface-1 border border-hairline rounded-lg">
-            <summary class="cursor-pointer px-6 py-5 flex items-center justify-between text-body font-medium text-ink list-none">
-              Quanto custa usar a plataforma?
-              <svg class="w-5 h-5 text-ink-subtle group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-            </summary>
-            <div class="px-6 pb-5 text-body-sm text-ink-subtle leading-relaxed">
-              Não há taxa para depósito nem para saque. Cobramos apenas uma pequena taxa (rake) sobre o pote total de cada partida ou torneio. Transparente e justo.
-            </div>
-          </details>
+    <!-- ══════════════════ CTA FINAL ══════════════════ -->
+    <section class="px-6 py-24 lg:px-20 lg:py-section">
+      <div
+        v-reveal
+        class="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-hairline bg-gradient-to-br from-primary/90 via-primary to-primary-focus p-10 text-center sm:p-16 lg:p-20"
+      >
+        <div
+          class="pointer-events-none absolute -right-16 -top-16 size-72 rounded-full bg-accent/30 blur-[100px]"
+        ></div>
+        <div
+          class="pointer-events-none absolute -bottom-20 -left-10 size-72 rounded-full bg-white/10 blur-[100px]"
+        ></div>
+        <div class="relative">
+          <h2 class="mx-auto max-w-3xl font-display text-display-md font-bold leading-tight text-white">
+            Pronto pra transformar sua paixão por futebol em dinheiro?
+          </h2>
+          <p class="mx-auto mt-4 max-w-xl text-body-lg text-white/80">
+            Crie sua conta grátis, chame a galera e comece a jogar hoje mesmo.
+          </p>
+          <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <router-link
+              to="/register"
+              class="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-8 py-4 text-button font-bold text-primary no-underline shadow-xl transition-transform duration-200 hover:scale-105"
+            >
+              Começar agora
+              <ArrowRight :size="20" />
+            </router-link>
+            <router-link
+              to="/torneios"
+              class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 px-8 py-4 text-button font-semibold text-white no-underline backdrop-blur transition-colors duration-200 hover:bg-white/20"
+            >
+              Explorar torneios
+            </router-link>
+          </div>
         </div>
       </div>
     </section>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- FOOTER                                      -->
-    <!-- ═══════════════════════════════════════════ -->
-    <footer class="border-t border-hairline py-12 px-6 lg:px-12">
-      <div class="max-w-[1280px] mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-          <!-- Brand Column -->
-          <div class="md:col-span-2">
-            <div class="flex items-center gap-3 mb-4">
-              <svg class="w-7 h-7 text-primary" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M21.58 6.91a2 2 0 0 0-1.28-1.12c-2.31-.76-7.85-1.52-8.3-1.52s-5.99.76-8.3 1.52A2 2 0 0 0 2.42 6.91C1.04 10.97 1 15.68 1 15.68a2 2 0 0 0 1.28 1.55c1.33.44 4.09.87 6.44 1.15.54.06.94.57.87 1.11-.06.49-.48.86-.97.86h-1.18a.75.75 0 0 0 0 1.5h9.12a.75.75 0 0 0 0-1.5h-1.18c-.49 0-.91-.37-.97-.86-.07-.54.33-1.05.87-1.11 2.35-.28 5.11-.71 6.44-1.15a2 2 0 0 0 1.28-1.55s.04-4.71-1.34-8.77zM9.5 12a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-              </svg>
-              <span class="font-display font-semibold text-body-lg tracking-tight">Arena X1</span>
-            </div>
-            <p class="text-caption text-ink-subtle max-w-xs leading-relaxed">
-              A plataforma definitiva de X1 de futebol virtual com dinheiro real para o público brasileiro.
-            </p>
-          </div>
-
-          <!-- Links Column -->
-          <div>
-            <h4 class="text-eyebrow text-ink-muted uppercase tracking-wider mb-4">Plataforma</h4>
-            <ul class="space-y-3 text-body-sm text-ink-subtle">
-              <li><a href="#como-funciona" class="hover:text-ink transition-colors">Como Funciona</a></li>
-              <li><a href="#recursos" class="hover:text-ink transition-colors">Recursos</a></li>
-              <li><a href="#faq" class="hover:text-ink transition-colors">FAQ</a></li>
-            </ul>
-          </div>
-
-          <!-- Legal Column -->
-          <div>
-            <h4 class="text-eyebrow text-ink-muted uppercase tracking-wider mb-4">Legal</h4>
-            <ul class="space-y-3 text-body-sm text-ink-subtle">
-              <li><a href="#" class="hover:text-ink transition-colors">Termos de Uso</a></li>
-              <li><a href="#" class="hover:text-ink transition-colors">Política de Privacidade</a></li>
-              <li><a href="#" class="hover:text-ink transition-colors">Suporte</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Copyright -->
-        <div class="border-t border-hairline pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p class="text-caption text-ink-tertiary">© 2026 Arena X1. Todos os direitos reservados.</p>
-          <div class="flex items-center gap-4 text-ink-tertiary">
-            <a href="#" class="hover:text-ink transition-colors">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
-            </a>
-            <a href="#" class="hover:text-ink transition-colors">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            </a>
-            <a href="#" class="hover:text-ink transition-colors">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-
   </div>
 </template>
-
-<style scoped>
-.bg-canvas {
-  background-image: radial-gradient(circle at center, #1b202c 0%, #0d0e12 100%);
-}
-
-details summary::-webkit-details-marker {
-  display: none;
-}
-</style>

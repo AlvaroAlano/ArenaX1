@@ -1,13 +1,53 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="pt-BR" class="dark">
   <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
+    <title>ArenaX1 — X1 de Futebol Virtual com Dinheiro Real</title>
+    <meta name="description" content="Desafie jogadores, aposte no seu talento no EA FC e eFootball e saque seus ganhos com segurança. PS5, Xbox e PC.">
+    <meta property="og:title" content="ArenaX1 — X1 de Futebol Virtual com Dinheiro Real">
+    <meta property="og:description" content="A plataforma definitiva de X1 de futebol virtual com dinheiro real para o público brasileiro.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#15181e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ArenaX1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    <style>
+      .material-symbols-outlined{visibility:hidden;display:inline-block;width:1em;height:1em;overflow:hidden;line-height:1}
+      .icons-ready .material-symbols-outlined{visibility:visible;width:auto;height:auto;overflow:visible;line-height:inherit}
+      /* Critical CSS */
+      body { font-family: 'Archivo', system-ui, -apple-system, sans-serif; background-color: #15181e; }
+      .fill-icon { font-variation-settings: 'FILL' 1; }
+      .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+      @media (max-width: 767px) {
+          body { padding-bottom: 4.5rem; }
+      }
+    </style>
+    <script>
+      (function(){
+          var shown=false;
+          function show(){ if(shown){return;} shown=true; document.documentElement.classList.add('icons-ready'); }
+          if(document.fonts&&document.fonts.load){
+              document.fonts.load('1em "Material Symbols Outlined"').then(show).catch(show);
+              document.fonts.ready.then(show);
+          }
+          window.addEventListener('load',show);
+          setTimeout(show,3000);
+      })();
+    </script>
   </head>
-  <body>
-    <div id="app"></div>
+  <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+    <div id="app" class="relative flex min-h-screen flex-col overflow-x-clip"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
+import { api } from '@/services/api'
 
 const authStore = useAuthStore()
-const activeTab = ref<'deposit' | 'withdraw'>('deposit')
+const route = useRoute()
+const activeTab = ref<'deposit' | 'withdraw'>(route.query.tab === 'withdraw' ? 'withdraw' : 'deposit')
 const wallet = ref<any>(null)
 const transactions = ref<any[]>([])
 const loading = ref(true)
@@ -21,8 +24,6 @@ const pixKey = ref('')
 const processingWithdraw = ref(false)
 const withdrawError = ref('')
 const withdrawSuccess = ref('')
-
-const API_URL = 'http://localhost:8000/api/pix'
 
 const selectAmount = (value: number) => {
   depositAmount.value = value
@@ -75,21 +76,7 @@ const handleGeneratePix = async () => {
 
   generatingPix.value = true
   try {
-    const res = await fetch(`${API_URL}/deposit`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        user_id: authStore.user?.id,
-        amount: depositAmount.value
-      })
-    })
-
-    if (!res.ok) {
-      const errData = await res.json()
-      throw new Error(errData.detail || 'Erro ao gerar o Pix.')
-    }
-
-    pixData.value = await res.json()
+    pixData.value = await api.post('/api/pix/deposit', { amount: depositAmount.value })
   } catch (err: any) {
     alert(err.message)
   } finally {
@@ -104,30 +91,23 @@ const copyCopiaCola = () => {
   alert('Código Pix copiado para a área de transferência!')
 }
 
-// Simular confirmação de pagamento (Webhook) para teste fácil pelo usuário
+// Simular confirmação de pagamento para teste em desenvolvimento.
+// Usa a rota /dev/simulate-deposit (exige o login do próprio usuário) em vez
+// do /webhook real, que agora exige a assinatura do gateway de pagamento e
+// nunca deve receber segredos vindos do navegador.
 const simulatePaymentWebhook = async () => {
   if (!pixData.value?.external_id) return
   try {
-    const res = await fetch(`${API_URL}/webhook`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        external_id: pixData.value.external_id,
-        amount: pixData.value.amount,
-        status: 'completed'
-      })
+    await api.post('/api/pix/dev/simulate-deposit', {
+      external_id: pixData.value.external_id,
+      amount: pixData.value.amount,
+      status: 'completed'
     })
-
-    if (res.ok) {
-      depositSuccess.value = true
-      pixData.value = null
-      depositAmount.value = null
-    } else {
-      const err = await res.json()
-      alert(err.detail)
-    }
-  } catch (err) {
-    alert('Erro ao simular pagamento.')
+    depositSuccess.value = true
+    pixData.value = null
+    depositAmount.value = null
+  } catch (err: any) {
+    alert(err.message || 'Erro ao simular pagamento.')
   }
 }
 
@@ -153,22 +133,11 @@ const handleWithdraw = async () => {
   withdrawSuccess.value = ''
 
   try {
-    const res = await fetch(`${API_URL}/withdraw`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        user_id: authStore.user?.id,
-        amount: withdrawAmount.value,
-        pix_key: pixKey.value
-      })
+    const resData = await api.post<{ new_balance: number }>('/api/pix/withdraw', {
+      amount: withdrawAmount.value,
+      pix_key: pixKey.value
     })
 
-    if (!res.ok) {
-      const errData = await res.json()
-      throw new Error(errData.detail || 'Erro ao processar saque.')
-    }
-
-    const resData = await res.json()
     withdrawSuccess.value = 'Saque realizado com sucesso!'
     withdrawAmount.value = null
     pixKey.value = ''
@@ -250,7 +219,7 @@ onUnmounted(() => {
           </p>
         </div>
         <div class="h-12 w-12 rounded-lg bg-primary flex items-center justify-center shadow-none shadow-none/20">
-          <svg class="h-6 w-6 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="h-6 w-6 text-canvas" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
@@ -307,7 +276,7 @@ onUnmounted(() => {
             <button 
               @click="handleGeneratePix"
               :disabled="generatingPix"
-              class="w-full bg-primary text-ink font-bold py-3.5 px-4 rounded-lg shadow-none transition-all text-sm disabled:opacity-50"
+              class="w-full bg-primary text-canvas font-bold py-3.5 px-4 rounded-lg shadow-none transition-all text-sm disabled:opacity-50"
             >
               {{ generatingPix ? 'Gerando cobrança Pix...' : 'Gerar QR Code Pix' }}
             </button>

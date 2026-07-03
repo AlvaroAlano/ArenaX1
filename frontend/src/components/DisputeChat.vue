@@ -205,7 +205,7 @@ onUnmounted(() => {
         
         <div 
           class="px-4 py-3 rounded-lg shadow-sm text-sm"
-          :class="msg.sender_id === authStore.user?.id ? 'bg-[#00f2fe] text-black rounded-tr-none' : 'bg-surface-2 text-ink border border-hairline rounded-tl-none'"
+          :class="msg.sender_id === authStore.user?.id ? 'bg-primary text-canvas rounded-tr-none' : 'bg-surface-2 text-ink border border-hairline rounded-tl-none'"
         >
           <p v-if="msg.message">{{ msg.message }}</p>
           
@@ -262,7 +262,7 @@ onUnmounted(() => {
         <button 
           type="submit"
           :disabled="sending || (!newMessage.trim())"
-          class="bg-primary hover:bg-primary-hover text-black font-semibold px-6 py-3.5 rounded-lg shadow-none disabled:opacity-50 transition-all flex items-center justify-center"
+          class="bg-primary hover:bg-primary-hover text-canvas font-semibold px-6 py-3.5 rounded-lg shadow-none disabled:opacity-50 transition-all flex items-center justify-center"
         >
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
