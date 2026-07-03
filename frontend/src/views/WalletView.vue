@@ -106,6 +106,7 @@ const simulatePaymentWebhook = async () => {
     depositSuccess.value = true
     pixData.value = null
     depositAmount.value = null
+    await loadData()
   } catch (err: any) {
     alert(err.message || 'Erro ao simular pagamento.')
   }

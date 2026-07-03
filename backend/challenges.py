@@ -144,7 +144,7 @@ def get_my_challenges(user_id: str = Depends(get_current_user_id)):
         # Buscar desafios onde o usuário seja criador ou oponente
         challenges_res = supabase.table("challenges").select(
             "*, creator_profile:creator_id(username, fair_play_rating), opponent_profile:opponent_id(username, fair_play_rating)"
-        ).or_(f"creator_id.eq.{user_id},opponent_id.eq.{user_id}").order("created_at", {"ascending": False}).execute()
+        ).or_(f"creator_id.eq.{user_id},opponent_id.eq.{user_id}").order("created_at", desc=True).execute()
 
         return challenges_res.data or []
     except Exception as e:

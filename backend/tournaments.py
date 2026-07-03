@@ -199,7 +199,7 @@ def get_my_tournaments(user_id: str = Depends(get_current_user_id)):
     try:
         tournaments_res = supabase.table("tournaments").select(
             "id, title, game, max_players, status, champion_participant_id, created_at, completed_at"
-        ).eq("host_id", user_id).order("created_at", {"ascending": False}).execute()
+        ).eq("host_id", user_id).order("created_at", desc=True).execute()
         return tournaments_res.data or []
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao carregar seus torneios: {str(e)}")
