@@ -158,8 +158,8 @@ const handleRegister = async () => {
           </div>
         </div>
 
-        <!-- Coluna direita: formulário -->
-        <div class="mx-auto w-full max-w-md rounded-2xl border border-hairline bg-surface-1/60 p-6 backdrop-blur lg:max-w-[440px] lg:p-10">
+        <!-- Coluna direita: formulário (full-bleed no mobile, card a partir do lg) -->
+        <div class="mx-auto w-full p-6 lg:max-w-[440px] lg:rounded-2xl lg:border lg:border-hairline lg:bg-surface-1/60 lg:p-10 lg:backdrop-blur">
           <div class="mb-6">
             <h2 class="font-display text-display-md font-semibold tracking-tight text-ink">Criar uma conta</h2>
             <p class="mt-1 text-body-sm text-ink-subtle">Junte-se à comunidade EA FC / eFootball de elite</p>
