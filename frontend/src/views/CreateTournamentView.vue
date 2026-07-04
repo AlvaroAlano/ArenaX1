@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { Trophy, Users, UserPlus, Shuffle, Info, Lock } from '@lucide/vue'
+import { Trophy, Users, UserPlus, Shuffle, Info, Lock, Coins, CalendarClock, Gamepad2 } from '@lucide/vue'
 import { useRouter } from 'vue-router'
 import { api } from '@/services/api'
 import { GAME_OPTIONS } from '@/constants/games'
 
 const router = useRouter()
+
+const mode = ref<'local' | 'online'>('local')
 
 const title = ref('')
 const game = ref(GAME_OPTIONS[0])
@@ -52,6 +54,54 @@ const submitTournament = async () => {
         isSubmitting.value = false
     }
 }
+
+/* ── Torneio Online Pago ── */
+const oTitle = ref('')
+const oGame = ref(GAME_OPTIONS[0])
+const oPlatform = ref('PS5')
+const oMaxPlayers = ref(4)
+const oEntryFee = ref(10)
+const oDeadline = ref('') // valor cru do <input type="datetime-local">
+const oSubmitting = ref(false)
+const oErrorMsg = ref('')
+
+// Prazo mínimo selecionável: daqui a 1h, formatado pro input datetime-local (sem timezone).
+function toLocalInputValue(d: Date): string {
+    const pad = (n: number) => String(n).padStart(2, '0')
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`
+}
+const minDeadline = toLocalInputValue(new Date(Date.now() + 60 * 60 * 1000))
+
+const oIsValid = computed(() => {
+    if (!oTitle.value.trim() || !oGame.value || !oPlatform.value) return false
+    if (![4, 8, 16].includes(oMaxPlayers.value)) return false
+    if (oEntryFee.value <= 0) return false
+    if (!oDeadline.value) return false
+    if (new Date(oDeadline.value).getTime() <= Date.now()) return false
+    return true
+})
+
+const submitOnlineTournament = async () => {
+    if (!oIsValid.value) return
+    oSubmitting.value = true
+    oErrorMsg.value = ''
+
+    try {
+        const tournament = await api.post<{ id: string }>('/api/tournaments/online/create', {
+            title: oTitle.value.trim(),
+            game: oGame.value,
+            platform: oPlatform.value,
+            max_players: oMaxPlayers.value,
+            entry_fee: oEntryFee.value,
+            registration_deadline: new Date(oDeadline.value).toISOString(),
+        })
+        router.push(`/tournaments/${tournament.id}`)
+    } catch (err: any) {
+        oErrorMsg.value = err.message || 'Erro ao criar o torneio online.'
+    } finally {
+        oSubmitting.value = false
+    }
+}
 </script>
 
 <template>
@@ -65,20 +115,29 @@ const submitTournament = async () => {
 
         <!-- Seleção de modo -->
         <section class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="flex flex-col gap-2 rounded-xl border-2 border-primary bg-primary/10 p-4">
-                <Users :size="22" class="text-primary" />
-                <p class="font-bold text-ink">Torneio Local</p>
+            <button
+                type="button"
+                @click="mode = 'local'"
+                class="flex flex-col gap-2 rounded-xl border-2 p-4 text-left transition-all"
+                :class="mode === 'local' ? 'border-primary bg-primary/10' : 'border-hairline bg-surface-1 hover:border-primary/40'"
+            >
+                <Users :size="22" :class="mode === 'local' ? 'text-primary' : 'text-ink-tertiary'" />
+                <p class="font-bold" :class="mode === 'local' ? 'text-ink' : 'text-ink-subtle'">Torneio Local</p>
                 <p class="text-caption text-ink-subtle">Você e seus amigos, no mesmo sofá — chaveamento automático, sem precisar de conta.</p>
-            </div>
-            <div class="relative flex flex-col gap-2 rounded-xl border-2 border-hairline bg-surface-1 p-4 opacity-60 cursor-not-allowed">
-                <span class="absolute right-3 top-3 rounded-full bg-surface-3 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-ink-tertiary">Em breve</span>
-                <Trophy :size="22" class="text-ink-tertiary" />
-                <p class="font-bold text-ink-tertiary">Torneio Online Pago</p>
-                <p class="text-caption text-ink-tertiary">Inscrição com dinheiro real e premiação para o pódio.</p>
-            </div>
+            </button>
+            <button
+                type="button"
+                @click="mode = 'online'"
+                class="flex flex-col gap-2 rounded-xl border-2 p-4 text-left transition-all"
+                :class="mode === 'online' ? 'border-primary bg-primary/10' : 'border-hairline bg-surface-1 hover:border-primary/40'"
+            >
+                <Trophy :size="22" :class="mode === 'online' ? 'text-primary' : 'text-ink-tertiary'" />
+                <p class="font-bold" :class="mode === 'online' ? 'text-ink' : 'text-ink-subtle'">Torneio Online Pago</p>
+                <p class="text-caption text-ink-subtle">Inscrição com dinheiro real — jogadores de verdade, prêmio de verdade pro pódio.</p>
+            </button>
         </section>
 
-        <form @submit.prevent="submitTournament">
+        <form v-if="mode === 'local'" @submit.prevent="submitTournament">
 
             <!-- Secção 1 -->
             <section class="flex flex-col gap-4 mb-8">
@@ -187,6 +246,118 @@ const submitTournament = async () => {
                     <span>{{ isSubmitting ? 'A criar...' : 'Criar o Torneio' }}</span>
                 </button>
                 <p class="text-center text-[10px] text-ink-subtle uppercase tracking-widest mt-4">Torneio local e grátis • A chave é gerada automaticamente</p>
+            </div>
+        </form>
+
+        <form v-else @submit.prevent="submitOnlineTournament">
+
+            <!-- Secção 1 -->
+            <section class="flex flex-col gap-4 mb-8">
+                <div class="flex items-center gap-2">
+                    <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-canvas">1</span>
+                    <h2 class="text-xl font-bold text-ink">Detalhes do Torneio</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-ink mb-1.5">Nome do torneio</label>
+                        <input v-model="oTitle" type="text" maxlength="80" placeholder="Ex: Copa de Final de Semana" class="w-full rounded-lg border border-hairline bg-surface-1 text-ink h-12 px-4 focus:ring-2 focus:ring-primary outline-none transition-all" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-ink mb-1.5">Jogo</label>
+                        <select v-model="oGame" class="w-full rounded-lg border border-hairline bg-surface-1 text-ink h-12 px-4 focus:ring-2 focus:ring-primary outline-none transition-all">
+                            <option v-for="opt in GAME_OPTIONS" :key="opt" :value="opt">{{ opt }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-ink mb-1.5 flex items-center gap-1.5"><Gamepad2 :size="16" /> Plataforma</label>
+                    <select v-model="oPlatform" class="w-full rounded-lg border border-hairline bg-surface-1 text-ink h-12 px-4 focus:ring-2 focus:ring-primary outline-none transition-all">
+                        <option value="PS5">PS5</option>
+                        <option value="Xbox">Xbox</option>
+                        <option value="PC">PC</option>
+                        <option value="Crossplay">Crossplay</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Secção 2 -->
+            <section class="flex flex-col gap-4 mb-8">
+                <div class="flex items-center gap-2">
+                    <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-canvas">2</span>
+                    <h2 class="text-xl font-bold text-ink">Número de Vagas</h2>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <label v-for="val in [4, 8, 16]" :key="val" class="cursor-pointer group">
+                        <input type="radio" v-model="oMaxPlayers" :value="val" class="peer sr-only" />
+                        <div class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-hairline bg-surface-1 peer-checked:border-primary peer-checked:bg-primary/10 hover:border-primary/50 transition-all">
+                            <span class="text-lg font-bold text-ink">{{ val }}</span>
+                        </div>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Secção 3 -->
+            <section class="flex flex-col gap-4 mb-8">
+                <div class="flex items-center gap-2">
+                    <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-canvas">3</span>
+                    <h2 class="text-xl font-bold text-ink flex items-center gap-1.5"><Coins :size="18" class="text-primary" /> Taxa de Inscrição</h2>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <label v-for="val in [10, 20, 50, 100]" :key="val" class="cursor-pointer group">
+                        <input type="radio" v-model="oEntryFee" :value="val" class="peer sr-only" />
+                        <div class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-hairline bg-surface-1 peer-checked:border-primary peer-checked:bg-primary/10 hover:border-primary/50 transition-all">
+                            <span class="text-lg font-bold text-ink">R$ {{ val.toFixed(2) }}</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="rounded-xl border border-hairline bg-surface-2 p-4 text-body-sm">
+                    <div class="flex items-center justify-between text-ink-subtle">
+                        <span>Pote total ({{ oMaxPlayers }} × R$ {{ oEntryFee.toFixed(2) }})</span>
+                        <span class="font-bold text-ink">R$ {{ (oMaxPlayers * oEntryFee).toFixed(2) }}</span>
+                    </div>
+                    <div class="mt-1 flex items-center justify-between text-ink-subtle">
+                        <span>Premiação líquida (após 10% de comissão)</span>
+                        <span class="font-bold text-semantic-success">R$ {{ (oMaxPlayers * oEntryFee * 0.9).toFixed(2) }}</span>
+                    </div>
+                    <p class="mt-2 text-[11px] text-ink-tertiary">
+                        Dividida 50% / 30% / 20% entre 1º, 2º e 3º lugar<template v-if="oMaxPlayers > 4"> (o 4º lugar recebe de volta a própria inscrição, sem lucro)</template>. Você (anfitrião) entra pagando a inscrição igual a qualquer jogador.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Secção 4 -->
+            <section class="flex flex-col gap-4 mb-8">
+                <div class="flex items-center gap-2">
+                    <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-canvas">4</span>
+                    <h2 class="text-xl font-bold text-ink flex items-center gap-1.5"><CalendarClock :size="18" class="text-primary" /> Prazo de Inscrição</h2>
+                </div>
+                <input
+                    v-model="oDeadline"
+                    type="datetime-local"
+                    :min="minDeadline"
+                    class="w-full rounded-lg border border-hairline bg-surface-1 text-ink h-12 px-4 focus:ring-2 focus:ring-primary outline-none transition-all"
+                />
+                <p class="text-[11px] text-ink-subtle flex items-center gap-1">
+                    <Info :size="14" />
+                    Se as vagas não completarem até este horário, todo mundo é reembolsado automaticamente e o torneio é cancelado.
+                </p>
+                <p class="text-[11px] text-ink-subtle flex items-center gap-1">
+                    <Lock :size="14" />
+                    Quem se inscrever pode desistir e reaver o valor a qualquer momento, exceto nos últimos 30 minutos antes desse prazo.
+                </p>
+            </section>
+
+            <div class="pt-6 border-t border-hairline">
+                <p v-if="oErrorMsg" class="mb-4 text-center text-sm font-semibold text-semantic-error">{{ oErrorMsg }}</p>
+                <button type="submit" :disabled="!oIsValid || oSubmitting" class="w-full py-4 rounded-xl bg-primary hover:bg-primary-hover text-canvas font-bold text-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <Trophy :size="24" v-if="!oSubmitting" />
+                    <svg v-if="oSubmitting" class="w-5 h-5 text-canvas animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                    <span>{{ oSubmitting ? 'A criar...' : 'Criar e Pagar Inscrição' }}</span>
+                </button>
+                <p class="text-center text-[10px] text-ink-subtle uppercase tracking-widest mt-4">A inscrição é bloqueada na sua carteira agora • 10% de comissão sobre o prêmio</p>
             </div>
         </form>
     </div>

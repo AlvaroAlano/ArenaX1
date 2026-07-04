@@ -1,40 +1,80 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { List, Calendar, History, Lock, Gamepad2, CalendarDays, Users, Trophy, SearchX, Plus } from '@lucide/vue'
+import { ref, computed, onMounted } from 'vue'
+import { List, Calendar, History, Gamepad2, CalendarDays, Users, Trophy, SearchX, Plus } from '@lucide/vue'
 import { vReveal } from '@/composables/useReveal'
 import { useAuthStore } from '@/stores/auth'
+import { api } from '@/services/api'
 
 const authStore = useAuthStore()
 
 const filter = ref('all') // 'all', 'proximos', 'concluidos'
 
-/* ── Mock (ainda não existe backend de torneios — ver TODO.md "Torneio de Sofá") ── */
-const allTournaments = ref([
-    { id: 1, title: 'Copa Final de Semana', game: 'EA FC 26', prize: 80, entryFee: 10, date: 'Hoje, 20:00', enrolled: 4, maxPlayers: 8, status: 'proximo', private: false },
-    { id: 2, title: 'Liga Noturna eFootball', game: 'eFootball', prize: 150, entryFee: 15, date: 'Amanhã, 22:00', enrolled: 12, maxPlayers: 16, status: 'proximo', private: false },
-    { id: 3, title: 'Torneio Fechado NDAMBA', game: 'EA FC 25', prize: 0, entryFee: 0, date: '25 Nov, 19:00', enrolled: 8, maxPlayers: 8, status: 'proximo', private: true },
-    { id: 4, title: 'Supercopa de Sexta', game: 'EA FC 26', prize: 500, entryFee: 25, date: 'Sexta, 21:00', enrolled: 16, maxPlayers: 32, status: 'proximo', private: false },
-    { id: 5, title: 'Campeonato Mensal Pro', game: 'eFootball', prize: 1000, entryFee: 50, date: 'Dia 30, 15:00', enrolled: 45, maxPlayers: 64, status: 'proximo', private: false },
-    { id: 6, title: 'Taça dos Campeões', game: 'EA FC 25', prize: 200, entryFee: 20, date: 'Ontem, 20:00', enrolled: 16, maxPlayers: 16, status: 'concluido', private: false },
-    { id: 7, title: 'Liga Amadora (Série B)', game: 'EA FC 25', prize: 40, entryFee: 5, date: 'Sábado passado', enrolled: 8, maxPlayers: 8, status: 'concluido', private: false },
-    { id: 8, title: 'X1 da Madrugada', game: 'eFootball', prize: 30, entryFee: 5, date: 'Domingo passado', enrolled: 8, maxPlayers: 8, status: 'concluido', private: false },
-    { id: 9, title: 'Invitational de Inverno', game: 'EA FC 26', prize: 0, entryFee: 0, date: 'Semana passada', enrolled: 16, maxPlayers: 16, status: 'concluido', private: true },
-    { id: 10, title: 'Copa Novatos', game: 'EA FC 25', prize: 50, entryFee: 5, date: 'Amanhã, 14:00', enrolled: 6, maxPlayers: 16, status: 'proximo', private: false },
-    { id: 11, title: 'Desafio dos 100', game: 'eFootball', prize: 100, entryFee: 10, date: 'Hoje, 23:30', enrolled: 10, maxPlayers: 16, status: 'proximo', private: false },
-    { id: 12, title: 'Masters EA FC', game: 'EA FC 26', prize: 400, entryFee: 40, date: 'Mês passado', enrolled: 16, maxPlayers: 16, status: 'concluido', private: false },
-])
+/**
+ * Formato alinhado ao contrato real do backend (ver backend/tournaments.py):
+ * GET /api/tournaments/online/open devolve exatamente esta forma.
+ */
+type TournamentStatus = 'registration_open' | 'in_progress' | 'completed' | 'cancelled'
+interface OnlineTournament {
+    id: string
+    title: string
+    game: string
+    platform: string | null
+    max_players: number
+    entry_fee: number
+    prize_pool: number
+    rake_amount: number
+    status: TournamentStatus
+    registration_deadline: string | null
+    participant_count: number
+}
+
+const allTournaments = ref<OnlineTournament[]>([])
+const loading = ref(true)
+const loadError = ref('')
+
+const loadTournaments = async () => {
+    loading.value = true
+    loadError.value = ''
+    try {
+        allTournaments.value = await api.get<OnlineTournament[]>('/api/tournaments/online/open')
+    } catch (err: any) {
+        loadError.value = err.message || 'Erro ao carregar os torneios.'
+    } finally {
+        loading.value = false
+    }
+}
+onMounted(loadTournaments)
 
 const filterTabs = computed(() => [
     { key: 'all', label: 'Todos', icon: List, count: allTournaments.value.length },
-    { key: 'proximos', label: 'Próximos', icon: Calendar, count: allTournaments.value.filter(t => t.status === 'proximo').length },
-    { key: 'concluidos', label: 'Concluídos', icon: History, count: allTournaments.value.filter(t => t.status === 'concluido').length },
+    { key: 'proximos', label: 'Abertos/Ao vivo', icon: Calendar, count: allTournaments.value.filter(t => t.status === 'registration_open' || t.status === 'in_progress').length },
+    { key: 'concluidos', label: 'Concluídos', icon: History, count: allTournaments.value.filter(t => t.status === 'completed').length },
 ])
 
 const filteredTournaments = computed(() => {
-    if (filter.value === 'proximos') return allTournaments.value.filter(t => t.status === 'proximo')
-    if (filter.value === 'concluidos') return allTournaments.value.filter(t => t.status === 'concluido')
-    return allTournaments.value
+    if (filter.value === 'proximos') return allTournaments.value.filter(t => t.status === 'registration_open' || t.status === 'in_progress')
+    if (filter.value === 'concluidos') return allTournaments.value.filter(t => t.status === 'completed')
+    return allTournaments.value.filter(t => t.status !== 'cancelled')
 })
+
+const netPrize = (t: OnlineTournament) => t.prize_pool - t.rake_amount
+
+function deadlineLabel(iso: string | null): string {
+    if (!iso) return '—'
+    const diffMs = new Date(iso).getTime() - Date.now()
+    if (diffMs <= 0) return 'Encerrando...'
+    const hours = Math.floor(diffMs / 3_600_000)
+    if (hours < 1) return `${Math.floor(diffMs / 60_000)} min`
+    if (hours < 24) return `${hours}h`
+    return `${Math.floor(hours / 24)} dias`
+}
+
+const statusMeta: Record<TournamentStatus, { label: string }> = {
+    registration_open: { label: 'Inscrições abertas' },
+    in_progress: { label: 'Ao vivo' },
+    completed: { label: 'Concluído' },
+    cancelled: { label: 'Cancelado' },
+}
 </script>
 
 <template>
@@ -43,7 +83,7 @@ const filteredTournaments = computed(() => {
     <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
             <span class="text-eyebrow uppercase tracking-widest text-accent">Competições oficiais</span>
-            <h1 class="mt-2 font-display text-headline font-black uppercase tracking-tight text-ink">Torneios</h1>
+            <h1 class="mt-2 font-display text-headline font-black uppercase tracking-tight text-ink">Torneios Online</h1>
             <p class="mt-1 text-body-sm text-ink-subtle">Mata-mata com premiação de verdade. Entra, elimina geral e leva o pote.</p>
         </div>
         <router-link
@@ -51,7 +91,7 @@ const filteredTournaments = computed(() => {
             class="group inline-flex w-fit items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-button font-semibold text-canvas no-underline shadow-glow-primary transition-all duration-200 hover:bg-primary-hover"
         >
             <Plus :size="18" class="transition-transform duration-200 group-hover:rotate-90" />
-            {{ authStore.user ? 'Criar Torneio Local' : 'Criar conta para criar torneio' }}
+            {{ authStore.user ? 'Criar Torneio' : 'Criar conta para criar torneio' }}
         </router-link>
     </div>
 
@@ -78,8 +118,22 @@ const filteredTournaments = computed(() => {
         </div>
     </div>
 
+    <!-- Carregando -->
+    <div v-if="loading" class="flex items-center justify-center py-24">
+        <svg class="h-8 w-8 animate-spin text-primary" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+    </div>
+
+    <!-- Erro -->
+    <div v-else-if="loadError" class="flex flex-col items-center gap-3 py-24 text-center">
+        <p class="font-semibold text-semantic-error">{{ loadError }}</p>
+        <button @click="loadTournaments" class="text-body-sm font-semibold text-primary hover:underline">Tentar novamente</button>
+    </div>
+
     <!-- Estado vazio -->
-    <div v-if="filteredTournaments.length === 0" class="flex flex-col items-center gap-3 py-24 text-center">
+    <div v-else-if="filteredTournaments.length === 0" class="flex flex-col items-center gap-3 py-24 text-center">
         <span class="grid size-14 place-items-center rounded-2xl bg-surface-2 text-ink-tertiary">
             <SearchX :size="26" />
         </span>
@@ -92,17 +146,14 @@ const filteredTournaments = computed(() => {
         <router-link
             v-for="(t, i) in filteredTournaments"
             :key="t.id"
-            :to="'/torneios/' + t.id"
+            :to="'/tournaments/' + t.id"
             v-reveal="`${(i % 6) * 60}ms`"
             class="glow-border group flex flex-col overflow-hidden rounded-2xl border border-hairline bg-surface-1/60 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-hairline-strong no-underline"
-            :class="t.status === 'concluido' ? 'opacity-70' : ''"
+            :class="t.status === 'completed' ? 'opacity-70' : ''"
         >
             <!-- Banner -->
             <div class="relative flex h-28 items-center justify-center overflow-hidden border-b border-hairline bg-surface-2 p-5">
                 <Trophy :size="80" class="pointer-events-none absolute -right-4 -top-4 text-ink/[0.04]" />
-                <span v-if="t.private" class="absolute left-3 top-3 grid size-8 place-items-center rounded-full border border-hairline-strong bg-surface-3 text-ink-tertiary">
-                    <Lock :size="14" />
-                </span>
                 <div class="z-10 text-center">
                     <h3 class="max-w-[220px] truncate font-display text-lg font-bold text-ink">{{ t.title }}</h3>
                     <span class="mt-2 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-accent">
@@ -116,30 +167,34 @@ const filteredTournaments = computed(() => {
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-caption uppercase tracking-widest text-ink-tertiary">Premiação</p>
-                        <p class="text-lg font-bold" :class="t.status === 'concluido' ? 'text-ink-subtle' : 'text-semantic-success'">{{ t.private ? 'Privada' : `R$ ${t.prize.toFixed(2)}` }}</p>
+                        <p class="text-lg font-bold" :class="t.status === 'completed' ? 'text-ink-subtle' : 'text-semantic-success'">R$ {{ netPrize(t).toFixed(2) }}</p>
                     </div>
                     <div class="text-right">
                         <p class="text-caption uppercase tracking-widest text-ink-tertiary">Inscrição</p>
-                        <p class="text-body-sm font-semibold text-ink">{{ t.private ? '—' : `R$ ${t.entryFee.toFixed(2)}` }}</p>
+                        <p class="text-body-sm font-semibold text-ink">R$ {{ t.entry_fee.toFixed(2) }}</p>
                     </div>
                 </div>
 
                 <div class="flex flex-col gap-2 rounded-xl border border-hairline bg-surface-2 p-4">
-                    <div class="flex items-center justify-between text-body-sm">
-                        <span class="inline-flex items-center gap-1.5 text-ink-tertiary"><CalendarDays :size="14" /> Data</span>
-                        <span class="font-medium text-ink">{{ t.date }}</span>
+                    <div v-if="t.status === 'registration_open'" class="flex items-center justify-between text-body-sm">
+                        <span class="inline-flex items-center gap-1.5 text-ink-tertiary"><CalendarDays :size="14" /> Encerra em</span>
+                        <span class="font-medium text-ink">{{ deadlineLabel(t.registration_deadline) }}</span>
+                    </div>
+                    <div v-else class="flex items-center justify-between text-body-sm">
+                        <span class="inline-flex items-center gap-1.5 text-ink-tertiary"><CalendarDays :size="14" /> Status</span>
+                        <span class="font-medium text-ink">{{ statusMeta[t.status].label }}</span>
                     </div>
                     <div class="flex items-center justify-between text-body-sm">
                         <span class="inline-flex items-center gap-1.5 text-ink-tertiary"><Users :size="14" /> Vagas</span>
-                        <span class="font-bold" :class="t.status === 'concluido' ? 'text-ink-tertiary' : 'text-accent'">{{ t.enrolled }}/{{ t.maxPlayers }}</span>
+                        <span class="font-bold" :class="t.status === 'completed' ? 'text-ink-tertiary' : 'text-accent'">{{ t.participant_count }}/{{ t.max_players }}</span>
                     </div>
                 </div>
 
                 <div
                     class="rounded-xl py-2.5 text-center text-button font-semibold transition-colors duration-200"
-                    :class="t.status === 'concluido' ? 'bg-surface-3 text-ink-tertiary' : 'bg-surface-3 text-ink-subtle group-hover:bg-primary group-hover:text-canvas'"
+                    :class="t.status === 'completed' ? 'bg-surface-3 text-ink-tertiary' : 'bg-surface-3 text-ink-subtle group-hover:bg-primary group-hover:text-canvas'"
                 >
-                    {{ t.status === 'concluido' ? 'Ver Chaveamento' : 'Ver Detalhes' }}
+                    {{ t.status === 'registration_open' ? 'Entrar / Ver Detalhes' : t.status === 'completed' ? 'Ver Chaveamento' : 'Ver Partidas' }}
                 </div>
             </div>
         </router-link>

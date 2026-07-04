@@ -1,0 +1,167 @@
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { Bell, Trophy, Swords, ShieldAlert, XCircle, CheckCheck, ThumbsDown, BadgeCheck } from '@lucide/vue'
+import { api } from '@/services/api'
+
+type NotificationType =
+  | 'tournament_open' | 'match_ready' | 'match_disputed' | 'tournament_prize'
+  | 'tournament_cancelled' | 'dispute_resolved_win' | 'dispute_resolved_loss'
+interface NotificationItem {
+  id: string
+  type: NotificationType
+  title: string
+  body: string
+  tournament_id: string | null
+  match_id: string | null
+  read_at: string | null
+  created_at: string
+}
+
+const router = useRouter()
+const rootEl = ref<HTMLElement | null>(null)
+const open = ref(false)
+const unreadCount = ref(0)
+const notifications = ref<NotificationItem[]>([])
+
+const loadNotifications = async () => {
+  try {
+    const feed = await api.get<{ unread_count: number; notifications: NotificationItem[] }>('/api/notifications')
+    unreadCount.value = feed.unread_count
+    notifications.value = feed.notifications
+  } catch {
+    // Sino é acessório — falha ao carregar não deve travar o resto da tela.
+  }
+}
+
+let pollTimer: ReturnType<typeof setInterval> | null = null
+onMounted(() => {
+  loadNotifications()
+  pollTimer = setInterval(loadNotifications, 30_000)
+  document.addEventListener('click', handleOutsideClick)
+})
+onUnmounted(() => {
+  if (pollTimer) clearInterval(pollTimer)
+  document.removeEventListener('click', handleOutsideClick)
+})
+
+function handleOutsideClick(e: MouseEvent) {
+  if (open.value && rootEl.value && !rootEl.value.contains(e.target as Node)) open.value = false
+}
+
+const toggle = () => {
+  open.value = !open.value
+  if (open.value) loadNotifications()
+}
+
+const markAllRead = async () => {
+  if (unreadCount.value === 0) return
+  const now = new Date().toISOString()
+  unreadCount.value = 0
+  notifications.value = notifications.value.map(n => ({ ...n, read_at: n.read_at || now }))
+  try {
+    await api.post('/api/notifications/mark-read', {})
+  } catch {
+    await loadNotifications() // desfaz o otimismo se a chamada falhar
+  }
+}
+
+const handleClick = (n: NotificationItem) => {
+  open.value = false
+  if (n.tournament_id) router.push(`/tournaments/${n.tournament_id}`)
+}
+
+function timeAgo(iso: string): string {
+  const mins = Math.floor((Date.now() - new Date(iso).getTime()) / 60_000)
+  if (mins < 1) return 'Agora mesmo'
+  if (mins < 60) return `Há ${mins} min`
+  const hours = Math.floor(mins / 60)
+  if (hours < 24) return hours === 1 ? 'Há 1 hora' : `Há ${hours} horas`
+  const days = Math.floor(hours / 24)
+  return days === 1 ? 'Ontem' : `Há ${days} dias`
+}
+
+const ICONS: Record<NotificationType, any> = {
+  tournament_open: Trophy,
+  match_ready: Swords,
+  match_disputed: ShieldAlert,
+  tournament_prize: Trophy,
+  tournament_cancelled: XCircle,
+  dispute_resolved_win: BadgeCheck,
+  dispute_resolved_loss: ThumbsDown,
+}
+const ICON_COLOR: Record<NotificationType, string> = {
+  tournament_open: 'text-primary bg-primary/10',
+  match_ready: 'text-accent bg-accent/10',
+  match_disputed: 'text-semantic-error bg-semantic-error/10',
+  tournament_prize: 'text-semantic-success bg-semantic-success/10',
+  tournament_cancelled: 'text-ink-tertiary bg-surface-3',
+  dispute_resolved_win: 'text-semantic-success bg-semantic-success/10',
+  dispute_resolved_loss: 'text-semantic-error bg-semantic-error/10',
+}
+</script>
+
+<template>
+  <div ref="rootEl" class="relative">
+    <button
+      type="button"
+      @click="toggle"
+      class="relative grid size-9 place-items-center rounded-full text-ink-subtle transition-colors hover:bg-surface-2 hover:text-ink"
+      aria-label="Notificações"
+    >
+      <Bell :size="20" />
+      <span
+        v-if="unreadCount > 0"
+        class="absolute -right-0.5 -top-0.5 grid min-w-[16px] place-items-center rounded-full bg-semantic-error px-1 text-[9px] font-bold leading-none text-white"
+        style="height: 16px"
+      >{{ unreadCount > 9 ? '9+' : unreadCount }}</span>
+    </button>
+
+    <div
+      v-if="open"
+      class="absolute right-0 z-[9996] mt-2 w-80 max-w-[90vw] overflow-hidden rounded-2xl border border-hairline-strong bg-surface-1 shadow-2xl"
+    >
+      <div class="flex items-center justify-between border-b border-hairline px-4 py-3">
+        <p class="text-body-sm font-bold text-ink">Notificações</p>
+        <button
+          v-if="unreadCount > 0"
+          type="button"
+          @click="markAllRead"
+          class="inline-flex items-center gap-1 text-[11px] font-semibold text-primary hover:underline"
+        >
+          <CheckCheck :size="12" /> Marcar tudo como lido
+        </button>
+      </div>
+
+      <div class="max-h-96 overflow-y-auto custom-scrollbar">
+        <div v-if="notifications.length === 0" class="px-4 py-8 text-center text-body-sm text-ink-subtle">
+          Nenhuma notificação ainda.
+        </div>
+        <button
+          v-for="n in notifications"
+          :key="n.id"
+          type="button"
+          @click="handleClick(n)"
+          class="flex w-full items-start gap-3 border-b border-hairline px-4 py-3 text-left transition-colors last:border-b-0 hover:bg-surface-2"
+          :class="!n.read_at ? 'bg-primary/[0.04]' : ''"
+        >
+          <span class="grid size-8 shrink-0 place-items-center rounded-full" :class="ICON_COLOR[n.type]">
+            <component :is="ICONS[n.type]" :size="15" />
+          </span>
+          <div class="min-w-0 flex-1">
+            <p class="truncate text-body-sm font-semibold text-ink">{{ n.title }}</p>
+            <p class="mt-0.5 line-clamp-2 text-caption text-ink-subtle">{{ n.body }}</p>
+            <p class="mt-1 text-[10px] text-ink-tertiary">{{ timeAgo(n.created_at) }}</p>
+          </div>
+          <span v-if="!n.read_at" class="mt-1.5 size-2 shrink-0 rounded-full bg-primary"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+</style>

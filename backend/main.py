@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pix import router as pix_router
 from challenges import router as challenges_router
 from tournaments import router as tournaments_router
+from notifications import router as notifications_router
+from admin import router as admin_router
 
 app = FastAPI(
     title="API de X1",
@@ -30,6 +32,8 @@ app.add_middleware(
 app.include_router(pix_router)
 app.include_router(challenges_router)
 app.include_router(tournaments_router)
+app.include_router(notifications_router)
+app.include_router(admin_router)
 
 @app.get("/")
 def read_root():

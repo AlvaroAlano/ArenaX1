@@ -57,7 +57,7 @@ const handleRegister = async () => {
   successMessage.value = ''
 
   try {
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email: email.value,
       password: password.value,
       options: {
@@ -65,12 +65,21 @@ const handleRegister = async () => {
           username: fullName.value,
           ea_id: eaId.value,
           referral_code: referralCode.value
-        }
+        },
+        emailRedirectTo: `${window.location.origin}/login`
       }
     })
 
     if (error) {
       errorMessage.value = error.message
+      return
+    }
+
+    if (!data.session) {
+      // Projeto tem confirmação de e-mail habilitada: não há sessão ainda,
+      // então redirecionar pro /dashboard só bateria de volta no /login sem
+      // explicação nenhuma. Avisar o usuário e não navegar.
+      successMessage.value = 'Cadastro realizado! Confirme o seu e-mail para poder entrar.'
       return
     }
 

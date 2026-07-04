@@ -29,6 +29,21 @@ const selectAmount = (value: number) => {
   depositAmount.value = value
 }
 
+// Rótulo/sinal por tipo real de transação (ver backend/04_atomic_wallet_functions.sql
+// e backend/07_online_tournaments.sql) — cobre desafios e torneios online, não só
+// depósito/saque.
+const TX_META: Record<string, { label: string; positive: boolean }> = {
+  deposit: { label: 'Depósito', positive: true },
+  withdraw: { label: 'Saque', positive: false },
+  bet_freeze: { label: 'Aposta/Inscrição', positive: false },
+  bet_refund: { label: 'Reembolso', positive: true },
+  challenge_win: { label: 'Vitória no X1', positive: true },
+  challenge_loss: { label: 'Derrota no X1', positive: false },
+  tournament_prize: { label: 'Prêmio de Torneio', positive: true },
+  win_prize: { label: 'Prêmio', positive: true },
+}
+const txMeta = (type: string) => TX_META[type] || { label: 'Movimentação', positive: false }
+
 // Carregar dados iniciais
 const loadData = async () => {
   if (!authStore.user) return
@@ -45,10 +60,38 @@ const loadData = async () => {
 
     // 2. Buscar transações
     await loadTransactions()
+
+    // 3. Detalhar o que compõe o saldo congelado (desafios + torneios em aberto)
+    await loadLockedItems()
   } catch (err) {
     console.error('Erro ao carregar carteira:', err)
   } finally {
     loading.value = false
+  }
+}
+
+// Detalhamento do locked_balance: de onde vem cada real congelado, pra não
+// ficar só um número solto sem explicação (desafio aberto/em andamento +
+// inscrição em torneio online com vagas abertas ou chave em andamento).
+interface LockedItem { label: string; amount: number; to: string }
+const lockedItems = ref<LockedItem[]>([])
+
+const loadLockedItems = async () => {
+  try {
+    const [challenges, tournaments] = await Promise.all([
+      api.get<any[]>('/api/challenges/my-challenges').catch(() => []),
+      api.get<any[]>('/api/tournaments/online/my').catch(() => []),
+    ])
+    const items: LockedItem[] = []
+    challenges
+      .filter((c) => c.status === 'open' || c.status === 'in_progress')
+      .forEach((c) => items.push({ label: `Desafio de ${c.game}`, amount: c.bet_amount, to: `/match/${c.id}` }))
+    tournaments
+      .filter((t: any) => t.status === 'registration_open' || t.status === 'in_progress')
+      .forEach((t: any) => items.push({ label: `Torneio "${t.title}"`, amount: t.entry_fee, to: `/tournaments/${t.id}` }))
+    lockedItems.value = items
+  } catch {
+    lockedItems.value = []
   }
 }
 
@@ -216,7 +259,7 @@ onUnmounted(() => {
             R$ {{ wallet?.balance?.toFixed(2) || '0.00' }}
           </div>
           <p class="text-caption text-ink-subtle mt-2">
-            Saldo congelado em desafios: R$ {{ wallet?.locked_balance?.toFixed(2) || '0.00' }}
+            Saldo congelado: R$ {{ wallet?.locked_balance?.toFixed(2) || '0.00' }}
           </p>
         </div>
         <div class="h-12 w-12 rounded-lg bg-primary flex items-center justify-center shadow-none shadow-none/20">
@@ -224,6 +267,20 @@ onUnmounted(() => {
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
+      </div>
+
+      <!-- Detalhamento do saldo congelado (de onde vem cada real bloqueado) -->
+      <div v-if="lockedItems.length > 0" class="bg-surface-1 border border-hairline rounded-lg p-5 space-y-2.5">
+        <h3 class="text-caption font-semibold uppercase tracking-wider text-ink-subtle mb-1">Congelado em jogo</h3>
+        <router-link
+          v-for="(item, i) in lockedItems"
+          :key="i"
+          :to="item.to"
+          class="flex items-center justify-between gap-3 rounded-lg bg-surface-2 px-3.5 py-2.5 no-underline hover:bg-surface-3 transition-colors"
+        >
+          <span class="text-body-sm text-ink truncate">{{ item.label }}</span>
+          <span class="text-body-sm font-semibold text-ink-muted shrink-0">R$ {{ item.amount.toFixed(2) }}</span>
+        </router-link>
       </div>
 
       <!-- Abas de Depósito e Saque -->
@@ -384,13 +441,13 @@ onUnmounted(() => {
         >
           <div>
             <div class="flex items-center gap-2">
-              <span 
+              <span
                 :class="[
-                  tx.type === 'deposit' || tx.type === 'win_prize' ? 'bg-surface-2 text-semantic-success' : 'bg-surface-2 text-ink-muted'
+                  txMeta(tx.type).positive ? 'bg-surface-2 text-semantic-success' : 'bg-surface-2 text-ink-muted'
                 ]"
                 class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full"
               >
-                {{ tx.type === 'deposit' ? 'Depósito' : tx.type === 'withdraw' ? 'Saque' : tx.type === 'win_prize' ? 'Prêmio' : 'Rake' }}
+                {{ txMeta(tx.type).label }}
               </span>
               <span 
                 :class="[
@@ -405,13 +462,13 @@ onUnmounted(() => {
             <span class="text-[10px] text-ink-tertiary block mt-0.5">{{ new Date(tx.created_at).toLocaleString() }}</span>
           </div>
 
-          <div 
+          <div
             :class="[
-              tx.type === 'deposit' || tx.type === 'win_prize' ? 'text-semantic-success' : 'text-ink-muted'
+              txMeta(tx.type).positive ? 'text-semantic-success' : 'text-ink-muted'
             ]"
             class="text-sm font-semibold"
           >
-            {{ tx.type === 'deposit' || tx.type === 'win_prize' ? '+' : '' }}R$ {{ Math.abs(parseFloat(tx.amount)).toFixed(2) }}
+            {{ txMeta(tx.type).positive ? '+' : '' }}R$ {{ Math.abs(parseFloat(tx.amount)).toFixed(2) }}
           </div>
         </div>
       </div>

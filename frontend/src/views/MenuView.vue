@@ -12,6 +12,7 @@ import {
   Headset,
   LogOut,
   ChevronRight,
+  ShieldCheck,
 } from '@lucide/vue'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
@@ -70,6 +71,26 @@ const accountItems = [
         <Wallet :size="20" />
       </span>
     </router-link>
+
+    <!-- Administração (só pra admins) -->
+    <section v-if="authStore.isAdmin" class="space-y-2">
+      <h2 class="px-1 text-[10px] font-bold uppercase tracking-wider text-ink-subtle">Administração</h2>
+      <nav class="space-y-2">
+        <router-link
+          to="/admin"
+          class="flex items-center gap-3.5 rounded-xl border border-primary/25 bg-primary/[0.06] p-4 no-underline transition-colors hover:border-primary/40"
+        >
+          <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/15 text-primary">
+            <ShieldCheck :size="19" />
+          </span>
+          <span class="min-w-0 flex-1">
+            <span class="block text-body-sm font-bold text-ink">Painel Admin</span>
+            <span class="block truncate text-caption text-ink-tertiary">Métricas e disputas de torneio</span>
+          </span>
+          <ChevronRight :size="18" class="shrink-0 text-ink-tertiary" />
+        </router-link>
+      </nav>
+    </section>
 
     <!-- Principal -->
     <section class="space-y-2">

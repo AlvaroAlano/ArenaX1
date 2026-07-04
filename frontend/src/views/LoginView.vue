@@ -11,6 +11,9 @@ const showPassword = ref(false)
 const loading = ref(false)
 const googleLoading = ref(false)
 const errorMessage = ref('')
+const needsConfirmation = ref(false)
+const resendingConfirmation = ref(false)
+const resendSuccess = ref(false)
 
 const router = useRouter()
 
@@ -52,6 +55,8 @@ const handleLogin = async () => {
 
   loading.value = true
   errorMessage.value = ''
+  needsConfirmation.value = false
+  resendSuccess.value = false
 
   try {
     const { error } = await supabase.auth.signInWithPassword({
@@ -60,9 +65,14 @@ const handleLogin = async () => {
     })
 
     if (error) {
-      errorMessage.value = error.message === 'Invalid login credentials'
-        ? 'E-mail ou senha incorretos.'
-        : error.message
+      if (error.message === 'Email not confirmed') {
+        errorMessage.value = 'Confirme o seu e-mail antes de entrar. Verifique a caixa de entrada (e o spam).'
+        needsConfirmation.value = true
+      } else {
+        errorMessage.value = error.message === 'Invalid login credentials'
+          ? 'E-mail ou senha incorretos.'
+          : error.message
+      }
       return
     }
 
@@ -71,6 +81,26 @@ const handleLogin = async () => {
     errorMessage.value = 'Ocorreu um erro ao tentar fazer login.'
   } finally {
     loading.value = false
+  }
+}
+
+const handleResendConfirmation = async () => {
+  if (!email.value) return
+  resendingConfirmation.value = true
+  resendSuccess.value = false
+  try {
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: email.value,
+      options: { emailRedirectTo: `${window.location.origin}/login` }
+    })
+    if (error) {
+      errorMessage.value = error.message
+    } else {
+      resendSuccess.value = true
+    }
+  } finally {
+    resendingConfirmation.value = false
   }
 }
 </script>
@@ -143,9 +173,21 @@ const handleLogin = async () => {
             <p class="mt-1 text-body-sm text-ink-subtle">Acesse sua conta para continuar</p>
           </div>
 
-          <div v-if="errorMessage" class="mb-6 flex items-start gap-2.5 rounded-xl border border-semantic-error/20 bg-semantic-error/10 p-4 text-body-sm text-ink">
-            <AlertCircle :size="18" class="mt-0.5 shrink-0 text-semantic-error" />
-            <span>{{ errorMessage }}</span>
+          <div v-if="errorMessage" class="mb-6 flex flex-col gap-2.5 rounded-xl border border-semantic-error/20 bg-semantic-error/10 p-4 text-body-sm text-ink">
+            <div class="flex items-start gap-2.5">
+              <AlertCircle :size="18" class="mt-0.5 shrink-0 text-semantic-error" />
+              <span>{{ errorMessage }}</span>
+            </div>
+            <button
+              v-if="needsConfirmation"
+              type="button"
+              @click="handleResendConfirmation"
+              :disabled="resendingConfirmation"
+              class="ml-[26px] self-start text-button font-semibold text-primary hover:underline disabled:opacity-60"
+            >
+              {{ resendingConfirmation ? 'Reenviando...' : 'Reenviar e-mail de confirmação' }}
+            </button>
+            <p v-if="resendSuccess" class="ml-[26px] text-semantic-success">E-mail reenviado! Confira a sua caixa de entrada.</p>
           </div>
 
           <button

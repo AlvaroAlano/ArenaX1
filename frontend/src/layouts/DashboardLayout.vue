@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DashboardSidebar from '@/components/layout/DashboardSidebar.vue'
 import DashboardBottomNav from '@/components/layout/DashboardBottomNav.vue'
+import NotificationBell from '@/components/ui/NotificationBell.vue'
 </script>
 
 <template>
@@ -13,9 +14,12 @@ import DashboardBottomNav from '@/components/layout/DashboardBottomNav.vue'
             <span class="grid size-7 place-items-center rounded-md bg-primary text-xs font-black tracking-tighter text-canvas">X1</span>
             <span class="font-display text-lg font-black tracking-tight text-ink">ARENA<span class="text-primary">X1</span></span>
           </span>
-          <span class="text-xs font-bold text-semantic-success bg-semantic-success/10 px-2.5 py-1 rounded-lg">
-            R$ 0.00
-          </span>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-semantic-success bg-semantic-success/10 px-2.5 py-1 rounded-lg">
+              R$ 0.00
+            </span>
+            <NotificationBell />
+          </div>
       </div>
     </div>
 

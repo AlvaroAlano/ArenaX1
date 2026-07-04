@@ -143,6 +143,20 @@ const router = createRouter({
           name: 'match',
           component: () => import('../views/MatchView.vue'),
           props: true
+        },
+        {
+          // Portal de admin — segue dentro do DashboardLayout normal (mesma
+          // sidebar/bottom nav), já que quem administra também joga. O
+          // backend confere profiles.is_admin em toda chamada de /api/admin/*;
+          // sem isso, as telas mostram "acesso restrito".
+          path: '/admin',
+          name: 'admin',
+          component: () => import('../views/AdminOverviewView.vue')
+        },
+        {
+          path: '/admin/disputes',
+          name: 'admin-disputes',
+          component: () => import('../views/AdminDisputesView.vue')
         }
       ]
     }
