@@ -30,7 +30,7 @@ import NotificationBell from '@/components/ui/NotificationBell.vue'
     <div class="hidden md:block w-64 shrink-0"></div>
 
     <!-- Área de Conteúdo -->
-    <main class="flex-1 flex flex-col relative overflow-y-auto h-screen custom-scrollbar pt-14 pb-20 md:pt-0 md:pb-0">
+    <main class="flex-1 flex flex-col relative overflow-y-auto overflow-x-hidden h-screen custom-scrollbar pt-14 pb-20 md:pt-0 md:pb-0">
         <router-view v-slot="{ Component, route }">
             <transition name="page" mode="out-in">
                 <component :is="Component" :key="route.path" />
