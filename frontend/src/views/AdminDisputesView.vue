@@ -21,19 +21,38 @@ const disputes = ref<OpenDispute[]>([])
 const loading = ref(true)
 const loadError = ref('')
 const forbidden = ref(false)
+const isMockData = ref(false)
 const resolvingId = ref<string | null>(null)
+
+// Exemplo pra visualizar a tela enquanto o backend não tem disputa real
+// (ou está fora do ar) — só entra se a chamada falhar por outro motivo
+// que não seja "sem permissão de admin".
+const MOCK_DISPUTES: OpenDispute[] = [
+  {
+    dispute_id: 'mock-1',
+    match_id: 'mock-match-1',
+    tournament_id: 'mock-tournament-1',
+    tournament_title: 'Torneio Relâmpago EA FC 26',
+    round: 2,
+    participant_a: { id: 'mock-pa-1', display_name: 'Lucas_Craque10', user_id: null },
+    participant_b: { id: 'mock-pb-1', display_name: 'RivaldoZK', user_id: null },
+    created_at: new Date(Date.now() - 45 * 60_000).toISOString(),
+  },
+]
 
 const loadDisputes = async () => {
   loading.value = true
   loadError.value = ''
   forbidden.value = false
+  isMockData.value = false
   try {
     disputes.value = await api.get<OpenDispute[]>('/api/admin/disputes')
   } catch (err: any) {
     if (err.message?.includes('restrito') || err.message?.includes('administrad')) {
       forbidden.value = true
     } else {
-      loadError.value = err.message || 'Erro ao carregar as disputas.'
+      disputes.value = MOCK_DISPUTES
+      isMockData.value = true
     }
   } finally {
     loading.value = false
@@ -45,6 +64,11 @@ const resolveDispute = async (d: OpenDispute, winner: 'a' | 'b') => {
   const winnerParticipant = winner === 'a' ? d.participant_a : d.participant_b
   if (!winnerParticipant) return
   if (!confirm(`Confirmar que ${winnerParticipant.display_name} venceu de verdade essa partida? O outro lado vai perder Fair Play Rating por ter mentido.`)) return
+
+  if (isMockData.value) {
+    disputes.value = disputes.value.filter((item) => item.dispute_id !== d.dispute_id)
+    return
+  }
 
   resolvingId.value = d.dispute_id
   try {
@@ -111,6 +135,10 @@ function timeAgo(iso: string): string {
     </div>
 
     <div v-else class="space-y-3">
+      <div v-if="isMockData" class="flex items-center gap-2.5 rounded-xl border border-accent/25 bg-accent/[0.06] px-4 py-3 text-body-sm text-accent">
+        <ShieldAlert :size="16" class="shrink-0" />
+        Não foi possível falar com o backend — exibindo uma disputa de exemplo, não é real.
+      </div>
       <div v-for="d in disputes" :key="d.dispute_id" class="rounded-2xl border border-semantic-error/25 bg-semantic-error/[0.03] p-5">
         <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
           <div>

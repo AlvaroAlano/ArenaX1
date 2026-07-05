@@ -43,18 +43,50 @@ const metrics = ref<DashboardMetrics | null>(null)
 const loading = ref(true)
 const loadError = ref('')
 const forbidden = ref(false)
+const isMockData = ref(false)
+
+// Dados de exemplo pra visualizar o painel enquanto o backend real não
+// tem movimento suficiente (ou está fora do ar) — só entra em cena se a
+// chamada falhar por um motivo que não seja "sem permissão de admin".
+const MOCK_METRICS: DashboardMetrics = {
+  financeiro: {
+    saldo_disponivel_total: 12480.5,
+    saldo_travado_total: 3200,
+    total_depositado: 45600,
+    total_sacado: 28900,
+    total_premios_pagos: 15200,
+    total_rake_desafios: 890.4,
+    total_rake_torneios: 1240,
+    travado_em_desafios: 1200,
+    travado_em_torneios_online: 2000,
+  },
+  desafios: { total: 342, abertos: 18, em_andamento: 24, concluidos: 289, em_disputa: 3, aposta_media: 42.5 },
+  torneios_locais: { total: 56, em_andamento: 4, concluidos: 50 },
+  torneios_online: {
+    total: 27, inscricoes_abertas: 3, em_andamento: 5, concluidos: 18, cancelados: 1,
+    taxa_inscricao_media: 35, distribuicao_tamanho: { '4': 12, '8': 10, '16': 5 },
+  },
+  usuarios: { total: 1284, jogadores_ativos: 640, fair_play_medio: 8.7 },
+  disputas: { desafios_em_disputa: 2, torneios_em_disputa: 1, resolvidas_total: 34 },
+  preferencias: {
+    jogos_populares: [{ label: 'EA FC 26', total: 850 }, { label: 'eFootball', total: 420 }],
+    plataformas_populares: [{ label: 'PS5', total: 610 }, { label: 'Xbox Series', total: 340 }, { label: 'PC', total: 220 }],
+  },
+}
 
 const loadMetrics = async () => {
   loading.value = true
   loadError.value = ''
   forbidden.value = false
+  isMockData.value = false
   try {
     metrics.value = await api.get<DashboardMetrics>('/api/admin/metrics')
   } catch (err: any) {
     if (err.message?.includes('restrito') || err.message?.includes('administrad')) {
       forbidden.value = true
     } else {
-      loadError.value = err.message || 'Erro ao carregar o painel administrativo.'
+      metrics.value = MOCK_METRICS
+      isMockData.value = true
     }
   } finally {
     loading.value = false
@@ -113,6 +145,11 @@ const disputasAbertasTotal = computed(() => {
     </div>
 
     <template v-else-if="metrics">
+      <div v-if="isMockData" class="flex items-center gap-2.5 rounded-xl border border-accent/25 bg-accent/[0.06] px-4 py-3 text-body-sm text-accent">
+        <ShieldAlert :size="16" class="shrink-0" />
+        Não foi possível falar com o backend — exibindo dados de exemplo, não são números reais.
+      </div>
+
       <!-- Atalho pra disputas -->
       <button
         type="button"
