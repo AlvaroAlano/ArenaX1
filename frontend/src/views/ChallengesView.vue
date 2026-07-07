@@ -49,6 +49,18 @@ interface Challenge {
 const filter = ref(authStore.user ? 'meus' : 'all') // Default filter
 const loading = ref(true)
 const loadError = ref('')
+const isMockData = ref(false)
+
+/* ── Dados de exemplo pra não deixar a tela vazia quando o backend (Render)
+   está fora do ar ou bloqueado por CORS — some assim que a API responder. ── */
+const agoISO = (minutes: number) => new Date(Date.now() - minutes * 60_000).toISOString()
+const MOCK_CHALLENGES: Challenge[] = [
+    { id: 'mock-1', creator_id: 'mock-user-1', opponent_id: null, bet_amount: 25, platform: 'PS5', game: 'EA FC 26', status: 'open', winner_id: null, created_at: agoISO(8), creator_profile: { username: 'RonaldoBSB', fair_play_rating: 4.8 }, opponent_profile: null },
+    { id: 'mock-2', creator_id: 'mock-user-2', opponent_id: 'mock-user-3', bet_amount: 50, platform: 'Xbox', game: 'EA FC 26', status: 'in_progress', winner_id: null, created_at: agoISO(22), creator_profile: { username: 'ZicoPlayer', fair_play_rating: 4.5 }, opponent_profile: { username: 'NetoGamer', fair_play_rating: 4.2 } },
+    { id: 'mock-3', creator_id: 'mock-user-4', opponent_id: null, bet_amount: 15, platform: 'PC', game: 'eFootball', status: 'open', winner_id: null, created_at: agoISO(40), creator_profile: { username: 'FenomenoX', fair_play_rating: 5.0 }, opponent_profile: null },
+    { id: 'mock-4', creator_id: 'mock-user-5', opponent_id: 'mock-user-6', bet_amount: 100, platform: 'Crossplay', game: 'EA FC 26', status: 'completed', winner_id: 'mock-user-5', created_at: agoISO(180), creator_profile: { username: 'CraqueDoGramado', fair_play_rating: 4.9 }, opponent_profile: { username: 'ZagueiroPro', fair_play_rating: 3.8 } },
+    { id: 'mock-5', creator_id: 'mock-user-7', opponent_id: 'mock-user-8', bet_amount: 30, platform: 'PS5', game: 'eFootball', status: 'disputed', winner_id: null, created_at: agoISO(320), creator_profile: { username: 'ArteiroBR', fair_play_rating: 4.1 }, opponent_profile: { username: 'MuralhaFC', fair_play_rating: 4.6 } },
+]
 
 /* ── Tempo relativo a partir de um timestamp real (created_at) ── */
 function timeAgo(iso: string): string {
@@ -71,6 +83,7 @@ const allChallenges = ref<Challenge[]>([])
 const loadChallenges = async () => {
     loading.value = true
     loadError.value = ''
+    isMockData.value = false
     try {
         const requests: Promise<Challenge[]>[] = [api.get<Challenge[]>('/api/challenges/open')]
         if (authStore.user) requests.push(api.get<Challenge[]>('/api/challenges/my-challenges'))
@@ -79,8 +92,9 @@ const loadChallenges = async () => {
         const merged = new Map<string, Challenge>()
         results.flat().forEach((c) => merged.set(c.id, c))
         allChallenges.value = Array.from(merged.values())
-    } catch (err: any) {
-        loadError.value = err.message || 'Erro ao carregar os desafios.'
+    } catch {
+        allChallenges.value = MOCK_CHALLENGES
+        isMockData.value = true
     } finally {
         loading.value = false
     }
@@ -93,6 +107,10 @@ const acceptingId = ref<string | null>(null)
 const handleAccept = async (c: Challenge) => {
     if (!authStore.user) {
         router.push('/register')
+        return
+    }
+    if (c.id.startsWith('mock-')) {
+        alert('Este é um desafio de exemplo — volte quando o servidor estiver disponível.')
         return
     }
     if (!confirm(`Confirmar aposta de R$ ${c.bet_amount.toFixed(2)} contra ${c.creator_profile.username}?`)) return
@@ -225,6 +243,12 @@ const winnerName = (c: Challenge) => {
                 <p class="text-caption text-ink-tertiary">jogadores ativos</p>
             </div>
         </div>
+    </div>
+
+    <!-- Aviso de dados de exemplo -->
+    <div v-if="isMockData" class="flex items-center gap-2.5 rounded-xl border border-accent/25 bg-accent/[0.06] px-4 py-3 text-body-sm text-accent">
+        <ShieldAlert :size="16" class="shrink-0" />
+        Não foi possível falar com o backend — exibindo desafios de exemplo, não são partidas reais.
     </div>
 
     <!-- Filtros -->

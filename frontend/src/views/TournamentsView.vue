@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { List, Calendar, History, Gamepad2, CalendarDays, Users, Trophy, SearchX, Plus } from '@lucide/vue'
+import { List, Calendar, History, Gamepad2, CalendarDays, Users, Trophy, SearchX, Plus, ShieldAlert } from '@lucide/vue'
 import { vReveal } from '@/composables/useReveal'
 import { useAuthStore } from '@/stores/auth'
 import { api } from '@/services/api'
@@ -31,14 +31,27 @@ interface OnlineTournament {
 const allTournaments = ref<OnlineTournament[]>([])
 const loading = ref(true)
 const loadError = ref('')
+const isMockData = ref(false)
+
+/* ── Dados de exemplo pra não deixar a tela vazia quando o backend (Render)
+   está fora do ar ou bloqueado por CORS — some assim que a API responder. ── */
+const inMs = (ms: number) => new Date(Date.now() + ms).toISOString()
+const MOCK_TOURNAMENTS: OnlineTournament[] = [
+    { id: 'mock-t1', title: 'Copa Arena X1 — EA FC', game: 'EA FC 26', platform: 'PS5', max_players: 8, entry_fee: 20, prize_pool: 144, rake_amount: 16, status: 'registration_open', registration_deadline: inMs(6 * 3_600_000), participant_count: 5 },
+    { id: 'mock-t2', title: 'Mata-Mata eFootball Turbo', game: 'eFootball', platform: 'Crossplay', max_players: 16, entry_fee: 15, prize_pool: 216, rake_amount: 24, status: 'in_progress', registration_deadline: null, participant_count: 16 },
+    { id: 'mock-t3', title: 'Liga dos Campeões da Resenha', game: 'EA FC 26', platform: 'Xbox', max_players: 4, entry_fee: 50, prize_pool: 180, rake_amount: 20, status: 'completed', registration_deadline: null, participant_count: 4 },
+    { id: 'mock-t4', title: 'Torneio Relâmpago PC', game: 'eFootball', platform: 'PC', max_players: 8, entry_fee: 10, prize_pool: 72, rake_amount: 8, status: 'registration_open', registration_deadline: inMs(45 * 60_000), participant_count: 3 },
+]
 
 const loadTournaments = async () => {
     loading.value = true
     loadError.value = ''
+    isMockData.value = false
     try {
         allTournaments.value = await api.get<OnlineTournament[]>('/api/tournaments/online/open')
-    } catch (err: any) {
-        loadError.value = err.message || 'Erro ao carregar os torneios.'
+    } catch {
+        allTournaments.value = MOCK_TOURNAMENTS
+        isMockData.value = true
     } finally {
         loading.value = false
     }
@@ -69,6 +82,10 @@ function deadlineLabel(iso: string | null): string {
     return `${Math.floor(hours / 24)} dias`
 }
 
+const onCardClick = (t: OnlineTournament, e: MouseEvent) => {
+    if (t.id.startsWith('mock-')) e.preventDefault()
+}
+
 const statusMeta: Record<TournamentStatus, { label: string }> = {
     registration_open: { label: 'Inscrições abertas' },
     in_progress: { label: 'Ao vivo' },
@@ -93,6 +110,12 @@ const statusMeta: Record<TournamentStatus, { label: string }> = {
             <Plus :size="18" class="transition-transform duration-200 group-hover:rotate-90" />
             {{ authStore.user ? 'Criar Torneio' : 'Criar conta para criar torneio' }}
         </router-link>
+    </div>
+
+    <!-- Aviso de dados de exemplo -->
+    <div v-if="isMockData" class="flex items-center gap-2.5 rounded-xl border border-accent/25 bg-accent/[0.06] px-4 py-3 text-body-sm text-accent">
+        <ShieldAlert :size="16" class="shrink-0" />
+        Não foi possível falar com o backend — exibindo torneios de exemplo, não são inscrições reais.
     </div>
 
     <!-- Filtros -->
@@ -147,6 +170,7 @@ const statusMeta: Record<TournamentStatus, { label: string }> = {
             v-for="(t, i) in filteredTournaments"
             :key="t.id"
             :to="'/tournaments/' + t.id"
+            @click="onCardClick(t, $event)"
             v-reveal="`${(i % 6) * 60}ms`"
             class="glow-border group flex flex-col overflow-hidden rounded-2xl border border-hairline bg-surface-1/60 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-hairline-strong no-underline"
             :class="t.status === 'completed' ? 'opacity-70' : ''"
