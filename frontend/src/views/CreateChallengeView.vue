@@ -2,12 +2,13 @@
 import { ref, computed, onMounted } from 'vue'
 import { Info, Tag, UserSearch, Lock, Swords } from '@lucide/vue'
 import { useAuthStore } from '@/stores/auth'
+import { useWalletStore } from '@/stores/wallet'
 import { useRouter } from 'vue-router'
-import { supabase } from '@/services/supabase'
 import { api } from '@/services/api'
 import { GAME_OPTIONS } from '@/constants/games'
 
 const authStore = useAuthStore()
+const walletStore = useWalletStore()
 const router = useRouter()
 
 const stake = ref(5)
@@ -17,21 +18,17 @@ const gameId = ref(authStore.user?.user_metadata?.ea_id || '')
 const inviteSearch = ref('')
 const isSubmitting = ref(false)
 const errorMsg = ref('')
-const walletBalance = ref<number | null>(null)
 
-// Leitura direta via Supabase (RLS já restringe a própria carteira), igual à WalletView.
-onMounted(async () => {
-    if (!authStore.user) return
-    const { data } = await supabase.from('wallets').select('balance').eq('user_id', authStore.user.id).single()
-    walletBalance.value = data?.balance ?? 0
-})
+onMounted(() => { walletStore.fetchWallet() })
+
+const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 const isValid = computed(() => {
     return stake.value > 0
         && game.value
         && platform.value
         && gameId.value.trim().length > 0
-        && (walletBalance.value === null || stake.value <= walletBalance.value)
+        && (!walletStore.loaded || stake.value <= walletStore.balance)
 })
 
 const submitChallenge = async () => {
@@ -60,7 +57,7 @@ const submitChallenge = async () => {
         
         <section>
             <h1 class="font-display text-3xl lg:text-4xl font-black uppercase tracking-tight mb-2 text-ink">Criar um Desafio</h1>
-            <p class="text-ink-subtle">Fecha o valor, escolhe a plataforma e prova em campo. Saldo atual: <span class="text-primary font-bold">R$ {{ (walletBalance ?? 0).toFixed(2) }}</span></p>
+            <p class="text-ink-subtle">Fecha o valor, escolhe a plataforma e prova em campo. Saldo atual: <span class="text-primary font-bold">{{ walletStore.loaded ? fmtBRL(walletStore.balance) : '···' }}</span></p>
         </section>
 
         <form @submit.prevent="submitChallenge">

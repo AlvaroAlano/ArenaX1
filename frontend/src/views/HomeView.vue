@@ -7,10 +7,12 @@ import {
 } from '@lucide/vue'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
+import { useWalletStore } from '@/stores/wallet'
 import { api } from '@/services/api'
 import { vReveal } from '@/composables/useReveal'
 
 const authStore = useAuthStore()
+const walletStore = useWalletStore()
 const MY_ID = authStore.user?.id || null
 
 /* ── Tipos alinhados ao contrato real do backend (ver challenges.py) ── */
@@ -31,45 +33,53 @@ interface Challenge {
 }
 
 const profile = ref<any>(null)
-const wallet = ref<any>(null)
 const challenges = ref<Challenge[]>([])
 const transactions = ref<any[]>([])
 const loading = ref(true)
+// Desafios vêm do backend (Render) — pode ser bem mais lento que o Supabase
+// direto (perfil/carteira/extrato) se o serviço estiver "dormindo" (plano
+// free hiberna após inatividade). Por isso tem loading próprio: o resto do
+// painel aparece assim que estiver pronto, sem esperar o backend acordar.
+const challengesLoading = ref(true)
 
 const loadUserData = async () => {
   if (!authStore.user) return
   loading.value = true
+  challengesLoading.value = true
+
+  // Desafios reais — disparado em paralelo com o resto, não depende de nada
+  // aqui. Resiliente: se o backend estiver fora, mostra estado vazio.
+  const challengesPromise = api.get<Challenge[]>('/api/challenges/my-challenges')
+    .catch(() => [] as Challenge[])
+    .then(data => {
+      challenges.value = data
+      challengesLoading.value = false
+    })
 
   try {
-    const [{ data: profileData }, { data: walletData }] = await Promise.all([
+    const [{ data: profileData }] = await Promise.all([
       supabase.from('profiles').select('*').eq('id', authStore.user.id).single(),
-      supabase.from('wallets').select('*').eq('user_id', authStore.user.id).single(),
+      walletStore.fetchWallet(),
     ])
     profile.value = profileData
-    wallet.value = walletData
 
     // Extrato: depende de já termos a carteira
-    if (walletData?.id) {
+    if (walletStore.id) {
       const { data: txData } = await supabase
         .from('transactions')
         .select('*')
-        .eq('wallet_id', walletData.id)
+        .eq('wallet_id', walletStore.id)
         .order('created_at', { ascending: false })
         .limit(6)
       transactions.value = txData || []
-    }
-
-    // Desafios reais — resiliente: se o backend estiver fora, mostra estado vazio.
-    try {
-      challenges.value = await api.get<Challenge[]>('/api/challenges/my-challenges')
-    } catch {
-      challenges.value = []
     }
   } catch (err) {
     console.error('Erro ao carregar dados do usuário:', err)
   } finally {
     loading.value = false
   }
+
+  await challengesPromise
 }
 
 onMounted(loadUserData)
@@ -106,8 +116,8 @@ const ratingLabel = computed(() => {
 })
 
 /* ── Carteira ── */
-const balance = computed(() => Number(wallet.value?.balance ?? 0))
-const locked = computed(() => Number(wallet.value?.locked_balance ?? 0))
+const balance = computed(() => walletStore.balance)
+const locked = computed(() => walletStore.lockedBalance)
 const totalFunds = computed(() => balance.value + locked.value)
 const availablePct = computed(() => totalFunds.value > 0 ? (balance.value / totalFunds.value) * 100 : 100)
 const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -339,7 +349,11 @@ const txMeta = (type: string): { label: string; positive: boolean } => {
           </router-link>
         </div>
 
-        <div v-if="activeChallenges.length" class="grid gap-4 lg:grid-cols-2">
+        <div v-if="challengesLoading" class="grid animate-pulse gap-4 lg:grid-cols-2">
+          <div v-for="i in 2" :key="i" class="h-[76px] rounded-2xl bg-surface-2"></div>
+        </div>
+
+        <div v-else-if="activeChallenges.length" class="grid gap-4 lg:grid-cols-2">
           <router-link
             v-for="c in activeChallenges"
             :key="c.id"
@@ -390,7 +404,10 @@ const txMeta = (type: string): { label: string; positive: boolean } => {
               Ver tudo <ArrowRight :size="13" />
             </router-link>
           </div>
-          <div v-if="historyChallenges.length" class="divide-y divide-hairline">
+          <div v-if="challengesLoading" class="animate-pulse space-y-3.5 p-5">
+            <div v-for="i in 3" :key="i" class="h-9 rounded-lg bg-surface-2"></div>
+          </div>
+          <div v-else-if="historyChallenges.length" class="divide-y divide-hairline">
             <div v-for="c in historyChallenges" :key="c.id" class="flex items-center justify-between gap-3 px-5 py-3.5">
               <div class="min-w-0">
                 <p class="truncate text-body-sm font-medium text-ink">{{ c.game }} · vs {{ opponentName(c) }}</p>

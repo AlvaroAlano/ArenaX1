@@ -19,6 +19,7 @@ import {
 } from '@lucide/vue'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
+import { useWalletStore } from '@/stores/wallet'
 import InstallPwaButton from '@/components/ui/InstallPwaButton.vue'
 import NotificationBell from '@/components/ui/NotificationBell.vue'
 
@@ -31,8 +32,11 @@ const emit = defineEmits<{
 }>()
 
 const authStore = useAuthStore()
+const walletStore = useWalletStore()
 const router = useRouter()
 const route = useRoute()
+
+const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 // Ao entrar em /admin (ou qualquer sub-tela dele), o menu lateral troca de
 // conjunto de opções — mesma sidebar, dois "modos" diferentes, alternados
@@ -171,7 +175,9 @@ const closeSidebar = () => {
           <!-- Card Resumo Saldo -->
           <div class="mt-8 rounded-xl bg-surface-2 border border-hairline p-5">
               <p class="text-[10px] font-bold text-ink-subtle uppercase tracking-wider mb-1">Saldo Total</p>
-              <p class="text-2xl font-bold font-display text-ink">R$ 0.00</p>
+              <p class="text-2xl font-bold font-display tabular-nums text-ink">
+                {{ walletStore.loaded ? fmtBRL(walletStore.balance + walletStore.lockedBalance) : '···' }}
+              </p>
               <router-link to="/wallet" @click="closeSidebar" class="mt-4 w-full py-2.5 text-xs font-bold uppercase tracking-wider bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors block text-center no-underline">
                   Depositar
               </router-link>

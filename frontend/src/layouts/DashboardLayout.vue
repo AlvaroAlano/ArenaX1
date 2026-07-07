@@ -1,7 +1,15 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import { Wallet } from '@lucide/vue'
 import DashboardSidebar from '@/components/layout/DashboardSidebar.vue'
 import DashboardBottomNav from '@/components/layout/DashboardBottomNav.vue'
 import NotificationBell from '@/components/ui/NotificationBell.vue'
+import { useWalletStore } from '@/stores/wallet'
+
+const walletStore = useWalletStore()
+onMounted(() => { walletStore.fetchWallet() })
+
+const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 </script>
 
 <template>
@@ -14,10 +22,14 @@ import NotificationBell from '@/components/ui/NotificationBell.vue'
             <span class="grid size-7 place-items-center rounded-md bg-primary text-xs font-black tracking-tighter text-canvas">X1</span>
             <span class="font-display text-lg font-black tracking-tight text-ink">ARENA<span class="text-primary">X1</span></span>
           </span>
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-bold text-semantic-success bg-semantic-success/10 px-2.5 py-1 rounded-lg">
-              R$ 0.00
-            </span>
+          <div class="flex items-center gap-2.5">
+            <router-link
+              to="/wallet"
+              class="flex items-center gap-1.5 rounded-xl border border-semantic-success/20 bg-semantic-success/10 px-3 py-2 text-sm font-bold tabular-nums text-semantic-success no-underline transition-colors active:bg-semantic-success/20"
+            >
+              <Wallet :size="15" />
+              {{ walletStore.loaded ? fmtBRL(walletStore.balance) : '···' }}
+            </router-link>
             <NotificationBell />
           </div>
       </div>
