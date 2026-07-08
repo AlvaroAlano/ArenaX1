@@ -83,6 +83,7 @@ export default {
       boxShadow: {
         "glow-primary": "0 0 40px -8px rgba(200, 240, 60, 0.45)",
         "glow-accent": "0 0 40px -8px rgba(200, 240, 60, 0.45)",
+        "glow-pill": "0 0 10px -2px rgba(200, 240, 60, 0.55)",
         "card-premium": "0 24px 60px -24px rgba(0, 0, 0, 0.7)",
       },
       backgroundImage: {

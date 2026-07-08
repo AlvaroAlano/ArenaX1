@@ -30,7 +30,7 @@ const router = useRouter()
  * GET /api/challenges/open (público) e GET /api/challenges/my-challenges
  * (autenticado) devolvem exatamente esta forma.
  */
-type ChallengeStatus = 'open' | 'in_progress' | 'completed' | 'disputed'
+type ChallengeStatus = 'open' | 'in_progress' | 'completed' | 'disputed' | 'cancelled'
 interface ChallengeProfile { username: string; fair_play_rating: number }
 interface Challenge {
     id: string
@@ -132,7 +132,7 @@ const filteredChallenges = computed(() => {
     if (filter.value === 'all') return allChallenges.value.filter(c => c.status === 'open' || c.status === 'in_progress')
     if (filter.value === 'abertos') return allChallenges.value.filter(c => c.status === 'open')
     if (filter.value === 'em_curso') return allChallenges.value.filter(c => c.status === 'in_progress')
-    if (filter.value === 'terminados') return allChallenges.value.filter(c => c.status === 'completed' || c.status === 'disputed')
+    if (filter.value === 'terminados') return allChallenges.value.filter(c => c.status === 'completed' || c.status === 'disputed' || c.status === 'cancelled')
     if (filter.value === 'convites') return [] // Sem endpoint de convites ainda
     return []
 })
@@ -160,7 +160,7 @@ const filterTabs = computed(() => {
         { key: 'all', label: 'Todos', icon: List, count: allChallenges.value.filter(c => c.status === 'open' || c.status === 'in_progress').length, authOnly: false },
         { key: 'abertos', label: 'Abertos', icon: Swords, count: openCount.value, authOnly: false },
         { key: 'em_curso', label: 'Ao vivo', icon: PlayCircle, count: allChallenges.value.filter(c => c.status === 'in_progress').length, authOnly: false },
-        { key: 'terminados', label: 'Terminados', icon: CheckCircle2, count: allChallenges.value.filter(c => c.status === 'completed' || c.status === 'disputed').length, authOnly: true },
+        { key: 'terminados', label: 'Terminados', icon: CheckCircle2, count: allChallenges.value.filter(c => c.status === 'completed' || c.status === 'disputed' || c.status === 'cancelled').length, authOnly: true },
         { key: 'convites', label: 'Convites', icon: Mail, count: 0, authOnly: true, badge: 2 },
     ]
     return authStore.user ? tabs : tabs.filter(t => !t.authOnly)
@@ -172,6 +172,7 @@ const statusMeta: Record<ChallengeStatus, { label: string; dot: string; text: st
     in_progress: { label: 'Ao vivo', dot: 'bg-accent', text: 'text-accent', bg: 'bg-accent/10 border-accent/20' },
     completed: { label: 'Concluído', dot: 'bg-ink-tertiary', text: 'text-ink-tertiary', bg: 'bg-surface-3 border-hairline' },
     disputed: { label: 'Em disputa', dot: 'bg-semantic-error', text: 'text-semantic-error', bg: 'bg-semantic-error/10 border-semantic-error/20' },
+    cancelled: { label: 'Cancelado', dot: 'bg-ink-tertiary', text: 'text-ink-tertiary', bg: 'bg-surface-3 border-hairline' },
 }
 const getStatusMeta = (status: ChallengeStatus) => statusMeta[status] ?? statusMeta.completed
 
@@ -252,14 +253,14 @@ const winnerName = (c: Challenge) => {
     </div>
 
     <!-- Filtros -->
-    <div class="sticky top-16 z-40 -mx-6 px-6 pb-4 pt-2 md:top-[76px] lg:-mx-20 lg:px-20">
+    <div class="sticky top-16 z-40 -mx-6 border-b border-hairline/60 bg-canvas/95 px-6 pb-4 pt-2 backdrop-blur-xl md:top-[76px] lg:-mx-20 lg:px-20">
         <div class="custom-scrollbar flex gap-2 overflow-x-auto pb-1">
             <button
                 v-for="tab in filterTabs"
                 :key="tab.key"
                 @click="filter = tab.key"
                 :class="filter === tab.key
-                    ? 'border-primary/40 bg-primary/15 text-primary shadow-glow-primary'
+                    ? 'border-primary/40 bg-primary/15 text-primary shadow-glow-pill'
                     : 'border-hairline-strong bg-surface-1/60 text-ink-subtle hover:bg-surface-2 hover:text-ink'"
                 class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full border px-4 py-2 text-body-sm font-semibold transition-all duration-200"
             >

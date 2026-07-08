@@ -119,14 +119,14 @@ const statusMeta: Record<TournamentStatus, { label: string }> = {
     </div>
 
     <!-- Filtros -->
-    <div class="sticky top-16 z-40 -mx-6 px-6 pb-4 pt-2 md:top-[76px] lg:-mx-20 lg:px-20">
+    <div class="sticky top-16 z-40 -mx-6 border-b border-hairline/60 bg-canvas/95 px-6 pb-4 pt-2 backdrop-blur-xl md:top-[76px] lg:-mx-20 lg:px-20">
         <div class="custom-scrollbar flex gap-2 overflow-x-auto pb-1">
             <button
                 v-for="tab in filterTabs"
                 :key="tab.key"
                 @click="filter = tab.key"
                 :class="filter === tab.key
-                    ? 'border-primary/40 bg-primary/15 text-primary shadow-glow-primary'
+                    ? 'border-primary/40 bg-primary/15 text-primary shadow-glow-pill'
                     : 'border-hairline-strong bg-surface-1/60 text-ink-subtle hover:bg-surface-2 hover:text-ink'"
                 class="relative inline-flex shrink-0 cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full border px-4 py-2 text-body-sm font-semibold transition-all duration-200"
             >
