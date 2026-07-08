@@ -89,6 +89,12 @@ const router = createRouter({
           component: () => import('../views/SettingsView.vue')
         },
         {
+          path: '/profile/:username',
+          name: 'profile',
+          component: () => import('../views/ProfileView.vue'),
+          props: true
+        },
+        {
           // A tela antiga de saque (PayPal, mock) foi substituída pela aba
           // "Sacar" dentro da Carteira, que já fala com o Pix de verdade.
           path: '/withdraw',

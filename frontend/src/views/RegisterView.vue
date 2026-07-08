@@ -2,9 +2,10 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { supabase } from '@/services/supabase'
-import { User, Hash, Mail, Lock, Eye, EyeOff, Users, AlertCircle, CheckCircle2, LoaderCircle, Swords, Trophy, ShieldCheck } from '@lucide/vue'
+import { User, Hash, Mail, Lock, Eye, EyeOff, Users, AlertCircle, CheckCircle2, LoaderCircle, Swords, Trophy, ShieldCheck, BadgeCheck } from '@lucide/vue'
 
 const fullName = ref('')
+const username = ref('')
 const eaId = ref('')
 const email = ref('')
 const password = ref('')
@@ -37,7 +38,7 @@ const handleGoogleAuth = async () => {
 }
 
 const handleRegister = async () => {
-  if (!fullName.value || !email.value || !password.value || !eaId.value) {
+  if (!fullName.value || !username.value || !email.value || !password.value || !eaId.value) {
     errorMessage.value = 'Preencha todos os campos obrigatórios.'
     return
   }
@@ -62,7 +63,8 @@ const handleRegister = async () => {
       password: password.value,
       options: {
         data: {
-          username: fullName.value,
+          username: username.value,
+          full_name: fullName.value,
           ea_id: eaId.value,
           referral_code: referralCode.value
         },
@@ -212,15 +214,27 @@ const handleRegister = async () => {
               </div>
 
               <div class="group relative">
-                <Hash :size="18" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-tertiary transition-colors group-focus-within:text-primary" />
+                <BadgeCheck :size="18" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-tertiary transition-colors group-focus-within:text-primary" />
                 <input
-                  v-model="eaId"
+                  v-model="username"
                   type="text"
-                  placeholder="EA ID"
+                  autocomplete="nickname"
+                  placeholder="Apelido (como vão te ver na Arena)"
                   required
                   class="h-12 w-full rounded-lg border border-hairline bg-surface-1 pl-11 pr-4 text-body-sm text-ink placeholder-ink-tertiary outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary"
                 />
               </div>
+            </div>
+
+            <div class="group relative">
+              <Hash :size="18" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-tertiary transition-colors group-focus-within:text-primary" />
+              <input
+                v-model="eaId"
+                type="text"
+                placeholder="EA ID"
+                required
+                class="h-12 w-full rounded-lg border border-hairline bg-surface-1 pl-11 pr-4 text-body-sm text-ink placeholder-ink-tertiary outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary"
+              />
             </div>
 
             <div class="group relative">

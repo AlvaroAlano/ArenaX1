@@ -29,6 +29,9 @@ class ChallengeCreateRequest(BaseModel):
 class ChallengeAcceptRequest(BaseModel):
     challenge_id: str
 
+class ChallengeCancelRequest(BaseModel):
+    challenge_id: str
+
 class ChallengeReportRequest(BaseModel):
     challenge_id: str
     result: str  # 'win' ou 'loss'
@@ -130,6 +133,23 @@ def accept_challenge(request: ChallengeAcceptRequest, user_id: str = Depends(get
         result = supabase.rpc("fn_accept_challenge", {
             "p_challenge_id": request.challenge_id,
             "p_opponent_id": user_id,
+        }).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.post("/cancel", response_model=ChallengeRow)
+def cancel_challenge(request: ChallengeCancelRequest, user_id: str = Depends(get_current_user_id)):
+    # Só cancela (nunca edita) um desafio ainda aberto — editar valor/plataforma
+    # em cima de uma aposta que outro jogador pode aceitar a qualquer instante
+    # criaria uma corrida real entre o dono editando e alguém aceitando o valor antigo.
+    try:
+        result = supabase.rpc("fn_cancel_challenge", {
+            "p_challenge_id": request.challenge_id,
+            "p_user_id": user_id,
         }).execute()
         return result.data
     except HTTPException:

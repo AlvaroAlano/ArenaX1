@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import { supabase } from '@/services/supabase'
 import {
   AlertTriangle,
   User,
@@ -11,6 +12,7 @@ import {
   Goal,
   Tv,
   Fingerprint,
+  LoaderCircle,
 } from '@lucide/vue'
 
 const authStore = useAuthStore()
@@ -19,6 +21,61 @@ const activeSection = ref('profile')
 
 const setActiveSection = (section: string) => {
     activeSection.value = section
+}
+
+/* ── Perfil: profiles.username é o apelido exibido em todo canto (cards,
+   ranking); full_name é o nome completo, mais "privado", mostrado só no
+   próprio perfil e no perfil público. Carrega da tabela real (não do
+   user_metadata do signup, que fica desatualizado assim que o usuário edita
+   aqui). ── */
+const profileLoading = ref(true)
+const fullName = ref('')
+const username = ref('')
+const eaId = ref('')
+const saving = ref(false)
+const saveError = ref('')
+const saveSuccess = ref(false)
+
+const loadProfile = async () => {
+    if (!authStore.user) return
+    profileLoading.value = true
+    const { data } = await supabase.from('profiles').select('*').eq('id', authStore.user.id).single()
+    fullName.value = data?.full_name || ''
+    username.value = data?.username || ''
+    eaId.value = data?.ea_id || ''
+    profileLoading.value = false
+}
+onMounted(loadProfile)
+
+const handleSaveProfile = async () => {
+    if (!authStore.user) return
+    if (!username.value.trim()) {
+        saveError.value = 'O apelido não pode ficar em branco.'
+        return
+    }
+
+    saving.value = true
+    saveError.value = ''
+    saveSuccess.value = false
+    try {
+        const { error } = await supabase.from('profiles').update({
+            full_name: fullName.value.trim() || null,
+            username: username.value.trim(),
+            ea_id: eaId.value.trim() || null,
+            updated_at: new Date().toISOString(),
+        }).eq('id', authStore.user.id)
+
+        if (error) {
+            saveError.value = error.code === '23505'
+                ? 'Esse apelido já está em uso por outro jogador.'
+                : 'Não foi possível salvar. Tente novamente.'
+            return
+        }
+        saveSuccess.value = true
+        setTimeout(() => { saveSuccess.value = false }, 3000)
+    } finally {
+        saving.value = false
+    }
 }
 </script>
 
@@ -31,12 +88,12 @@ const setActiveSection = (section: string) => {
             <div class="flex gap-5 items-center">
                 <div class="relative">
                     <div class="h-20 w-20 rounded-full bg-primary/10 border-4 border-primary/30 flex items-center justify-center">
-                        <span class="font-bold text-2xl text-primary">{{ authStore.user?.user_metadata?.username?.substring(0,2).toUpperCase() || 'ÁA' }}</span>
+                        <span class="font-bold text-2xl text-primary">{{ (username || '??').substring(0,2).toUpperCase() }}</span>
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <h1 class="text-2xl font-bold text-ink">{{ authStore.user?.user_metadata?.username || 'Álvaro Alano' }}</h1>
-                    <p class="text-ink-subtle text-sm">{{ authStore.user?.email || 'alvarobster@gmail.com' }}</p>
+                    <h1 class="text-2xl font-bold text-ink">{{ profileLoading ? '···' : (username || 'Sem apelido') }}</h1>
+                    <p class="text-ink-subtle text-sm">{{ authStore.user?.email }}</p>
                     <div class="mt-2 flex gap-2 flex-wrap">
                         <span class="px-2.5 py-0.5 rounded-full bg-surface-3 text-ink-tertiary text-xs font-semibold flex items-center gap-1">
                             <AlertTriangle :size="14" />
@@ -95,11 +152,15 @@ const setActiveSection = (section: string) => {
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs text-ink-subtle mb-1">Nome Completo</label>
-                            <input type="text" :value="authStore.user?.user_metadata?.username" class="w-full h-11 rounded-lg border border-hairline bg-surface-2 px-3 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors text-ink">
+                            <input v-model="fullName" type="text" placeholder="Seu nome completo" :disabled="profileLoading" class="w-full h-11 rounded-lg border border-hairline bg-surface-2 px-3 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors text-ink disabled:opacity-60">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-ink-subtle mb-1">Apelido <span class="text-ink-tertiary normal-case">(exibido pra outros jogadores)</span></label>
+                            <input v-model="username" type="text" placeholder="Como quer ser visto na Arena" :disabled="profileLoading" class="w-full h-11 rounded-lg border border-hairline bg-surface-2 px-3 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors text-ink disabled:opacity-60">
                         </div>
                         <div>
                             <label class="block text-xs text-ink-subtle mb-1">EA Sports ID / Gamertag</label>
-                            <input type="text" :value="authStore.user?.user_metadata?.ea_id" placeholder="O seu ID..." class="w-full h-11 rounded-lg border border-hairline bg-surface-2 px-3 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors text-ink">
+                            <input v-model="eaId" type="text" placeholder="O seu ID..." :disabled="profileLoading" class="w-full h-11 rounded-lg border border-hairline bg-surface-2 px-3 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors text-ink disabled:opacity-60">
                         </div>
                         <div>
                             <label class="block text-xs text-ink-subtle mb-1">Plataforma Principal</label>
@@ -115,9 +176,17 @@ const setActiveSection = (section: string) => {
                             <input type="email" :value="authStore.user?.email" disabled class="w-full h-11 rounded-lg border border-hairline bg-surface-2/50 px-3 text-sm text-ink-subtle cursor-not-allowed">
                         </div>
                     </div>
+                    <p v-if="saveError" class="text-sm text-semantic-error">{{ saveError }}</p>
+                    <p v-if="saveSuccess" class="text-sm text-semantic-success">Alterações salvas.</p>
                     <div class="flex justify-end pt-4">
-                        <button type="button" class="px-6 py-2.5 bg-primary hover:bg-primary-hover text-canvas rounded-lg font-bold text-sm transition-colors">
-                            Salvar Alterações
+                        <button
+                            type="button"
+                            @click="handleSaveProfile"
+                            :disabled="saving || profileLoading"
+                            class="flex items-center gap-2 px-6 py-2.5 bg-primary hover:bg-primary-hover text-canvas rounded-lg font-bold text-sm transition-colors disabled:cursor-wait disabled:opacity-60"
+                        >
+                            <LoaderCircle v-if="saving" :size="16" class="animate-spin" />
+                            {{ saving ? 'Salvando...' : 'Salvar Alterações' }}
                         </button>
                     </div>
                 </div>

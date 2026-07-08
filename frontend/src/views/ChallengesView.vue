@@ -16,6 +16,7 @@ import {
   SearchX,
   Star,
   ShieldAlert,
+  Trash2,
 } from '@lucide/vue'
 import { vReveal } from '@/composables/useReveal'
 import { useAuthStore } from '@/stores/auth'
@@ -124,6 +125,26 @@ const handleAccept = async (c: Challenge) => {
         await loadChallenges() // outro jogador pode ter aceitado primeiro
     } finally {
         acceptingId.value = null
+    }
+}
+
+const cancellingId = ref<string | null>(null)
+
+/* ── Só cancela (nunca edita) um desafio aberto — editar em cima de uma
+   aposta que outro jogador pode aceitar a qualquer instante criaria uma
+   corrida real entre o dono editando e alguém aceitando o valor antigo. ── */
+const handleCancel = async (c: Challenge) => {
+    if (c.id.startsWith('mock-')) return
+    if (!confirm(`Cancelar este desafio de R$ ${c.bet_amount.toFixed(2)}? O valor volta pro seu saldo.`)) return
+
+    cancellingId.value = c.id
+    try {
+        await api.post('/api/challenges/cancel', { challenge_id: c.id })
+        await loadChallenges()
+    } catch (err: any) {
+        alert(err.message || 'Erro ao cancelar o desafio.')
+    } finally {
+        cancellingId.value = null
     }
 }
 
@@ -335,31 +356,53 @@ const winnerName = (c: Challenge) => {
 
             <!-- Confronto -->
             <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
-                <div class="flex flex-col items-center gap-1.5 text-center">
+                <router-link
+                    :to="{ name: 'profile', params: { username: c.creator_profile.username } }"
+                    class="flex flex-col items-center gap-1.5 text-center no-underline"
+                >
                     <div
                         class="grid size-11 place-items-center rounded-full bg-primary/15 text-sm font-bold uppercase text-primary"
                         :style="ringStyle(c.platform)"
                     >{{ c.creator_profile.username.charAt(0) }}</div>
-                    <span class="max-w-[88px] truncate text-body-sm font-medium text-ink">{{ c.creator_profile.username }}</span>
+                    <span class="max-w-[88px] truncate text-body-sm font-medium text-ink hover:text-primary">{{ c.creator_profile.username }}</span>
                     <span class="inline-flex items-center gap-0.5 text-[10px] font-semibold text-amber-500">
                         <Star :size="10" fill="currentColor" />{{ c.creator_profile.fair_play_rating.toFixed(1) }}
                     </span>
-                </div>
+                </router-link>
 
                 <span class="grid size-7 shrink-0 place-items-center rounded-full border border-hairline-strong text-[10px] font-bold text-ink-tertiary">VS</span>
 
                 <template v-if="c.opponent_profile">
-                    <div class="flex flex-col items-center gap-1.5 text-center">
+                    <router-link
+                        :to="{ name: 'profile', params: { username: c.opponent_profile.username } }"
+                        class="flex flex-col items-center gap-1.5 text-center no-underline"
+                    >
                         <div
                             class="grid size-11 place-items-center rounded-full bg-primary/15 text-sm font-bold uppercase text-primary"
                             :style="ringStyle(c.platform)"
                         >{{ c.opponent_profile.username.charAt(0) }}</div>
-                        <span class="max-w-[88px] truncate text-body-sm font-medium text-ink">{{ c.opponent_profile.username }}</span>
+                        <span class="max-w-[88px] truncate text-body-sm font-medium text-ink hover:text-primary">{{ c.opponent_profile.username }}</span>
                         <span class="inline-flex items-center gap-0.5 text-[10px] font-semibold text-amber-500">
                             <Star :size="10" fill="currentColor" />{{ c.opponent_profile.fair_play_rating.toFixed(1) }}
                         </span>
-                    </div>
+                    </router-link>
                 </template>
+                <button
+                    v-else-if="c.creator_id === MY_ID && c.status === 'open'"
+                    type="button"
+                    @click="handleCancel(c)"
+                    :disabled="cancellingId === c.id"
+                    class="group/cancel flex flex-col items-center gap-1.5 text-center disabled:cursor-wait disabled:opacity-60"
+                >
+                    <div class="grid size-11 place-items-center rounded-full border-2 border-dashed border-hairline-strong text-ink-tertiary transition-colors duration-200 group-hover/cancel:border-semantic-error/50 group-hover/cancel:text-semantic-error">
+                        <svg v-if="cancellingId === c.id" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                        </svg>
+                        <Trash2 v-else :size="16" />
+                    </div>
+                    <span class="text-body-sm font-medium text-ink-tertiary transition-colors duration-200 group-hover/cancel:text-semantic-error">{{ cancellingId === c.id ? 'Cancelando...' : 'Cancelar' }}</span>
+                </button>
                 <div v-else-if="c.creator_id === MY_ID" class="flex flex-col items-center gap-1.5 text-center">
                     <div class="grid size-11 place-items-center rounded-full border-2 border-dashed border-hairline-strong text-ink-tertiary">
                         <UserPlus :size="18" />
