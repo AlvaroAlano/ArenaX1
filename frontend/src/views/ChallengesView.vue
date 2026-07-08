@@ -139,10 +139,16 @@ const filteredChallenges = computed(() => {
 
 /* ── Stats ao vivo (derivadas dos dados reais carregados) ── */
 const openCount = computed(() => allChallenges.value.filter(c => c.status === 'open').length)
+/* ── "Em jogo" é o que está de fato retido em locked_balance agora: só a
+   aposta do criador enquanto ninguém aceitou (open), as duas apostas
+   quando já tem oponente (in_progress) — nunca o prêmio hipotético
+   pós-rake (1,8x), que só existe depois que a partida termina. ── */
 const livePoolFmt = computed(() => {
-    const pool = allChallenges.value
-        .filter(c => c.status === 'open' || c.status === 'in_progress')
-        .reduce((sum, c) => sum + c.bet_amount * 1.8, 0)
+    const pool = allChallenges.value.reduce((sum, c) => {
+        if (c.status === 'open') return sum + c.bet_amount
+        if (c.status === 'in_progress') return sum + c.bet_amount * 2
+        return sum
+    }, 0)
     return pool.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 })
 })
 const activePlayers = computed(() => {
@@ -253,7 +259,7 @@ const winnerName = (c: Challenge) => {
     </div>
 
     <!-- Filtros -->
-    <div class="sticky top-16 z-40 -mx-6 border-b border-hairline/60 bg-canvas/95 px-6 pb-4 pt-2 backdrop-blur-xl md:top-[76px] lg:-mx-20 lg:px-20">
+    <div class="sticky top-14 z-40 -mx-6 border-b border-hairline/60 bg-canvas/95 px-6 py-3 backdrop-blur-xl md:top-0 lg:-mx-20 lg:px-20">
         <div class="custom-scrollbar flex gap-2 overflow-x-auto pb-1">
             <button
                 v-for="tab in filterTabs"

@@ -349,11 +349,11 @@ const txMeta = (type: string): { label: string; positive: boolean } => {
           </router-link>
         </div>
 
-        <div v-if="challengesLoading" class="grid animate-pulse gap-4 lg:grid-cols-2">
+        <div v-if="challengesLoading" class="grid animate-pulse grid-cols-1 gap-4 lg:grid-cols-2">
           <div v-for="i in 2" :key="i" class="h-[76px] rounded-2xl bg-surface-2"></div>
         </div>
 
-        <div v-else-if="activeChallenges.length" class="grid gap-4 lg:grid-cols-2">
+        <div v-else-if="activeChallenges.length" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <router-link
             v-for="c in activeChallenges"
             :key="c.id"
