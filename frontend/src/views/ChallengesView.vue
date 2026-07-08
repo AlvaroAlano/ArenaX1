@@ -20,10 +20,12 @@ import {
 } from '@lucide/vue'
 import { vReveal } from '@/composables/useReveal'
 import { useAuthStore } from '@/stores/auth'
+import { useWalletStore } from '@/stores/wallet'
 import { api } from '@/services/api'
 import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
+const walletStore = useWalletStore()
 const router = useRouter()
 
 /**
@@ -119,6 +121,7 @@ const handleAccept = async (c: Challenge) => {
     acceptingId.value = c.id
     try {
         await api.post('/api/challenges/accept', { challenge_id: c.id })
+        walletStore.fetchWallet(true)
         router.push(`/match/${c.id}`)
     } catch (err: any) {
         alert(err.message || 'Erro ao aceitar o desafio.')
@@ -141,6 +144,7 @@ const handleCancel = async (c: Challenge) => {
     try {
         await api.post('/api/challenges/cancel', { challenge_id: c.id })
         await loadChallenges()
+        walletStore.fetchWallet(true)
     } catch (err: any) {
         alert(err.message || 'Erro ao cancelar o desafio.')
     } finally {
