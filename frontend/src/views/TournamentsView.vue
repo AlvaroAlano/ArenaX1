@@ -119,7 +119,7 @@ const statusMeta: Record<TournamentStatus, { label: string }> = {
     </div>
 
     <!-- Filtros -->
-    <div class="sticky top-14 z-40 -mx-6 border-b border-hairline/60 bg-canvas/95 px-6 py-3 backdrop-blur-xl md:top-0 lg:-mx-20 lg:px-20">
+    <div class="sticky top-0 z-40 -mx-6 border-b border-hairline/60 bg-canvas/95 px-6 py-3 backdrop-blur-xl lg:-mx-20 lg:px-20">
         <div class="custom-scrollbar flex gap-2 overflow-x-auto pb-1">
             <button
                 v-for="tab in filterTabs"

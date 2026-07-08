@@ -17,6 +17,7 @@ import {
   Star,
   ShieldAlert,
   Trash2,
+  ChevronRight,
 } from '@lucide/vue'
 import { vReveal } from '@/composables/useReveal'
 import { useAuthStore } from '@/stores/auth'
@@ -49,7 +50,7 @@ interface Challenge {
     opponent_profile: ChallengeProfile | null
 }
 
-const filter = ref(authStore.user ? 'meus' : 'all') // Default filter
+const filter = ref('all') // Default filter: mostra a arena movimentada de cara, não só "os meus"
 const loading = ref(true)
 const loadError = ref('')
 const isMockData = ref(false)
@@ -247,32 +248,32 @@ const winnerName = (c: Challenge) => {
     </div>
 
     <!-- Barra de stats ao vivo -->
-    <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <div class="glass flex items-center gap-3 rounded-xl border border-hairline px-4 py-3.5">
-            <span class="grid size-9 shrink-0 place-items-center rounded-lg bg-semantic-success/10 text-semantic-success">
-                <Swords :size="18" />
+    <div class="grid grid-cols-3 gap-2 sm:gap-3">
+        <div class="glass flex flex-col items-center gap-1 rounded-xl border border-hairline px-2 py-2.5 text-center sm:flex-row sm:gap-3 sm:px-4 sm:py-3.5 sm:text-left">
+            <span class="grid size-7 shrink-0 place-items-center rounded-lg bg-semantic-success/10 text-semantic-success sm:size-9">
+                <Swords :size="14" class="sm:hidden" /><Swords :size="18" class="hidden sm:block" />
             </span>
             <div class="leading-tight">
-                <p class="font-display text-lg font-bold tabular-nums text-ink">{{ openCount }}</p>
-                <p class="text-caption text-ink-tertiary">desafios abertos agora</p>
+                <p class="font-display text-base font-bold tabular-nums text-ink sm:text-lg">{{ openCount }}</p>
+                <p class="text-[10px] text-ink-tertiary sm:text-caption">desafios abertos</p>
             </div>
         </div>
-        <div class="glass flex items-center gap-3 rounded-xl border border-hairline px-4 py-3.5">
-            <span class="grid size-9 shrink-0 place-items-center rounded-lg bg-accent/10 text-accent">
-                <Wallet :size="18" />
+        <div class="glass flex flex-col items-center gap-1 rounded-xl border border-hairline px-2 py-2.5 text-center sm:flex-row sm:gap-3 sm:px-4 sm:py-3.5 sm:text-left">
+            <span class="grid size-7 shrink-0 place-items-center rounded-lg bg-accent/10 text-accent sm:size-9">
+                <Wallet :size="14" class="sm:hidden" /><Wallet :size="18" class="hidden sm:block" />
             </span>
             <div class="leading-tight">
-                <p class="font-display text-lg font-bold tabular-nums text-ink">{{ livePoolFmt }}</p>
-                <p class="text-caption text-ink-tertiary">em jogo neste momento</p>
+                <p class="font-display text-base font-bold tabular-nums text-ink sm:text-lg">{{ livePoolFmt }}</p>
+                <p class="text-[10px] text-ink-tertiary sm:text-caption">em jogo agora</p>
             </div>
         </div>
-        <div class="glass flex items-center gap-3 rounded-xl border border-hairline px-4 py-3.5">
-            <span class="grid size-9 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary">
-                <Users :size="18" />
+        <div class="glass flex flex-col items-center gap-1 rounded-xl border border-hairline px-2 py-2.5 text-center sm:flex-row sm:gap-3 sm:px-4 sm:py-3.5 sm:text-left">
+            <span class="grid size-7 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary sm:size-9">
+                <Users :size="14" class="sm:hidden" /><Users :size="18" class="hidden sm:block" />
             </span>
             <div class="leading-tight">
-                <p class="font-display text-lg font-bold tabular-nums text-ink">{{ activePlayers }}</p>
-                <p class="text-caption text-ink-tertiary">jogadores ativos</p>
+                <p class="font-display text-base font-bold tabular-nums text-ink sm:text-lg">{{ activePlayers }}</p>
+                <p class="text-[10px] text-ink-tertiary sm:text-caption">jogadores ativos</p>
             </div>
         </div>
     </div>
@@ -284,7 +285,7 @@ const winnerName = (c: Challenge) => {
     </div>
 
     <!-- Filtros -->
-    <div class="sticky top-14 z-40 -mx-6 border-b border-hairline/60 bg-canvas/95 px-6 py-3 backdrop-blur-xl md:top-0 lg:-mx-20 lg:px-20">
+    <div class="sticky top-0 z-40 -mx-6 border-b border-hairline/60 bg-canvas/95 px-6 py-3 backdrop-blur-xl lg:-mx-20 lg:px-20">
         <div class="custom-scrollbar flex gap-2 overflow-x-auto pb-1">
             <button
                 v-for="tab in filterTabs"
@@ -467,6 +468,18 @@ const winnerName = (c: Challenge) => {
                 <ShieldAlert :size="16" class="text-semantic-error" />
                 <span class="text-ink-subtle">Resultados divergentes — em mediação pela ArenaX1.</span>
             </div>
+
+            <!-- Ver detalhes: só pra quem participa (criador/oponente) de uma partida
+                 já em andamento, concluída ou em disputa — é a única forma de chegar
+                 no chat de mediação de uma disputa a partir desta tela. -->
+            <router-link
+                v-if="(c.creator_id === MY_ID || c.opponent_id === MY_ID) && ['in_progress', 'completed', 'disputed'].includes(c.status)"
+                :to="`/match/${c.id}`"
+                class="flex items-center justify-center gap-1.5 rounded-xl border border-hairline-strong py-2.5 text-body-sm font-semibold text-ink-subtle no-underline transition-colors hover:bg-surface-2 hover:text-ink"
+            >
+                Ver detalhes
+                <ChevronRight :size="14" />
+            </router-link>
         </div>
     </div>
   </div>
