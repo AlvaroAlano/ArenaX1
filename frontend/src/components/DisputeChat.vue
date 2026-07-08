@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
+import { ShieldAlert, Paperclip, Send } from '@lucide/vue'
 
 const props = defineProps<{
   challengeId: string
@@ -167,24 +168,24 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="bg-surface-1 border border-hairline rounded-xxl shadow-none overflow-hidden flex flex-col h-[600px]">
-    
+  <div class="bg-surface-1 border border-semantic-error/20 rounded-xxl overflow-hidden flex flex-col h-[600px]">
+
     <!-- Header -->
     <div class="bg-surface-2 border-b border-hairline p-5 flex items-center justify-between">
       <div>
         <h3 class="text-ink font-semibold uppercase tracking-wider flex items-center gap-2">
-          <span class="w-3 h-3 rounded-full bg-red-500 "></span>
+          <ShieldAlert :size="16" class="text-semantic-error" />
           Chat de Mediação
         </h3>
         <p class="text-ink-subtle text-caption mt-1">Nossa equipe acompanhará esta disputa.</p>
       </div>
-      <span class="text-caption font-bold px-3 py-1 bg-surface-3 border border-hairline-strong rounded-full text-ink-muted">
+      <span class="text-caption font-bold px-3 py-1 bg-semantic-error/10 border border-semantic-error/25 rounded-full text-semantic-error">
         Status: Aberto
       </span>
     </div>
 
     <!-- Messages Area -->
-    <div ref="messagesContainer" class="flex-1 overflow-y-auto p-5 space-y-4 bg-[#12141a]">
+    <div ref="messagesContainer" class="flex-1 overflow-y-auto p-5 space-y-4 bg-canvas">
       <div v-if="loading" class="text-center py-10 text-ink-subtle text-sm">
         Carregando mensagens...
       </div>
@@ -216,9 +217,7 @@ onUnmounted(() => {
               class="max-w-full h-auto rounded-lg border border-hairline" 
             />
             <div v-else class="flex items-center gap-2 bg-black/20 p-2 rounded-lg text-caption font-bold">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-              </svg>
+              <Paperclip :size="14" />
               Ver Anexo
             </div>
           </a>
@@ -238,35 +237,31 @@ onUnmounted(() => {
           class="hidden" 
         />
         
-        <button 
-          type="button" 
+        <button
+          type="button"
           @click="fileInput?.click()"
           :disabled="uploading"
-          class="p-3.5 bg-surface-3 hover:bg-[#2e3543] border border-hairline-strong rounded-lg text-ink-subtle hover:text-primary transition-colors disabled:opacity-50"
+          class="p-3.5 bg-surface-3 hover:bg-surface-2 border border-hairline-strong rounded-lg text-ink-subtle hover:text-primary transition-colors disabled:opacity-50"
           title="Anexar Comprovante (Imagem/Vídeo)"
         >
           <svg v-if="uploading" class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-          <svg v-else class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-          </svg>
+          <Paperclip v-else :size="18" />
         </button>
 
-        <textarea 
+        <textarea
           v-model="newMessage"
           rows="1"
           placeholder="Escreva sua mensagem..."
-          class="flex-1 bg-[#12141a] border border-hairline rounded-lg px-4 py-3.5 text-ink placeholder-[#515c6e] focus:outline-none focus:border-[#4facfe] transition-colors resize-none overflow-hidden"
+          class="flex-1 bg-canvas border border-hairline rounded-lg px-4 py-3.5 text-ink placeholder-ink-tertiary outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary resize-none overflow-hidden"
           @keydown.enter.prevent="sendMessage()"
         ></textarea>
 
-        <button 
+        <button
           type="submit"
           :disabled="sending || (!newMessage.trim())"
-          class="bg-primary hover:bg-primary-hover text-canvas font-semibold px-6 py-3.5 rounded-lg shadow-none disabled:opacity-50 transition-all flex items-center justify-center"
+          class="bg-primary hover:bg-primary-hover text-canvas font-semibold px-6 py-3.5 rounded-lg disabled:opacity-50 transition-all flex items-center justify-center"
         >
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-          </svg>
+          <Send :size="18" />
         </button>
       </form>
     </div>
