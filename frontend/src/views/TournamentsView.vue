@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { List, Calendar, History, Gamepad2, CalendarDays, Users, Trophy, SearchX, Plus, ShieldAlert } from '@lucide/vue'
 import { vReveal } from '@/composables/useReveal'
 import { useAuthStore } from '@/stores/auth'
+import { api } from '@/services/api'
 
 const authStore = useAuthStore()
 
@@ -27,11 +28,13 @@ interface OnlineTournament {
     participant_count: number
 }
 
-const isMockData = ref(true)
+const allTournaments = ref<OnlineTournament[]>([])
+const loading = ref(true)
+const loadError = ref('')
+const isMockData = ref(false)
 
-/* ── Banco ainda sem torneios reais (plataforma pré-lançamento) — mostra
-   exemplos direto, sem tentar buscar na API. Trocar por fetch real (ver
-   commit 82f0b10) assim que houver torneios de verdade. ── */
+/* ── Dados de exemplo pra não deixar a tela vazia quando o backend (Render)
+   está fora do ar ou bloqueado por CORS — some assim que a API responder. ── */
 const inMs = (ms: number) => new Date(Date.now() + ms).toISOString()
 const MOCK_TOURNAMENTS: OnlineTournament[] = [
     { id: 'mock-t1', title: 'Copa Arena X1 — EA FC', game: 'EA FC 26', platform: 'PS5', max_players: 8, entry_fee: 20, prize_pool: 144, rake_amount: 16, status: 'registration_open', registration_deadline: inMs(6 * 3_600_000), participant_count: 5 },
@@ -40,7 +43,20 @@ const MOCK_TOURNAMENTS: OnlineTournament[] = [
     { id: 'mock-t4', title: 'Torneio Relâmpago PC', game: 'eFootball', platform: 'PC', max_players: 8, entry_fee: 10, prize_pool: 72, rake_amount: 8, status: 'registration_open', registration_deadline: inMs(45 * 60_000), participant_count: 3 },
 ]
 
-const allTournaments = ref<OnlineTournament[]>(MOCK_TOURNAMENTS)
+const loadTournaments = async () => {
+    loading.value = true
+    loadError.value = ''
+    isMockData.value = false
+    try {
+        allTournaments.value = await api.get<OnlineTournament[]>('/api/tournaments/online/open')
+    } catch {
+        allTournaments.value = MOCK_TOURNAMENTS
+        isMockData.value = true
+    } finally {
+        loading.value = false
+    }
+}
+onMounted(loadTournaments)
 
 const filterTabs = computed(() => [
     { key: 'all', label: 'Todos', icon: List, count: allTournaments.value.length },
@@ -99,7 +115,7 @@ const statusMeta: Record<TournamentStatus, { label: string }> = {
     <!-- Aviso de dados de exemplo -->
     <div v-if="isMockData" class="flex items-center gap-2.5 rounded-xl border border-accent/25 bg-accent/[0.06] px-4 py-3 text-body-sm text-accent">
         <ShieldAlert :size="16" class="shrink-0" />
-        Exibindo torneios de exemplo — a Arena tá começando, ainda não são inscrições reais.
+        Não foi possível falar com o backend — exibindo torneios de exemplo, não são inscrições reais.
     </div>
 
     <!-- Filtros -->
@@ -125,8 +141,22 @@ const statusMeta: Record<TournamentStatus, { label: string }> = {
         </div>
     </div>
 
+    <!-- Carregando -->
+    <div v-if="loading" class="flex items-center justify-center py-24">
+        <svg class="h-8 w-8 animate-spin text-primary" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+    </div>
+
+    <!-- Erro -->
+    <div v-else-if="loadError" class="flex flex-col items-center gap-3 py-24 text-center">
+        <p class="font-semibold text-semantic-error">{{ loadError }}</p>
+        <button @click="loadTournaments" class="text-body-sm font-semibold text-primary hover:underline">Tentar novamente</button>
+    </div>
+
     <!-- Estado vazio -->
-    <div v-if="filteredTournaments.length === 0" class="flex flex-col items-center gap-3 py-24 text-center">
+    <div v-else-if="filteredTournaments.length === 0" class="flex flex-col items-center gap-3 py-24 text-center">
         <span class="grid size-14 place-items-center rounded-2xl bg-surface-2 text-ink-tertiary">
             <SearchX :size="26" />
         </span>

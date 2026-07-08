@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import {
   User,
   List,
@@ -47,11 +47,12 @@ interface Challenge {
 }
 
 const filter = ref(authStore.user ? 'meus' : 'all') // Default filter
-const isMockData = ref(true)
+const loading = ref(true)
+const loadError = ref('')
+const isMockData = ref(false)
 
-/* ── Banco ainda sem desafios reais (plataforma pré-lançamento) — mostra
-   exemplos direto, sem tentar buscar na API. Trocar por fetch real (ver
-   commit 82f0b10) assim que houver desafios de verdade. ── */
+/* ── Dados de exemplo pra não deixar a tela vazia quando o backend (Render)
+   está fora do ar ou bloqueado por CORS — some assim que a API responder. ── */
 const agoISO = (minutes: number) => new Date(Date.now() - minutes * 60_000).toISOString()
 const MOCK_CHALLENGES: Challenge[] = [
     { id: 'mock-1', creator_id: 'mock-user-1', opponent_id: null, bet_amount: 25, platform: 'PS5', game: 'EA FC 26', status: 'open', winner_id: null, created_at: agoISO(8), creator_profile: { username: 'RonaldoBSB', fair_play_rating: 4.8 }, opponent_profile: null },
@@ -74,7 +75,32 @@ function timeAgo(iso: string): string {
 
 const MY_ID = authStore.user?.id || null
 
-const allChallenges = ref<Challenge[]>(MOCK_CHALLENGES)
+const allChallenges = ref<Challenge[]>([])
+
+/* ── Carrega dados reais: /open é público, /my-challenges só quando logado.
+   "Ao vivo"/"Terminados" só cobrem partidas do próprio usuário porque não
+   existe (ainda) um endpoint de partidas em andamento de outros jogadores. ── */
+const loadChallenges = async () => {
+    loading.value = true
+    loadError.value = ''
+    isMockData.value = false
+    try {
+        const requests: Promise<Challenge[]>[] = [api.get<Challenge[]>('/api/challenges/open')]
+        if (authStore.user) requests.push(api.get<Challenge[]>('/api/challenges/my-challenges'))
+
+        const results = await Promise.all(requests)
+        const merged = new Map<string, Challenge>()
+        results.flat().forEach((c) => merged.set(c.id, c))
+        allChallenges.value = Array.from(merged.values())
+    } catch {
+        allChallenges.value = MOCK_CHALLENGES
+        isMockData.value = true
+    } finally {
+        loading.value = false
+    }
+}
+
+onMounted(loadChallenges)
 
 const acceptingId = ref<string | null>(null)
 
@@ -84,7 +110,7 @@ const handleAccept = async (c: Challenge) => {
         return
     }
     if (c.id.startsWith('mock-')) {
-        alert('Este é um desafio de exemplo — crie o seu pra jogar de verdade!')
+        alert('Este é um desafio de exemplo — volte quando o servidor estiver disponível.')
         return
     }
     if (!confirm(`Confirmar aposta de R$ ${c.bet_amount.toFixed(2)} contra ${c.creator_profile.username}?`)) return
@@ -95,6 +121,7 @@ const handleAccept = async (c: Challenge) => {
         router.push(`/match/${c.id}`)
     } catch (err: any) {
         alert(err.message || 'Erro ao aceitar o desafio.')
+        await loadChallenges() // outro jogador pode ter aceitado primeiro
     } finally {
         acceptingId.value = null
     }
@@ -221,7 +248,7 @@ const winnerName = (c: Challenge) => {
     <!-- Aviso de dados de exemplo -->
     <div v-if="isMockData" class="flex items-center gap-2.5 rounded-xl border border-accent/25 bg-accent/[0.06] px-4 py-3 text-body-sm text-accent">
         <ShieldAlert :size="16" class="shrink-0" />
-        Exibindo desafios de exemplo — a Arena tá começando, ainda não são partidas reais.
+        Não foi possível falar com o backend — exibindo desafios de exemplo, não são partidas reais.
     </div>
 
     <!-- Filtros -->
@@ -248,8 +275,22 @@ const winnerName = (c: Challenge) => {
         </div>
     </div>
 
+    <!-- Carregando -->
+    <div v-if="loading" class="flex items-center justify-center py-24">
+        <svg class="h-8 w-8 animate-spin text-primary" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+    </div>
+
+    <!-- Erro ao carregar -->
+    <div v-else-if="loadError" class="flex flex-col items-center gap-3 py-24 text-center">
+        <p class="font-semibold text-semantic-error">{{ loadError }}</p>
+        <button @click="loadChallenges" class="mt-2 text-body-sm font-semibold text-primary hover:underline">Tentar novamente</button>
+    </div>
+
     <!-- Estado vazio -->
-    <div v-if="filteredChallenges.length === 0" class="flex flex-col items-center gap-3 py-24 text-center">
+    <div v-else-if="filteredChallenges.length === 0" class="flex flex-col items-center gap-3 py-24 text-center">
         <span class="grid size-14 place-items-center rounded-2xl bg-surface-2 text-ink-tertiary">
             <SearchX :size="26" />
         </span>
