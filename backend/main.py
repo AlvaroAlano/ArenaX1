@@ -20,9 +20,13 @@ app = FastAPI(
 default_origins = "http://localhost:5173,http://127.0.0.1:5173"
 allowed_origins = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", default_origins).split(",") if o.strip()]
 
+# Além da lista fixa, libera qualquer subdomínio *.vercel.app via regex —
+# a Vercel gera uma URL nova a cada deploy de preview, então travar só na
+# lista fixa quebra CORS a cada preview novo.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
