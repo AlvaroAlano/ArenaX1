@@ -30,7 +30,9 @@
       .fill-icon { font-variation-settings: 'FILL' 1; }
       .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
       @media (max-width: 767px) {
-          body { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)); }
+          /* 96px = 72.5px do rodapé flutuante (medido em runtime) + ~24px de
+             respiro — o valor antigo (4.5rem = 63px) ficava curto. */
+          body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
       }
     </style>
     <script>

@@ -46,7 +46,11 @@ const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', cur
          barra fina fazia o Chrome/Android reservar aquele espaço físico em
          vez de sobrepor o conteúdo, empurrando tudo pra esquerda em
          qualquer tela alta o bastante pra rolar (mais visível no Menu). -->
-    <main class="flex-1 flex flex-col relative overflow-y-auto overflow-x-hidden h-screen custom-scrollbar pt-14 md:pt-0 pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0">
+    <!-- 104px = 80px do rodapé flutuante (66px de altura + 14px de distância
+         da borda, medido de verdade em runtime) + ~24px de respiro visual —
+         o valor antigo (5rem = 70px) ficava 10px curto e cortava o último
+         item em páginas com conteúdo até o fim (ex.: Transações na Home). -->
+    <main class="flex-1 flex flex-col relative overflow-y-auto overflow-x-hidden h-screen custom-scrollbar pt-14 md:pt-0 pb-[calc(104px+env(safe-area-inset-bottom))] md:pb-0">
         <router-view v-slot="{ Component, route }">
             <transition name="page" mode="out-in">
                 <component :is="Component" :key="route.path" />
