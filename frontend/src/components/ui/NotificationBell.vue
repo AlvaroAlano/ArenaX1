@@ -227,6 +227,10 @@ const ICON_COLOR: Record<NotificationType, string> = {
         </button>
       </div>
 
+      <!-- custom-scrollbar usa só a regra global de main.css (barra 100%
+           escondida) — um scoped override mostrando uma barra fina faz o
+           Chrome/Android reservar espaço físico em vez de sobrepor o
+           conteúdo, ver DashboardLayout.vue pro caso confirmado desse bug. -->
       <div class="max-h-96 overflow-y-auto custom-scrollbar">
         <div v-if="notifications.length === 0" class="px-4 py-8 text-center text-body-sm text-ink-subtle">
           Nenhuma notificação ainda.
@@ -263,9 +267,3 @@ const ICON_COLOR: Record<NotificationType, string> = {
     </div>
   </div>
 </template>
-
-<style scoped>
-.custom-scrollbar::-webkit-scrollbar { width: 6px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-</style>

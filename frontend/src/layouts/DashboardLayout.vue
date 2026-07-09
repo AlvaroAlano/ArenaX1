@@ -41,7 +41,11 @@ const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', cur
     <!-- Spacer lateral para Desktop -->
     <div class="hidden md:block w-64 shrink-0"></div>
 
-    <!-- Área de Conteúdo -->
+    <!-- Área de Conteúdo. custom-scrollbar aqui usa só a regra global de
+         main.css (barra 100% escondida) — um scoped override mostrando uma
+         barra fina fazia o Chrome/Android reservar aquele espaço físico em
+         vez de sobrepor o conteúdo, empurrando tudo pra esquerda em
+         qualquer tela alta o bastante pra rolar (mais visível no Menu). -->
     <main class="flex-1 flex flex-col relative overflow-y-auto overflow-x-hidden h-screen custom-scrollbar pt-14 pb-20 md:pt-0 md:pb-0">
         <router-view v-slot="{ Component, route }">
             <transition name="page" mode="out-in">
@@ -55,10 +59,3 @@ const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', cur
 
   </div>
 </template>
-
-<style scoped>
-.custom-scrollbar::-webkit-scrollbar { width: 6px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-.custom-scrollbar:hover::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
-</style>

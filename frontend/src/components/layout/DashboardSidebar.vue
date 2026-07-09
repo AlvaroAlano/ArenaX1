@@ -204,10 +204,10 @@ const closeSidebar = () => {
 </template>
 
 <style scoped>
-.custom-scrollbar::-webkit-scrollbar { width: 6px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-.custom-scrollbar:hover::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+/* custom-scrollbar aqui usa só a regra global de main.css (barra 100%
+   escondida) — um scoped override mostrando uma barra fina faz o
+   Chrome/Android reservar aquele espaço físico em vez de sobrepor o
+   conteúdo, ver DashboardLayout.vue pro caso confirmado desse bug. */
 
 .nav-slide-enter-active,
 .nav-slide-leave-active {
