@@ -73,8 +73,8 @@ def _raise_from_rpc_error(e: Exception):
 
 @router.post("/deposit", response_model=DepositOut)
 def create_deposit(request: DepositRequest, user_id: str = Depends(get_current_user_id)):
-    if request.amount <= 0:
-        raise HTTPException(status_code=400, detail="O valor do depósito deve ser maior que zero.")
+    if request.amount < 10:
+        raise HTTPException(status_code=400, detail="O valor mínimo de depósito é R$ 10,00.")
 
     try:
         # 1. Obter a carteira (wallet) do usuário

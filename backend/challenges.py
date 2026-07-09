@@ -96,8 +96,8 @@ def _raise_from_rpc_error(e: Exception):
 
 @router.post("/create", response_model=ChallengeRow)
 def create_challenge(request: ChallengeCreateRequest, user_id: str = Depends(get_current_user_id)):
-    if request.bet_amount < 0:
-        raise HTTPException(status_code=400, detail="O valor da aposta não pode ser negativo.")
+    if request.bet_amount < 1:
+        raise HTTPException(status_code=400, detail="O valor da partida precisa ser de pelo menos R$ 1,00.")
 
     try:
         result = supabase.rpc("fn_create_challenge", {

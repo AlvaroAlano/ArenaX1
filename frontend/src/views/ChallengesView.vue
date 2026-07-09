@@ -117,7 +117,7 @@ const handleAccept = async (c: Challenge) => {
         alert('Este é um desafio de exemplo — volte quando o servidor estiver disponível.')
         return
     }
-    if (!confirm(`Confirmar aposta de R$ ${c.bet_amount.toFixed(2)} contra ${c.creator_profile.username}?`)) return
+    if (!confirm(`Confirmar valor de R$ ${c.bet_amount.toFixed(2)} contra ${c.creator_profile.username}?`)) return
 
     acceptingId.value = c.id
     try {
@@ -219,9 +219,10 @@ const ringStyle = (platform: string) => ({
     boxShadow: `0 0 0 2px var(--canvas), 0 0 0 4px ${platformColor[platform] || '#52525b'}`,
 })
 
-/* ── Prêmio: mesma regra do backend (rake_percentage = 0.10 em challenges.py) ── */
-const totalPrize = (c: Challenge) => c.bet_amount * 1.8
-const netProfit = (c: Challenge) => c.bet_amount * 0.8
+/* ── Prêmio: mesma regra do backend (rake do desafio 1v1 = 0.08, ver
+   18_rake_minimums_and_wording.sql) ── */
+const totalPrize = (c: Challenge) => c.bet_amount * 1.84
+const netProfit = (c: Challenge) => c.bet_amount * 0.84
 const winnerName = (c: Challenge) => {
     if (c.winner_id === c.creator_id) return c.creator_profile.username
     if (c.opponent_profile && c.winner_id === c.opponent_id) return c.opponent_profile.username

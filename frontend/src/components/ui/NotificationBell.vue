@@ -60,7 +60,7 @@ const mockNotifications: NotificationItem[] = [
   },
   {
     id: 'mock-3', type: 'challenge_accepted', title: 'Desafio aceito ⚔️',
-    body: 'joaozinho topou sua aposta de R$ 20.00 em EA FC 26. Combinem sala e horário no chat.',
+    body: 'joaozinho topou o valor da sua partida de R$ 20.00 em EA FC 26. Combinem sala e horário no chat.',
     tournament_id: null, match_id: null, challenge_id: null,
     read_at: null, created_at: new Date(now - 40 * 60_000).toISOString(),
   },

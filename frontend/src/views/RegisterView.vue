@@ -136,7 +136,7 @@ const handleRegister = async () => {
               </span>
               <div>
                 <p class="font-semibold text-ink">Desafios 1v1 por dinheiro real</p>
-                <p class="text-body-sm text-ink-subtle">Encontre um adversário do seu nível e aposte na sua habilidade.</p>
+                <p class="text-body-sm text-ink-subtle">Encontre um adversário do seu nível e prove sua habilidade.</p>
               </div>
             </div>
             <div class="flex items-start gap-4">

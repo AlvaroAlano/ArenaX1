@@ -22,7 +22,7 @@ import { Wallet, Gamepad2, Camera, Banknote, Hourglass, Gavel, WifiOff, ShieldCh
                 </div>
                 <h3 class="mb-3 text-xl font-bold text-ink">1. Criar Conta e Depositar</h3>
                 <p class="text-body-sm leading-relaxed text-ink-subtle">
-                  Crie a sua conta na ArenaX1 em poucos segundos. Adicione fundos à sua carteira de forma instantânea e segura para começar a apostar nas suas habilidades.
+                  Crie a sua conta na ArenaX1 em poucos segundos. Adicione fundos à sua carteira de forma instantânea e segura para começar a disputar partidas e provar sua habilidade.
                 </p>
             </div>
 

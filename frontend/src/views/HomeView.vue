@@ -162,7 +162,8 @@ function timeAgo(iso: string): string {
   return days === 1 ? 'Ontem' : `Há ${days} dias`
 }
 
-const totalPrize = (c: Challenge) => c.bet_amount * 1.8
+// Rake do desafio 1v1 = 8% (ver backend/18_rake_minimums_and_wording.sql)
+const totalPrize = (c: Challenge) => c.bet_amount * 1.84
 
 /* Adversário exibido do ponto de vista do usuário logado */
 const opponentName = (c: Challenge) => {
@@ -182,7 +183,7 @@ const challengeResult = (c: Challenge) => {
   if (c.status === 'disputed') return { label: 'Em disputa', amount: 0, tone: 'text-semantic-error' as const }
   const won = c.winner_id === MY_ID
   return won
-    ? { label: 'Vitória', amount: c.bet_amount * 0.8, tone: 'text-semantic-success' as const }
+    ? { label: 'Vitória', amount: c.bet_amount * 0.84, tone: 'text-semantic-success' as const }
     : { label: 'Derrota', amount: -c.bet_amount, tone: 'text-ink-subtle' as const }
 }
 
@@ -193,7 +194,7 @@ const txMeta = (type: string): { label: string; positive: boolean } => {
     case 'challenge_win': case 'win_prize': return { label: 'Prêmio', positive: true }
     case 'withdraw': return { label: 'Saque', positive: false }
     case 'challenge_loss': return { label: 'Derrota', positive: false }
-    case 'bet_freeze': return { label: 'Aposta retida', positive: false }
+    case 'bet_freeze': return { label: 'Valor retido', positive: false }
     case 'rake': return { label: 'Comissão', positive: false }
     default: return { label: type, positive: false }
   }

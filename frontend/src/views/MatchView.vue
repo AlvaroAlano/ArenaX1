@@ -104,10 +104,11 @@ const ringStyle = computed(() => ({
 }))
 const initials = (name?: string) => (name || '??').substring(0, 2).toUpperCase()
 
-/* ── Prêmio ao vencedor: mesma regra do backend (rake 10% em challenges.py),
-   já usada em ChallengesView — bet_amount * 1.8. ── */
-const totalPrize = computed(() => (challenge.value?.bet_amount ?? 0) * 1.8)
-const netProfit = computed(() => (challenge.value?.bet_amount ?? 0) * 0.8)
+/* ── Prêmio ao vencedor: mesma regra do backend (rake 8% no desafio 1v1,
+   ver 18_rake_minimums_and_wording.sql), já usada em ChallengesView —
+   bet_amount * 1.84. ── */
+const totalPrize = computed(() => (challenge.value?.bet_amount ?? 0) * 1.84)
+const netProfit = computed(() => (challenge.value?.bet_amount ?? 0) * 0.84)
 const winnerName = computed(() => {
   if (!challenge.value) return ''
   if (challenge.value.winner_id === challenge.value.creator_id) return challenge.value.creator_profile?.username

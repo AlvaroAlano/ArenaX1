@@ -24,7 +24,7 @@ onMounted(() => { walletStore.fetchWallet() })
 const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 const isValid = computed(() => {
-    return stake.value > 0
+    return stake.value >= 1
         && game.value
         && platform.value
         && gameId.value.trim().length > 0
@@ -66,7 +66,7 @@ const submitChallenge = async () => {
             <section class="flex flex-col gap-4 mb-8">
                 <div class="flex items-center gap-2">
                     <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-canvas">1</span>
-                    <h2 class="text-xl font-bold text-ink">Defina a Sua Aposta</h2>
+                    <h2 class="text-xl font-bold text-ink">Defina o Valor da Partida</h2>
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     <label v-for="val in [5, 10, 20, 50]" :key="val" class="cursor-pointer group">
@@ -113,7 +113,7 @@ const submitChallenge = async () => {
                         </li>
                         <li class="flex gap-3">
                             <span class="font-bold text-ink">2.</span>
-                            <span>O vencedor leva até 1,8× o valor da aposta (após a comissão de 10% da ArenaX1).</span>
+                            <span>O vencedor leva até 1,84× o valor da partida (após a comissão de 8% da ArenaX1).</span>
                         </li>
                         <li class="flex gap-3">
                             <span class="font-bold text-ink">3.</span>
@@ -172,7 +172,7 @@ const submitChallenge = async () => {
                     </svg>
                     <span>{{ isSubmitting ? 'A criar...' : 'Criar o Desafio' }}</span>
                 </button>
-                <p class="text-center text-[10px] text-ink-subtle uppercase tracking-widest mt-4">A aposta será bloqueada na sua carteira • 10% de comissão sobre o prémio do vencedor</p>
+                <p class="text-center text-[10px] text-ink-subtle uppercase tracking-widest mt-4">O valor será bloqueado na sua carteira • 8% de comissão sobre o prêmio do vencedor</p>
             </div>
         </form>
     </div>

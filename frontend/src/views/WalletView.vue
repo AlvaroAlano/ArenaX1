@@ -35,7 +35,7 @@ const selectAmount = (value: number) => {
 const TX_META: Record<string, { label: string; positive: boolean }> = {
   deposit: { label: 'Depósito', positive: true },
   withdraw: { label: 'Saque', positive: false },
-  bet_freeze: { label: 'Aposta/Inscrição', positive: false },
+  bet_freeze: { label: 'Valor/Inscrição', positive: false },
   bet_refund: { label: 'Reembolso', positive: true },
   challenge_win: { label: 'Vitória no X1', positive: true },
   challenge_loss: { label: 'Derrota no X1', positive: false },
@@ -108,8 +108,8 @@ const loadTransactions = async () => {
 
 // Gerar depósito Pix
 const handleGeneratePix = async () => {
-  if (!depositAmount.value || depositAmount.value <= 0) {
-    alert('Insira um valor válido para depósito.')
+  if (!depositAmount.value || depositAmount.value < 10) {
+    alert('O valor mínimo de depósito é R$ 10,00.')
     return
   }
 
@@ -305,7 +305,7 @@ onUnmounted(() => {
         <div class="p-6">
           <!-- CONTEÚDO DE DEPÓSITO -->
           <div v-if="activeTab === 'deposit'" class="space-y-6">
-            <p class="text-sm text-ink-subtle">Selecione um valor rápido ou digite o valor que deseja depositar para começar a apostar.</p>
+            <p class="text-sm text-ink-subtle">Selecione um valor rápido ou digite o valor que deseja depositar para começar a jogar.</p>
             
             <!-- Valores rápidos -->
             <div class="grid grid-cols-4 gap-3">
@@ -326,7 +326,7 @@ onUnmounted(() => {
               <input 
                 v-model.number="depositAmount"
                 type="number"
-                placeholder="Valor mínimo R$ 5,00"
+                placeholder="Valor mínimo R$ 10,00"
                 class="w-full bg-surface-2 border border-hairline-strong rounded-lg px-4 py-3 text-ink placeholder-[#515c6e] focus:outline-none focus:border-[#4facfe] transition-colors text-sm"
               />
             </div>

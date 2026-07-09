@@ -75,7 +75,7 @@ const minDeadline = toLocalInputValue(new Date(Date.now() + 60 * 60 * 1000))
 const oIsValid = computed(() => {
     if (!oTitle.value.trim() || !oGame.value || !oPlatform.value) return false
     if (![4, 8, 16].includes(oMaxPlayers.value)) return false
-    if (oEntryFee.value <= 0) return false
+    if (oEntryFee.value < 1) return false
     if (!oDeadline.value) return false
     if (new Date(oDeadline.value).getTime() <= Date.now()) return false
     return true

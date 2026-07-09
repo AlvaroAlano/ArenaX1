@@ -340,8 +340,8 @@ def _fetch_online_tournament_detail(tournament_id: str) -> dict:
 def create_online_tournament(request: OnlineTournamentCreateRequest, user_id: str = Depends(get_current_user_id)):
     if request.max_players not in (4, 8, 16):
         raise HTTPException(status_code=400, detail="O torneio precisa ter 4, 8 ou 16 jogadores.")
-    if request.entry_fee <= 0:
-        raise HTTPException(status_code=400, detail="A taxa de inscrição precisa ser maior que zero.")
+    if request.entry_fee < 1:
+        raise HTTPException(status_code=400, detail="A taxa de inscrição precisa ser de pelo menos R$ 1,00.")
 
     try:
         result = supabase.rpc("fn_create_online_tournament", {
