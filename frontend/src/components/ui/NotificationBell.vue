@@ -146,7 +146,7 @@ const handleClick = (n: NotificationItem) => {
     api.post('/api/notifications/mark-read', { ids: [n.id] }).catch(() => {})
   }
   if (n.challenge_id) router.push(`/match/${n.challenge_id}`)
-  else if (n.tournament_id) router.push(`/tournaments/${n.tournament_id}`)
+  else if (n.tournament_id) router.push(n.match_id ? `/tournaments/${n.tournament_id}?match=${n.match_id}` : `/tournaments/${n.tournament_id}`)
   else if (n.type === 'deposit_confirmed' || n.type === 'withdraw_completed') router.push('/wallet')
 }
 

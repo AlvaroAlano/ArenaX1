@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   ArrowLeft, Lock, Medal, Landmark, Users, Gamepad2, CalendarClock,
@@ -71,7 +71,24 @@ const loadTournament = async (silent = false) => {
     if (!silent) loading.value = false
   }
 }
-onMounted(loadTournament)
+
+// Deep-link vindo de uma notificação (?match=<id>): rola até a partida
+// específica na chave e destaca ela por alguns segundos — sem isso o
+// usuário cai na chave inteira e precisa procurar o próprio confronto.
+const highlightedMatchId = ref<string | null>(null)
+
+onMounted(async () => {
+  await loadTournament()
+  const matchId = route.query.match
+  if (typeof matchId === 'string' && matchId) {
+    highlightedMatchId.value = matchId
+    await nextTick()
+    document.getElementById(`tournament-match-${matchId}`)?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
+    setTimeout(() => {
+      if (highlightedMatchId.value === matchId) highlightedMatchId.value = null
+    }, 3000)
+  }
+})
 
 const participantById = computed(() => {
   const map = new Map<string, Participant>()
@@ -360,7 +377,13 @@ const handleReport = async (match: Match, result: 'win' | 'loss') => {
               <div v-for="col in roundsGrouped" :key="col.round" class="flex w-64 shrink-0 flex-col gap-4">
                 <h3 class="text-center text-caption font-bold uppercase tracking-widest text-ink-tertiary">{{ col.label }}</h3>
 
-                <div v-for="match in col.matches" :key="match.id" class="flex flex-col gap-2 rounded-2xl border border-hairline bg-surface-1/60 p-4 backdrop-blur">
+                <div
+                  v-for="match in col.matches"
+                  :key="match.id"
+                  :id="`tournament-match-${match.id}`"
+                  class="flex flex-col gap-2 rounded-2xl border border-hairline bg-surface-1/60 p-4 backdrop-blur transition-shadow duration-500"
+                  :class="highlightedMatchId === match.id ? 'ring-2 ring-primary shadow-glow-primary' : ''"
+                >
                   <p v-if="match.is_third_place" class="text-center text-[10px] font-bold uppercase tracking-widest text-amber-500">Disputa de 3º Lugar</p>
 
                   <!-- Participante A -->
