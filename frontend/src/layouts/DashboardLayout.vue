@@ -46,7 +46,7 @@ const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', cur
          barra fina fazia o Chrome/Android reservar aquele espaço físico em
          vez de sobrepor o conteúdo, empurrando tudo pra esquerda em
          qualquer tela alta o bastante pra rolar (mais visível no Menu). -->
-    <main class="flex-1 flex flex-col relative overflow-y-auto overflow-x-hidden h-screen custom-scrollbar pt-14 pb-20 md:pt-0 md:pb-0">
+    <main class="flex-1 flex flex-col relative overflow-y-auto overflow-x-hidden h-screen custom-scrollbar pt-14 md:pt-0 pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0">
         <router-view v-slot="{ Component, route }">
             <transition name="page" mode="out-in">
                 <component :is="Component" :key="route.path" />
