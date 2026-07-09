@@ -38,7 +38,7 @@ export interface TabItem {
     <router-link
       v-if="tab.to"
       :to="tab.to"
-      class="tab-item group relative flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-1.5 rounded-full px-3 py-2.5 no-underline transition-colors duration-300"
+      class="tab-item group relative flex min-h-[46px] min-w-[46px] shrink-0 items-center justify-center gap-1.5 rounded-full px-3.5 py-3 no-underline transition-colors duration-300"
       :class="
         isActive(tab)
           ? ['bg-primary/15', activeColor || 'text-primary']
@@ -47,7 +47,7 @@ export interface TabItem {
     >
       <component
         :is="tab.icon"
-        :size="21"
+        :size="22"
         :stroke-width="isActive(tab) ? 2.25 : 1.75"
         class="shrink-0 transition-[stroke-width] duration-300"
       />
@@ -61,7 +61,7 @@ export interface TabItem {
       v-else
       type="button"
       @click="tab.onClick && tab.onClick()"
-      class="tab-item group relative flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-1.5 rounded-full px-3 py-2.5 transition-colors duration-300"
+      class="tab-item group relative flex min-h-[46px] min-w-[46px] shrink-0 items-center justify-center gap-1.5 rounded-full px-3.5 py-3 transition-colors duration-300"
       :class="
         isActive(tab)
           ? ['bg-primary/15', activeColor || 'text-primary']
@@ -70,7 +70,7 @@ export interface TabItem {
     >
       <component
         :is="tab.icon"
-        :size="21"
+        :size="22"
         :stroke-width="isActive(tab) ? 2.25 : 1.75"
         class="shrink-0 transition-[stroke-width] duration-300"
       />

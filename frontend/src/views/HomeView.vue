@@ -100,10 +100,12 @@ const displayName = computed(() => profile.value?.username || authStore.user?.us
 const initials = computed(() => displayName.value.substring(0, 2).toUpperCase())
 const mainPlatform = computed(() => profile.value?.psn_id ? 'PS5' : profile.value?.xbox_id ? 'Xbox' : 'PC')
 
-/* ── Estatísticas derivadas ── */
-const wins = computed(() => profile.value?.wins ?? 0)
-const losses = computed(() => profile.value?.losses ?? 0)
-const totalMatches = computed(() => wins.value + losses.value)
+/* ── Estatísticas derivadas dos desafios reais (profiles não tem colunas
+   wins/losses — nunca teve; isso ficava sempre zerado). 'disputed' não
+   conta: partida sem vencedor definido ainda. ── */
+const totalMatches = computed(() => challenges.value.filter(c => c.status === 'completed').length)
+const wins = computed(() => challenges.value.filter(c => c.status === 'completed' && c.winner_id === MY_ID).length)
+const losses = computed(() => totalMatches.value - wins.value)
 const winRate = computed(() => totalMatches.value ? Math.round((wins.value / totalMatches.value) * 100) : 0)
 const netWins = computed(() => wins.value - losses.value)
 const rating = computed(() => profile.value?.fair_play_rating ?? 5.0)

@@ -5,6 +5,7 @@ import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
 import { api } from '@/services/api'
 import DisputeChat from '@/components/DisputeChat.vue'
+import MatchChat from '@/components/MatchChat.vue'
 import { vReveal } from '@/composables/useReveal'
 import {
   ArrowLeft,
@@ -267,6 +268,11 @@ const currentStatus = computed(() => statusMeta[challenge.value?.status as Statu
             </button>
           </div>
         </template>
+      </div>
+
+      <!-- Chat entre os participantes: só depois que a aposta foi aceita -->
+      <div v-if="['in_progress', 'completed'].includes(challenge.status) && isParticipant" v-reveal="'200ms'">
+        <MatchChat :challenge-id="challengeId" />
       </div>
 
       <!-- Vencedor (concluído) -->

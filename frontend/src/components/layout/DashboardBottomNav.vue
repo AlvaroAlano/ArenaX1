@@ -54,7 +54,7 @@ const tabsRight = computed<TabItem[]>(() => [
     style="bottom: calc(1rem + env(safe-area-inset-bottom))"
   >
     <div
-      class="pointer-events-auto relative flex items-center gap-1 rounded-full border border-hairline-strong bg-surface-1/90 p-1.5 shadow-card-premium backdrop-blur-xl"
+      class="pointer-events-auto relative flex items-center gap-1 rounded-full border border-hairline-strong bg-surface-1/90 p-2 shadow-card-premium backdrop-blur-xl"
     >
       <!-- Menu do botão criar -->
       <Transition name="create-menu">
@@ -100,10 +100,10 @@ const tabsRight = computed<TabItem[]>(() => [
         @click="toggleMenu"
         :aria-expanded="isMenuOpen"
         aria-label="Abrir opções de criação"
-        class="relative mx-0.5 grid size-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-accent to-primary text-canvas shadow-glow-primary transition-all duration-200 active:scale-90"
+        class="relative mx-0.5 grid size-[50px] shrink-0 place-items-center rounded-full bg-gradient-to-br from-accent to-primary text-canvas shadow-glow-primary transition-all duration-200 active:scale-90"
         :class="isCreateActive ? 'ring-2 ring-accent/50 ring-offset-2 ring-offset-surface-1' : ''"
       >
-        <Plus :size="22" :stroke-width="2.5" />
+        <Plus :size="24" :stroke-width="2.5" />
       </button>
 
       <ExpandableTabs :tabs="tabsRight" />
