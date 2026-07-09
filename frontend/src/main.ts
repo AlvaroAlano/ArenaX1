@@ -21,6 +21,19 @@ window.addEventListener('vite:preloadError', () => {
   reloadOnce('vite:preloadError')
 })
 
+// iOS Safari dispara eventos não-padrão de "gesture" pro pinch-zoom que
+// ignoram a propriedade CSS touch-action — sem isso dava pra distorcer o
+// layout beliscando a tela mesmo com viewport/touch-action configurados.
+document.addEventListener('gesturestart', (e) => e.preventDefault())
+document.addEventListener('gesturechange', (e) => e.preventDefault())
+document.addEventListener(
+  'touchmove',
+  (e) => {
+    if (e.touches.length > 1) e.preventDefault()
+  },
+  { passive: false },
+)
+
 router.onError((error) => {
   if (/Failed to fetch dynamically imported module|Importing a module script failed/i.test(error.message)) {
     reloadOnce('router:chunk-load-failed')

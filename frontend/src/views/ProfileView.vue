@@ -74,6 +74,20 @@ const ratingLabel = computed(() => {
     if (r >= 2.5) return 'Reputação regular'
     return 'Reputação baixa'
 })
+const ratingColor = computed(() => {
+    const r = profile.value?.fair_play_rating ?? 5
+    if (r >= 4.5) return 'text-accent'
+    if (r >= 3.5) return 'text-emerald-400'
+    if (r >= 2.5) return 'text-amber-400'
+    return 'text-red-400'
+})
+const ratingIconClass = computed(() => {
+    const r = profile.value?.fair_play_rating ?? 5
+    if (r >= 4.5) return 'bg-accent/10 text-accent'
+    if (r >= 3.5) return 'bg-emerald-400/10 text-emerald-400'
+    if (r >= 2.5) return 'bg-amber-400/10 text-amber-400'
+    return 'bg-red-400/10 text-red-400'
+})
 </script>
 
 <template>
@@ -133,7 +147,7 @@ const ratingLabel = computed(() => {
       <div class="flex flex-col justify-between rounded-2xl border border-hairline bg-surface-1 p-6 sm:max-w-xs">
         <div class="flex items-start justify-between">
             <p class="text-caption font-semibold uppercase tracking-widest text-ink-tertiary">Reputação</p>
-            <span class="grid size-9 place-items-center rounded-lg bg-amber-400/10 text-amber-400">
+            <span class="grid size-9 place-items-center rounded-lg transition-colors" :class="ratingIconClass">
                 <Star :size="18" fill="currentColor" />
             </span>
         </div>
@@ -141,7 +155,7 @@ const ratingLabel = computed(() => {
             <p class="font-display text-4xl font-bold tabular-nums text-ink">
                 {{ profile.fair_play_rating.toFixed(1) }}<span class="text-xl text-ink-tertiary">/5.0</span>
             </p>
-            <p class="mt-1 text-body-sm font-medium text-amber-400">{{ ratingLabel }}</p>
+            <p class="mt-1 text-body-sm font-medium transition-colors" :class="ratingColor">{{ ratingLabel }}</p>
         </div>
       </div>
     </template>

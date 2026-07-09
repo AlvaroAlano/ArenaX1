@@ -116,6 +116,20 @@ const ratingLabel = computed(() => {
   if (r >= 2.5) return 'Reputação regular'
   return 'Reputação em risco'
 })
+const ratingColor = computed(() => {
+  const r = rating.value
+  if (r >= 4.5) return 'text-accent'
+  if (r >= 3.5) return 'text-emerald-400'
+  if (r >= 2.5) return 'text-amber-400'
+  return 'text-red-400'
+})
+const ratingIconClass = computed(() => {
+  const r = rating.value
+  if (r >= 4.5) return 'bg-accent/10 text-accent'
+  if (r >= 3.5) return 'bg-emerald-400/10 text-emerald-400'
+  if (r >= 2.5) return 'bg-amber-400/10 text-amber-400'
+  return 'bg-red-400/10 text-red-400'
+})
 
 /* ── Carteira ── */
 const balance = computed(() => walletStore.balance)
@@ -290,7 +304,7 @@ const txMeta = (type: string): { label: string; positive: boolean } => {
         <div v-reveal="'80ms'" class="flex flex-col justify-between rounded-2xl border border-hairline bg-surface-1 p-6">
           <div class="flex items-start justify-between">
             <p class="text-caption font-semibold uppercase tracking-widest text-ink-tertiary">Reputação</p>
-            <span class="grid size-9 place-items-center rounded-lg bg-amber-400/10 text-amber-400">
+            <span class="grid size-9 place-items-center rounded-lg transition-colors" :class="ratingIconClass">
               <Star :size="18" fill="currentColor" />
             </span>
           </div>
@@ -298,7 +312,7 @@ const txMeta = (type: string): { label: string; positive: boolean } => {
             <p class="font-display text-4xl font-bold tabular-nums text-ink">
               {{ rating.toFixed(1) }}<span class="text-xl text-ink-tertiary">/5.0</span>
             </p>
-            <p class="mt-1 text-body-sm font-medium text-amber-400">{{ ratingLabel }}</p>
+            <p class="mt-1 text-body-sm font-medium transition-colors" :class="ratingColor">{{ ratingLabel }}</p>
           </div>
           <div class="mt-5 flex items-center justify-between border-t border-hairline pt-4">
             <span class="text-caption text-ink-subtle">Saldo de partidas</span>
