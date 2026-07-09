@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { Bell, Trophy, Swords, ShieldAlert, XCircle, CheckCheck, ThumbsDown, BadgeCheck } from '@lucide/vue'
+import {
+  Bell, Trophy, Swords, ShieldAlert, XCircle, CheckCheck, ThumbsDown, BadgeCheck,
+  ArrowDownCircle, ArrowUpCircle, Hourglass, ArrowRight,
+} from '@lucide/vue'
 import { api } from '@/services/api'
 
 type NotificationType =
   | 'tournament_open' | 'match_ready' | 'match_disputed' | 'tournament_prize'
   | 'tournament_cancelled' | 'dispute_resolved_win' | 'dispute_resolved_loss'
+  | 'deposit_confirmed' | 'withdraw_completed'
+  | 'challenge_accepted' | 'challenge_result_pending' | 'challenge_win'
+  | 'challenge_loss' | 'challenge_disputed'
 interface NotificationItem {
   id: string
   type: NotificationType
@@ -14,6 +20,7 @@ interface NotificationItem {
   body: string
   tournament_id: string | null
   match_id: string | null
+  challenge_id: string | null
   read_at: string | null
   created_at: string
 }
@@ -68,7 +75,15 @@ const markAllRead = async () => {
 
 const handleClick = (n: NotificationItem) => {
   open.value = false
-  if (n.tournament_id) router.push(`/tournaments/${n.tournament_id}`)
+  if (!n.read_at) {
+    const now = new Date().toISOString()
+    unreadCount.value = Math.max(0, unreadCount.value - 1)
+    notifications.value = notifications.value.map(item => item.id === n.id ? { ...item, read_at: now } : item)
+    api.post('/api/notifications/mark-read', { ids: [n.id] }).catch(() => {})
+  }
+  if (n.challenge_id) router.push(`/match/${n.challenge_id}`)
+  else if (n.tournament_id) router.push(`/tournaments/${n.tournament_id}`)
+  else if (n.type === 'deposit_confirmed' || n.type === 'withdraw_completed') router.push('/wallet')
 }
 
 function timeAgo(iso: string): string {
@@ -89,6 +104,13 @@ const ICONS: Record<NotificationType, any> = {
   tournament_cancelled: XCircle,
   dispute_resolved_win: BadgeCheck,
   dispute_resolved_loss: ThumbsDown,
+  deposit_confirmed: ArrowDownCircle,
+  withdraw_completed: ArrowUpCircle,
+  challenge_accepted: Swords,
+  challenge_result_pending: Hourglass,
+  challenge_win: Trophy,
+  challenge_loss: ThumbsDown,
+  challenge_disputed: ShieldAlert,
 }
 const ICON_COLOR: Record<NotificationType, string> = {
   tournament_open: 'text-primary bg-primary/10',
@@ -98,6 +120,13 @@ const ICON_COLOR: Record<NotificationType, string> = {
   tournament_cancelled: 'text-ink-tertiary bg-surface-3',
   dispute_resolved_win: 'text-semantic-success bg-semantic-success/10',
   dispute_resolved_loss: 'text-semantic-error bg-semantic-error/10',
+  deposit_confirmed: 'text-semantic-success bg-semantic-success/10',
+  withdraw_completed: 'text-primary bg-primary/10',
+  challenge_accepted: 'text-primary bg-primary/10',
+  challenge_result_pending: 'text-amber-400 bg-amber-400/10',
+  challenge_win: 'text-semantic-success bg-semantic-success/10',
+  challenge_loss: 'text-ink-tertiary bg-surface-3',
+  challenge_disputed: 'text-semantic-error bg-semantic-error/10',
 }
 </script>
 
@@ -137,12 +166,14 @@ const ICON_COLOR: Record<NotificationType, string> = {
         <div v-if="notifications.length === 0" class="px-4 py-8 text-center text-body-sm text-ink-subtle">
           Nenhuma notificação ainda.
         </div>
-        <button
+        <div
           v-for="n in notifications"
           :key="n.id"
-          type="button"
+          role="button"
+          tabindex="0"
           @click="handleClick(n)"
-          class="flex w-full items-start gap-3 border-b border-hairline px-4 py-3 text-left transition-colors last:border-b-0 hover:bg-surface-2"
+          @keydown.enter="handleClick(n)"
+          class="flex w-full cursor-pointer items-start gap-3 border-b border-hairline px-4 py-3 text-left transition-colors last:border-b-0 hover:bg-surface-2"
           :class="!n.read_at ? 'bg-primary/[0.04]' : ''"
         >
           <span class="grid size-8 shrink-0 place-items-center rounded-full" :class="ICON_COLOR[n.type]">
@@ -151,10 +182,18 @@ const ICON_COLOR: Record<NotificationType, string> = {
           <div class="min-w-0 flex-1">
             <p class="truncate text-body-sm font-semibold text-ink">{{ n.title }}</p>
             <p class="mt-0.5 line-clamp-2 text-caption text-ink-subtle">{{ n.body }}</p>
+            <button
+              v-if="n.type === 'challenge_result_pending'"
+              type="button"
+              @click.stop="handleClick(n)"
+              class="mt-2 inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1.5 text-[11px] font-bold text-canvas transition-colors hover:bg-primary-hover"
+            >
+              Reportar resultado <ArrowRight :size="12" />
+            </button>
             <p class="mt-1 text-[10px] text-ink-tertiary">{{ timeAgo(n.created_at) }}</p>
           </div>
           <span v-if="!n.read_at" class="mt-1.5 size-2 shrink-0 rounded-full bg-primary"></span>
-        </button>
+        </div>
       </div>
     </div>
   </div>
