@@ -277,6 +277,7 @@ class OnlineTournamentRow(BaseModel):
     champion_participant_id: Optional[str] = None
     runner_up_participant_id: Optional[str] = None
     third_place_participant_id: Optional[str] = None
+    fourth_place_participant_id: Optional[str] = None
     created_at: str
     completed_at: Optional[str] = None
 

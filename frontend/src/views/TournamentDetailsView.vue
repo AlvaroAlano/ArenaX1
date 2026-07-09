@@ -52,6 +52,7 @@ interface TournamentDetail {
   champion_participant_id: string | null
   runner_up_participant_id: string | null
   third_place_participant_id: string | null
+  fourth_place_participant_id: string | null
   participants: Participant[]
   matches: Match[]
 }
@@ -103,11 +104,29 @@ const myParticipant = computed(() => {
 
 const netPool = computed(() => tournament.value ? tournament.value.prize_pool - tournament.value.rake_amount : 0)
 
-// Em torneios de 8/16, o 4º lugar recebe de volta a própria inscrição
-// (empate) — o pote que sobra pro 1º/2º/3º é o líquido menos essa devolução
-// (mesma conta de fn_submit_online_match_result/fn_resolve_online_match_dispute).
-const fourthPlaceRefund = computed(() => tournament.value && tournament.value.max_players > 4 ? tournament.value.entry_fee : 0)
-const adjustedPool = computed(() => netPool.value - fourthPlaceRefund.value)
+// Tabela de premiação por tamanho de chave, sempre sobre o pote líquido —
+// mesma regra do backend (fn_submit_online_match_result /
+// fn_resolve_online_match_dispute, ver backend/19_tiered_prize_distribution.sql).
+// 4 jogadores: só o campeão leva. 8: top 3. 16: top 4.
+const prizeTiers = computed(() => {
+  if (!tournament.value) return []
+  const pool = netPool.value
+  const table = tournament.value.max_players === 4
+    ? [{ label: '1º Lugar', medal: '🥇', pct: 1.00, color: 'text-semantic-success', participantId: tournament.value.champion_participant_id }]
+    : tournament.value.max_players === 8
+    ? [
+        { label: '1º Lugar', medal: '🥇', pct: 0.55, color: 'text-semantic-success', participantId: tournament.value.champion_participant_id },
+        { label: '2º Lugar', medal: '🥈', pct: 0.30, color: 'text-ink-muted', participantId: tournament.value.runner_up_participant_id },
+        { label: '3º Lugar', medal: '🥉', pct: 0.15, color: 'text-accent', participantId: tournament.value.third_place_participant_id },
+      ]
+    : [
+        { label: '1º Lugar', medal: '🥇', pct: 0.50, color: 'text-semantic-success', participantId: tournament.value.champion_participant_id },
+        { label: '2º Lugar', medal: '🥈', pct: 0.25, color: 'text-ink-muted', participantId: tournament.value.runner_up_participant_id },
+        { label: '3º Lugar', medal: '🥉', pct: 0.15, color: 'text-accent', participantId: tournament.value.third_place_participant_id },
+        { label: '4º Lugar', medal: '🏅', pct: 0.10, color: 'text-ink', participantId: tournament.value.fourth_place_participant_id },
+      ]
+  return table.map(t => ({ ...t, amount: pool * t.pct }))
+})
 
 // Mesmo corte de 30min aplicado em fn_leave_online_tournament — mostrado
 // proativamente pra não deixar o usuário tentar e só descobrir pelo erro.
@@ -321,32 +340,19 @@ const handleReport = async (match: Match, result: 'win' | 'loss') => {
               <Medal :size="22" class="text-primary" />
               Prêmios
             </h3>
-            <div class="grid grid-cols-3 gap-4" :class="fourthPlaceRefund > 0 ? 'sm:grid-cols-4' : ''">
-              <div class="rounded-xl border border-hairline bg-surface-2 p-4 text-center">
-                <span class="text-2xl drop-shadow-md">🥇</span>
-                <p class="mt-2 text-lg font-bold text-semantic-success">R$ {{ (adjustedPool * 0.5).toFixed(2) }}</p>
-                <p class="mt-1 text-caption font-bold uppercase tracking-widest text-ink-tertiary">1º Lugar</p>
-                <p v-if="tournament.champion_participant_id" class="mt-1 truncate text-caption text-ink-subtle">{{ participantById.get(tournament.champion_participant_id)?.display_name }}</p>
-              </div>
-              <div class="rounded-xl border border-hairline bg-surface-2 p-4 text-center">
-                <span class="text-2xl drop-shadow-md">🥈</span>
-                <p class="mt-2 text-lg font-bold text-ink-muted">R$ {{ (adjustedPool * 0.3).toFixed(2) }}</p>
-                <p class="mt-1 text-caption font-bold uppercase tracking-widest text-ink-tertiary">2º Lugar</p>
-                <p v-if="tournament.runner_up_participant_id" class="mt-1 truncate text-caption text-ink-subtle">{{ participantById.get(tournament.runner_up_participant_id)?.display_name }}</p>
-              </div>
-              <div class="rounded-xl border border-hairline bg-surface-2 p-4 text-center">
-                <span class="text-2xl drop-shadow-md">🥉</span>
-                <p class="mt-2 text-lg font-bold text-accent">R$ {{ (adjustedPool * 0.2).toFixed(2) }}</p>
-                <p class="mt-1 text-caption font-bold uppercase tracking-widest text-ink-tertiary">3º Lugar</p>
-                <p v-if="tournament.third_place_participant_id" class="mt-1 truncate text-caption text-ink-subtle">{{ participantById.get(tournament.third_place_participant_id)?.display_name }}</p>
-              </div>
-              <div v-if="fourthPlaceRefund > 0" class="rounded-xl border border-hairline bg-surface-2 p-4 text-center">
-                <span class="text-2xl drop-shadow-md">💸</span>
-                <p class="mt-2 text-lg font-bold text-ink">R$ {{ fourthPlaceRefund.toFixed(2) }}</p>
-                <p class="mt-1 text-caption font-bold uppercase tracking-widest text-ink-tertiary">4º Lugar</p>
-                <p class="mt-1 truncate text-caption text-ink-subtle">Inscrição de volta</p>
+            <div class="grid gap-4" :class="prizeTiers.length >= 4 ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-3'">
+              <div v-for="tier in prizeTiers" :key="tier.label" class="rounded-xl border border-hairline bg-surface-2 p-4 text-center">
+                <span class="text-2xl drop-shadow-md">{{ tier.medal }}</span>
+                <p class="mt-2 text-lg font-bold" :class="tier.color">R$ {{ tier.amount.toFixed(2) }}</p>
+                <p class="mt-1 text-caption font-bold uppercase tracking-widest text-ink-tertiary">{{ tier.label }} <span class="text-ink-tertiary">({{ (tier.pct * 100).toFixed(0) }}%)</span></p>
+                <p v-if="tier.participantId" class="mt-1 truncate text-caption text-ink-subtle">{{ participantById.get(tier.participantId)?.display_name }}</p>
               </div>
             </div>
+            <p class="mt-4 text-[11px] text-ink-tertiary">
+              <template v-if="tournament.max_players === 4">Chave de 4: o campeão leva 100% da premiação líquida.</template>
+              <template v-else-if="tournament.max_players === 8">Chave de 8: dividida 55% / 30% / 15% entre 1º, 2º e 3º lugar.</template>
+              <template v-else>Chave de 16: dividida 50% / 25% / 15% / 10% entre 1º, 2º, 3º e 4º lugar.</template>
+            </p>
           </div>
 
           <!-- Banner de campeão -->

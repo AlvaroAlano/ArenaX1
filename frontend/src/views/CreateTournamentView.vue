@@ -72,6 +72,20 @@ function toLocalInputValue(d: Date): string {
 }
 const minDeadline = toLocalInputValue(new Date(Date.now() + 60 * 60 * 1000))
 
+// Tabela de premiação por tamanho de chave (sempre sobre o pote líquido,
+// depois do rake de 10% — mesma regra usada no backend, ver
+// backend/19_tiered_prize_distribution.sql). 4 jogadores: só o campeão
+// leva. 8: top 3. 16: top 4.
+const oPrizeBreakdown = computed(() => {
+    const pool = oMaxPlayers.value * oEntryFee.value * 0.9
+    const table = oMaxPlayers.value === 4
+        ? [{ label: '1º Lugar', pct: 1.00 }]
+        : oMaxPlayers.value === 8
+        ? [{ label: '1º Lugar', pct: 0.55 }, { label: '2º Lugar', pct: 0.30 }, { label: '3º Lugar', pct: 0.15 }]
+        : [{ label: '1º Lugar', pct: 0.50 }, { label: '2º Lugar', pct: 0.25 }, { label: '3º Lugar', pct: 0.15 }, { label: '4º Lugar', pct: 0.10 }]
+    return table.map(t => ({ ...t, amount: pool * t.pct }))
+})
+
 const oIsValid = computed(() => {
     if (!oTitle.value.trim() || !oGame.value || !oPlatform.value) return false
     if (![4, 8, 16].includes(oMaxPlayers.value)) return false
@@ -319,8 +333,14 @@ const submitOnlineTournament = async () => {
                         <span>Premiação líquida (após 10% de comissão)</span>
                         <span class="font-bold text-semantic-success">R$ {{ (oMaxPlayers * oEntryFee * 0.9).toFixed(2) }}</span>
                     </div>
+                    <div class="mt-3 space-y-1 border-t border-hairline pt-3">
+                        <div v-for="tier in oPrizeBreakdown" :key="tier.label" class="flex items-center justify-between">
+                            <span class="text-ink-subtle">{{ tier.label }} <span class="text-ink-tertiary">({{ (tier.pct * 100).toFixed(0) }}%)</span></span>
+                            <span class="font-bold text-ink">R$ {{ tier.amount.toFixed(2) }}</span>
+                        </div>
+                    </div>
                     <p class="mt-2 text-[11px] text-ink-tertiary">
-                        Dividida 50% / 30% / 20% entre 1º, 2º e 3º lugar<template v-if="oMaxPlayers > 4"> (o 4º lugar recebe de volta a própria inscrição, sem lucro)</template>. Você (anfitrião) entra pagando a inscrição igual a qualquer jogador.
+                        Você (anfitrião) entra pagando a inscrição igual a qualquer jogador.
                     </p>
                 </div>
             </section>
