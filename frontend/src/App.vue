@@ -3,6 +3,7 @@ import { RouterView, useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { supabase } from '@/services/supabase'
 import { computed } from 'vue'
+import PullToRefresh from '@/components/ui/PullToRefresh.vue'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -21,6 +22,8 @@ const handleLogout = async () => {
 
 <template>
   <div class="min-h-screen bg-canvas text-ink flex flex-col">
+    <PullToRefresh />
+
     <!-- Glow ambiente: teleportado pro <body> pra escapar de qualquer stacking/overflow context do #app.
          Importante: usa z-0 (nunca z-index negativo) — nesta base de código, elementos fixed com
          z-index negativo somem por trás do fundo em telas com conteúdo rolável (bug de compositing
