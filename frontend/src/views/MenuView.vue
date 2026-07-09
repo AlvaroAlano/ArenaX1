@@ -14,11 +14,18 @@ import {
   ChevronRight,
   ShieldCheck,
 } from '@lucide/vue'
+import { onMounted } from 'vue'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
+import { useWalletStore } from '@/stores/wallet'
 
 const authStore = useAuthStore()
+const walletStore = useWalletStore()
 const router = useRouter()
+
+onMounted(() => { walletStore.fetchWallet() })
+
+const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 const handleLogout = async () => {
   await supabase.auth.signOut()
@@ -65,7 +72,7 @@ const accountItems = [
     >
       <div>
         <p class="text-[10px] font-bold uppercase tracking-wider text-ink-subtle">Saldo total</p>
-        <p class="font-display text-2xl font-black text-ink">R$ 0.00</p>
+        <p class="font-display text-2xl font-black text-ink">{{ walletStore.loaded ? fmtBRL(walletStore.balance + walletStore.lockedBalance) : '···' }}</p>
       </div>
       <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-primary text-canvas">
         <Wallet :size="20" />
