@@ -59,3 +59,18 @@ const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', cur
 
   </div>
 </template>
+
+<style scoped>
+/* Bug real do Chromium: um filho width:auto de um flex-col com
+   overflow-y:auto é "esticado" (align-items: stretch) usando um cálculo
+   que ainda reserva a largura de uma scrollbar, mesmo com ela 100%
+   escondida via CSS — sobra ~16px de largura fantasma, empurrando o
+   conteúdo centralizado (mx-auto) pra fora da tela à direita. Só aparece
+   em telas altas o bastante pra precisar rolar (ex.: Menu). width:100%
+   explícito no filho não sofre desse cálculo. Aplicado aqui uma vez só
+   pra cobrir toda página renderizada dentro do <main>, sem precisar
+   mexer em cada view. */
+main.custom-scrollbar > :deep(*) {
+  width: 100%;
+}
+</style>
