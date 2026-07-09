@@ -25,6 +25,13 @@ interface NotificationItem {
   created_at: string
 }
 
+// `align="left"` faz o painel abrir pra DIREITA do sino (ancorado pelo lado
+// esquerdo) — necessário na sidebar do Dashboard, onde o sino fica coladinho
+// na borda esquerda da tela: abrindo pra esquerda (padrão) o painel de 320px
+// simplesmente não cabe e é cortado. No header mobile, onde o sino fica na
+// borda direita, o padrão (abre pra esquerda) é o correto.
+const props = withDefaults(defineProps<{ align?: 'left' | 'right' }>(), { align: 'right' })
+
 const router = useRouter()
 const rootEl = ref<HTMLElement | null>(null)
 const open = ref(false)
@@ -205,7 +212,8 @@ const ICON_COLOR: Record<NotificationType, string> = {
 
     <div
       v-if="open"
-      class="absolute right-0 z-[9996] mt-2 w-80 max-w-[90vw] overflow-hidden rounded-2xl border border-hairline-strong bg-surface-1 shadow-2xl"
+      class="absolute z-[9996] mt-2 w-80 max-w-[90vw] overflow-hidden rounded-2xl border border-hairline-strong bg-surface-1 shadow-2xl"
+      :class="props.align === 'left' ? 'left-0' : 'right-0'"
     >
       <div class="flex items-center justify-between border-b border-hairline px-4 py-3">
         <p class="text-body-sm font-bold text-ink">Notificações</p>

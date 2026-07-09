@@ -73,7 +73,7 @@ const closeSidebar = () => {
               <span class="grid size-8 place-items-center rounded-md bg-primary text-[15px] font-black tracking-tighter text-canvas">X1</span>
               <span class="font-display text-lg font-black tracking-tight text-ink">ARENA<span class="text-primary">X1</span></span>
           </router-link>
-          <NotificationBell />
+          <NotificationBell align="left" />
       </div>
 
       <nav class="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar px-4 py-6">
