@@ -172,7 +172,7 @@ const submitChallenge = async () => {
                     </svg>
                     <span>{{ isSubmitting ? 'A criar...' : 'Criar o Desafio' }}</span>
                 </button>
-                <p class="text-center text-[10px] text-ink-subtle uppercase tracking-widest mt-4">O valor será bloqueado na sua carteira • 8% de comissão sobre o prêmio do vencedor</p>
+                <p class="text-center text-[10px] text-ink-subtle uppercase tracking-widest mt-4">O valor será bloqueado na sua carteira • 8% de comissão da ArenaX1 sobre o prêmio do vencedor</p>
             </div>
         </form>
     </div>

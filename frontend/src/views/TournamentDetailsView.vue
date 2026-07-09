@@ -475,7 +475,7 @@ const handleReport = async (match: Match, result: 'win' | 'loss') => {
               </div>
               <hr class="border-hairline">
               <div class="flex items-center justify-between text-body-sm">
-                <span class="text-ink-subtle">Premiação em jogo (após 10%)</span>
+                <span class="text-ink-subtle">Premiação em jogo (após 10% de comissão da ArenaX1)</span>
                 <span class="font-bold text-semantic-success">R$ {{ netPool.toFixed(2) }}</span>
               </div>
             </div>

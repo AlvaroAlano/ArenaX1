@@ -330,7 +330,7 @@ const submitOnlineTournament = async () => {
                         <span class="font-bold text-ink">R$ {{ (oMaxPlayers * oEntryFee).toFixed(2) }}</span>
                     </div>
                     <div class="mt-1 flex items-center justify-between text-ink-subtle">
-                        <span>Premiação líquida (após 10% de comissão)</span>
+                        <span>Premiação líquida (após 10% de comissão da ArenaX1)</span>
                         <span class="font-bold text-semantic-success">R$ {{ (oMaxPlayers * oEntryFee * 0.9).toFixed(2) }}</span>
                     </div>
                     <div class="mt-3 space-y-1 border-t border-hairline pt-3">
@@ -377,7 +377,7 @@ const submitOnlineTournament = async () => {
                     </svg>
                     <span>{{ oSubmitting ? 'A criar...' : 'Criar e Pagar Inscrição' }}</span>
                 </button>
-                <p class="text-center text-[10px] text-ink-subtle uppercase tracking-widest mt-4">A inscrição é bloqueada na sua carteira agora • 10% de comissão sobre o prêmio</p>
+                <p class="text-center text-[10px] text-ink-subtle uppercase tracking-widest mt-4">A inscrição é bloqueada na sua carteira agora • 10% de comissão da ArenaX1 sobre o prêmio</p>
             </div>
         </form>
     </div>
