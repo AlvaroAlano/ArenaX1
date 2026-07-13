@@ -152,6 +152,15 @@ const router = createRouter({
           component: () => import('../views/SupportView.vue')
         },
         {
+          // Conversa de um ticket (thread). Mesma tela serve usuário e admin —
+          // o backend autoriza dono ou admin. É pra cá que a notificação de
+          // resposta leva direto.
+          path: '/support/:id',
+          name: 'support-ticket',
+          component: () => import('../views/SupportTicketView.vue'),
+          props: true
+        },
+        {
           path: '/match/:id',
           name: 'match',
           component: () => import('../views/MatchView.vue'),
@@ -170,6 +179,11 @@ const router = createRouter({
           path: '/admin/disputes',
           name: 'admin-disputes',
           component: () => import('../views/AdminDisputesView.vue')
+        },
+        {
+          path: '/admin/support',
+          name: 'admin-support',
+          component: () => import('../views/AdminSupportView.vue')
         }
       ]
     }

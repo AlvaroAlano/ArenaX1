@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   Bell, Trophy, Swords, ShieldAlert, XCircle, CheckCheck, ThumbsDown, BadgeCheck,
-  ArrowDownCircle, ArrowUpCircle, Hourglass, ArrowRight, UserPlus,
+  ArrowDownCircle, ArrowUpCircle, Hourglass, ArrowRight, UserPlus, MessageSquare, Headset,
 } from '@lucide/vue'
 import { api } from '@/services/api'
 
@@ -14,6 +14,7 @@ type NotificationType =
   | 'challenge_accepted' | 'challenge_result_pending' | 'challenge_win'
   | 'challenge_loss' | 'challenge_disputed' | 'challenge_expired'
   | 'challenge_join_requested' | 'challenge_request_accepted' | 'challenge_request_rejected'
+  | 'support_ticket_opened' | 'support_ticket_replied' | 'support_ticket_message'
 interface NotificationItem {
   id: string
   type: NotificationType
@@ -22,6 +23,7 @@ interface NotificationItem {
   tournament_id: string | null
   match_id: string | null
   challenge_id: string | null
+  ticket_id: string | null
   read_at: string | null
   created_at: string
 }
@@ -89,7 +91,15 @@ const handleClick = (n: NotificationItem) => {
     notifications.value = notifications.value.map(item => item.id === n.id ? { ...item, read_at: now } : item)
     api.post('/api/notifications/mark-read', { ids: [n.id] }).catch(() => {})
   }
-  if (n.challenge_id) router.push(`/match/${n.challenge_id}`)
+  // Suporte tem prioridade: a notificação leva DIRETO à conversa do ticket
+  // (mesmo que o ticket referencie um challenge_id). Alerta antigo sem ticket_id
+  // cai na tela de suporte (usuário) ou na fila (admin).
+  if (n.type === 'support_ticket_opened' || n.type === 'support_ticket_replied' || n.type === 'support_ticket_message') {
+    if (n.ticket_id) router.push(`/support/${n.ticket_id}`)
+    else if (n.type === 'support_ticket_replied') router.push('/support')
+    else router.push('/admin/support')
+  }
+  else if (n.challenge_id) router.push(`/match/${n.challenge_id}`)
   else if (n.tournament_id) router.push(n.match_id ? `/tournaments/${n.tournament_id}?match=${n.match_id}` : `/tournaments/${n.tournament_id}`)
   else if (n.type === 'deposit_confirmed' || n.type === 'withdraw_completed') router.push('/wallet')
 }
@@ -123,6 +133,9 @@ const ICONS: Record<NotificationType, any> = {
   challenge_join_requested: UserPlus,
   challenge_request_accepted: Swords,
   challenge_request_rejected: XCircle,
+  support_ticket_opened: Headset,
+  support_ticket_replied: MessageSquare,
+  support_ticket_message: MessageSquare,
 }
 const ICON_COLOR: Record<NotificationType, string> = {
   tournament_open: 'text-primary bg-primary/10',
@@ -143,6 +156,9 @@ const ICON_COLOR: Record<NotificationType, string> = {
   challenge_join_requested: 'text-amber-400 bg-amber-400/10',
   challenge_request_accepted: 'text-primary bg-primary/10',
   challenge_request_rejected: 'text-ink-tertiary bg-surface-3',
+  support_ticket_opened: 'text-primary bg-primary/10',
+  support_ticket_replied: 'text-primary bg-primary/10',
+  support_ticket_message: 'text-amber-400 bg-amber-400/10',
 }
 </script>
 

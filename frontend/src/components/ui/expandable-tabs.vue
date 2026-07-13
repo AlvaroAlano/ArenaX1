@@ -38,7 +38,7 @@ export interface TabItem {
     <router-link
       v-if="tab.to"
       :to="tab.to"
-      class="tab-item group relative flex min-h-[46px] min-w-[46px] shrink-0 items-center justify-center gap-1.5 rounded-full px-3.5 py-3 no-underline transition-colors duration-300"
+      class="tab-item group relative flex min-h-[46px] min-w-[46px] shrink-0 items-center justify-center gap-1.5 rounded-full px-3.5 py-3 no-underline transition-[background-color,color,transform] duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] active:scale-[0.9]"
       :class="
         isActive(tab)
           ? ['bg-primary/15', activeColor || 'text-primary']
@@ -49,7 +49,8 @@ export interface TabItem {
         :is="tab.icon"
         :size="22"
         :stroke-width="isActive(tab) ? 2.25 : 1.75"
-        class="shrink-0 transition-[stroke-width] duration-300"
+        class="shrink-0 transition-[stroke-width,transform] duration-[350ms] ease-[cubic-bezier(0.25,1,0.5,1)]"
+        :class="isActive(tab) ? 'scale-110' : 'scale-100'"
       />
 
       <span class="tab-label-track grid overflow-hidden" :class="isActive(tab) ? 'is-open' : ''">
@@ -61,7 +62,7 @@ export interface TabItem {
       v-else
       type="button"
       @click="tab.onClick && tab.onClick()"
-      class="tab-item group relative flex min-h-[46px] min-w-[46px] shrink-0 items-center justify-center gap-1.5 rounded-full px-3.5 py-3 transition-colors duration-300"
+      class="tab-item group relative flex min-h-[46px] min-w-[46px] shrink-0 items-center justify-center gap-1.5 rounded-full px-3.5 py-3 transition-[background-color,color,transform] duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] active:scale-[0.9]"
       :class="
         isActive(tab)
           ? ['bg-primary/15', activeColor || 'text-primary']
@@ -72,7 +73,8 @@ export interface TabItem {
         :is="tab.icon"
         :size="22"
         :stroke-width="isActive(tab) ? 2.25 : 1.75"
-        class="shrink-0 transition-[stroke-width] duration-300"
+        class="shrink-0 transition-[stroke-width,transform] duration-[350ms] ease-[cubic-bezier(0.25,1,0.5,1)]"
+        :class="isActive(tab) ? 'scale-110' : 'scale-100'"
       />
 
       <span class="tab-label-track grid overflow-hidden" :class="isActive(tab) ? 'is-open' : ''">
@@ -85,10 +87,14 @@ export interface TabItem {
 <style scoped>
 .tab-label-track {
   grid-template-columns: 0fr;
-  transition: grid-template-columns 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  opacity: 0;
+  transition:
+    grid-template-columns 0.42s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.3s ease-out;
 }
 .tab-label-track.is-open {
   grid-template-columns: 1fr;
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {

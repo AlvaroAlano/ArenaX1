@@ -24,11 +24,17 @@ class ResolveDisputeRequest(BaseModel):
     winner_participant_id: str
 
 
+class SetTicketStatusRequest(BaseModel):
+    status: str
+
+
 def _raise_from_rpc_error(e: Exception):
     message = getattr(e, "message", None) or str(e)
     if "NOT_FOUND" in message:
         status_code = 404
-    elif any(code in message for code in ("MATCH_NOT_DISPUTED", "INVALID_WINNER", "TOURNAMENT_NOT_IN_PROGRESS")):
+    elif "NOT_ALLOWED" in message:
+        status_code = 403
+    elif any(code in message for code in ("MATCH_NOT_DISPUTED", "INVALID_WINNER", "TOURNAMENT_NOT_IN_PROGRESS", "INVALID_STATUS")):
         status_code = 400
     else:
         status_code = 500
@@ -107,6 +113,37 @@ def resolve_tournament_dispute(request: ResolveDisputeRequest, admin_user_id: st
             "p_match_id": request.match_id,
             "p_winner_participant_id": request.winner_participant_id,
             "p_admin_user_id": admin_user_id,
+        }).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.get("/support/tickets")
+def list_support_tickets(status: str = "open", admin_user_id: str = Depends(get_current_admin_user_id)):
+    """Fila de tickets de suporte pro admin. status='open' (padrão), 'resolved',
+    'closed' ou 'all'. Traz o perfil de quem abriu pra decidir sem sair da tela."""
+    try:
+        query = supabase.table("support_tickets").select(
+            "*, user_profile:user_id(username, fair_play_rating)"
+        ).order("updated_at", desc=True)
+        if status in ("open", "resolved", "closed"):
+            query = query.eq("status", status)
+        res = query.execute()
+        return res.data or []
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao carregar tickets: {str(e)}")
+
+
+@router.post("/support/tickets/{ticket_id}/status")
+def set_support_ticket_status(ticket_id: str, request: SetTicketStatusRequest, admin_user_id: str = Depends(get_current_admin_user_id)):
+    try:
+        result = supabase.rpc("fn_set_support_ticket_status", {
+            "p_ticket_id": ticket_id,
+            "p_admin_id": admin_user_id,
+            "p_status": request.status,
         }).execute()
         return result.data
     except HTTPException:

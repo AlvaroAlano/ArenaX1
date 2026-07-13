@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { supabase } from '@/services/supabase'
 import { User, Hash, Mail, Lock, Eye, EyeOff, Users, AlertCircle, CheckCircle2, LoaderCircle, Swords, Trophy, ShieldCheck, BadgeCheck } from '@lucide/vue'
+import ResponsibleGamingNote from '@/components/ui/ResponsibleGamingNote.vue'
 
 const fullName = ref('')
 const username = ref('')
@@ -312,6 +313,8 @@ const handleRegister = async () => {
               </router-link>
             </p>
           </div>
+
+          <ResponsibleGamingNote class="mt-6" />
         </div>
 
       </div>

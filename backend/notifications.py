@@ -29,6 +29,7 @@ class NotificationOut(BaseModel):
     tournament_id: Optional[str] = None
     match_id: Optional[str] = None
     challenge_id: Optional[str] = None
+    ticket_id: Optional[str] = None
     read_at: Optional[str] = None
     created_at: str
 

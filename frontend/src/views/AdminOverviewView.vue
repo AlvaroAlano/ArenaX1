@@ -3,7 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   Wallet, Lock, ArrowDownToLine, ArrowUpFromLine, Trophy, Percent,
-  Swords, Award, Users, ShieldAlert, Gamepad2, RefreshCw, ChevronRight,
+  Swords, Award, Users, ShieldAlert, Gamepad2, RefreshCw, ChevronRight, Headset,
 } from '@lucide/vue'
 import { api } from '@/services/api'
 
@@ -74,6 +74,18 @@ const MOCK_METRICS: DashboardMetrics = {
   },
 }
 
+// Contagem de tickets de suporte abertos, pro card de atalho. Chamada à parte
+// (tolerante a falha) pra não travar as métricas se o suporte estiver fora.
+const openTicketsCount = ref<number | null>(null)
+const loadOpenTickets = async () => {
+  try {
+    const list = await api.get<any[]>('/api/admin/support/tickets?status=open')
+    openTicketsCount.value = list.length
+  } catch {
+    openTicketsCount.value = null
+  }
+}
+
 const loadMetrics = async () => {
   loading.value = true
   loadError.value = ''
@@ -92,7 +104,7 @@ const loadMetrics = async () => {
     loading.value = false
   }
 }
-onMounted(loadMetrics)
+onMounted(() => { loadMetrics(); loadOpenTickets() })
 
 const fmtBRL = (n: number) => `R$ ${(n ?? 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 const fmtNum = (n: number) => (n ?? 0).toLocaleString('pt-BR')
@@ -121,7 +133,7 @@ const disputasAbertasTotal = computed(() => {
         <h1 class="mt-2 font-display text-headline font-black uppercase tracking-tight text-ink">Visão Geral</h1>
         <p class="mt-1 text-body-sm text-ink-subtle">Dinheiro, desafios e torneios rodando na ArenaX1 agora.</p>
       </div>
-      <button @click="loadMetrics" :disabled="loading" class="inline-flex w-fit items-center gap-2 rounded-xl border border-hairline-strong bg-surface-1 px-4 py-2.5 text-body-sm font-semibold text-ink-subtle transition-colors hover:bg-surface-2 disabled:opacity-60">
+      <button @click="loadMetrics(); loadOpenTickets()" :disabled="loading" class="inline-flex w-fit items-center gap-2 rounded-xl border border-hairline-strong bg-surface-1 px-4 py-2.5 text-body-sm font-semibold text-ink-subtle transition-colors hover:bg-surface-2 disabled:opacity-60">
         <RefreshCw :size="15" :class="loading ? 'animate-spin' : ''" /> Atualizar
       </button>
     </div>
@@ -167,6 +179,31 @@ const disputasAbertasTotal = computed(() => {
             <span class="block font-bold text-ink">Disputas de torneio</span>
             <span class="block text-body-sm text-ink-subtle">
               {{ disputasAbertasTotal > 0 ? `${disputasAbertasTotal} aberta(s) esperando resolução` : 'Nenhuma disputa aberta agora' }}
+            </span>
+          </span>
+        </span>
+        <ChevronRight :size="18" class="shrink-0 text-ink-tertiary" />
+      </button>
+
+      <!-- Atalho pra fila de suporte -->
+      <button
+        type="button"
+        @click="router.push('/admin/support')"
+        class="flex w-full items-center justify-between gap-3 rounded-2xl border p-5 text-left transition-colors"
+        :class="(openTicketsCount ?? 0) > 0
+          ? 'border-primary/25 bg-primary/[0.05] hover:bg-primary/[0.09]'
+          : 'border-hairline bg-surface-1/60 hover:bg-surface-2'"
+      >
+        <span class="flex items-center gap-3">
+          <span class="grid size-10 place-items-center rounded-xl" :class="(openTicketsCount ?? 0) > 0 ? 'bg-primary/15 text-primary' : 'bg-surface-3 text-ink-subtle'">
+            <Headset :size="18" />
+          </span>
+          <span>
+            <span class="block font-bold text-ink">Suporte — análises</span>
+            <span class="block text-body-sm text-ink-subtle">
+              {{ openTicketsCount === null ? 'Ver tickets abertos'
+                 : openTicketsCount > 0 ? `${openTicketsCount} ticket(s) em aberto esperando resposta`
+                 : 'Nenhum ticket em aberto agora' }}
             </span>
           </span>
         </span>

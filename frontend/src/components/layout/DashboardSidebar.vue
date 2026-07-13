@@ -44,6 +44,10 @@ const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', cur
 // reload/link direto.
 const isAdminSection = computed(() => route.path.startsWith('/admin'))
 
+// O logo funciona como "subir um nível": no dashboard (home do painel) leva
+// pra landing pública; em qualquer outra tela do painel, volta pro dashboard.
+const logoTo = computed(() => route.path === '/dashboard' ? '/' : '/dashboard')
+
 const handleLogout = async () => {
   await supabase.auth.signOut()
   router.push('/')
@@ -69,7 +73,7 @@ const closeSidebar = () => {
   >
       <!-- Logo Area -->
       <div class="flex h-16 items-center justify-between gap-3 border-b border-hairline px-6 shrink-0">
-          <router-link to="/dashboard" @click="closeSidebar" class="flex items-center gap-2.5 no-underline">
+          <router-link :to="logoTo" @click="closeSidebar" class="flex items-center gap-2.5 no-underline">
               <span class="grid size-8 place-items-center rounded-md bg-primary text-[15px] font-black tracking-tighter text-canvas">X1</span>
               <span class="font-display text-lg font-black tracking-tight text-ink">ARENA<span class="text-primary">X1</span></span>
           </router-link>
@@ -166,6 +170,11 @@ const closeSidebar = () => {
                 <router-link to="/admin/disputes" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
                     <ShieldAlert :size="20" />
                     Disputas
+                </router-link>
+
+                <router-link to="/admin/support" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
+                    <Headset :size="20" />
+                    Suporte
                 </router-link>
             </div>
           </Transition>

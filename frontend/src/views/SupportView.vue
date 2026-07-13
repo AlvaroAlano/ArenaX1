@@ -4,12 +4,45 @@
 // mailto), e ALERTA os admins. A resposta do admin é manual por ora (SQL/portal)
 // até a Fila de revisão (regra 4.4) ganhar thread + tela de lista. Sem mailto
 // exposto de propósito.
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { Headset, Send, AlertTriangle, CheckCircle2 } from '@lucide/vue'
+import { Headset, Send, AlertTriangle, CheckCircle2, ChevronRight, MessageSquare } from '@lucide/vue'
 import { api } from '@/services/api'
 
 const route = useRoute()
+
+// Meus tickets (histórico + porta pra conversa). A resposta do admin chega
+// pelas notificações, mas a lista aqui deixa reabrir qualquer conversa.
+interface MyTicket { id: string; category: string; message: string; status: 'open' | 'resolved' | 'closed'; updated_at: string }
+const tickets = ref<MyTicket[]>([])
+const ticketsLoading = ref(true)
+
+const CATEGORY_LABEL: Record<string, string> = {
+  other: 'Assunto geral',
+  badge_contest: 'Contestação de histórico de ausências',
+  match: 'Problema numa partida',
+  wallet: 'Carteira, saldo ou saque',
+  account: 'Conta ou login',
+}
+const STATUS_META: Record<'open' | 'resolved' | 'closed', { label: string; cls: string }> = {
+  open: { label: 'Em aberto', cls: 'border-amber-400/30 bg-amber-400/10 text-amber-400' },
+  resolved: { label: 'Resolvido', cls: 'border-semantic-success/30 bg-semantic-success/10 text-semantic-success' },
+  closed: { label: 'Fechado', cls: 'border-hairline-strong bg-surface-3 text-ink-tertiary' },
+}
+
+const loadTickets = async () => {
+  ticketsLoading.value = true
+  try {
+    tickets.value = await api.get<MyTicket[]>('/api/support/tickets')
+  } catch {
+    tickets.value = []
+  } finally {
+    ticketsLoading.value = false
+  }
+}
+onMounted(loadTickets)
+
+const fmtDate = (iso: string) => new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
 
 const CATEGORIES = [
   { value: 'other', label: 'Assunto geral' },
@@ -42,6 +75,7 @@ const submit = async () => {
       message: message.value.trim(),
     })
     done.value = true
+    loadTickets()
   } catch (err: any) {
     error.value = err?.message || 'Não foi possível enviar sua mensagem. Tente novamente.'
   } finally {
@@ -136,6 +170,42 @@ const sendAnother = () => {
         <Send :size="18" /> {{ sending ? 'Enviando…' : 'Enviar mensagem' }}
       </button>
     </form>
+
+    <!-- Meus tickets -->
+    <section class="space-y-3">
+      <h2 class="flex items-center gap-2 text-body-sm font-bold text-ink">
+        <MessageSquare :size="16" class="text-ink-subtle" /> Meus tickets
+      </h2>
+
+      <div v-if="ticketsLoading" class="animate-pulse space-y-2.5">
+        <div v-for="i in 2" :key="i" class="h-16 rounded-xl bg-surface-2"></div>
+      </div>
+
+      <div v-else-if="tickets.length" class="space-y-2.5">
+        <router-link
+          v-for="t in tickets"
+          :key="t.id"
+          :to="`/support/${t.id}`"
+          class="group flex items-center gap-3 rounded-xl border border-hairline bg-surface-2 p-4 no-underline transition-colors hover:border-hairline-strong"
+        >
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              <p class="truncate text-body-sm font-bold text-ink">{{ CATEGORY_LABEL[t.category] || 'Suporte' }}</p>
+              <span class="shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-bold" :class="STATUS_META[t.status].cls">
+                {{ STATUS_META[t.status].label }}
+              </span>
+            </div>
+            <p class="mt-0.5 truncate text-caption text-ink-tertiary">{{ t.message }}</p>
+          </div>
+          <span class="shrink-0 text-caption text-ink-tertiary">{{ fmtDate(t.updated_at) }}</span>
+          <ChevronRight :size="16" class="shrink-0 text-ink-tertiary transition-transform group-hover:translate-x-0.5" />
+        </router-link>
+      </div>
+
+      <p v-else class="rounded-xl border border-dashed border-hairline-strong bg-surface-1 px-4 py-6 text-center text-body-sm text-ink-subtle">
+        Você ainda não abriu nenhum ticket.
+      </p>
+    </section>
 
     <!-- Contestação do selo de abandono (regra 1.4) -->
     <div class="space-y-2 rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-5">

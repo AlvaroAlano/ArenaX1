@@ -60,6 +60,13 @@ const loadMessages = async () => {
   }
 }
 
+// Evita duplicar quando o realtime ecoa uma mensagem já presente na lista.
+const pushUnique = (msg: any) => {
+  if (msg?.id && messages.value.some((m) => m.id === msg.id)) return
+  messages.value.push(msg)
+  scrollToBottom()
+}
+
 // 3. Enviar Mensagem
 const sendMessage = async (attachmentUrl: string | null = null) => {
   if (!newMessage.value.trim() && !attachmentUrl) return
@@ -67,15 +74,21 @@ const sendMessage = async (attachmentUrl: string | null = null) => {
 
   sending.value = true
   try {
-    const { error } = await supabase.from('dispute_messages').insert({
-      dispute_id: dispute.value.id,
-      sender_id: authStore.user?.id,
-      message: newMessage.value.trim(),
-      attachment_url: attachmentUrl
-    })
+    // .select() retorna a linha inserida pra append imediato (sender vê na hora).
+    const { data, error } = await supabase
+      .from('dispute_messages')
+      .insert({
+        dispute_id: dispute.value.id,
+        sender_id: authStore.user?.id,
+        message: newMessage.value.trim(),
+        attachment_url: attachmentUrl,
+      })
+      .select('*, sender:sender_id(username)')
+      .single()
 
     if (error) throw error
     newMessage.value = ''
+    pushUnique(data)
   } catch (err) {
     console.error('Erro ao enviar mensagem:', err)
     toast.push('Erro ao enviar mensagem.', 'error')
@@ -114,9 +127,12 @@ const handleFileUpload = async (event: Event) => {
     // Envia como mensagem
     await sendMessage(data.publicUrl)
 
-  } catch (err) {
+  } catch (err: any) {
     console.error('Erro no upload:', err)
-    toast.push('Erro ao enviar anexo.', 'error')
+    // Superfície o motivo real (bucket ausente / RLS) pra facilitar o diagnóstico
+    // em vez de um "Erro ao enviar anexo" genérico.
+    const reason = err?.message || err?.error || ''
+    toast.push(reason ? `Erro ao enviar anexo: ${reason}` : 'Erro ao enviar anexo.', 'error')
   } finally {
     uploading.value = false
     if (fileInput.value) fileInput.value.value = ''
@@ -133,18 +149,15 @@ const setupRealtime = () => {
       'postgres_changes',
       { event: 'INSERT', schema: 'public', table: 'dispute_messages', filter: `dispute_id=eq.${dispute.value.id}` },
       async (payload) => {
-        // Buscar o username para a nova mensagem (já que o trigger Realtime não traz joins automáticos)
+        if (messages.value.some((m) => m.id === payload.new.id)) return
+        // Buscar o username para a nova mensagem (o Realtime não traz joins)
         const { data: userData } = await supabase
           .from('profiles')
           .select('username')
           .eq('id', payload.new.sender_id)
           .single()
 
-        messages.value.push({
-          ...payload.new,
-          sender: userData
-        })
-        scrollToBottom()
+        pushUnique({ ...payload.new, sender: userData })
       }
     )
     .subscribe()

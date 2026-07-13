@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { supabase } from '@/services/supabase'
 import { Mail, Lock, Eye, EyeOff, AlertCircle, LoaderCircle, Swords, Trophy, ShieldCheck, Zap } from '@lucide/vue'
+import ResponsibleGamingNote from '@/components/ui/ResponsibleGamingNote.vue'
 
 const email = ref('')
 const password = ref('')
@@ -286,6 +287,8 @@ const handleResendConfirmation = async () => {
             <Zap :size="14" />
             Acesso rápido (dev) — entrar como jogador de teste
           </button>
+
+          <ResponsibleGamingNote class="mt-6" />
         </div>
 
       </div>

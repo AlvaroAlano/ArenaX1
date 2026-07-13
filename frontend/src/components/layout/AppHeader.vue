@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed top-0 left-0 right-0 z-50 bg-canvas/80 backdrop-blur-lg border-b border-hairline">
+  <header class="fixed top-0 left-0 right-0 z-50 bg-canvas/80 backdrop-blur-lg border-b border-hairline" style="padding-top: env(safe-area-inset-top)">
     <div class="flex items-center justify-between px-6 h-16 md:h-[76px] lg:px-20">
         <router-link to="/" class="flex items-center gap-2.5 no-underline">
             <span class="grid size-8 place-items-center rounded-md bg-primary text-[15px] font-black tracking-tighter text-canvas">X1</span>

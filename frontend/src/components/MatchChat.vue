@@ -38,19 +38,31 @@ const loadMessages = async () => {
   }
 }
 
+// Evita duplicar quando o realtime ecoa uma mensagem que já está na lista
+// (ex.: a própria mensagem que acabei de inserir de forma otimista).
+const pushUnique = (msg: any) => {
+  if (msg?.id && messages.value.some((m) => m.id === msg.id)) return
+  messages.value.push(msg)
+  scrollToBottom()
+}
+
 const sendMessage = async () => {
   if (!newMessage.value.trim()) return
+  const body = newMessage.value.trim()
 
   sending.value = true
   try {
-    const { error } = await supabase.from('challenge_messages').insert({
-      challenge_id: props.challengeId,
-      sender_id: authStore.user?.id,
-      message: newMessage.value.trim(),
-    })
+    // .select() retorna a linha inserida pra append IMEDIATO — o usuário vê a
+    // própria mensagem na hora, sem depender do round-trip do realtime.
+    const { data, error } = await supabase
+      .from('challenge_messages')
+      .insert({ challenge_id: props.challengeId, sender_id: authStore.user?.id, message: body })
+      .select('*, sender:sender_id(username)')
+      .single()
 
     if (error) throw error
     newMessage.value = ''
+    pushUnique(data)
   } catch (err) {
     console.error('Erro ao enviar mensagem:', err)
     toast.push('Erro ao enviar mensagem.', 'error')
@@ -66,14 +78,14 @@ const setupRealtime = () => {
       'postgres_changes',
       { event: 'INSERT', schema: 'public', table: 'challenge_messages', filter: `challenge_id=eq.${props.challengeId}` },
       async (payload) => {
+        if (messages.value.some((m) => m.id === payload.new.id)) return
         const { data: userData } = await supabase
           .from('profiles')
           .select('username')
           .eq('id', payload.new.sender_id)
           .single()
 
-        messages.value.push({ ...payload.new, sender: userData })
-        scrollToBottom()
+        pushUnique({ ...payload.new, sender: userData })
       }
     )
     .subscribe()

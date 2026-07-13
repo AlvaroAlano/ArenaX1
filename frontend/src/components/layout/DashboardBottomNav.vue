@@ -50,17 +50,17 @@ const tabsRight = computed<TabItem[]>(() => [
   <div v-if="isMenuOpen" class="fixed inset-0 z-[9989] md:hidden" @click="closeMenu" aria-hidden="true"></div>
 
   <nav
-    class="pointer-events-none fixed inset-x-0 z-[9990] flex justify-center px-4 md:hidden"
-    style="bottom: calc(1rem + env(safe-area-inset-bottom))"
+    class="fixed inset-x-0 bottom-0 z-[9990] border-t border-hairline-strong bg-surface-1/95 shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.5)] backdrop-blur-xl md:hidden"
+    style="padding-bottom: env(safe-area-inset-bottom)"
   >
     <div
-      class="pointer-events-auto relative flex items-center gap-1 rounded-full border border-hairline-strong bg-surface-1/90 p-2 shadow-card-premium backdrop-blur-xl"
+      class="relative mx-auto flex max-w-lg items-center justify-around gap-1 px-2 py-1.5"
     >
       <!-- Menu do botão criar -->
       <Transition name="create-menu">
         <div
           v-if="isMenuOpen"
-          class="absolute bottom-full left-1/2 mb-4 w-72 -translate-x-1/2 rounded-2xl border border-hairline-strong bg-surface-1 p-2 shadow-card-premium backdrop-blur-xl"
+          class="absolute bottom-full left-1/2 mb-3 w-72 -translate-x-1/2 rounded-2xl border border-hairline-strong bg-surface-1 p-2 shadow-card-premium backdrop-blur-xl"
         >
           <button
             type="button"

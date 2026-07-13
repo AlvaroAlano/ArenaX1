@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import {
-  LayoutDashboard,
   Swords,
-  PlusCircle,
   Award,
   Trophy,
   Wallet,
@@ -14,18 +12,11 @@ import {
   ChevronRight,
   ShieldCheck,
 } from '@lucide/vue'
-import { onMounted } from 'vue'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
-import { useWalletStore } from '@/stores/wallet'
 
 const authStore = useAuthStore()
-const walletStore = useWalletStore()
 const router = useRouter()
-
-onMounted(() => { walletStore.fetchWallet() })
-
-const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 const handleLogout = async () => {
   await supabase.auth.signOut()
@@ -33,11 +24,8 @@ const handleLogout = async () => {
 }
 
 const mainItems = [
-  { to: '/dashboard', icon: LayoutDashboard, label: 'Painel', desc: 'Visão geral da sua conta' },
   { to: '/challenges', icon: Swords, label: 'Desafios', desc: 'Encontre um adversário e prove em campo' },
-  { to: '/create-challenge', icon: PlusCircle, label: 'Criar um Desafio', desc: 'Fecha o valor e desafia', highlight: true },
   { to: '/tournaments', icon: Award, label: 'Torneios', desc: 'Mata-mata com premiação de verdade' },
-  { to: '/create-tournament', icon: Trophy, label: 'Criar Torneio Local', desc: 'Chave grátis com a galera', highlight: true },
   { to: '/ranking', icon: Trophy, label: 'Classificação', desc: 'O ranking nacional é o seu palco' },
 ]
 
@@ -64,20 +52,6 @@ const accountItems = [
         <p class="truncate text-body-sm text-ink-subtle">{{ authStore.user?.email }}</p>
       </div>
     </div>
-
-    <!-- Atalho de saldo -->
-    <router-link
-      to="/wallet"
-      class="flex items-center justify-between rounded-2xl border border-primary/25 bg-primary/[0.06] p-5 no-underline transition-colors hover:border-primary/40"
-    >
-      <div>
-        <p class="text-[10px] font-bold uppercase tracking-wider text-ink-subtle">Saldo total</p>
-        <p class="font-display text-2xl font-black text-ink">{{ walletStore.loaded ? fmtBRL(walletStore.balance + walletStore.lockedBalance) : '···' }}</p>
-      </div>
-      <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-primary text-canvas">
-        <Wallet :size="20" />
-      </span>
-    </router-link>
 
     <!-- Administração (só pra admins) -->
     <section v-if="authStore.isAdmin" class="space-y-2">
@@ -107,15 +81,9 @@ const accountItems = [
           v-for="item in mainItems"
           :key="item.to"
           :to="item.to"
-          class="flex items-center gap-3.5 rounded-xl border p-4 no-underline transition-colors"
-          :class="item.highlight
-            ? 'border-primary/25 bg-primary/[0.06] hover:border-primary/40'
-            : 'border-hairline bg-surface-2 hover:border-hairline-strong'"
+          class="flex items-center gap-3.5 rounded-xl border border-hairline bg-surface-2 p-4 no-underline transition-colors hover:border-hairline-strong"
         >
-          <span
-            class="grid size-10 shrink-0 place-items-center rounded-xl"
-            :class="item.highlight ? 'bg-primary/15 text-primary' : 'bg-surface-3 text-ink-subtle'"
-          >
+          <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-surface-3 text-ink-subtle">
             <component :is="item.icon" :size="19" />
           </span>
           <span class="min-w-0 flex-1">

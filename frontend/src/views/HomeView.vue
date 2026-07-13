@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import {
-  Wallet, ArrowDownToLine, ArrowUpFromLine, Swords, Trophy, Target,
   Star, Plus, History, Receipt, ArrowRight, CalendarDays, Gamepad2,
-  ShieldAlert, Activity, ChevronRight, Clock,
+  ShieldAlert, ChevronRight, Clock, BellRing, Flag, UserPlus,
 } from '@lucide/vue'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
 import { useWalletStore } from '@/stores/wallet'
 import { api } from '@/services/api'
+import { txMeta } from '@/utils/transactions'
 import { vReveal } from '@/composables/useReveal'
 
 const authStore = useAuthStore()
@@ -18,6 +18,7 @@ const MY_ID = authStore.user?.id || null
 /* ── Tipos alinhados ao contrato real do backend (ver challenges.py) ── */
 type ChallengeStatus = 'open' | 'accepted' | 'in_progress' | 'completed' | 'disputed'
 interface ChallengeProfile { username: string; fair_play_rating: number }
+interface JoinRequest { id: string; requester_id: string; status: string; created_at: string }
 interface Challenge {
   id: string
   creator_id: string
@@ -26,11 +27,14 @@ interface Challenge {
   platform: string
   game: string
   status: ChallengeStatus
+  creator_result: string | null
+  opponent_result: string | null
   winner_id: string | null
   settlement_release_at: string | null
   created_at: string
   creator_profile: ChallengeProfile
   opponent_profile: ChallengeProfile | null
+  join_requests?: JoinRequest[]
 }
 
 const profile = ref<any>(null)
@@ -43,7 +47,77 @@ const loading = ref(true)
 // painel aparece assim que estiver pronto, sem esperar o backend acordar.
 const challengesLoading = ref(true)
 
+/* ═══════════════════════════════════════════════════════════════════════
+   MOCK TEMPORÁRIO (só visual) — simula um usuário que já usa o app há um
+   tempo: ações pendentes, desafios ativos, histórico, estatísticas e extrato.
+   NÃO fala com o backend. Para desligar: troque USE_MOCK para false (ou
+   remova este bloco + a ramificação no início de loadUserData).
+   ═══════════════════════════════════════════════════════════════════════ */
+const USE_MOCK = false
+const mockIso = (minsAgo: number) => new Date(Date.now() - minsAgo * 60_000).toISOString()
+
+function buildMockChallenges(): Challenge[] {
+  const me = MY_ID || 'mock-me'
+  const prof = (username: string, r = 4.5): ChallengeProfile => ({ username, fair_play_rating: r })
+  const list: Challenge[] = [
+    // Precisa de você → reportar resultado (sou criador, in_progress, meu result nulo)
+    { id: 'mk-1', creator_id: me, opponent_id: 'u-rafa', bet_amount: 20, platform: 'PlayStation', game: 'EA FC 25',
+      status: 'in_progress', creator_result: null, opponent_result: 'loss', winner_id: null, settlement_release_at: null,
+      created_at: mockIso(40), creator_profile: prof('Você', 4.7), opponent_profile: prof('Rafa_10', 4.2), join_requests: [] },
+    // Precisa de você → 2 solicitações de entrada (sou criador, open)
+    { id: 'mk-2', creator_id: me, opponent_id: null, bet_amount: 10, platform: 'PC', game: 'EA FC 25',
+      status: 'open', creator_result: null, opponent_result: null, winner_id: null, settlement_release_at: null,
+      created_at: mockIso(18), creator_profile: prof('Você', 4.7), opponent_profile: null,
+      join_requests: [ { id: 'jr-1', requester_id: 'u-bia', status: 'pending', created_at: mockIso(12) },
+                       { id: 'jr-2', requester_id: 'u-leo', status: 'pending', created_at: mockIso(6) } ] },
+    // Desafio ativo → confirmar presença (sou oponente, accepted)
+    { id: 'mk-3', creator_id: 'u-gustavo', opponent_id: me, bet_amount: 50, platform: 'PlayStation', game: 'EA FC 25',
+      status: 'accepted', creator_result: null, opponent_result: null, winner_id: null, settlement_release_at: null,
+      created_at: mockIso(55), creator_profile: prof('Gustavo_PS', 4.9), opponent_profile: prof('Você', 4.7), join_requests: [] },
+  ]
+  // Concluídos → alimentam estatísticas + histórico
+  const done: Array<[string, number, 'win' | 'loss']> = [
+    ['Rafa_10', 20, 'win'], ['MK_Silva', 15, 'win'], ['Duda99', 30, 'loss'], ['Leo_ZR', 10, 'win'],
+    ['Bia_star', 25, 'win'], ['ZéDaGol', 40, 'loss'], ['TioRicardo', 10, 'win'], ['PH_Santos', 20, 'win'],
+  ]
+  done.forEach(([name, bet, res], i) => {
+    const iWon = res === 'win'
+    list.push({
+      id: `mk-done-${i}`, creator_id: me, opponent_id: `u-${i}`, bet_amount: bet, platform: i % 2 ? 'PC' : 'PlayStation',
+      game: 'EA FC 25', status: 'completed', creator_result: res, opponent_result: iWon ? 'loss' : 'win',
+      winner_id: iWon ? me : `u-${i}`, settlement_release_at: null,
+      created_at: mockIso(120 + i * 90), creator_profile: prof('Você', 4.7), opponent_profile: prof(name), join_requests: [] })
+  })
+  // Prêmio retido (chip "libera em Xd") e uma disputa em aberto
+  list.push({ id: 'mk-held', creator_id: me, opponent_id: 'u-held', bet_amount: 30, platform: 'PC', game: 'EA FC 25',
+    status: 'completed', creator_result: 'win', opponent_result: 'loss', winner_id: me,
+    settlement_release_at: new Date(Date.now() + 2 * 86_400_000).toISOString(),
+    created_at: mockIso(60), creator_profile: prof('Você', 4.7), opponent_profile: prof('NovatoX'), join_requests: [] })
+  list.push({ id: 'mk-disp', creator_id: 'u-disp', opponent_id: me, bet_amount: 15, platform: 'PlayStation', game: 'EA FC 25',
+    status: 'disputed', creator_result: 'win', opponent_result: 'win', winner_id: null, settlement_release_at: null,
+    created_at: mockIso(200), creator_profile: prof('Contestador'), opponent_profile: prof('Você', 4.7), join_requests: [] })
+  return list
+}
+
+function buildMockTransactions(): any[] {
+  return [
+    { id: 'tx-1', type: 'challenge_win', amount: 18.40, created_at: mockIso(38) },
+    { id: 'tx-2', type: 'bet_freeze', amount: 20, created_at: mockIso(42) },
+    { id: 'tx-3', type: 'deposit', amount: 50, created_at: mockIso(180) },
+    { id: 'tx-4', type: 'bet_refund', amount: 10, created_at: mockIso(320) },
+    { id: 'tx-5', type: 'withdraw', amount: 30, created_at: mockIso(1500) },
+  ]
+}
+
 const loadUserData = async () => {
+  if (USE_MOCK) {
+    profile.value = { username: 'Alano', fair_play_rating: 4.7, main_platform: 'PC', ea_id: 'Alvaroalano' }
+    challenges.value = buildMockChallenges()
+    transactions.value = buildMockTransactions()
+    loading.value = false
+    challengesLoading.value = false
+    return
+  }
   if (!authStore.user) return
   loading.value = true
   challengesLoading.value = true
@@ -108,7 +182,6 @@ const totalMatches = computed(() => challenges.value.filter(c => c.status === 'c
 const wins = computed(() => challenges.value.filter(c => c.status === 'completed' && c.winner_id === MY_ID).length)
 const losses = computed(() => totalMatches.value - wins.value)
 const winRate = computed(() => totalMatches.value ? Math.round((wins.value / totalMatches.value) * 100) : 0)
-const netWins = computed(() => wins.value - losses.value)
 const rating = computed(() => profile.value?.fair_play_rating ?? 5.0)
 const ratingLabel = computed(() => {
   const r = rating.value
@@ -116,13 +189,6 @@ const ratingLabel = computed(() => {
   if (r >= 3.5) return 'Boa reputação'
   if (r >= 2.5) return 'Reputação regular'
   return 'Reputação em risco'
-})
-const ratingColor = computed(() => {
-  const r = rating.value
-  if (r >= 4.5) return 'text-accent'
-  if (r >= 3.5) return 'text-emerald-400'
-  if (r >= 2.5) return 'text-amber-400'
-  return 'text-red-400'
 })
 const ratingIconClass = computed(() => {
   const r = rating.value
@@ -132,11 +198,6 @@ const ratingIconClass = computed(() => {
   return 'bg-red-400/10 text-red-400'
 })
 
-/* ── Carteira ── */
-const balance = computed(() => walletStore.balance)
-const locked = computed(() => walletStore.lockedBalance)
-const totalFunds = computed(() => balance.value + locked.value)
-const availablePct = computed(() => totalFunds.value > 0 ? (balance.value / totalFunds.value) * 100 : 100)
 const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 /* ── Desafios ── */
@@ -172,6 +233,46 @@ const opponentName = (c: Challenge) => {
   return c.creator_profile.username
 }
 
+/* ── Ações pendentes (banner "Precisa de você") ──────────────────────────
+   Deriva 100% do payload de /my-challenges (já embute join_requests). Duas
+   ações time-sensitive, ambas resolvidas dentro da tela da partida (/match):
+   1. Reportar resultado: desafio 'in_progress' onde o MEU lado ainda não
+      reportou (fn_report_challenge_result exige in_progress + meu *_result
+      nulo — ver 26_match_settlement_hold.sql).
+   2. Solicitações de entrada: sou o criador e há pedido 'pending' na fila. */
+type PendingKind = 'report' | 'join'
+interface PendingAction { key: string; kind: PendingKind; title: string; subtitle: string; to: string }
+
+const pendingActions = computed<PendingAction[]>(() => {
+  const out: PendingAction[] = []
+  for (const c of challenges.value) {
+    const iAmCreator = c.creator_id === MY_ID
+    const myResult = iAmCreator ? c.creator_result : c.opponent_result
+    if (c.status === 'in_progress' && !myResult) {
+      out.push({
+        key: `report-${c.id}`,
+        kind: 'report',
+        title: 'Reportar resultado',
+        subtitle: `${c.game} · vs ${opponentName(c)}`,
+        to: `/match/${c.id}`,
+      })
+    }
+    if (iAmCreator) {
+      const n = (c.join_requests || []).filter(r => r.status === 'pending').length
+      if (n > 0) {
+        out.push({
+          key: `join-${c.id}`,
+          kind: 'join',
+          title: n === 1 ? '1 solicitação de entrada' : `${n} solicitações de entrada`,
+          subtitle: `${c.game} · aguardando sua aprovação`,
+          to: `/match/${c.id}`,
+        })
+      }
+    }
+  }
+  return out
+})
+
 const statusMeta: Record<ChallengeStatus, { label: string; dot: string; text: string }> = {
   open: { label: 'Aberto', dot: 'bg-semantic-success', text: 'text-semantic-success' },
   accepted: { label: 'Confirmar presença', dot: 'bg-amber-400', text: 'text-amber-400' },
@@ -196,18 +297,6 @@ const heldDaysLeft = (c: Challenge): number | null => {
   return ms > 0 ? Math.max(1, Math.ceil(ms / 86_400_000)) : null
 }
 
-/* Transações: rótulo + sinal (cobre nomes antigos e novos do backend) */
-const txMeta = (type: string): { label: string; positive: boolean } => {
-  switch (type) {
-    case 'deposit': return { label: 'Depósito', positive: true }
-    case 'challenge_win': case 'win_prize': return { label: 'Prêmio', positive: true }
-    case 'withdraw': return { label: 'Saque', positive: false }
-    case 'challenge_loss': return { label: 'Derrota', positive: false }
-    case 'bet_freeze': return { label: 'Valor retido', positive: false }
-    case 'rake': return { label: 'Comissão', positive: false }
-    default: return { label: type, positive: false }
-  }
-}
 </script>
 
 <template>
@@ -236,7 +325,16 @@ const txMeta = (type: string): { label: string; positive: boolean } => {
             {{ initials }}
           </div>
           <div>
-            <h1 class="font-display text-2xl font-bold text-ink sm:text-3xl">{{ greeting }}, {{ displayName }}</h1>
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+              <h1 class="font-display text-2xl font-bold text-ink sm:text-3xl">{{ greeting }}, {{ displayName }}</h1>
+              <span
+                :title="ratingLabel"
+                class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-body-sm font-bold tabular-nums transition-colors"
+                :class="ratingIconClass"
+              >
+                <Star :size="14" fill="currentColor" /> {{ rating.toFixed(1) }}
+              </span>
+            </div>
             <p class="mt-0.5 flex items-center gap-1.5 text-body-sm text-ink-subtle">
               <CalendarDays :size="14" /> {{ todayLabel }}
             </p>
@@ -252,124 +350,44 @@ const txMeta = (type: string): { label: string; positive: boolean } => {
         </div>
       </header>
 
-      <!-- Carteira + Reputação -->
-      <section class="grid gap-5 lg:grid-cols-3">
-        <!-- Carteira (destaque financeiro) -->
-        <div
-          v-reveal
-          class="relative overflow-hidden rounded-2xl border border-hairline bg-surface-1 p-6 lg:col-span-2 lg:p-7"
-        >
-          <div class="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-primary/10 blur-3xl"></div>
-
-          <div class="relative flex items-start justify-between">
-            <div>
-              <p class="flex items-center gap-2 text-caption font-semibold uppercase tracking-widest text-ink-tertiary">
-                <Wallet :size="14" /> Saldo disponível
-              </p>
-              <p class="mt-2 font-display text-4xl font-bold tabular-nums text-ink lg:text-5xl">{{ fmtBRL(balance) }}</p>
-            </div>
-            <span
-              v-if="locked > 0"
-              class="hidden shrink-0 items-center gap-1.5 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1.5 text-caption font-semibold text-amber-400 sm:inline-flex"
-            >
-              {{ fmtBRL(locked) }} em jogo
+      <!-- Ações pendentes ("Precisa de você") — só aparece quando há algo a
+           resolver; nada de placeholder oco quando a fila está limpa. -->
+      <section v-if="pendingActions.length" class="space-y-3">
+        <h2 class="flex items-center gap-2 text-xl font-bold text-ink">
+          <span class="grid size-6 place-items-center rounded-md bg-amber-400/15 text-amber-400"><BellRing :size="14" /></span>
+          Precisa de você
+        </h2>
+        <div class="space-y-2.5">
+          <router-link
+            v-for="a in pendingActions"
+            :key="a.key"
+            :to="a.to"
+            class="group flex items-center gap-4 rounded-2xl border border-amber-400/30 bg-amber-400/[0.06] p-4 no-underline transition-all hover:border-amber-400/50 hover:bg-amber-400/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50"
+          >
+            <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-amber-400/15 text-amber-400">
+              <component :is="a.kind === 'report' ? Flag : UserPlus" :size="20" />
             </span>
-          </div>
-
-          <!-- Barra disponível / em jogo -->
-          <div class="relative mt-6">
-            <div class="flex h-2 w-full overflow-hidden rounded-full bg-surface-3">
-              <div class="bg-semantic-success transition-[width] duration-500" :style="{ width: availablePct + '%' }"></div>
-              <div class="bg-amber-500 transition-[width] duration-500" :style="{ width: (100 - availablePct) + '%' }"></div>
+            <div class="min-w-0 flex-1">
+              <p class="font-semibold text-ink">{{ a.title }}</p>
+              <p class="mt-0.5 truncate text-caption text-ink-tertiary">{{ a.subtitle }}</p>
             </div>
-            <div class="mt-2.5 flex items-center gap-4 text-caption text-ink-subtle">
-              <span class="inline-flex items-center gap-1.5">
-                <span class="size-2 rounded-full bg-semantic-success"></span> Disponível
-              </span>
-              <span v-if="locked > 0" class="inline-flex items-center gap-1.5">
-                <span class="size-2 rounded-full bg-amber-500"></span> Em jogo
-              </span>
-              <span class="ml-auto tabular-nums">Total: {{ fmtBRL(totalFunds) }}</span>
-            </div>
-          </div>
-
-          <!-- Ações -->
-          <div class="relative mt-6 flex flex-col gap-3 sm:flex-row">
-            <router-link
-              to="/wallet"
-              class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary py-3 text-button font-semibold text-canvas no-underline shadow-glow-primary transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
-            >
-              <ArrowDownToLine :size="18" /> Depositar
-            </router-link>
-            <router-link
-              to="/wallet?tab=withdraw"
-              class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-hairline-strong bg-surface-2 py-3 text-button font-semibold text-ink no-underline transition-colors hover:bg-surface-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
-            >
-              <ArrowUpFromLine :size="18" /> Sacar
-            </router-link>
-          </div>
-        </div>
-
-        <!-- Reputação -->
-        <div v-reveal="'80ms'" class="flex flex-col justify-between rounded-2xl border border-hairline bg-surface-1 p-6">
-          <div class="flex items-start justify-between">
-            <p class="text-caption font-semibold uppercase tracking-widest text-ink-tertiary">Reputação</p>
-            <span class="grid size-9 place-items-center rounded-lg transition-colors" :class="ratingIconClass">
-              <Star :size="18" fill="currentColor" />
+            <span class="flex shrink-0 items-center gap-1 text-caption font-semibold text-amber-400">
+              Resolver <ChevronRight :size="15" class="transition-transform group-hover:translate-x-0.5" />
             </span>
-          </div>
-          <div class="mt-4">
-            <p class="font-display text-4xl font-bold tabular-nums text-ink">
-              {{ rating.toFixed(1) }}<span class="text-xl text-ink-tertiary">/5.0</span>
-            </p>
-            <p class="mt-1 text-body-sm font-medium transition-colors" :class="ratingColor">{{ ratingLabel }}</p>
-          </div>
-          <div class="mt-5 flex items-center justify-between border-t border-hairline pt-4">
-            <span class="text-caption text-ink-subtle">Saldo de partidas</span>
-            <span class="font-bold tabular-nums" :class="netWins > 0 ? 'text-semantic-success' : netWins < 0 ? 'text-semantic-error' : 'text-ink-subtle'">
-              {{ netWins > 0 ? '+' : '' }}{{ netWins }}
-            </span>
-          </div>
-        </div>
-      </section>
-
-      <!-- KPIs -->
-      <section class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <div v-reveal class="rounded-2xl border border-hairline bg-surface-1 p-5">
-          <span class="grid size-9 place-items-center rounded-lg bg-primary/10 text-primary"><Activity :size="18" /></span>
-          <p class="mt-3 font-display text-2xl font-bold tabular-nums text-ink">{{ totalMatches }}</p>
-          <p class="text-caption text-ink-tertiary">Partidas jogadas</p>
-        </div>
-        <div v-reveal="'60ms'" class="rounded-2xl border border-hairline bg-surface-1 p-5">
-          <span class="grid size-9 place-items-center rounded-lg bg-semantic-success/10 text-semantic-success"><Trophy :size="18" /></span>
-          <p class="mt-3 font-display text-2xl font-bold tabular-nums text-semantic-success">{{ wins }}</p>
-          <p class="text-caption text-ink-tertiary">Vitórias</p>
-        </div>
-        <div v-reveal="'120ms'" class="rounded-2xl border border-hairline bg-surface-1 p-5">
-          <span class="grid size-9 place-items-center rounded-lg bg-semantic-error/10 text-semantic-error"><Swords :size="18" /></span>
-          <p class="mt-3 font-display text-2xl font-bold tabular-nums text-ink">{{ losses }}</p>
-          <p class="text-caption text-ink-tertiary">Derrotas</p>
-        </div>
-        <div v-reveal="'180ms'" class="rounded-2xl border border-hairline bg-surface-1 p-5">
-          <span class="grid size-9 place-items-center rounded-lg bg-accent/10 text-accent"><Target :size="18" /></span>
-          <p class="mt-3 font-display text-2xl font-bold tabular-nums text-ink">{{ winRate }}%</p>
-          <p class="text-caption text-ink-tertiary">Taxa de vitória</p>
-          <div class="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-surface-3">
-            <div class="h-full rounded-full bg-accent transition-[width] duration-500" :style="{ width: winRate + '%' }"></div>
-          </div>
+          </router-link>
         </div>
       </section>
 
       <!-- Desafios ativos -->
       <section class="space-y-4">
-        <div class="flex items-center justify-between">
+        <div v-if="challengesLoading || activeChallenges.length" class="flex items-center justify-between">
           <div>
             <h2 class="text-xl font-bold text-ink">Desafios ativos</h2>
             <p class="mt-0.5 text-body-sm text-ink-subtle">Suas partidas em aberto e ao vivo.</p>
           </div>
           <router-link
             to="/create-challenge"
-            class="inline-flex items-center gap-2 rounded-lg border border-hairline bg-surface-2 px-4 py-2 text-body-sm font-semibold text-ink no-underline transition-colors hover:bg-surface-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+            class="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg border border-hairline bg-surface-2 px-4 py-2 text-body-sm font-semibold text-ink no-underline transition-colors hover:bg-surface-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
           >
             <Plus :size="16" /> Novo desafio
           </router-link>
@@ -406,17 +424,41 @@ const txMeta = (type: string): { label: string; positive: boolean } => {
           </router-link>
         </div>
 
-        <!-- Vazio -->
-        <div v-else class="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-hairline-strong bg-surface-1 py-14 text-center">
-          <span class="grid size-14 place-items-center rounded-2xl bg-surface-2 text-ink-tertiary"><Swords :size="26" /></span>
-          <p class="font-semibold text-ink">Nenhum desafio ativo</p>
-          <p class="max-w-xs text-body-sm text-ink-subtle">Tá esperando o quê? Abre um desafio e mostra em campo quem manda.</p>
-          <router-link
-            to="/create-challenge"
-            class="mt-1 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-body-sm font-semibold text-canvas no-underline shadow-glow-primary transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
-          >
-            <Plus :size="16" /> Criar desafio
-          </router-link>
+        <!-- Vazio: colapsa num CTA compacto de uma linha em vez de um bloco
+             tracejado grande — só "pesa" na tela quando há desafio de verdade. -->
+        <router-link
+          v-else
+          to="/create-challenge"
+          class="group flex items-center gap-4 rounded-2xl border border-hairline bg-surface-1 p-4 no-underline transition-all hover:border-primary/40 hover:bg-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+        >
+          <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+            <Plus :size="22" />
+          </span>
+          <div class="min-w-0 flex-1">
+            <p class="font-semibold text-ink">Criar um desafio</p>
+            <p class="mt-0.5 truncate text-caption text-ink-tertiary">Sem desafios ativos. Abre um e mostra em campo quem manda.</p>
+          </div>
+          <ChevronRight :size="18" class="shrink-0 text-ink-tertiary transition-transform group-hover:translate-x-0.5" />
+        </router-link>
+      </section>
+
+      <!-- Estatísticas (faixa compacta — o retrospecto detalhado vive no Perfil) -->
+      <section v-reveal class="flex items-stretch divide-x divide-hairline overflow-hidden rounded-2xl border border-hairline bg-surface-1">
+        <div class="flex-1 px-3 py-3.5 text-center sm:px-4">
+          <p class="font-display text-xl font-bold tabular-nums text-ink sm:text-2xl">{{ totalMatches }}</p>
+          <p class="mt-0.5 text-caption text-ink-tertiary">Partidas</p>
+        </div>
+        <div class="flex-1 px-3 py-3.5 text-center sm:px-4">
+          <p class="font-display text-xl font-bold tabular-nums text-semantic-success sm:text-2xl">{{ wins }}</p>
+          <p class="mt-0.5 text-caption text-ink-tertiary">Vitórias</p>
+        </div>
+        <div class="flex-1 px-3 py-3.5 text-center sm:px-4">
+          <p class="font-display text-xl font-bold tabular-nums text-ink sm:text-2xl">{{ losses }}</p>
+          <p class="mt-0.5 text-caption text-ink-tertiary">Derrotas</p>
+        </div>
+        <div class="flex-1 px-3 py-3.5 text-center sm:px-4">
+          <p class="font-display text-xl font-bold tabular-nums text-accent sm:text-2xl">{{ winRate }}%</p>
+          <p class="mt-0.5 text-caption text-ink-tertiary">Taxa</p>
         </div>
       </section>
 
@@ -434,26 +476,34 @@ const txMeta = (type: string): { label: string; positive: boolean } => {
             <div v-for="i in 3" :key="i" class="h-9 rounded-lg bg-surface-2"></div>
           </div>
           <div v-else-if="historyChallenges.length" class="divide-y divide-hairline">
-            <div v-for="c in historyChallenges" :key="c.id" class="flex items-center justify-between gap-3 px-5 py-3.5">
+            <router-link
+              v-for="c in historyChallenges"
+              :key="c.id"
+              :to="`/match/${c.id}`"
+              class="group flex items-center justify-between gap-3 px-5 py-3.5 no-underline transition-colors hover:bg-surface-2"
+            >
               <div class="min-w-0">
                 <p class="truncate text-body-sm font-medium text-ink">{{ c.game }} · vs {{ opponentName(c) }}</p>
                 <p class="text-caption text-ink-tertiary">{{ timeAgo(c.created_at) }}</p>
               </div>
-              <div class="shrink-0 text-right">
-                <p class="text-body-sm font-bold tabular-nums" :class="challengeResult(c).tone">
-                  <template v-if="c.status === 'disputed'">
-                    <ShieldAlert :size="14" class="mr-0.5 inline" />Em disputa
-                  </template>
-                  <template v-else>
-                    {{ challengeResult(c).amount > 0 ? '+' : '' }}{{ fmtBRL(challengeResult(c).amount) }}
-                  </template>
-                </p>
-                <p class="text-caption" :class="challengeResult(c).tone">{{ challengeResult(c).label }}</p>
-                <p v-if="heldDaysLeft(c)" class="mt-0.5 inline-flex items-center gap-1 rounded-full bg-amber-400/10 px-1.5 py-0.5 text-[10px] font-semibold text-amber-500">
-                  <Clock :size="9" /> libera em {{ heldDaysLeft(c) }}d
-                </p>
+              <div class="flex shrink-0 items-center gap-2">
+                <div class="text-right">
+                  <p class="text-body-sm font-bold tabular-nums" :class="challengeResult(c).tone">
+                    <template v-if="c.status === 'disputed'">
+                      <ShieldAlert :size="14" class="mr-0.5 inline" />Em disputa
+                    </template>
+                    <template v-else>
+                      {{ challengeResult(c).amount > 0 ? '+' : '' }}{{ fmtBRL(challengeResult(c).amount) }}
+                    </template>
+                  </p>
+                  <p class="text-caption" :class="challengeResult(c).tone">{{ challengeResult(c).label }}</p>
+                  <p v-if="heldDaysLeft(c)" class="mt-0.5 inline-flex items-center gap-1 rounded-full bg-amber-400/10 px-1.5 py-0.5 text-[10px] font-semibold text-amber-500">
+                    <Clock :size="9" /> libera em {{ heldDaysLeft(c) }}d
+                  </p>
+                </div>
+                <ChevronRight :size="16" class="shrink-0 text-ink-tertiary transition-transform group-hover:translate-x-0.5" />
               </div>
-            </div>
+            </router-link>
           </div>
           <div v-else class="flex flex-1 flex-col items-center justify-center gap-2 py-12 text-center">
             <History :size="30" class="text-ink-tertiary" />

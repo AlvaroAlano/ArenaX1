@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { Wallet } from '@lucide/vue'
 import DashboardSidebar from '@/components/layout/DashboardSidebar.vue'
 import DashboardBottomNav from '@/components/layout/DashboardBottomNav.vue'
@@ -7,7 +8,12 @@ import NotificationBell from '@/components/ui/NotificationBell.vue'
 import { useWalletStore } from '@/stores/wallet'
 
 const walletStore = useWalletStore()
+const route = useRoute()
 onMounted(() => { walletStore.fetchWallet() })
+
+// Logo = "subir um nível": no dashboard (home do painel) leva pra landing
+// pública; em qualquer outra tela do painel, volta pro dashboard.
+const logoTo = computed(() => route.path === '/dashboard' ? '/' : '/dashboard')
 
 const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 </script>
@@ -16,12 +22,15 @@ const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', cur
   <div class="flex min-h-screen text-ink font-display overflow-x-hidden">
 
     <!-- Mobile Header (sem hambúrguer — navegação mobile é via bottom nav + tela /menu) -->
-    <div class="md:hidden fixed top-0 left-0 right-0 z-50 bg-surface-1/90 backdrop-blur border-b border-hairline">
+    <!-- padding-top do safe-area: no iPhone (notch/Dynamic Island) o header
+         fixo ficava por baixo do relógio/bateria; o env() empurra o conteúdo
+         pra baixo e o fundo preenche a faixa do topo. -->
+    <div class="md:hidden fixed top-0 left-0 right-0 z-50 bg-surface-1/90 backdrop-blur border-b border-hairline" style="padding-top: env(safe-area-inset-top)">
       <div class="flex items-center justify-between px-4 h-14">
-          <span class="flex items-center gap-2">
+          <router-link :to="logoTo" class="flex items-center gap-2 no-underline">
             <span class="grid size-7 place-items-center rounded-md bg-primary text-xs font-black tracking-tighter text-canvas">X1</span>
             <span class="font-display text-lg font-black tracking-tight text-ink">ARENA<span class="text-primary">X1</span></span>
-          </span>
+          </router-link>
           <div class="flex items-center gap-2.5">
             <router-link
               to="/wallet"
@@ -46,17 +55,17 @@ const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', cur
          barra fina fazia o Chrome/Android reservar aquele espaço físico em
          vez de sobrepor o conteúdo, empurrando tudo pra esquerda em
          qualquer tela alta o bastante pra rolar (mais visível no Menu). -->
-    <!-- 104px = 80px do rodapé flutuante (66px de altura + 14px de distância
-         da borda, medido de verdade em runtime) + ~24px de respiro visual —
-         o valor antigo (5rem = 70px) ficava 10px curto e cortava o último
-         item em páginas com conteúdo até o fim (ex.: Transações na Home). -->
+    <!-- 80px = ~62px da barra fixa inferior (py-1.5 + botão de 50px, colada na
+         base) + ~18px de respiro visual. A barra ainda adiciona o
+         env(safe-area-inset-bottom) por dentro dela, e o env() abaixo cobre
+         essa faixa; assim o último item nunca fica atrás da barra. -->
     <!-- h-dvh (não h-screen): 100vh mede contra o viewport com a barra de
          endereço recolhida, mas no load ela ainda está visível — como quem
          rola é esse <main> (não a página), o browser nunca ganha o gesto de
          scroll no documento que recolheria a barra, e o fim do conteúdo
          (ex.: tabela do Ranking) fica preso atrás dela. dvh acompanha o
          viewport visível de verdade. -->
-    <main class="flex-1 flex flex-col relative overflow-y-auto overflow-x-hidden h-dvh custom-scrollbar pt-14 md:pt-0 pb-[calc(104px+env(safe-area-inset-bottom))] md:pb-0">
+    <main class="flex-1 flex flex-col relative overflow-y-auto overflow-x-hidden h-dvh custom-scrollbar pt-[calc(3.5rem+env(safe-area-inset-top))] md:pt-0 pb-[calc(80px+env(safe-area-inset-bottom))] md:pb-0">
         <router-view v-slot="{ Component, route }">
             <transition name="page" mode="out-in">
                 <component :is="Component" :key="route.path" />

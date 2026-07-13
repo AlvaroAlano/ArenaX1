@@ -26,6 +26,7 @@
     </div>
     <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-hairline flex flex-col md:flex-row items-center justify-between gap-4">
         <p class="text-xs text-ink-tertiary order-last md:order-first">&copy; 2026 ArenaX1.</p>
+        <ResponsibleGamingNote />
         <div class="flex items-center gap-3">
             <div class="flex items-center gap-1.5 bg-surface-2 border border-hairline rounded px-2.5 py-1">
                 <Lock :size="14" class="text-semantic-success" />
@@ -37,4 +38,5 @@
 </template>
 <script setup lang="ts">
 import { Lock } from '@lucide/vue'
+import ResponsibleGamingNote from '@/components/ui/ResponsibleGamingNote.vue'
 </script>

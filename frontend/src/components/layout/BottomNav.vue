@@ -18,12 +18,10 @@ const tabs = computed<TabItem[]>(() => [
 
 <template>
   <nav
-    class="pointer-events-none fixed inset-x-0 z-[9990] flex justify-center px-4 md:hidden"
-    style="bottom: calc(1rem + env(safe-area-inset-bottom))"
+    class="fixed inset-x-0 bottom-0 z-[9990] border-t border-hairline-strong bg-surface-1/95 shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.5)] backdrop-blur-xl md:hidden"
+    style="padding-bottom: env(safe-area-inset-bottom)"
   >
-    <div
-      class="pointer-events-auto flex items-center gap-1 rounded-full border border-hairline-strong bg-surface-1/90 p-1.5 shadow-card-premium backdrop-blur-xl"
-    >
+    <div class="relative mx-auto flex max-w-lg items-center justify-around gap-1 px-2 py-1.5">
       <ExpandableTabs :tabs="tabs" />
     </div>
   </nav>

@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
 import { useToastStore } from '@/stores/toast'
 import { api } from '@/services/api'
+import { txMeta } from '@/utils/transactions'
+import ResponsibleGamingNote from '@/components/ui/ResponsibleGamingNote.vue'
 
 const authStore = useAuthStore()
 const toast = useToastStore()
@@ -13,6 +15,12 @@ const activeTab = ref<'deposit' | 'withdraw'>(route.query.tab === 'withdraw' ? '
 const wallet = ref<any>(null)
 const transactions = ref<any[]>([])
 const loading = ref(true)
+
+// Divisão do saldo: disponível (livre p/ jogar/sacar) vs. em jogo (congelado)
+const availableBal = computed(() => wallet.value?.balance ?? 0)
+const lockedBal = computed(() => wallet.value?.locked_balance ?? 0)
+const totalBal = computed(() => availableBal.value + lockedBal.value)
+const availablePct = computed(() => totalBal.value > 0 ? (availableBal.value / totalBal.value) * 100 : 100)
 
 // Formulário de Depósito
 const depositAmount = ref<number | null>(null)
@@ -30,21 +38,6 @@ const withdrawSuccess = ref('')
 const selectAmount = (value: number) => {
   depositAmount.value = value
 }
-
-// Rótulo/sinal por tipo real de transação (ver backend/04_atomic_wallet_functions.sql
-// e backend/07_online_tournaments.sql) — cobre desafios e torneios online, não só
-// depósito/saque.
-const TX_META: Record<string, { label: string; positive: boolean }> = {
-  deposit: { label: 'Depósito', positive: true },
-  withdraw: { label: 'Saque', positive: false },
-  bet_freeze: { label: 'Valor/Inscrição', positive: false },
-  bet_refund: { label: 'Reembolso', positive: true },
-  challenge_win: { label: 'Vitória no X1', positive: true },
-  challenge_loss: { label: 'Derrota no X1', positive: false },
-  tournament_prize: { label: 'Prêmio de Torneio', positive: true },
-  win_prize: { label: 'Prêmio', positive: true },
-}
-const txMeta = (type: string) => TX_META[type] || { label: 'Movimentação', positive: false }
 
 // Carregar dados iniciais
 const loadData = async () => {
@@ -252,22 +245,38 @@ onUnmounted(() => {
     <div class="lg:col-span-2 space-y-6">
       
       <!-- Seção Card de Saldo Atual -->
-      <div class="bg-surface-1 border border-hairline p-8 rounded-lg shadow-none flex justify-between items-center relative overflow-hidden group">
-        
-        <div>
-          <h2 class="text-ink-subtle text-caption font-semibold uppercase tracking-wider mb-2">Saldo Disponível para Jogo</h2>
-          <div v-if="loading" class="h-10 w-32 bg-[#262b35]  rounded-lg"></div>
-          <div v-else class="text-4xl font-semibold text-ink">
-            R$ {{ wallet?.balance?.toFixed(2) || '0.00' }}
+      <div class="bg-surface-1 border border-hairline p-8 rounded-lg shadow-none relative overflow-hidden group">
+
+        <div class="flex justify-between items-start">
+          <div>
+            <h2 class="text-ink-subtle text-caption font-semibold uppercase tracking-wider mb-2">Saldo Disponível para Jogo</h2>
+            <div v-if="loading" class="h-10 w-32 bg-[#262b35]  rounded-lg"></div>
+            <div v-else class="text-4xl font-semibold text-ink">
+              R$ {{ availableBal.toFixed(2) }}
+            </div>
           </div>
-          <p class="text-caption text-ink-subtle mt-2">
-            Saldo congelado: R$ {{ wallet?.locked_balance?.toFixed(2) || '0.00' }}
-          </p>
+          <div class="h-12 w-12 rounded-lg bg-primary flex items-center justify-center shadow-none shadow-none/20 shrink-0">
+            <svg class="h-6 w-6 text-canvas" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
         </div>
-        <div class="h-12 w-12 rounded-lg bg-primary flex items-center justify-center shadow-none shadow-none/20">
-          <svg class="h-6 w-6 text-canvas" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+
+        <!-- Barra disponível / em jogo -->
+        <div v-if="!loading" class="mt-6">
+          <div class="flex h-2 w-full overflow-hidden rounded-full bg-surface-3">
+            <div class="bg-semantic-success transition-[width] duration-500" :style="{ width: availablePct + '%' }"></div>
+            <div class="bg-amber-500 transition-[width] duration-500" :style="{ width: (100 - availablePct) + '%' }"></div>
+          </div>
+          <div class="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-caption text-ink-subtle">
+            <span class="inline-flex items-center gap-1.5">
+              <span class="size-2 rounded-full bg-semantic-success"></span> Disponível: <span class="tabular-nums text-ink">R$ {{ availableBal.toFixed(2) }}</span>
+            </span>
+            <span v-if="lockedBal > 0" class="inline-flex items-center gap-1.5">
+              <span class="size-2 rounded-full bg-amber-500"></span> Em jogo: <span class="tabular-nums text-ink">R$ {{ lockedBal.toFixed(2) }}</span>
+            </span>
+            <span class="ml-auto tabular-nums">Total: R$ {{ totalBal.toFixed(2) }}</span>
+          </div>
         </div>
       </div>
 
@@ -308,7 +317,9 @@ onUnmounted(() => {
           <!-- CONTEÚDO DE DEPÓSITO -->
           <div v-if="activeTab === 'deposit'" class="space-y-6">
             <p class="text-sm text-ink-subtle">Selecione um valor rápido ou digite o valor que deseja depositar para começar a jogar.</p>
-            
+
+            <ResponsibleGamingNote variant="reminder" />
+
             <!-- Valores rápidos -->
             <div class="grid grid-cols-4 gap-3">
               <button 
