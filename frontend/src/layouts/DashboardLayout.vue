@@ -50,7 +50,13 @@ const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', cur
          da borda, medido de verdade em runtime) + ~24px de respiro visual —
          o valor antigo (5rem = 70px) ficava 10px curto e cortava o último
          item em páginas com conteúdo até o fim (ex.: Transações na Home). -->
-    <main class="flex-1 flex flex-col relative overflow-y-auto overflow-x-hidden h-screen custom-scrollbar pt-14 md:pt-0 pb-[calc(104px+env(safe-area-inset-bottom))] md:pb-0">
+    <!-- h-dvh (não h-screen): 100vh mede contra o viewport com a barra de
+         endereço recolhida, mas no load ela ainda está visível — como quem
+         rola é esse <main> (não a página), o browser nunca ganha o gesto de
+         scroll no documento que recolheria a barra, e o fim do conteúdo
+         (ex.: tabela do Ranking) fica preso atrás dela. dvh acompanha o
+         viewport visível de verdade. -->
+    <main class="flex-1 flex flex-col relative overflow-y-auto overflow-x-hidden h-dvh custom-scrollbar pt-14 md:pt-0 pb-[calc(104px+env(safe-area-inset-bottom))] md:pb-0">
         <router-view v-slot="{ Component, route }">
             <transition name="page" mode="out-in">
                 <component :is="Component" :key="route.path" />

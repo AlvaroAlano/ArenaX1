@@ -145,6 +145,13 @@ const router = createRouter({
           component: () => import('../views/MenuView.vue')
         },
         {
+          // Suporte mínimo (e-mail). Fecha o link morto que Menu/Sidebar já
+          // anunciavam e dá uma porta real pra contestação do selo (regra 1.4).
+          path: '/support',
+          name: 'support',
+          component: () => import('../views/SupportView.vue')
+        },
+        {
           path: '/match/:id',
           name: 'match',
           component: () => import('../views/MatchView.vue'),

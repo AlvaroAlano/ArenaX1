@@ -1,7 +1,9 @@
 -- QA VISUAL — NÃO é migração de schema, não faz parte da sequência numerada
 -- (01, 02, 03...). Só insere notificações de mentirinha pra você ver como
 -- cada tipo novo fica no sino do app de verdade antes de aprovar. Rode no
--- SQL Editor do Supabase depois do 17_challenge_and_wallet_notifications.sql.
+-- SQL Editor do Supabase depois do 17_challenge_and_wallet_notifications.sql
+-- e do 20_challenge_join_requests.sql (esse é quem cria os 3 tipos novos do
+-- fluxo de solicitação usados aqui embaixo).
 --
 -- Por padrão mira na sua própria conta (a que está com is_admin = true,
 -- configurada no 10_admin_portal.sql). Se não for a conta certa, troque a
@@ -56,7 +58,19 @@ BEGIN
 
     (v_user_id, 'challenge_disputed', 'Resultado em disputa ⚠️',
       'Os resultados do desafio de EA FC 26 bateram de frente e foram pra mediação da ArenaX1.',
-      v_challenge_id, now() - interval '5 minutes');
+      v_challenge_id, now() - interval '5 minutes'),
+
+    (v_user_id, 'challenge_join_requested', 'Pedido pra jogar 🙋',
+      'pedrocosta quer topar o valor da sua partida de R$ 20.00 em EA FC 26. Escolha quem entra.',
+      v_challenge_id, now() - interval '10 minutes'),
+
+    (v_user_id, 'challenge_request_accepted', 'Você entrou no desafio ⚔️',
+      'Sua solicitação pro desafio de R$ 20.00 em EA FC 26 foi aceita. Combinem sala e horário no chat.',
+      v_challenge_id, now() - interval '35 minutes'),
+
+    (v_user_id, 'challenge_request_rejected', 'Vaga preenchida',
+      'Outro jogador foi escolhido pro desafio de EA FC 26. Fica de olho em outras salas abertas.',
+      v_challenge_id, now() - interval '2 hours');
 
   RAISE NOTICE 'Notificações de teste inseridas para user_id = %', v_user_id;
 END;
@@ -71,6 +85,7 @@ $$;
 -- DELETE FROM public.notifications
 -- WHERE type IN (
 --   'deposit_confirmed', 'withdraw_completed', 'challenge_accepted',
---   'challenge_result_pending', 'challenge_win', 'challenge_loss', 'challenge_disputed'
+--   'challenge_result_pending', 'challenge_win', 'challenge_loss', 'challenge_disputed',
+--   'challenge_join_requested', 'challenge_request_accepted', 'challenge_request_rejected'
 -- )
--- AND (body LIKE '%R$ 50.00%' OR body LIKE '%joaozinho%' OR body LIKE '%mariasilva%');
+-- AND (body LIKE '%R$ 50.00%' OR body LIKE '%joaozinho%' OR body LIKE '%mariasilva%' OR body LIKE '%pedrocosta%');

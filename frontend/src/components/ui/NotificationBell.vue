@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   Bell, Trophy, Swords, ShieldAlert, XCircle, CheckCheck, ThumbsDown, BadgeCheck,
-  ArrowDownCircle, ArrowUpCircle, Hourglass, ArrowRight,
+  ArrowDownCircle, ArrowUpCircle, Hourglass, ArrowRight, UserPlus,
 } from '@lucide/vue'
 import { api } from '@/services/api'
 
@@ -12,7 +12,8 @@ type NotificationType =
   | 'tournament_cancelled' | 'dispute_resolved_win' | 'dispute_resolved_loss'
   | 'deposit_confirmed' | 'withdraw_completed'
   | 'challenge_accepted' | 'challenge_result_pending' | 'challenge_win'
-  | 'challenge_loss' | 'challenge_disputed'
+  | 'challenge_loss' | 'challenge_disputed' | 'challenge_expired'
+  | 'challenge_join_requested' | 'challenge_request_accepted' | 'challenge_request_rejected'
 interface NotificationItem {
   id: string
   type: NotificationType
@@ -38,64 +39,7 @@ const open = ref(false)
 const unreadCount = ref(0)
 const notifications = ref<NotificationItem[]>([])
 
-// ⚠️ MOCK TEMPORÁRIO — QA visual dos 7 tipos novos de notificação sem
-// depender do INSERT funcionar no Supabase (pedido do usuário, 09/07/2026).
-// Troque pra `false` (ou apague o bloco inteiro) antes de ir pra produção
-// de verdade — com isso em `true`, TODO usuário vê essas notificações fake
-// de depósito/saque/desafio em vez das reais.
-const MOCK_PREVIEW_NOTIFICATIONS = true
-const now = Date.now()
-const mockNotifications: NotificationItem[] = [
-  {
-    id: 'mock-1', type: 'deposit_confirmed', title: 'Depósito confirmado 💰',
-    body: 'Seu depósito de R$ 50.00 caiu na carteira. Saldo atual: R$ 150.00.',
-    tournament_id: null, match_id: null, challenge_id: null,
-    read_at: null, created_at: new Date(now - 2 * 60_000).toISOString(),
-  },
-  {
-    id: 'mock-2', type: 'withdraw_completed', title: 'Saque realizado ✅',
-    body: 'Seu saque de R$ 80.00 via Pix foi processado e enviado para a chave informada.',
-    tournament_id: null, match_id: null, challenge_id: null,
-    read_at: null, created_at: new Date(now - 20 * 60_000).toISOString(),
-  },
-  {
-    id: 'mock-3', type: 'challenge_accepted', title: 'Desafio aceito ⚔️',
-    body: 'joaozinho topou o valor da sua partida de R$ 20.00 em EA FC 26. Combinem sala e horário no chat.',
-    tournament_id: null, match_id: null, challenge_id: null,
-    read_at: null, created_at: new Date(now - 40 * 60_000).toISOString(),
-  },
-  {
-    id: 'mock-4', type: 'challenge_result_pending', title: 'Sua vez de reportar ⏳',
-    body: 'mariasilva já reportou o resultado do desafio em EA FC 26. Confirma o que aconteceu pra liberar o pote.',
-    tournament_id: null, match_id: null, challenge_id: null,
-    read_at: null, created_at: new Date(now - 3 * 60 * 60_000).toISOString(),
-  },
-  {
-    id: 'mock-5', type: 'challenge_win', title: 'Você venceu 🏆',
-    body: 'Vitória confirmada no desafio de eFootball. R$ 36.00 caíram na sua carteira.',
-    tournament_id: null, match_id: null, challenge_id: null,
-    read_at: new Date().toISOString(), created_at: new Date(now - 26 * 60 * 60_000).toISOString(),
-  },
-  {
-    id: 'mock-6', type: 'challenge_loss', title: 'Resultado confirmado',
-    body: 'Derrota confirmada no desafio de EA FC 25. R$ 20.00 saíram da sua carteira.',
-    tournament_id: null, match_id: null, challenge_id: null,
-    read_at: new Date().toISOString(), created_at: new Date(now - 30 * 60 * 60_000).toISOString(),
-  },
-  {
-    id: 'mock-7', type: 'challenge_disputed', title: 'Resultado em disputa ⚠️',
-    body: 'Os resultados do desafio de EA FC 26 bateram de frente e foram pra mediação da ArenaX1.',
-    tournament_id: null, match_id: null, challenge_id: null,
-    read_at: null, created_at: new Date(now - 5 * 60_000).toISOString(),
-  },
-]
-
 const loadNotifications = async () => {
-  if (MOCK_PREVIEW_NOTIFICATIONS) {
-    notifications.value = mockNotifications
-    unreadCount.value = mockNotifications.filter(n => !n.read_at).length
-    return
-  }
   try {
     const feed = await api.get<{ unread_count: number; notifications: NotificationItem[] }>('/api/notifications')
     unreadCount.value = feed.unread_count
@@ -175,6 +119,10 @@ const ICONS: Record<NotificationType, any> = {
   challenge_win: Trophy,
   challenge_loss: ThumbsDown,
   challenge_disputed: ShieldAlert,
+  challenge_expired: XCircle,
+  challenge_join_requested: UserPlus,
+  challenge_request_accepted: Swords,
+  challenge_request_rejected: XCircle,
 }
 const ICON_COLOR: Record<NotificationType, string> = {
   tournament_open: 'text-primary bg-primary/10',
@@ -191,6 +139,10 @@ const ICON_COLOR: Record<NotificationType, string> = {
   challenge_win: 'text-semantic-success bg-semantic-success/10',
   challenge_loss: 'text-ink-tertiary bg-surface-3',
   challenge_disputed: 'text-semantic-error bg-semantic-error/10',
+  challenge_expired: 'text-ink-tertiary bg-surface-3',
+  challenge_join_requested: 'text-amber-400 bg-amber-400/10',
+  challenge_request_accepted: 'text-primary bg-primary/10',
+  challenge_request_rejected: 'text-ink-tertiary bg-surface-3',
 }
 </script>
 
@@ -258,6 +210,14 @@ const ICON_COLOR: Record<NotificationType, string> = {
               class="mt-2 inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1.5 text-[11px] font-bold text-canvas transition-colors hover:bg-primary-hover"
             >
               Reportar resultado <ArrowRight :size="12" />
+            </button>
+            <button
+              v-if="n.type === 'challenge_join_requested'"
+              type="button"
+              @click.stop="handleClick(n)"
+              class="mt-2 inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1.5 text-[11px] font-bold text-canvas transition-colors hover:bg-primary-hover"
+            >
+              Ver solicitações <ArrowRight :size="12" />
             </button>
             <p class="mt-1 text-[10px] text-ink-tertiary">{{ timeAgo(n.created_at) }}</p>
           </div>

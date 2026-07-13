@@ -3,7 +3,7 @@ import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
-import { CalendarDays, Star, Gamepad2, Hash, SearchX, Pencil } from '@lucide/vue'
+import { CalendarDays, Star, Gamepad2, Hash, SearchX, Pencil, ArrowLeft, PowerOff, AlertTriangle } from '@lucide/vue'
 
 const props = defineProps<{ username: string }>()
 const route = useRoute()
@@ -21,10 +21,11 @@ interface Profile {
   username: string
   full_name: string | null
   ea_id: string | null
-  psn_id: string | null
-  xbox_id: string | null
-  steam_id: string | null
+  main_platform: string | null
   fair_play_rating: number
+  abandoned_matches: number
+  abandonment_badge_public_at: string | null
+  deactivated_at: string | null
   created_at: string
 }
 
@@ -38,7 +39,7 @@ const loadProfile = async (username: string) => {
     profile.value = null
 
     const { data } = await supabase.from('profiles')
-        .select('id, username, full_name, ea_id, psn_id, xbox_id, steam_id, fair_play_rating, created_at')
+        .select('id, username, full_name, ea_id, main_platform, fair_play_rating, abandoned_matches, abandonment_badge_public_at, deactivated_at, created_at')
         .eq('username', username)
         .maybeSingle()
 
@@ -54,12 +55,15 @@ const isOwnProfile = computed(() => authStore.user?.id === profile.value?.id)
 
 const initials = computed(() => (profile.value?.username || '??').substring(0, 2).toUpperCase())
 
-const mainPlatform = computed(() => {
-    if (!profile.value) return null
-    if (profile.value.psn_id) return 'PS5'
-    if (profile.value.xbox_id) return 'Xbox'
-    if (profile.value.steam_id) return 'PC'
-    return null
+const mainPlatform = computed(() => profile.value?.main_platform || null)
+
+// Selo de alerta de abandono (punição reputacional, não-financeira). Não basta
+// cruzar o limiar de abandonos: o backend agenda a publicação 48h depois (janela
+// de contestação, regra 1.4) em abandonment_badge_public_at. O selo só aparece
+// quando esse instante já passou — nada de comparar abandoned_matches direto.
+const showAbandonBadge = computed(() => {
+    const at = profile.value?.abandonment_badge_public_at
+    return at != null && new Date(at).getTime() <= Date.now()
 })
 
 const memberSince = computed(() => {
@@ -93,6 +97,19 @@ const ratingIconClass = computed(() => {
 <template>
   <div class="mx-auto w-full max-w-4xl space-y-6 p-6 lg:p-10">
 
+    <!-- Voltar pra onde quer que o usuário estivesse antes (lista de
+         solicitações de um desafio, lobby, ranking...) — sempre router.back()
+         em vez de um destino fixo, já que esse perfil é acessado de vários
+         lugares diferentes do app. -->
+    <button
+      type="button"
+      @click="router.back()"
+      class="inline-flex w-fit items-center gap-1.5 text-body-sm text-ink-subtle transition-colors hover:text-primary"
+    >
+      <ArrowLeft :size="14" />
+      Voltar
+    </button>
+
     <!-- Carregando -->
     <div v-if="loading" class="animate-pulse space-y-6">
       <div class="h-24 rounded-2xl bg-surface-2"></div>
@@ -106,7 +123,15 @@ const ratingIconClass = computed(() => {
         </span>
         <p class="font-semibold text-ink">Jogador não encontrado</p>
         <p class="max-w-xs text-body-sm text-ink-subtle">Não existe ninguém com o apelido "{{ props.username }}" na Arena.</p>
-        <button @click="router.back()" class="mt-2 text-body-sm font-semibold text-primary hover:underline">Voltar</button>
+    </div>
+
+    <!-- Conta desativada (some da vitrine pra quem não é o dono) -->
+    <div v-else-if="profile && profile.deactivated_at && !isOwnProfile" class="flex flex-col items-center gap-3 py-24 text-center">
+        <span class="grid size-14 place-items-center rounded-2xl bg-surface-2 text-ink-tertiary">
+            <PowerOff :size="26" />
+        </span>
+        <p class="font-semibold text-ink">Conta desativada</p>
+        <p class="max-w-xs text-body-sm text-ink-subtle">Este jogador desativou a conta temporariamente e não está disponível na Arena agora.</p>
     </div>
 
     <template v-else-if="profile">
@@ -133,13 +158,16 @@ const ratingIconClass = computed(() => {
         </router-link>
       </div>
 
-      <!-- Plataforma / EA ID -->
-      <div v-if="mainPlatform || profile.ea_id" class="flex flex-wrap items-center gap-2">
+      <!-- Plataforma / EA ID / alerta de abandono -->
+      <div v-if="mainPlatform || profile.ea_id || showAbandonBadge" class="flex flex-wrap items-center gap-2">
         <span v-if="mainPlatform" class="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-surface-1 px-3 py-1.5 text-caption font-semibold text-ink-subtle">
             <Gamepad2 :size="14" class="text-accent" /> {{ mainPlatform }}
         </span>
         <span v-if="profile.ea_id" class="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-surface-1 px-3 py-1.5 text-caption font-semibold text-ink-subtle">
             <Hash :size="13" /> EA ID: <span class="text-ink">{{ profile.ea_id }}</span>
+        </span>
+        <span v-if="showAbandonBadge" class="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 text-caption font-semibold text-amber-500" title="Abandonou partidas recentemente">
+            <AlertTriangle :size="13" /> Histórico de abandono
         </span>
       </div>
 

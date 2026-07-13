@@ -5,6 +5,7 @@ import { useAuthStore } from '@/stores/auth'
 import { useWalletStore } from '@/stores/wallet'
 import { useRouter } from 'vue-router'
 import { api } from '@/services/api'
+import { supabase } from '@/services/supabase'
 import { GAME_OPTIONS } from '@/constants/games'
 
 const authStore = useAuthStore()
@@ -19,7 +20,13 @@ const inviteSearch = ref('')
 const isSubmitting = ref(false)
 const errorMsg = ref('')
 
-onMounted(() => { walletStore.fetchWallet() })
+onMounted(() => {
+    walletStore.fetchWallet()
+    if (authStore.user) {
+        supabase.from('profiles').select('main_platform').eq('id', authStore.user.id).single()
+            .then(({ data }) => { if (data?.main_platform) platform.value = data.main_platform })
+    }
+})
 
 const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 

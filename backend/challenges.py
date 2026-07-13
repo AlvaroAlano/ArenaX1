@@ -5,7 +5,7 @@ from typing import List, Optional
 from supabase import create_client, Client
 from dotenv import load_dotenv
 
-from auth import get_current_user_id
+from auth import get_current_user_id, get_current_admin_user_id
 
 load_dotenv()
 
@@ -26,15 +26,30 @@ class ChallengeCreateRequest(BaseModel):
     platform: str  # 'PS5', 'Xbox', 'PC', 'Crossplay'
     game: str      # 'EA FC 25', 'EA FC 26', 'eFootball'
 
-class ChallengeAcceptRequest(BaseModel):
+class ChallengeJoinRequest(BaseModel):
     challenge_id: str
 
+class ChallengeJoinRequestAction(BaseModel):
+    request_id: str
+
 class ChallengeCancelRequest(BaseModel):
+    challenge_id: str
+
+class ChallengeMarkReadyRequest(BaseModel):
     challenge_id: str
 
 class ChallengeReportRequest(BaseModel):
     challenge_id: str
     result: str  # 'win' ou 'loss'
+
+class ChallengeDisputeRequest(BaseModel):
+    challenge_id: str
+    reason: str
+    details: Optional[str] = None
+
+class ChallengeResolveRequest(BaseModel):
+    challenge_id: str
+    winner_id: str
 
 
 # Schemas de resposta: fixam o contrato que o frontend consome, para um
@@ -43,6 +58,14 @@ class ChallengeReportRequest(BaseModel):
 class ChallengeProfile(BaseModel):
     username: str
     fair_play_rating: float
+
+class JoinRequestOut(BaseModel):
+    id: str
+    challenge_id: str
+    requester_id: str
+    status: str
+    created_at: str
+    requester_profile: Optional[ChallengeProfile] = None
 
 class ChallengeRow(BaseModel):
     id: str
@@ -56,6 +79,7 @@ class ChallengeRow(BaseModel):
     opponent_result: Optional[str] = None
     winner_id: Optional[str] = None
     rake_amount: float = 0
+    settlement_release_at: Optional[str] = None
     created_at: str
     updated_at: Optional[str] = None
 
@@ -65,6 +89,7 @@ class OpenChallengeOut(ChallengeRow):
 class MyChallengeOut(ChallengeRow):
     creator_profile: Optional[ChallengeProfile] = None
     opponent_profile: Optional[ChallengeProfile] = None
+    join_requests: List[JoinRequestOut] = []
 
 class ReportResultOut(BaseModel):
     message: str
@@ -83,8 +108,10 @@ def _raise_from_rpc_error(e: Exception):
     elif "FORBIDDEN" in message:
         status_code = 403
     elif any(code in message for code in (
-        "CHALLENGE_NOT_OPEN", "SELF_ACCEPT", "CHALLENGE_NOT_IN_PROGRESS",
-        "ALREADY_REPORTED", "INVALID_RESULT", "INVALID_AMOUNT"
+        "CHALLENGE_NOT_OPEN", "CHALLENGE_NOT_IN_PROGRESS", "CHALLENGE_NOT_ACCEPTED",
+        "ALREADY_REPORTED", "INVALID_RESULT", "INVALID_AMOUNT",
+        "SELF_REQUEST", "ALREADY_REQUESTED", "REQUEST_NOT_PENDING",
+        "CANNOT_DISPUTE", "CHALLENGE_NOT_DISPUTED", "INVALID_WINNER"
     )):
         status_code = 400
     else:
@@ -121,24 +148,78 @@ def get_open_challenges():
         # Buscar desafios abertos com dados públicos do perfil do criador.
         # Alias precisa ser "creator_profile" para bater com o mesmo contrato
         # usado em /my-challenges (o frontend consome os dois com o mesmo tipo).
-        challenges_res = supabase.table("challenges").select("*, creator_profile:creator_id(username, fair_play_rating)").eq("status", "open").execute()
-        return challenges_res.data or []
+        # deactivated_at vem no embed só para filtrar: quem desativou a conta
+        # some da vitrine (o response_model descarta esse campo extra).
+        challenges_res = supabase.table("challenges").select("*, creator_profile:creator_id(username, fair_play_rating, deactivated_at)").eq("status", "open").execute()
+        rows = challenges_res.data or []
+        return [c for c in rows if not (c.get("creator_profile") or {}).get("deactivated_at")]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao buscar desafios abertos: {str(e)}")
 
 
-@router.post("/accept", response_model=ChallengeRow)
-def accept_challenge(request: ChallengeAcceptRequest, user_id: str = Depends(get_current_user_id)):
+@router.post("/request-join", response_model=JoinRequestOut)
+def request_join_challenge(request: ChallengeJoinRequest, user_id: str = Depends(get_current_user_id)):
     try:
-        result = supabase.rpc("fn_accept_challenge", {
+        result = supabase.rpc("fn_request_join_challenge", {
             "p_challenge_id": request.challenge_id,
-            "p_opponent_id": user_id,
+            "p_requester_id": user_id,
         }).execute()
         return result.data
     except HTTPException:
         raise
     except Exception as e:
         _raise_from_rpc_error(e)
+
+
+@router.post("/accept-join-request", response_model=ChallengeRow)
+def accept_join_request(request: ChallengeJoinRequestAction, user_id: str = Depends(get_current_user_id)):
+    try:
+        result = supabase.rpc("fn_accept_join_request", {
+            "p_request_id": request.request_id,
+            "p_creator_id": user_id,
+        }).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.post("/reject-join-request", response_model=JoinRequestOut)
+def reject_join_request(request: ChallengeJoinRequestAction, user_id: str = Depends(get_current_user_id)):
+    try:
+        result = supabase.rpc("fn_reject_join_request", {
+            "p_request_id": request.request_id,
+            "p_creator_id": user_id,
+        }).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.post("/cancel-join-request", response_model=JoinRequestOut)
+def cancel_join_request(request: ChallengeJoinRequestAction, user_id: str = Depends(get_current_user_id)):
+    try:
+        result = supabase.rpc("fn_cancel_join_request", {
+            "p_request_id": request.request_id,
+            "p_requester_id": user_id,
+        }).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.get("/my-join-requests", response_model=List[JoinRequestOut])
+def get_my_join_requests(user_id: str = Depends(get_current_user_id)):
+    try:
+        requests_res = supabase.table("challenge_join_requests").select("*").eq("requester_id", user_id).execute()
+        return requests_res.data or []
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao carregar suas solicitações: {str(e)}")
 
 
 @router.post("/cancel", response_model=ChallengeRow)
@@ -163,12 +244,90 @@ def get_my_challenges(user_id: str = Depends(get_current_user_id)):
     try:
         # Buscar desafios onde o usuário seja criador ou oponente
         challenges_res = supabase.table("challenges").select(
-            "*, creator_profile:creator_id(username, fair_play_rating), opponent_profile:opponent_id(username, fair_play_rating)"
+            "*, creator_profile:creator_id(username, fair_play_rating), opponent_profile:opponent_id(username, fair_play_rating), "
+            "join_requests:challenge_join_requests(id, challenge_id, requester_id, status, created_at, requester_profile:requester_id(username, fair_play_rating))"
         ).or_(f"creator_id.eq.{user_id},opponent_id.eq.{user_id}").order("created_at", desc=True).execute()
 
         return challenges_res.data or []
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao carregar seus desafios: {str(e)}")
+
+
+@router.post("/mark-ready", response_model=ChallengeRow)
+def mark_ready(request: ChallengeMarkReadyRequest, user_id: str = Depends(get_current_user_id)):
+    # Checkpoint "Iniciar partida": confirma presença na fase 'accepted'. Quando
+    # os dois confirmam, a função SQL move pra 'in_progress' e arma o prazo.
+    try:
+        result = supabase.rpc("fn_mark_ready", {
+            "p_challenge_id": request.challenge_id,
+            "p_user_id": user_id,
+        }).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.post("/process-timeouts")
+def process_match_timeouts(user_id: str = Depends(get_current_admin_user_id)):
+    # Gatilho manual do job de timeout (o agendamento normal é via pg_cron, ver
+    # 24_match_absent_player.sql). Admin-only — útil pra testar ou se o pg_cron
+    # não estiver disponível no plano.
+    try:
+        result = supabase.rpc("fn_process_match_timeouts", {}).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.post("/open-dispute", response_model=ChallengeRow)
+def open_challenge_dispute(request: ChallengeDisputeRequest, user_id: str = Depends(get_current_user_id)):
+    # Contestação reativa (resultado aceito automático, dentro da janela de 3d)
+    # ou reporte de problema na partida em andamento (má conduta/trapaça).
+    try:
+        result = supabase.rpc("fn_open_challenge_dispute", {
+            "p_challenge_id": request.challenge_id,
+            "p_user_id": user_id,
+            "p_reason": request.reason,
+            "p_details": request.details,
+        }).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.post("/resolve-dispute", response_model=ChallengeRow)
+def resolve_challenge_dispute(request: ChallengeResolveRequest, admin_id: str = Depends(get_current_admin_user_id)):
+    # Resolução de disputa de desafio 1v1 (admin) — decide o vencedor, normaliza
+    # o dinheiro e paga; penaliza o fair_play só de quem mentiu.
+    try:
+        result = supabase.rpc("fn_resolve_challenge_dispute", {
+            "p_challenge_id": request.challenge_id,
+            "p_winner_id": request.winner_id,
+        }).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.post("/release-settlements")
+def release_settlements(admin_id: str = Depends(get_current_admin_user_id)):
+    # Gatilho manual da liberação de prêmios retidos (o normal é pg_cron horário,
+    # ver 26_match_settlement_hold.sql). Admin-only.
+    try:
+        result = supabase.rpc("fn_release_due_settlements", {}).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
 
 
 @router.post("/report", response_model=ReportResultOut)

@@ -6,6 +6,8 @@ from challenges import router as challenges_router
 from tournaments import router as tournaments_router
 from notifications import router as notifications_router
 from admin import router as admin_router
+from account import router as account_router
+from support import router as support_router
 
 app = FastAPI(
     title="API de X1",
@@ -38,6 +40,8 @@ app.include_router(challenges_router)
 app.include_router(tournaments_router)
 app.include_router(notifications_router)
 app.include_router(admin_router)
+app.include_router(account_router)
+app.include_router(support_router)
 
 @app.get("/")
 def read_root():

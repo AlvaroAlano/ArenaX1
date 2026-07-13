@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { Trophy, Users, UserPlus, Shuffle, Info, Lock, Coins, CalendarClock, Gamepad2 } from '@lucide/vue'
 import { useRouter } from 'vue-router'
 import { api } from '@/services/api'
+import { supabase } from '@/services/supabase'
+import { useAuthStore } from '@/stores/auth'
 import { GAME_OPTIONS } from '@/constants/games'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const mode = ref<'local' | 'online'>('local')
 
@@ -71,6 +74,13 @@ function toLocalInputValue(d: Date): string {
     return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`
 }
 const minDeadline = toLocalInputValue(new Date(Date.now() + 60 * 60 * 1000))
+
+onMounted(() => {
+    if (authStore.user) {
+        supabase.from('profiles').select('main_platform').eq('id', authStore.user.id).single()
+            .then(({ data }) => { if (data?.main_platform) oPlatform.value = data.main_platform })
+    }
+})
 
 // Tabela de premiação por tamanho de chave (sempre sobre o pote líquido,
 // depois do rake de 10% — mesma regra usada no backend, ver

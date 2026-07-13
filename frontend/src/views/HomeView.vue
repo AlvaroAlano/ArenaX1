@@ -3,7 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import {
   Wallet, ArrowDownToLine, ArrowUpFromLine, Swords, Trophy, Target,
   Star, Plus, History, Receipt, ArrowRight, CalendarDays, Gamepad2,
-  ShieldAlert, Activity, ChevronRight,
+  ShieldAlert, Activity, ChevronRight, Clock,
 } from '@lucide/vue'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
@@ -16,7 +16,7 @@ const walletStore = useWalletStore()
 const MY_ID = authStore.user?.id || null
 
 /* ── Tipos alinhados ao contrato real do backend (ver challenges.py) ── */
-type ChallengeStatus = 'open' | 'in_progress' | 'completed' | 'disputed'
+type ChallengeStatus = 'open' | 'accepted' | 'in_progress' | 'completed' | 'disputed'
 interface ChallengeProfile { username: string; fair_play_rating: number }
 interface Challenge {
   id: string
@@ -27,6 +27,7 @@ interface Challenge {
   game: string
   status: ChallengeStatus
   winner_id: string | null
+  settlement_release_at: string | null
   created_at: string
   creator_profile: ChallengeProfile
   opponent_profile: ChallengeProfile | null
@@ -98,7 +99,7 @@ const todayLabel = computed(() => {
 
 const displayName = computed(() => profile.value?.username || authStore.user?.user_metadata?.username || 'Jogador')
 const initials = computed(() => displayName.value.substring(0, 2).toUpperCase())
-const mainPlatform = computed(() => profile.value?.psn_id ? 'PS5' : profile.value?.xbox_id ? 'Xbox' : 'PC')
+const mainPlatform = computed(() => profile.value?.main_platform || 'Não definida')
 
 /* ── Estatísticas derivadas dos desafios reais (profiles não tem colunas
    wins/losses — nunca teve; isso ficava sempre zerado). 'disputed' não
@@ -141,7 +142,7 @@ const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', cur
 /* ── Desafios ── */
 const activeChallenges = computed(() =>
   challenges.value
-    .filter(c => c.status === 'open' || c.status === 'in_progress')
+    .filter(c => c.status === 'open' || c.status === 'accepted' || c.status === 'in_progress')
     .sort((a, b) => +new Date(b.created_at) - +new Date(a.created_at))
 )
 const historyChallenges = computed(() =>
@@ -173,6 +174,7 @@ const opponentName = (c: Challenge) => {
 
 const statusMeta: Record<ChallengeStatus, { label: string; dot: string; text: string }> = {
   open: { label: 'Aberto', dot: 'bg-semantic-success', text: 'text-semantic-success' },
+  accepted: { label: 'Confirmar presença', dot: 'bg-amber-400', text: 'text-amber-400' },
   in_progress: { label: 'Ao vivo', dot: 'bg-accent', text: 'text-accent' },
   completed: { label: 'Concluído', dot: 'bg-ink-tertiary', text: 'text-ink-tertiary' },
   disputed: { label: 'Em disputa', dot: 'bg-semantic-error', text: 'text-semantic-error' },
@@ -185,6 +187,13 @@ const challengeResult = (c: Challenge) => {
   return won
     ? { label: 'Vitória', amount: c.bet_amount * 0.84, tone: 'text-semantic-success' as const }
     : { label: 'Derrota', amount: -c.bet_amount, tone: 'text-ink-subtle' as const }
+}
+
+/* Prêmio retido (resultado aceito por timeout): dias até liberar, ou null. */
+const heldDaysLeft = (c: Challenge): number | null => {
+  if (c.status !== 'completed' || !c.settlement_release_at) return null
+  const ms = new Date(c.settlement_release_at).getTime() - Date.now()
+  return ms > 0 ? Math.max(1, Math.ceil(ms / 86_400_000)) : null
 }
 
 /* Transações: rótulo + sinal (cobre nomes antigos e novos do backend) */
@@ -374,7 +383,7 @@ const txMeta = (type: string): { label: string; positive: boolean } => {
           <router-link
             v-for="c in activeChallenges"
             :key="c.id"
-            :to="c.status === 'in_progress' ? `/match/${c.id}` : '/challenges'"
+            :to="(c.status === 'in_progress' || c.status === 'accepted') ? `/match/${c.id}` : '/challenges'"
             class="group flex items-center gap-4 rounded-2xl border border-hairline bg-surface-1 p-4 no-underline transition-all hover:border-hairline-strong hover:bg-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
           >
             <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-surface-2 text-ink-subtle">
@@ -440,6 +449,9 @@ const txMeta = (type: string): { label: string; positive: boolean } => {
                   </template>
                 </p>
                 <p class="text-caption" :class="challengeResult(c).tone">{{ challengeResult(c).label }}</p>
+                <p v-if="heldDaysLeft(c)" class="mt-0.5 inline-flex items-center gap-1 rounded-full bg-amber-400/10 px-1.5 py-0.5 text-[10px] font-semibold text-amber-500">
+                  <Clock :size="9" /> libera em {{ heldDaysLeft(c) }}d
+                </p>
               </div>
             </div>
           </div>
