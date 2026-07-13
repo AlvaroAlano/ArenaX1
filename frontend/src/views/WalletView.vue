@@ -3,9 +3,11 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
+import { useToastStore } from '@/stores/toast'
 import { api } from '@/services/api'
 
 const authStore = useAuthStore()
+const toast = useToastStore()
 const route = useRoute()
 const activeTab = ref<'deposit' | 'withdraw'>(route.query.tab === 'withdraw' ? 'withdraw' : 'deposit')
 const wallet = ref<any>(null)
@@ -109,7 +111,7 @@ const loadTransactions = async () => {
 // Gerar depósito Pix
 const handleGeneratePix = async () => {
   if (!depositAmount.value || depositAmount.value < 10) {
-    alert('O valor mínimo de depósito é R$ 10,00.')
+    toast.push('O valor mínimo de depósito é R$ 10,00.', 'error')
     return
   }
 
@@ -121,7 +123,7 @@ const handleGeneratePix = async () => {
   try {
     pixData.value = await api.post('/api/pix/deposit', { amount: depositAmount.value })
   } catch (err: any) {
-    alert(err.message)
+    toast.push(err.message, 'error')
   } finally {
     generatingPix.value = false
   }
@@ -131,7 +133,7 @@ const handleGeneratePix = async () => {
 const copyCopiaCola = () => {
   if (!pixData.value?.copia_e_cola) return
   navigator.clipboard.writeText(pixData.value.copia_e_cola)
-  alert('Código Pix copiado para a área de transferência!')
+  toast.push('Código Pix copiado para a área de transferência!', 'success')
 }
 
 // Simular confirmação de pagamento para teste em desenvolvimento.
@@ -151,7 +153,7 @@ const simulatePaymentWebhook = async () => {
     depositAmount.value = null
     await loadData()
   } catch (err: any) {
-    alert(err.message || 'Erro ao simular pagamento.')
+    toast.push(err.message || 'Erro ao simular pagamento.', 'error')
   }
 }
 

@@ -20,7 +20,7 @@
                 <h4 class="text-xs font-bold uppercase tracking-widest text-ink-tertiary">Suporte</h4>
                 <a class="text-sm text-ink-subtle hover:text-primary" href="#">Termos de Utilização</a>
                 <a class="text-sm text-ink-subtle hover:text-primary" href="#">Política de Privacidade</a>
-                <a class="text-sm text-ink-subtle hover:text-primary" href="#">Fale Conosco</a>
+                <router-link class="text-sm text-ink-subtle hover:text-primary" to="/support">Fale Conosco</router-link>
             </div>
         </div>
     </div>

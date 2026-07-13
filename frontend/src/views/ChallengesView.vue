@@ -18,15 +18,21 @@ import {
   ShieldAlert,
   Trash2,
   ChevronRight,
+  Hourglass,
+  Clock,
 } from '@lucide/vue'
 import { vReveal } from '@/composables/useReveal'
 import { useAuthStore } from '@/stores/auth'
 import { useWalletStore } from '@/stores/wallet'
+import { useConfirmStore } from '@/stores/confirm'
+import { useToastStore } from '@/stores/toast'
 import { api } from '@/services/api'
 import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
 const walletStore = useWalletStore()
+const confirm = useConfirmStore()
+const toast = useToastStore()
 const router = useRouter()
 
 /**
@@ -34,8 +40,16 @@ const router = useRouter()
  * GET /api/challenges/open (público) e GET /api/challenges/my-challenges
  * (autenticado) devolvem exatamente esta forma.
  */
-type ChallengeStatus = 'open' | 'in_progress' | 'completed' | 'disputed' | 'cancelled'
+type ChallengeStatus = 'open' | 'accepted' | 'in_progress' | 'completed' | 'disputed' | 'cancelled'
 interface ChallengeProfile { username: string; fair_play_rating: number }
+interface JoinRequest {
+    id: string
+    challenge_id: string
+    requester_id: string
+    status: string
+    created_at: string
+    requester_profile?: ChallengeProfile | null
+}
 interface Challenge {
     id: string
     creator_id: string
@@ -45,9 +59,12 @@ interface Challenge {
     game: string
     status: ChallengeStatus
     winner_id: string | null
+    settlement_release_at?: string | null
     created_at: string
     creator_profile: ChallengeProfile
     opponent_profile: ChallengeProfile | null
+    /** Só vem preenchido em /my-challenges (challenges próprios) — quem pediu pra entrar. */
+    join_requests?: JoinRequest[]
 }
 
 const filter = ref('all') // Default filter: mostra a arena movimentada de cara, não só "os meus"
@@ -80,22 +97,33 @@ function timeAgo(iso: string): string {
 const MY_ID = authStore.user?.id || null
 
 const allChallenges = ref<Challenge[]>([])
+/* ── Minhas solicitações pendentes, por challenge_id — dirige o estado do
+   botão (Solicitar vs. Solicitação enviada) pra desafios de outras pessoas.
+   Só entra aqui o que ainda está 'pending': se foi recusado, o botão volta
+   a permitir solicitar de novo (o desafio pode continuar aberto). ── */
+const myPendingRequestByChallenge = ref<Map<string, JoinRequest>>(new Map())
 
-/* ── Carrega dados reais: /open é público, /my-challenges só quando logado.
-   "Ao vivo"/"Terminados" só cobrem partidas do próprio usuário porque não
-   existe (ainda) um endpoint de partidas em andamento de outros jogadores. ── */
+/* ── Carrega dados reais: /open é público, /my-challenges e /my-join-requests
+   só quando logado. "Ao vivo"/"Terminados" só cobrem partidas do próprio
+   usuário porque não existe (ainda) um endpoint de partidas em andamento de
+   outros jogadores. ── */
 const loadChallenges = async () => {
     loading.value = true
     loadError.value = ''
     isMockData.value = false
     try {
-        const requests: Promise<Challenge[]>[] = [api.get<Challenge[]>('/api/challenges/open')]
-        if (authStore.user) requests.push(api.get<Challenge[]>('/api/challenges/my-challenges'))
+        const openReq = api.get<Challenge[]>('/api/challenges/open')
+        const mineReq = authStore.user ? api.get<Challenge[]>('/api/challenges/my-challenges') : Promise.resolve([] as Challenge[])
+        const myRequestsReq = authStore.user ? api.get<JoinRequest[]>('/api/challenges/my-join-requests') : Promise.resolve([] as JoinRequest[])
 
-        const results = await Promise.all(requests)
+        const [openResults, mineResults, myRequests] = await Promise.all([openReq, mineReq, myRequestsReq])
         const merged = new Map<string, Challenge>()
-        results.flat().forEach((c) => merged.set(c.id, c))
+        ;[...openResults, ...mineResults].forEach((c) => merged.set(c.id, c))
         allChallenges.value = Array.from(merged.values())
+
+        const pending = new Map<string, JoinRequest>()
+        myRequests.filter(r => r.status === 'pending').forEach(r => pending.set(r.challenge_id, r))
+        myPendingRequestByChallenge.value = pending
     } catch {
         allChallenges.value = MOCK_CHALLENGES
         isMockData.value = true
@@ -106,31 +134,59 @@ const loadChallenges = async () => {
 
 onMounted(loadChallenges)
 
-const acceptingId = ref<string | null>(null)
+const requestingId = ref<string | null>(null)
 
-const handleAccept = async (c: Challenge) => {
+const handleRequestJoin = async (c: Challenge) => {
     if (!authStore.user) {
         router.push('/register')
         return
     }
     if (c.id.startsWith('mock-')) {
-        alert('Este é um desafio de exemplo — volte quando o servidor estiver disponível.')
+        toast.push('Este é um desafio de exemplo — volte quando o servidor estiver disponível.', 'info')
         return
     }
-    if (!confirm(`Confirmar valor de R$ ${c.bet_amount.toFixed(2)} contra ${c.creator_profile.username}?`)) return
+    if (!(await confirm.ask({
+        title: 'Solicitar entrada',
+        message: `Entrar nesse desafio de R$ ${c.bet_amount.toFixed(2)} contra ${c.creator_profile.username}?`,
+        confirmText: 'Solicitar',
+    }))) return
 
-    acceptingId.value = c.id
+    requestingId.value = c.id
     try {
-        await api.post('/api/challenges/accept', { challenge_id: c.id })
-        walletStore.fetchWallet(true)
-        router.push(`/match/${c.id}`)
+        await api.post('/api/challenges/request-join', { challenge_id: c.id })
+        await loadChallenges()
     } catch (err: any) {
-        alert(err.message || 'Erro ao aceitar o desafio.')
-        await loadChallenges() // outro jogador pode ter aceitado primeiro
+        toast.push(err.message || 'Erro ao solicitar entrada no desafio.', 'error')
     } finally {
-        acceptingId.value = null
+        requestingId.value = null
     }
 }
+
+const handleCancelRequest = async (c: Challenge) => {
+    const request = myPendingRequestByChallenge.value.get(c.id)
+    if (!request) return
+    if (!(await confirm.ask({
+        title: 'Cancelar solicitação',
+        message: 'Cancelar sua solicitação pra esse desafio?',
+        confirmText: 'Cancelar solicitação',
+        cancelText: 'Voltar',
+        tone: 'danger',
+    }))) return
+
+    requestingId.value = c.id
+    try {
+        await api.post('/api/challenges/cancel-join-request', { request_id: request.id })
+        await loadChallenges()
+    } catch (err: any) {
+        toast.push(err.message || 'Erro ao cancelar sua solicitação.', 'error')
+    } finally {
+        requestingId.value = null
+    }
+}
+
+/* ── Quantos pedidos pendentes o criador tem pra decidir num desafio seu
+   (só existe dado real quando veio de /my-challenges, ver join_requests). ── */
+const pendingRequestsCount = (c: Challenge) => (c.join_requests || []).filter(r => r.status === 'pending').length
 
 const cancellingId = ref<string | null>(null)
 
@@ -139,7 +195,13 @@ const cancellingId = ref<string | null>(null)
    corrida real entre o dono editando e alguém aceitando o valor antigo. ── */
 const handleCancel = async (c: Challenge) => {
     if (c.id.startsWith('mock-')) return
-    if (!confirm(`Cancelar este desafio de R$ ${c.bet_amount.toFixed(2)}? O valor volta pro seu saldo.`)) return
+    if (!(await confirm.ask({
+        title: 'Cancelar desafio',
+        message: `Cancelar este desafio de R$ ${c.bet_amount.toFixed(2)}? O valor volta pro seu saldo.`,
+        confirmText: 'Cancelar desafio',
+        cancelText: 'Voltar',
+        tone: 'danger',
+    }))) return
 
     cancellingId.value = c.id
     try {
@@ -147,7 +209,7 @@ const handleCancel = async (c: Challenge) => {
         await loadChallenges()
         walletStore.fetchWallet(true)
     } catch (err: any) {
-        alert(err.message || 'Erro ao cancelar o desafio.')
+        toast.push(err.message || 'Erro ao cancelar o desafio.', 'error')
     } finally {
         cancellingId.value = null
     }
@@ -155,7 +217,7 @@ const handleCancel = async (c: Challenge) => {
 
 const filteredChallenges = computed(() => {
     if (filter.value === 'meus') return allChallenges.value.filter(c => c.creator_id === MY_ID || c.opponent_id === MY_ID)
-    if (filter.value === 'all') return allChallenges.value.filter(c => c.status === 'open' || c.status === 'in_progress')
+    if (filter.value === 'all') return allChallenges.value.filter(c => c.status === 'open' || c.status === 'accepted' || c.status === 'in_progress')
     if (filter.value === 'abertos') return allChallenges.value.filter(c => c.status === 'open')
     if (filter.value === 'em_curso') return allChallenges.value.filter(c => c.status === 'in_progress')
     if (filter.value === 'terminados') return allChallenges.value.filter(c => c.status === 'completed' || c.status === 'disputed' || c.status === 'cancelled')
@@ -172,7 +234,7 @@ const openCount = computed(() => allChallenges.value.filter(c => c.status === 'o
 const livePoolFmt = computed(() => {
     const pool = allChallenges.value.reduce((sum, c) => {
         if (c.status === 'open') return sum + c.bet_amount
-        if (c.status === 'in_progress') return sum + c.bet_amount * 2
+        if (c.status === 'accepted' || c.status === 'in_progress') return sum + c.bet_amount * 2
         return sum
     }, 0)
     return pool.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 })
@@ -180,7 +242,7 @@ const livePoolFmt = computed(() => {
 const activePlayers = computed(() => {
     const set = new Set<string>()
     allChallenges.value
-        .filter(c => c.status === 'open' || c.status === 'in_progress')
+        .filter(c => c.status === 'open' || c.status === 'accepted' || c.status === 'in_progress')
         .forEach(c => { set.add(c.creator_id); if (c.opponent_id) set.add(c.opponent_id) })
     return set.size
 })
@@ -189,7 +251,7 @@ const activePlayers = computed(() => {
 const filterTabs = computed(() => {
     const tabs = [
         { key: 'meus', label: 'Os meus', icon: User, count: allChallenges.value.filter(c => c.creator_id === MY_ID || c.opponent_id === MY_ID).length, authOnly: true },
-        { key: 'all', label: 'Todos', icon: List, count: allChallenges.value.filter(c => c.status === 'open' || c.status === 'in_progress').length, authOnly: false },
+        { key: 'all', label: 'Todos', icon: List, count: allChallenges.value.filter(c => c.status === 'open' || c.status === 'accepted' || c.status === 'in_progress').length, authOnly: false },
         { key: 'abertos', label: 'Abertos', icon: Swords, count: openCount.value, authOnly: false },
         { key: 'em_curso', label: 'Ao vivo', icon: PlayCircle, count: allChallenges.value.filter(c => c.status === 'in_progress').length, authOnly: false },
         { key: 'terminados', label: 'Terminados', icon: CheckCircle2, count: allChallenges.value.filter(c => c.status === 'completed' || c.status === 'disputed' || c.status === 'cancelled').length, authOnly: true },
@@ -201,6 +263,7 @@ const filterTabs = computed(() => {
 /* ── Status visual (chaves alinhadas ao enum real do backend) ── */
 const statusMeta: Record<ChallengeStatus, { label: string; dot: string; text: string; bg: string }> = {
     open: { label: 'Aberto', dot: 'bg-semantic-success', text: 'text-semantic-success', bg: 'bg-semantic-success/10 border-semantic-success/20' },
+    accepted: { label: 'Confirmar presença', dot: 'bg-amber-400', text: 'text-amber-400', bg: 'bg-amber-400/10 border-amber-400/20' },
     in_progress: { label: 'Ao vivo', dot: 'bg-accent', text: 'text-accent', bg: 'bg-accent/10 border-accent/20' },
     completed: { label: 'Concluído', dot: 'bg-ink-tertiary', text: 'text-ink-tertiary', bg: 'bg-surface-3 border-hairline' },
     disputed: { label: 'Em disputa', dot: 'bg-semantic-error', text: 'text-semantic-error', bg: 'bg-semantic-error/10 border-semantic-error/20' },
@@ -227,6 +290,14 @@ const winnerName = (c: Challenge) => {
     if (c.winner_id === c.creator_id) return c.creator_profile.username
     if (c.opponent_profile && c.winner_id === c.opponent_id) return c.opponent_profile.username
     return c.opponent_profile?.username || c.creator_profile.username
+}
+
+/* Prêmio retido (resultado aceito por timeout): dias até liberar, ou null se
+   já foi confirmado pelos dois (pago na hora). */
+const heldDaysLeft = (c: Challenge): number | null => {
+    if (c.status !== 'completed' || !c.settlement_release_at) return null
+    const ms = new Date(c.settlement_release_at).getTime() - Date.now()
+    return ms > 0 ? Math.max(1, Math.ceil(ms / 86_400_000)) : null
 }
 </script>
 
@@ -426,22 +497,51 @@ const winnerName = (c: Challenge) => {
                     <span class="text-body-sm font-medium text-accent">Vaga aberta</span>
                 </router-link>
                 <button
+                    v-else-if="myPendingRequestByChallenge.has(c.id)"
+                    type="button"
+                    @click="handleCancelRequest(c)"
+                    :disabled="requestingId === c.id"
+                    class="group/pending flex flex-col items-center gap-1.5 text-center disabled:cursor-wait disabled:opacity-60"
+                >
+                    <div class="grid size-11 place-items-center rounded-full border-2 border-dashed border-hairline-strong text-ink-tertiary transition-colors duration-200 group-hover/pending:border-semantic-error/50 group-hover/pending:text-semantic-error">
+                        <svg v-if="requestingId === c.id" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                        </svg>
+                        <Hourglass v-else :size="16" />
+                    </div>
+                    <span class="text-body-sm font-medium text-ink-tertiary transition-colors duration-200 group-hover/pending:text-semantic-error">{{ requestingId === c.id ? 'Cancelando...' : 'Solicitado' }}</span>
+                </button>
+                <button
                     v-else
                     type="button"
-                    @click="handleAccept(c)"
-                    :disabled="acceptingId === c.id"
+                    @click="handleRequestJoin(c)"
+                    :disabled="requestingId === c.id"
                     class="flex flex-col items-center gap-1.5 text-center disabled:cursor-wait disabled:opacity-60"
                 >
                     <div class="grid size-11 place-items-center rounded-full border-2 border-dashed border-accent/40 text-accent transition-colors duration-200 group-hover:border-accent group-hover:bg-accent/10">
-                        <svg v-if="acceptingId === c.id" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <svg v-if="requestingId === c.id" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
                         </svg>
                         <UserPlus v-else :size="18" />
                     </div>
-                    <span class="text-body-sm font-medium text-accent">{{ acceptingId === c.id ? 'Aceitando...' : 'Aceitar desafio' }}</span>
+                    <span class="text-body-sm font-medium text-accent">{{ requestingId === c.id ? 'Solicitando...' : 'Solicitar participação' }}</span>
                 </button>
             </div>
+
+            <!-- Solicitações pendentes (só aparece pro criador, no próprio desafio aberto) -->
+            <router-link
+                v-if="c.creator_id === MY_ID && c.status === 'open' && pendingRequestsCount(c) > 0"
+                :to="`/match/${c.id}`"
+                class="flex items-center justify-between gap-2 rounded-xl border border-accent/25 bg-accent/10 px-3.5 py-2.5 text-body-sm font-semibold text-accent no-underline transition-colors hover:bg-accent/15"
+            >
+                <span class="inline-flex items-center gap-2">
+                    <Users :size="15" />
+                    {{ pendingRequestsCount(c) }} {{ pendingRequestsCount(c) === 1 ? 'pessoa quer' : 'pessoas querem' }} jogar
+                </span>
+                <span class="inline-flex items-center gap-1">Ver solicitações <ChevronRight :size="14" /></span>
+            </router-link>
 
             <!-- Rodapé: horário + aposta/prêmio -->
             <div class="flex items-center justify-between border-t border-hairline pt-3.5 text-body-sm">
@@ -457,11 +557,19 @@ const winnerName = (c: Challenge) => {
             </div>
 
             <!-- Vencedor (concluído) -->
-            <div v-if="c.status === 'completed'" class="flex items-center gap-2 rounded-xl border border-semantic-success/20 bg-semantic-success/5 px-3.5 py-2.5 text-body-sm">
-                <Trophy :size="16" class="text-semantic-success" />
-                <span class="text-ink-subtle">Vencedor:</span>
-                <span class="font-bold text-semantic-success">{{ winnerName(c) }}</span>
-                <span class="ml-auto font-bold text-semantic-success">+R$ {{ netProfit(c).toFixed(2) }}</span>
+            <div v-if="c.status === 'completed'" class="flex flex-col gap-1.5">
+                <div class="flex items-center gap-2 rounded-xl border border-semantic-success/20 bg-semantic-success/5 px-3.5 py-2.5 text-body-sm">
+                    <Trophy :size="16" class="text-semantic-success" />
+                    <span class="text-ink-subtle">Vencedor:</span>
+                    <span class="font-bold text-semantic-success">{{ winnerName(c) }}</span>
+                    <span class="ml-auto font-bold text-semantic-success">+R$ {{ netProfit(c).toFixed(2) }}</span>
+                </div>
+                <p v-if="heldDaysLeft(c)" class="flex items-center gap-1.5 px-1 text-caption font-medium text-amber-500">
+                    <Clock :size="12" /> Aguardando prazo de contestação — libera em {{ heldDaysLeft(c) }}d (oponente não confirmou)
+                </p>
+                <p v-else class="flex items-center gap-1.5 px-1 text-caption font-medium text-ink-tertiary">
+                    <CheckCircle2 :size="12" /> Confirmado pelos dois — pago
+                </p>
             </div>
 
             <!-- Em disputa -->
@@ -474,7 +582,7 @@ const winnerName = (c: Challenge) => {
                  já em andamento, concluída ou em disputa — é a única forma de chegar
                  no chat de mediação de uma disputa a partir desta tela. -->
             <router-link
-                v-if="(c.creator_id === MY_ID || c.opponent_id === MY_ID) && ['in_progress', 'completed', 'disputed'].includes(c.status)"
+                v-if="(c.creator_id === MY_ID || c.opponent_id === MY_ID) && ['accepted', 'in_progress', 'completed', 'disputed'].includes(c.status)"
                 :to="`/match/${c.id}`"
                 class="flex items-center justify-center gap-1.5 rounded-xl border border-hairline-strong py-2.5 text-body-sm font-semibold text-ink-subtle no-underline transition-colors hover:bg-surface-2 hover:text-ink"
             >

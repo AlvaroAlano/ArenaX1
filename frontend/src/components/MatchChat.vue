@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
+import { useToastStore } from '@/stores/toast'
 import { MessageCircle, Send } from '@lucide/vue'
 
 const props = defineProps<{
@@ -9,6 +10,7 @@ const props = defineProps<{
 }>()
 
 const authStore = useAuthStore()
+const toast = useToastStore()
 
 const messages = ref<any[]>([])
 const newMessage = ref('')
@@ -51,7 +53,7 @@ const sendMessage = async () => {
     newMessage.value = ''
   } catch (err) {
     console.error('Erro ao enviar mensagem:', err)
-    alert('Erro ao enviar mensagem.')
+    toast.push('Erro ao enviar mensagem.', 'error')
   } finally {
     sending.value = false
   }

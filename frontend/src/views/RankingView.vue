@@ -109,6 +109,11 @@ const filterTabs = [
             <p class="mt-1 text-body-sm text-ink-subtle">O ranking é o seu palco. Vitória vale posição — quem só fala fica lá embaixo.</p>
         </div>
 
+        <div class="flex items-start gap-3 rounded-xl border border-amber-400/25 bg-amber-400/10 p-4 text-body-sm text-ink">
+            <Info :size="20" class="mt-0.5 shrink-0 text-amber-400" />
+            <p><strong class="text-ink">Prévia ilustrativa.</strong> O ranking nacional ainda está em construção — os jogadores e números abaixo são <strong>exemplos</strong> pra mostrar como a tela vai funcionar. As posições reais entram no ar junto com as primeiras temporadas valendo.</p>
+        </div>
+
         <div class="flex items-start gap-3 rounded-xl border border-accent/20 bg-accent/10 p-4 text-body-sm text-ink">
             <Info :size="20" class="mt-0.5 shrink-0 text-accent" />
             <p><strong class="text-ink">Como funciona o Ranking?</strong> A classificação oficial da ArenaX1 prioriza jogadores pelo total de <strong>Vitórias</strong>. Em caso de empate, avaliamos a <strong>Taxa de Vitória (%)</strong> e o <strong>menor número de Derrotas</strong> (Saldo Positivo).</p>

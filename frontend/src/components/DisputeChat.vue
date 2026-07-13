@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
+import { useToastStore } from '@/stores/toast'
 import { ShieldAlert, Paperclip, Send } from '@lucide/vue'
 
 const props = defineProps<{
@@ -9,6 +10,7 @@ const props = defineProps<{
 }>()
 
 const authStore = useAuthStore()
+const toast = useToastStore()
 
 const dispute = ref<any>(null)
 const messages = ref<any[]>([])
@@ -76,7 +78,7 @@ const sendMessage = async (attachmentUrl: string | null = null) => {
     newMessage.value = ''
   } catch (err) {
     console.error('Erro ao enviar mensagem:', err)
-    alert('Erro ao enviar mensagem.')
+    toast.push('Erro ao enviar mensagem.', 'error')
   } finally {
     sending.value = false
   }
@@ -89,7 +91,7 @@ const handleFileUpload = async (event: Event) => {
   if (!file) return
 
   if (file.size > 5 * 1024 * 1024) {
-    alert('Arquivo muito grande. O limite é 5MB.')
+    toast.push('Arquivo muito grande. O limite é 5MB.', 'error')
     return
   }
 
@@ -114,7 +116,7 @@ const handleFileUpload = async (event: Event) => {
 
   } catch (err) {
     console.error('Erro no upload:', err)
-    alert('Erro ao enviar anexo.')
+    toast.push('Erro ao enviar anexo.', 'error')
   } finally {
     uploading.value = false
     if (fileInput.value) fileInput.value.value = ''

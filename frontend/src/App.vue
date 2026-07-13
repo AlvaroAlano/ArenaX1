@@ -4,6 +4,8 @@ import { useAuthStore } from '@/stores/auth'
 import { supabase } from '@/services/supabase'
 import { computed } from 'vue'
 import PullToRefresh from '@/components/ui/PullToRefresh.vue'
+import ToastHost from '@/components/ui/ToastHost.vue'
+import ConfirmDialog from '@/components/ui/ConfirmDialog.vue'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -23,6 +25,8 @@ const handleLogout = async () => {
 <template>
   <div class="min-h-screen bg-canvas text-ink flex flex-col">
     <PullToRefresh />
+    <ToastHost />
+    <ConfirmDialog />
 
     <!-- Glow ambiente: teleportado pro <body> pra escapar de qualquer stacking/overflow context do #app.
          Importante: usa z-0 (nunca z-index negativo) — nesta base de código, elementos fixed com

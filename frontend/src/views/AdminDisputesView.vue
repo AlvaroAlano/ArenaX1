@@ -3,8 +3,12 @@ import { ref, onMounted } from 'vue'
 import { ArrowLeft, ShieldAlert, CheckCircle2, RefreshCw } from '@lucide/vue'
 import { useRouter } from 'vue-router'
 import { api } from '@/services/api'
+import { useConfirmStore } from '@/stores/confirm'
+import { useToastStore } from '@/stores/toast'
 
 const router = useRouter()
+const confirm = useConfirmStore()
+const toast = useToastStore()
 
 interface OpenDispute {
   dispute_id: string
@@ -63,7 +67,12 @@ onMounted(loadDisputes)
 const resolveDispute = async (d: OpenDispute, winner: 'a' | 'b') => {
   const winnerParticipant = winner === 'a' ? d.participant_a : d.participant_b
   if (!winnerParticipant) return
-  if (!confirm(`Confirmar que ${winnerParticipant.display_name} venceu de verdade essa partida? O outro lado vai perder Fair Play Rating por ter mentido.`)) return
+  if (!(await confirm.ask({
+    title: 'Definir vencedor',
+    message: `Confirmar que ${winnerParticipant.display_name} venceu de verdade essa partida? O outro lado vai perder Fair Play Rating por ter mentido.`,
+    confirmText: 'Confirmar vencedor',
+    tone: 'danger',
+  }))) return
 
   if (isMockData.value) {
     disputes.value = disputes.value.filter((item) => item.dispute_id !== d.dispute_id)
@@ -78,7 +87,7 @@ const resolveDispute = async (d: OpenDispute, winner: 'a' | 'b') => {
     })
     await loadDisputes()
   } catch (err: any) {
-    alert(err.message || 'Erro ao resolver a disputa.')
+    toast.push(err.message || 'Erro ao resolver a disputa.', 'error')
   } finally {
     resolvingId.value = null
   }

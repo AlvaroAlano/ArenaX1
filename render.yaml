@@ -18,4 +18,4 @@ services:
       - key: ALLOWED_ORIGINS
         sync: false
       - key: APP_ENV
-        value: development
+        value: production

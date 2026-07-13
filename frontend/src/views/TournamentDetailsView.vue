@@ -7,10 +7,12 @@ import {
 } from '@lucide/vue'
 import { api } from '@/services/api'
 import { useAuthStore } from '@/stores/auth'
+import { useConfirmStore } from '@/stores/confirm'
 
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
+const confirm = useConfirmStore()
 const tournamentId = route.params.id as string
 
 /**
@@ -192,7 +194,11 @@ const handleJoin = async () => {
     router.push('/register')
     return
   }
-  if (!confirm(`Confirmar inscrição de R$ ${tournament.value!.entry_fee.toFixed(2)} neste torneio?`)) return
+  if (!(await confirm.ask({
+    title: 'Confirmar inscrição',
+    message: `Confirmar inscrição de R$ ${tournament.value!.entry_fee.toFixed(2)} neste torneio? O valor fica reservado até o fim do torneio.`,
+    confirmText: 'Inscrever',
+  }))) return
 
   joining.value = true
   actionError.value = ''
@@ -207,7 +213,13 @@ const handleJoin = async () => {
 }
 
 const handleLeave = async () => {
-  if (!confirm('Cancelar sua inscrição? O valor será estornado para sua carteira.')) return
+  if (!(await confirm.ask({
+    title: 'Cancelar inscrição',
+    message: 'Cancelar sua inscrição? O valor será estornado para sua carteira.',
+    confirmText: 'Cancelar inscrição',
+    cancelText: 'Voltar',
+    tone: 'danger',
+  }))) return
 
   leaving.value = true
   actionError.value = ''
@@ -237,7 +249,12 @@ function myResult(match: Match): 'win' | 'loss' | null {
 }
 
 const handleReport = async (match: Match, result: 'win' | 'loss') => {
-  if (!confirm(`Confirma que você ${result === 'win' ? 'VENCEU' : 'PERDEU'} esta partida? Reportes falsos levam ao banimento.`)) return
+  if (!(await confirm.ask({
+    title: `Reportar ${result === 'win' ? 'vitória' : 'derrota'}`,
+    message: `Confirma que você ${result === 'win' ? 'VENCEU' : 'PERDEU'} esta partida? Reportes falsos levam ao banimento.`,
+    confirmText: result === 'win' ? 'Reportar vitória' : 'Reportar derrota',
+    tone: 'danger',
+  }))) return
 
   reportingMatchId.value = match.id
   actionError.value = ''
