@@ -2,8 +2,10 @@
 import { Wallet, Gamepad2, Camera, Banknote, Hourglass, Gavel, WifiOff, ShieldCheck } from '@lucide/vue'
 import FaqAccordion from '@/components/ui/FaqAccordion.vue'
 
-/* Respostas ancoradas no termos-de-uso.md (Seções 1.3-A, 2, 5, 6, 9 e 11.2) —
-   sem prazos ou regras que não estejam documentados lá. */
+/* Respostas ancoradas no termos-de-uso.md (Seções 1.3-A, 2, 5, 6, 9, 11.2) e
+   em regras-do-sistema.md (rake, prazos, divisão de premiação, Fair Play,
+   contador de abandono) — sem números ou regras que não estejam documentados
+   em algum dos dois. */
 const faqs = [
   {
     q: 'O que é a ArenaX1?',
@@ -40,6 +42,50 @@ const faqs = [
   {
     q: 'Como funcionam os torneios?',
     a: 'Os torneios online pagos são mata-mata de 4, 8 ou 16 jogadores: a chave é sorteada quando as vagas fecham e a premiação é distribuída sobre o total arrecadado em inscrições, descontada a comissão da plataforma. Cada confronto segue as mesmas regras de reporte e mediação do X1. Também existe o Torneio de Sofá, 100% grátis, pra jogar com os amigos — só o anfitrião precisa de conta.',
+  },
+  {
+    q: 'Quanto a ArenaX1 cobra de comissão sobre os desafios e torneios?',
+    a: 'No desafio 1v1 a comissão é de 8% sobre o total apostado pelos dois jogadores — o vencedor leva 1,84× o valor da aposta. Nos torneios online pagos é 10% sobre o total arrecadado em inscrições. A comissão só é descontada no momento em que o prêmio é efetivamente liberado: nunca é cobrada sobre desafio cancelado ou resultado revertido por disputa.',
+  },
+  {
+    q: 'Existem "odds" ou multiplicadores que a plataforma define?',
+    a: 'Não. O valor que você pode ganhar ou perder é fixo e conhecido antes de aceitar o desafio — a ArenaX1 não define probabilidades, cotações ou multiplicadores variáveis por jogador ou por partida. No 1v1, o vencedor sempre leva 1,84× o valor apostado; não existe uma "casa" fixando odds contra você.',
+  },
+  {
+    q: 'Qual o valor mínimo pra depositar e pra criar um desafio?',
+    a: 'O depósito mínimo via Pix é R$ 10,00. Já o valor mínimo de um desafio 1v1 é R$ 1,00 — a interface sugere atalhos de R$ 5, 10, 20 ou 50, mas dá pra digitar outro valor dentro do permitido.',
+  },
+  {
+    q: 'Como é dividida a premiação nos torneios pagos?',
+    a: 'Depende do número de vagas: com 4 jogadores, o campeão leva 100% do pote; com 8, a divisão é 55% para o 1º lugar, 30% para o 2º e 15% para o 3º; com 16, é 50% / 25% / 15% / 10% para os quatro primeiros colocados — sempre sobre o valor líquido, já descontada a comissão da plataforma.',
+  },
+  {
+    q: 'Posso ter mais de uma conta?',
+    a: 'Não. Cada CPF pode estar associado a apenas uma conta na plataforma — é uma regra antifraude, já que múltiplas contas poderiam ser usadas pra manipular resultados entre si.',
+  },
+  {
+    q: 'O que é a nota de Fair Play e como ela funciona?',
+    a: 'É a sua reputação de conduta na plataforma, numa escala de 0 a 5 que começa em 5,0. Ela só cai quando uma mediação comprova má conduta — mentir sobre o resultado, trapacear ou se comportar mal — nunca por silêncio ou por não reportar a tempo, que é considerado comportamento passivo, não falta de conduta.',
+  },
+  {
+    q: 'O que é o selo de "histórico de abandono" no perfil?',
+    a: 'É um indicador separado da nota de Fair Play, que conta quantas vezes você aceitou um desafio e não confirmou presença a tempo. Ele só fica visível no seu perfil público depois de acumular 3 ausências, e você é avisado com 48h de antecedência pra contestar antes da publicação, caso tenha tido um motivo justo.',
+  },
+  {
+    q: 'Quanto tempo tenho pra confirmar presença depois que meu desafio é aceito?',
+    a: 'Quinze minutos. Depois que o oponente é escolhido, os dois precisam clicar em "Iniciar partida" dentro desse prazo. Se alguém não confirmar, o desafio é cancelado, o valor de ambos é devolvido integralmente e só quem não confirmou recebe uma marcação no contador de ausência — nunca uma penalidade financeira.',
+  },
+  {
+    q: 'Posso cancelar um desafio que eu criei?',
+    a: 'Sim, mas só enquanto ele ainda estiver aberto, sem nenhum oponente escolhido, com devolução integral do valor reservado. Depois que alguém é selecionado pra jogar contra você, o desafio segue o fluxo normal até o resultado ou até o prazo de confirmação vencer.',
+  },
+  {
+    q: 'Em quais plataformas dá pra jogar?',
+    a: 'PS5, Xbox e PC — incluindo desafios Crossplay, pra encontrar adversário em qualquer plataforma, jogando EA FC 25, EA FC 26 ou eFootball.',
+  },
+  {
+    q: 'Posso desativar ou excluir minha conta?',
+    a: 'Sim, existem dois caminhos. Desativar é reversível e instantâneo: sua conta some das listagens públicas, mas nada é apagado e basta fazer login de novo pra reativar. Excluir é definitivo: primeiro é preciso sacar qualquer saldo livre disponível, depois há uma carência de 30 dias — logar novamente dentro desse prazo cancela o pedido automaticamente.',
   },
 ]
 </script>
