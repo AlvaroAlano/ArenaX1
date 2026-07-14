@@ -44,12 +44,8 @@ const faqs = [
     a: 'Os torneios online pagos são mata-mata de 4, 8 ou 16 jogadores: a chave é sorteada quando as vagas fecham e a premiação é distribuída sobre o total arrecadado em inscrições, descontada a comissão da plataforma. Cada confronto segue as mesmas regras de reporte e mediação do X1. Também existe o Torneio de Sofá, 100% grátis, pra jogar com os amigos — só o anfitrião precisa de conta.',
   },
   {
-    q: 'Quanto a ArenaX1 cobra de comissão sobre os desafios e torneios?',
-    a: 'No desafio 1v1 a comissão é de 8% sobre o total apostado pelos dois jogadores — o vencedor leva 1,84× o valor da aposta. Nos torneios online pagos é 10% sobre o total arrecadado em inscrições. A comissão só é descontada no momento em que o prêmio é efetivamente liberado: nunca é cobrada sobre desafio cancelado ou resultado revertido por disputa.',
-  },
-  {
     q: 'Existem "odds" ou multiplicadores que a plataforma define?',
-    a: 'Não. O valor que você pode ganhar ou perder é fixo e conhecido antes de aceitar o desafio — a ArenaX1 não define probabilidades, cotações ou multiplicadores variáveis por jogador ou por partida. No 1v1, o vencedor sempre leva 1,84× o valor apostado; não existe uma "casa" fixando odds contra você.',
+    a: 'Não. O valor que você pode ganhar ou perder é fixo e conhecido antes de aceitar o desafio — a ArenaX1 não define probabilidades, cotações ou multiplicadores variáveis por jogador ou por partida. Não existe uma "casa" fixando odds contra você: o resultado é só entre você e seu adversário.',
   },
   {
     q: 'Qual o valor mínimo pra depositar e pra criar um desafio?',
