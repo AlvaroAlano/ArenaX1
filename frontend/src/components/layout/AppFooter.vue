@@ -18,13 +18,25 @@
             </div>
             <div class="flex flex-col gap-4">
                 <h4 class="text-xs font-bold uppercase tracking-widest text-ink-tertiary">Suporte</h4>
-                <a class="text-sm text-ink-subtle hover:text-primary" href="#">Termos de Utilização</a>
-                <a class="text-sm text-ink-subtle hover:text-primary" href="#">Política de Privacidade</a>
+                <router-link class="text-sm text-ink-subtle hover:text-primary" to="/termos">Termos de Utilização</router-link>
+                <router-link class="text-sm text-ink-subtle hover:text-primary" to="/privacidade">Política de Privacidade</router-link>
                 <router-link class="text-sm text-ink-subtle hover:text-primary" to="/support">Fale Conosco</router-link>
             </div>
         </div>
     </div>
-    <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-hairline flex flex-col md:flex-row items-center justify-between gap-4">
+    <!-- Aviso legal — conteúdo institucional discreto (skill-based + marcas de terceiros) -->
+    <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-hairline">
+        <h4 class="mb-3 text-[11px] font-bold uppercase tracking-widest text-ink-tertiary">Aviso legal</h4>
+        <div class="max-w-4xl space-y-2.5">
+            <p class="text-caption leading-relaxed text-ink-tertiary">
+              A ArenaX1 é uma plataforma de competição baseada 100% em habilidade. Não operamos cassino, não sorteamos prêmios e não intermediamos apostas sobre eventos esportivos de terceiros — o resultado financeiro de cada desafio decorre exclusivamente do desempenho do próprio jogador na partida que ele disputou.
+            </p>
+            <p class="text-caption leading-relaxed text-ink-tertiary">
+              A ArenaX1 não é endossada, patrocinada ou afiliada à Electronic Arts (EA Sports FC), Konami (eFootball), Sony (PlayStation), Microsoft (Xbox) ou Valve (Steam). Todas as marcas citadas pertencem aos seus respectivos titulares e não existe vínculo comercial entre essas empresas e a operação da Plataforma.
+            </p>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-8 pt-6 border-t border-hairline flex flex-col md:flex-row items-center justify-between gap-4">
         <p class="text-xs text-ink-tertiary order-last md:order-first">&copy; 2026 ArenaX1.</p>
         <ResponsibleGamingNote />
         <div class="flex items-center gap-3">

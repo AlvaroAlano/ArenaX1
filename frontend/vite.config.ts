@@ -42,4 +42,11 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  server: {
+    fs: {
+      // Os documentos legais (.md) importados via ?raw moram na raiz do
+      // repositório, um nível acima de frontend/ — libera pro dev server.
+      allow: [fileURLToPath(new URL('..', import.meta.url))],
+    },
+  },
 })

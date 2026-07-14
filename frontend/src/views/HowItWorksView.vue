@@ -1,5 +1,47 @@
 <script setup lang="ts">
 import { Wallet, Gamepad2, Camera, Banknote, Hourglass, Gavel, WifiOff, ShieldCheck } from '@lucide/vue'
+import FaqAccordion from '@/components/ui/FaqAccordion.vue'
+
+/* Respostas ancoradas no termos-de-uso.md (Seções 1.3-A, 2, 5, 6, 9 e 11.2) —
+   sem prazos ou regras que não estejam documentados lá. */
+const faqs = [
+  {
+    q: 'O que é a ArenaX1?',
+    a: 'Uma plataforma brasileira de desafios e torneios de futebol virtual (EA FC e eFootball). Você desafia outro jogador num X1 valendo dinheiro de verdade, joga a partida no seu console ou PC e, se vencer, o pote cai direto na sua carteira.',
+  },
+  {
+    q: 'Isso é aposta ou jogo de azar?',
+    a: 'Não. A ArenaX1 é uma competição baseada 100% em habilidade: não operamos cassino, não sorteamos prêmios e não intermediamos apostas sobre eventos esportivos de terceiros. O que você recebe ao final de um desafio é consequência direta do seu próprio desempenho na partida que você mesmo jogou — nunca de sorte, aleatoriedade ou resultado alheio.',
+  },
+  {
+    q: 'Como funciona um desafio 1v1?',
+    a: 'Você cria um desafio (ou aceita um aberto) definindo jogo, plataforma e valor. Formada a dupla, o valor dos dois lados fica travado em custódia. Vocês combinam a sala pelo chat da partida, jogam no próprio jogo e cada um reporta o resultado na plataforma. Batendo os dois relatos, o vencedor recebe o pote imediatamente, descontada a comissão da plataforma.',
+  },
+  {
+    q: 'Como sei que não vou ser passado pra trás no resultado?',
+    a: 'Três camadas de proteção: o valor fica travado em custódia até o resultado sair; os dois jogadores precisam reportar o placar (duplo check); e é obrigatório registrar foto ou vídeo do placar final. Se os relatos divergirem, a partida entra em mediação e nossa equipe decide com base nas provas apresentadas. Quem reporta resultado falso perde reputação e pode ser banido.',
+  },
+  {
+    q: 'Quanto tempo demora pra sacar?',
+    a: 'O saque é feito via Pix para uma chave cadastrada no seu próprio CPF, sem taxa de saque. O tempo de processamento pode variar conforme o horário e a análise antifraude — como medida de segurança, podemos confirmar a titularidade da chave antes de liberar o valor.',
+  },
+  {
+    q: 'Sou menor de idade, posso jogar?',
+    a: 'Não. A ArenaX1 é restrita a maiores de 18 anos, sem exceção, com verificação de identidade obrigatória — a simples declaração de maioridade não é aceita. Contas identificadas como pertencentes a menores são imediatamente suspensas e encerradas.',
+  },
+  {
+    q: 'A ArenaX1 tem vínculo com a EA ou a Konami?',
+    a: 'Não. A ArenaX1 não é endossada, patrocinada ou afiliada à Electronic Arts, Konami, Sony, Microsoft ou Valve. EA Sports FC, eFootball, PlayStation, Xbox e Steam são marcas dos seus respectivos titulares — nós organizamos a competição entre os jogadores, sem qualquer vínculo comercial com essas empresas.',
+  },
+  {
+    q: 'O que acontece se o adversário sumir sem reportar o resultado?',
+    a: 'Se só você reportar, o resultado informado é aceito automaticamente após o prazo de 24 horas. O valor fica retido por 3 dias antes de se tornar sacável — a janela em que o outro jogador ainda pode contestar. Quem some repetidamente acumula registro de ausência na reputação.',
+  },
+  {
+    q: 'Como funcionam os torneios?',
+    a: 'Os torneios online pagos são mata-mata de 4, 8 ou 16 jogadores: a chave é sorteada quando as vagas fecham e a premiação é distribuída sobre o total arrecadado em inscrições, descontada a comissão da plataforma. Cada confronto segue as mesmas regras de reporte e mediação do X1. Também existe o Torneio de Sofá, 100% grátis, pra jogar com os amigos — só o anfitrião precisa de conta.',
+  },
+]
 </script>
 
 <template>
@@ -102,6 +144,24 @@ import { Wallet, Gamepad2, Camera, Banknote, Hourglass, Gavel, WifiOff, ShieldCh
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <div class="space-y-8">
+        <h2 class="border-b border-hairline pb-4 font-display text-headline font-bold text-ink">Perguntas Frequentes</h2>
+        <div class="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-14">
+            <div class="space-y-4">
+                <p class="text-body-lg leading-relaxed text-ink-subtle">
+                  Respostas diretas sobre dinheiro, segurança e regras — sem letra miúda.
+                </p>
+                <p class="text-body-sm text-ink-tertiary">
+                  Ainda ficou com dúvida? Fale com a gente pelo canal de
+                  <router-link to="/support" class="font-semibold text-primary hover:text-primary-hover">suporte</router-link>
+                  ou confira os
+                  <router-link to="/termos" class="font-semibold text-primary hover:text-primary-hover">Termos de Uso</router-link>.
+                </p>
+            </div>
+            <FaqAccordion :items="faqs" />
         </div>
     </div>
 

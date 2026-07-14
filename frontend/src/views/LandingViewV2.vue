@@ -2,6 +2,8 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import amigos from '@/assets/amigos.png'
 import { vReveal, prefersReduce } from '@/composables/useReveal'
+import FaqAccordion from '@/components/ui/FaqAccordion.vue'
+import TiltCard from '@/components/ui/TiltCard.vue'
 import {
   ArrowRight,
   Star,
@@ -23,6 +25,9 @@ import {
   Crown,
   Share2,
   Gamepad2,
+  Target,
+  Banknote,
+  Scale,
 } from '@lucide/vue'
 
 /* ─────────────────────────────────────────────────────────
@@ -76,6 +81,30 @@ const steps = [
   { n: '02', icon: Wallet, title: 'Deposite via Pix', desc: 'A partir de R$ 5. Cai na carteira na hora, protegida por sistema antifraude.' },
   { n: '03', icon: Swords, title: 'Desafie e jogue', desc: 'Crie ou aceite um X1, combinem a sala e joguem no EA FC 25, EA FC 26 ou eFootball. O valor fica travado até o resultado.' },
   { n: '04', icon: Zap, title: 'Ganhou? Saca.', desc: 'O prêmio cai direto na carteira. Saque via Pix, sem burocracia.' },
+]
+
+/* ── Por que jogar na ArenaX1 (só recursos que existem de verdade no produto) ── */
+const whyArena = [
+  {
+    icon: Target,
+    title: '100% Habilidade',
+    desc: 'Sem roleta, sem sorteio, sem cassino. O único fator que decide quem leva o pote é o seu nível no jogo.',
+  },
+  {
+    icon: Banknote,
+    title: 'Saque via Pix',
+    desc: 'Ganhou, sacou. O prêmio vai direto pra sua conta via Pix, sem taxa de saque e sem enrolação.',
+  },
+  {
+    icon: Scale,
+    title: 'Fair Play com Mediação',
+    desc: 'Sistema de reputação, duplo check de resultado e mediação de disputas com prova em foto ou vídeo. Ninguém sai no prejuízo.',
+  },
+  {
+    icon: Gamepad2,
+    title: 'Feito pra EA FC e eFootball',
+    desc: 'Uma arena pensada pro jogador brasileiro de futebol virtual — não mais um site genérico de apostas.',
+  },
 ]
 
 /* ── Torneios em destaque (mesmo mock de TournamentsView.vue, sem backend próprio ainda) ── */
@@ -298,6 +327,30 @@ const faqs = [
       </div>
     </section>
 
+    <!-- ══════════════════ POR QUE A ARENAX1 ══════════════════ -->
+    <section class="mx-auto flex max-w-[1600px] flex-col gap-11 px-6 py-20 lg:px-16 lg:py-24">
+      <div class="mx-auto flex max-w-2xl flex-col items-center gap-2.5 text-center">
+        <span class="text-xs font-bold uppercase tracking-[0.14em] text-primary">Por que a ArenaX1</span>
+        <h2 class="font-display text-[32px] font-black uppercase tracking-tight text-ink lg:text-[40px]">Não é aposta. <span class="text-primary">É habilidade</span></h2>
+        <p class="text-base text-ink-subtle">Aqui ninguém torce por resultado alheio: você entra em campo, joga e o prêmio segue o seu desempenho. Simples assim.</p>
+      </div>
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div v-for="(b, i) in whyArena" :key="b.title" v-reveal="`${i * 90}ms`">
+          <TiltCard class="group relative h-full overflow-hidden rounded-2xl border border-hairline bg-surface-2 p-6 transition-colors duration-300 hover:border-primary/40">
+            <!-- brilho de fundo que acende no hover -->
+            <span aria-hidden="true" class="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-primary/10 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+            <div class="flex h-full flex-col gap-3.5 [transform:translateZ(28px)]">
+              <span class="grid size-12 place-items-center rounded-xl border border-primary/20 bg-primary/12 text-primary shadow-glow-pill">
+                <component :is="b.icon" :size="24" />
+              </span>
+              <span class="text-[17px] font-extrabold text-ink">{{ b.title }}</span>
+              <p class="text-sm leading-relaxed text-ink-subtle">{{ b.desc }}</p>
+            </div>
+          </TiltCard>
+        </div>
+      </div>
+    </section>
+
     <!-- ══════════════════ TORNEIOS ══════════════════ -->
     <section id="torneios" class="mx-auto flex max-w-[1600px] flex-col gap-10 px-6 py-20 lg:px-16 lg:py-24">
       <div class="flex flex-col gap-2.5">
@@ -513,15 +566,11 @@ const faqs = [
         <span class="text-xs font-bold uppercase tracking-[0.14em] text-primary">FAQ</span>
         <h2 class="font-display text-[32px] font-black uppercase tracking-tight text-ink lg:text-[40px]">Perguntas frequentes</h2>
       </div>
-      <div class="flex flex-col gap-3">
-        <details v-for="f in faqs" :key="f.q" class="group rounded-xl border border-hairline bg-surface-2 px-6 py-5">
-          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-bold text-ink marker:content-none">
-            {{ f.q }}
-            <span class="text-lg font-black text-primary transition-transform group-open:rotate-45">+</span>
-          </summary>
-          <p class="mt-3.5 text-sm leading-relaxed text-ink-subtle">{{ f.a }}</p>
-        </details>
-      </div>
+      <FaqAccordion :items="faqs" />
+      <p class="text-center text-caption text-ink-tertiary">
+        Mais dúvidas? Veja o FAQ completo em
+        <router-link to="/como-funciona" class="font-semibold text-primary hover:text-primary-hover">Como Funciona</router-link>.
+      </p>
     </section>
 
     <!-- ══════════════════ CTA FINAL ══════════════════ -->

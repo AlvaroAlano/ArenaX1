@@ -50,6 +50,19 @@ const router = createRouter({
           path: 'como-funciona',
           name: 'how-it-works',
           component: () => import('../views/HowItWorksView.vue')
+        },
+        {
+          // Documentos legais renderizados dos .md da raiz do repo (LegalView)
+          path: 'termos',
+          name: 'terms',
+          component: () => import('../views/LegalView.vue'),
+          props: { doc: 'termos' }
+        },
+        {
+          path: 'privacidade',
+          name: 'privacy',
+          component: () => import('../views/LegalView.vue'),
+          props: { doc: 'privacidade' }
         }
       ]
     },
