@@ -116,8 +116,9 @@ const closeSidebar = () => {
 
       <!-- Criar rápido: um botão só, fora da lista de navegação (não compete
            com Desafios/Torneios), com um mini-menu de 2 opções — mesmo
-           padrão do "+" do bottom nav mobile. -->
-      <div ref="createMenuRoot" class="relative shrink-0 border-b border-hairline px-4 py-3">
+           padrão do "+" do bottom nav mobile. Escondido no modo admin: criar
+           desafio/torneio não faz sentido dentro do painel de moderação. -->
+      <div v-if="!isAdminSection" ref="createMenuRoot" class="relative shrink-0 border-b border-hairline px-4 py-3">
           <button
             type="button"
             @click="showCreateMenu = !showCreateMenu"
@@ -238,7 +239,9 @@ const closeSidebar = () => {
             </div>
           </Transition>
 
-          <InstallPwaButton variant="ghost" class="w-full !justify-start mt-1" />
+          <!-- Instalar app: só no modo normal — dentro do painel de admin
+               polui o menu de moderação e não é onde alguém instala o app. -->
+          <InstallPwaButton v-if="!isAdminSection" variant="ghost" class="w-full !justify-start mt-1" />
 
           <!-- Card Resumo Saldo -->
           <div class="mt-8 rounded-xl bg-surface-2 border border-hairline p-5">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { ArrowLeft, ShieldAlert, CheckCircle2, RefreshCw, Swords, X } from '@lucide/vue'
+import { ArrowLeft, ShieldAlert, CheckCircle2, RefreshCw, Swords, ChevronRight } from '@lucide/vue'
 import { useRouter } from 'vue-router'
 import { api } from '@/services/api'
 import { useConfirmStore } from '@/stores/confirm'
@@ -46,9 +46,6 @@ const resolvingId = ref<string | null>(null)
 
 const challengeDisputes = ref<ChallengeDispute[]>([])
 const challengeDisputesLoading = ref(true)
-const resolvingChallengeId = ref<string | null>(null)
-const cancelingChallengeId = ref<string | null>(null)
-const cancelReason = ref('')
 
 // Exemplo pra visualizar a tela enquanto o backend não tem disputa real
 // (ou está fora do ar) — só entra se a chamada falhar por outro motivo
@@ -101,6 +98,10 @@ onMounted(() => {
   loadChallengeDisputes()
 })
 
+const openChallengeDispute = (d: ChallengeDispute) => {
+  router.push(`/admin/disputes/${d.challenge_id}`)
+}
+
 const resolveDispute = async (d: OpenDispute, winner: 'a' | 'b') => {
   const winnerParticipant = winner === 'a' ? d.participant_a : d.participant_b
   if (!winnerParticipant) return
@@ -130,62 +131,6 @@ const resolveDispute = async (d: OpenDispute, winner: 'a' | 'b') => {
   }
 }
 
-const resolveChallengeDispute = async (d: ChallengeDispute, winner: 'creator' | 'opponent') => {
-  const winnerProfile = winner === 'creator' ? d.creator : d.opponent
-  if (!winnerProfile) return
-  if (!(await confirm.ask({
-    title: 'Definir vencedor',
-    message: `Confirmar que ${winnerProfile.username || 'esse jogador'} venceu de verdade o desafio de ${d.game}? O outro lado vai perder Fair Play Rating se tiver reportado vitória falsa.`,
-    confirmText: 'Confirmar vencedor',
-    tone: 'danger',
-  }))) return
-
-  resolvingChallengeId.value = d.dispute_id
-  try {
-    await api.post(`/api/admin/challenge-disputes/${d.challenge_id}/resolve`, { winner_id: winnerProfile.id })
-    toast.push('Disputa resolvida.', 'success')
-    await loadChallengeDisputes()
-  } catch (err: any) {
-    toast.push(err.message || 'Erro ao resolver a disputa.', 'error')
-  } finally {
-    resolvingChallengeId.value = null
-  }
-}
-
-const startCancelChallenge = (d: ChallengeDispute) => {
-  cancelingChallengeId.value = d.dispute_id
-  cancelReason.value = ''
-}
-const cancelCancelChallenge = () => {
-  cancelingChallengeId.value = null
-  cancelReason.value = ''
-}
-
-const submitCancelChallenge = async (d: ChallengeDispute) => {
-  if (!cancelReason.value.trim()) {
-    toast.push('Descreva o motivo de anular a disputa.', 'error')
-    return
-  }
-  if (!(await confirm.ask({
-    title: 'Anular disputa',
-    message: `O valor apostado por ${d.creator.username || 'criador'} e ${d.opponent?.username || 'oponente'} volta pra carteira dos dois, sem vencedor e sem penalidade de Fair Play. Confirma?`,
-    confirmText: 'Anular e devolver aos dois',
-    tone: 'danger',
-  }))) return
-
-  resolvingChallengeId.value = d.dispute_id
-  try {
-    await api.post(`/api/admin/challenge-disputes/${d.challenge_id}/cancel`, { reason: cancelReason.value.trim() })
-    toast.push('Disputa anulada e valor devolvido aos dois.', 'success')
-    cancelCancelChallenge()
-    await loadChallengeDisputes()
-  } catch (err: any) {
-    toast.push(err.message || 'Erro ao anular a disputa.', 'error')
-  } finally {
-    resolvingChallengeId.value = null
-  }
-}
-
 function timeAgo(iso: string): string {
   const mins = Math.floor((Date.now() - new Date(iso).getTime()) / 60_000)
   if (mins < 1) return 'Agora mesmo'
@@ -195,6 +140,10 @@ function timeAgo(iso: string): string {
   const days = Math.floor(hours / 24)
   return days === 1 ? 'Ontem' : `Há ${days} dias`
 }
+
+const fmtDateTime = (iso: string) => new Date(iso).toLocaleString('pt-BR', {
+  day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
+})
 
 const resultLabel = (r: 'win' | 'loss' | null) => r === 'win' ? 'Reportou vitória' : r === 'loss' ? 'Reportou derrota' : 'Não reportou'
 </script>
@@ -208,7 +157,7 @@ const resultLabel = (r: 'win' | 'loss' | null) => r === 'win' ? 'Reportou vitór
         </button>
         <span class="text-eyebrow uppercase tracking-widest text-accent">Portal de admin</span>
         <h1 class="mt-2 font-display text-headline font-black uppercase tracking-tight text-ink">Disputas</h1>
-        <p class="mt-1 text-body-sm text-ink-subtle">Desafios 1v1 e partidas de torneio com resultado divergente — analisa as provas no chat da disputa e decide.</p>
+        <p class="mt-1 text-body-sm text-ink-subtle">Desafios 1v1 e partidas de torneio com resultado divergente — clique numa disputa pra analisar as provas e decidir.</p>
       </div>
       <button @click="loadDisputes(); loadChallengeDisputes()" :disabled="loading || challengeDisputesLoading" class="inline-flex w-fit items-center gap-2 rounded-xl border border-hairline-strong bg-surface-1 px-4 py-2.5 text-body-sm font-semibold text-ink-subtle transition-colors hover:bg-surface-2 disabled:opacity-60">
         <RefreshCw :size="15" :class="(loading || challengeDisputesLoading) ? 'animate-spin' : ''" /> Atualizar
@@ -234,13 +183,25 @@ const resultLabel = (r: 'win' | 'loss' | null) => r === 'win' ? 'Reportou vitór
       </div>
 
       <div v-else class="space-y-3">
-        <div v-for="d in challengeDisputes" :key="d.dispute_id" class="rounded-2xl border border-semantic-error/25 bg-semantic-error/[0.03] p-5">
-          <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <button
+          v-for="d in challengeDisputes"
+          :key="d.dispute_id"
+          type="button"
+          @click="openChallengeDispute(d)"
+          class="group w-full rounded-2xl border border-semantic-error/25 bg-semantic-error/[0.03] p-5 text-left transition-colors hover:bg-semantic-error/[0.07]"
+        >
+          <div class="mb-3 flex flex-wrap items-start justify-between gap-2">
             <div>
               <p class="font-bold text-ink">{{ d.game }} · {{ d.platform }} · R$ {{ Number(d.bet_amount).toFixed(2) }}</p>
               <p class="text-caption text-ink-tertiary">{{ d.creator.username || '?' }} vs {{ d.opponent?.username || '?' }}</p>
             </div>
-            <span class="text-caption text-ink-tertiary">{{ timeAgo(d.created_at) }}</span>
+            <div class="flex items-center gap-2 text-right">
+              <div>
+                <p class="text-caption font-semibold text-ink-subtle">{{ fmtDateTime(d.created_at) }}</p>
+                <p class="text-caption text-ink-tertiary">{{ timeAgo(d.created_at) }}</p>
+              </div>
+              <ChevronRight :size="18" class="shrink-0 text-ink-tertiary transition-transform group-hover:translate-x-0.5" />
+            </div>
           </div>
 
           <div class="mb-3 grid gap-2 sm:grid-cols-2">
@@ -254,61 +215,14 @@ const resultLabel = (r: 'win' | 'loss' | null) => r === 'win' ? 'Reportou vitór
             </div>
           </div>
 
-          <p v-if="d.reason" class="mb-4 rounded-lg bg-surface-2 px-3 py-2.5 text-body-sm text-ink-subtle">
+          <p v-if="d.reason" class="line-clamp-2 rounded-lg bg-surface-2 px-3 py-2.5 text-body-sm text-ink-subtle">
             <span class="font-semibold text-ink-tertiary">Motivo relatado: </span>{{ d.reason }}
           </p>
 
-          <div class="flex flex-col gap-2 sm:flex-row">
-            <button
-              type="button"
-              @click="resolveChallengeDispute(d, 'creator')"
-              :disabled="resolvingChallengeId === d.dispute_id || !d.creator"
-              class="flex-1 rounded-lg border border-semantic-success/30 bg-semantic-success/10 px-3 py-3 text-body-sm font-semibold text-semantic-success transition-colors hover:bg-semantic-success/20 disabled:cursor-wait disabled:opacity-60"
-            >
-              {{ d.creator.username || '—' }} venceu de verdade
-            </button>
-            <button
-              type="button"
-              @click="resolveChallengeDispute(d, 'opponent')"
-              :disabled="resolvingChallengeId === d.dispute_id || !d.opponent"
-              class="flex-1 rounded-lg border border-semantic-success/30 bg-semantic-success/10 px-3 py-3 text-body-sm font-semibold text-semantic-success transition-colors hover:bg-semantic-success/20 disabled:cursor-wait disabled:opacity-60"
-            >
-              {{ d.opponent?.username || '—' }} venceu de verdade
-            </button>
-            <button
-              v-if="cancelingChallengeId !== d.dispute_id"
-              type="button"
-              @click="startCancelChallenge(d)"
-              :disabled="resolvingChallengeId === d.dispute_id"
-              class="rounded-lg border border-hairline-strong bg-surface-2 px-3 py-3 text-body-sm font-semibold text-ink-subtle transition-colors hover:bg-surface-3 disabled:cursor-wait disabled:opacity-60"
-            >
-              Anular disputa
-            </button>
-          </div>
-
-          <div v-if="cancelingChallengeId === d.dispute_id" class="mt-3 space-y-2 border-t border-hairline pt-3">
-            <label class="block text-caption font-semibold uppercase tracking-wider text-ink-subtle">Motivo de anular (sem provas suficientes de nenhum lado, etc.)</label>
-            <textarea
-              v-model="cancelReason"
-              rows="2"
-              placeholder="Ex.: nenhum dos dois enviou prova do placar, impossível decidir com segurança."
-              class="w-full rounded-lg border border-hairline-strong bg-surface-2 px-3.5 py-2.5 text-body-sm text-ink placeholder:text-ink-tertiary focus:border-primary focus:outline-none"
-            ></textarea>
-            <div class="flex gap-2">
-              <button
-                type="button"
-                @click="submitCancelChallenge(d)"
-                :disabled="resolvingChallengeId === d.dispute_id"
-                class="rounded-lg bg-semantic-error px-4 py-2 text-body-sm font-bold text-canvas transition-colors hover:bg-semantic-error/90 disabled:opacity-50"
-              >
-                Confirmar anulação
-              </button>
-              <button type="button" @click="cancelCancelChallenge" class="inline-flex items-center gap-1.5 rounded-lg border border-hairline-strong px-4 py-2 text-body-sm font-semibold text-ink-subtle hover:bg-surface-2">
-                <X :size="14" /> Cancelar
-              </button>
-            </div>
-          </div>
-        </div>
+          <span class="mt-3 inline-flex items-center gap-1.5 text-caption font-bold uppercase tracking-wide text-primary">
+            Analisar disputa <ChevronRight :size="13" />
+          </span>
+        </button>
       </div>
     </section>
 
@@ -351,7 +265,10 @@ const resultLabel = (r: 'win' | 'loss' | null) => r === 'win' ? 'Reportou vitór
               <p class="font-bold text-ink">{{ d.tournament_title }}</p>
               <p class="text-caption text-ink-tertiary">Rodada {{ d.round }}</p>
             </div>
-            <span class="text-caption text-ink-tertiary">{{ timeAgo(d.created_at) }}</span>
+            <div class="text-right">
+              <p class="text-caption font-semibold text-ink-subtle">{{ fmtDateTime(d.created_at) }}</p>
+              <p class="text-caption text-ink-tertiary">{{ timeAgo(d.created_at) }}</p>
+            </div>
           </div>
           <div class="flex flex-col gap-2 sm:flex-row">
             <button

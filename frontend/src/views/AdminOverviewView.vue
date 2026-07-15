@@ -130,9 +130,11 @@ const tamanhoOrdenado = computed(() => {
     .sort((a, b) => Number(a.label) - Number(b.label))
 })
 
+// Conta desafios 1v1 E torneios em disputa — o card leva pra tela única que
+// lista os dois tipos, então o número precisa somar os dois (antes só torneio).
 const disputasAbertasTotal = computed(() => {
   if (!metrics.value) return 0
-  return metrics.value.disputas.torneios_em_disputa
+  return metrics.value.disputas.desafios_em_disputa + metrics.value.disputas.torneios_em_disputa
 })
 </script>
 
@@ -187,9 +189,9 @@ const disputasAbertasTotal = computed(() => {
             <ShieldAlert :size="18" />
           </span>
           <span>
-            <span class="block font-bold text-ink">Disputas de torneio</span>
+            <span class="block font-bold text-ink">Disputas</span>
             <span class="block text-body-sm text-ink-subtle">
-              {{ disputasAbertasTotal > 0 ? `${disputasAbertasTotal} aberta(s) esperando resolução` : 'Nenhuma disputa aberta agora' }}
+              {{ disputasAbertasTotal > 0 ? `${disputasAbertasTotal} aberta(s) esperando análise` : 'Nenhuma disputa aberta agora' }}
             </span>
           </span>
         </span>

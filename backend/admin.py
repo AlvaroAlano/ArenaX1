@@ -285,6 +285,130 @@ def list_challenge_disputes(status: str = "open", admin_user_id: str = Depends(g
         raise HTTPException(status_code=500, detail=f"Erro ao carregar disputas de desafio: {str(e)}")
 
 
+@router.get("/challenge-disputes/{challenge_id}")
+def get_challenge_dispute_detail(challenge_id: str, admin_user_id: str = Depends(get_current_admin_user_id)):
+    """Tudo que o admin precisa pra analisar UMA disputa de desafio 1v1 numa
+    tela só: dados do desafio, perfis dos dois, linha do tempo (criação →
+    solicitação → aceite → disputa), o chat entre os jogadores (challenge_
+    messages) e o chat de mediação com os prints (dispute_messages). Como o
+    admin não é participante, a RLS bloquearia esses chats via cliente normal
+    — por isso é o backend (service_role) que lê e entrega tudo pronto."""
+    try:
+        challenge_res = supabase.table("challenges").select("*").eq("id", challenge_id).execute()
+        challenge = (challenge_res.data or [None])[0]
+        if not challenge:
+            raise HTTPException(status_code=404, detail="Desafio não encontrado.")
+
+        dispute_res = supabase.table("disputes").select(
+            "id, status, resolution, created_at, updated_at"
+        ).eq("challenge_id", challenge_id).execute()
+        dispute = (dispute_res.data or [None])[0]
+
+        # Perfis de todo mundo que aparece na tela (dois jogadores + quem mandou
+        # mensagem em qualquer um dos chats + quem solicitou entrada).
+        join_res = supabase.table("challenge_join_requests").select(
+            "id, requester_id, status, created_at, updated_at"
+        ).eq("challenge_id", challenge_id).order("created_at").execute()
+        join_requests = join_res.data or []
+
+        match_msgs_res = supabase.table("challenge_messages").select(
+            "id, sender_id, message, created_at"
+        ).eq("challenge_id", challenge_id).order("created_at").execute()
+        match_messages = match_msgs_res.data or []
+
+        dispute_messages = []
+        if dispute:
+            dm_res = supabase.table("dispute_messages").select(
+                "id, sender_id, message, attachment_url, created_at"
+            ).eq("dispute_id", dispute["id"]).order("created_at").execute()
+            dispute_messages = dm_res.data or []
+
+        profile_ids = set()
+        for pid in (challenge.get("creator_id"), challenge.get("opponent_id")):
+            if pid:
+                profile_ids.add(pid)
+        for r in join_requests:
+            profile_ids.add(r["requester_id"])
+        for m in match_messages:
+            profile_ids.add(m["sender_id"])
+        for m in dispute_messages:
+            profile_ids.add(m["sender_id"])
+        profiles_res = supabase.table("profiles").select(
+            "id, username, fair_play_rating"
+        ).in_("id", list(profile_ids)).execute()
+        profiles_by_id = {p["id"]: p for p in (profiles_res.data or [])}
+
+        def profile(pid):
+            if not pid:
+                return None
+            p = profiles_by_id.get(pid, {})
+            return {"id": pid, "username": p.get("username"), "fair_play_rating": p.get("fair_play_rating")}
+
+        creator = profile(challenge.get("creator_id"))
+        opponent = profile(challenge.get("opponent_id"))
+
+        # Linha do tempo montada só com o que temos timestamp confiável (não
+        # inventa horário de reporte que o schema não guarda). Cada evento:
+        # {key, label, at, actor}. Ordenada no fim por horário.
+        timeline = [{
+            "key": "created",
+            "label": "Desafio criado",
+            "at": challenge["created_at"],
+            "actor": creator["username"] if creator else None,
+        }]
+        accepted_req = next((r for r in join_requests if r["status"] == "accepted"), None)
+        if accepted_req:
+            requester = profile(accepted_req["requester_id"])
+            timeline.append({
+                "key": "requested",
+                "label": "Oponente solicitou entrada",
+                "at": accepted_req["created_at"],
+                "actor": requester["username"] if requester else None,
+            })
+            timeline.append({
+                "key": "accepted",
+                "label": "Criador aceitou o oponente",
+                "at": accepted_req["updated_at"],
+                "actor": creator["username"] if creator else None,
+            })
+        if dispute:
+            timeline.append({
+                "key": "disputed",
+                "label": "Disputa aberta",
+                "at": dispute["created_at"],
+                "actor": None,
+            })
+        timeline.sort(key=lambda e: e["at"])
+
+        def with_sender(m):
+            sp = profiles_by_id.get(m["sender_id"], {})
+            return {**m, "sender_username": sp.get("username", "?")}
+
+        return {
+            "challenge": {
+                "id": challenge["id"],
+                "game": challenge["game"],
+                "platform": challenge["platform"],
+                "bet_amount": challenge["bet_amount"],
+                "status": challenge["status"],
+                "creator_result": challenge.get("creator_result"),
+                "opponent_result": challenge.get("opponent_result"),
+                "created_at": challenge["created_at"],
+                "updated_at": challenge["updated_at"],
+            },
+            "creator": creator,
+            "opponent": opponent,
+            "dispute": dispute,
+            "timeline": timeline,
+            "match_messages": [with_sender(m) for m in match_messages],
+            "dispute_messages": [with_sender(m) for m in dispute_messages],
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao carregar a disputa: {str(e)}")
+
+
 @router.post("/challenge-disputes/{challenge_id}/resolve")
 def resolve_challenge_dispute(challenge_id: str, request: ResolveChallengeDisputeRequest, admin_user_id: str = Depends(get_current_admin_user_id)):
     try:

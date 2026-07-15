@@ -194,6 +194,15 @@ const router = createRouter({
           component: () => import('../views/AdminDisputesView.vue')
         },
         {
+          // Tela dedicada de análise de UMA disputa de desafio 1v1 — chat dos
+          // jogadores, chat de mediação com prints, linha do tempo e as ações
+          // de resolver/anular. Chega-se aqui clicando num card da lista.
+          path: '/admin/disputes/:challengeId',
+          name: 'admin-dispute-detail',
+          component: () => import('../views/AdminDisputeDetailView.vue'),
+          props: true
+        },
+        {
           path: '/admin/support',
           name: 'admin-support',
           component: () => import('../views/AdminSupportView.vue')
