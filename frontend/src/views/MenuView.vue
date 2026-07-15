@@ -35,8 +35,13 @@ const financeItems = [
 
 const accountItems = [
   { to: '/settings', icon: Settings, label: 'Configurações', desc: 'Perfil, senha e preferências' },
-  { to: '/referrals', icon: UserPlus, label: 'Indicação', desc: 'Convide amigos e ganhe' },
   { to: '/support', icon: Headset, label: 'Suporte', desc: 'Fale com a nossa equipe' },
+]
+
+// Ainda não existe programa de indicação no produto — mostrado desabilitado
+// em vez de link morto (mesmo tratamento da sidebar desktop).
+const comingSoonItems = [
+  { icon: UserPlus, label: 'Indicação', desc: 'Convide amigos e ganhe' },
 ]
 </script>
 
@@ -136,6 +141,21 @@ const accountItems = [
           </span>
           <ChevronRight :size="18" class="shrink-0 text-ink-tertiary" />
         </router-link>
+
+        <div
+          v-for="item in comingSoonItems"
+          :key="item.label"
+          class="flex cursor-not-allowed items-center gap-3.5 rounded-xl border border-hairline bg-surface-2 p-4 opacity-60"
+        >
+          <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-surface-3 text-ink-tertiary">
+            <component :is="item.icon" :size="19" />
+          </span>
+          <span class="min-w-0 flex-1">
+            <span class="block text-body-sm font-bold text-ink-tertiary">{{ item.label }}</span>
+            <span class="block truncate text-caption text-ink-tertiary">{{ item.desc }}</span>
+          </span>
+          <span class="shrink-0 rounded-full border border-hairline-strong bg-surface-3 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-ink-tertiary">Em breve</span>
+        </div>
       </nav>
     </section>
 

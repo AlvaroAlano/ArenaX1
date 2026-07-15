@@ -264,7 +264,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex-1 p-6 md:p-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <div class="flex-1 p-6 md:p-10 max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
 
     <!-- Lado Esquerdo: Painel de Ações Finanças (Depósito / Saque) -->
     <div class="lg:col-span-2 space-y-6">

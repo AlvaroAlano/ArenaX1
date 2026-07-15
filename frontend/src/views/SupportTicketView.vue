@@ -127,7 +127,7 @@ const isMine = (m: TicketMessage) => m.sender_id === myId.value
 </script>
 
 <template>
-  <div class="mx-auto flex min-h-full max-w-2xl flex-col gap-5 p-6 md:p-10">
+  <div class="mx-auto flex min-h-full max-w-3xl flex-col gap-5 p-6 md:p-10">
     <!-- Voltar -->
     <button
       type="button"

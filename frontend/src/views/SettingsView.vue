@@ -163,7 +163,7 @@ const handleSaveProfile = async () => {
 
 <template>
   <div class="flex-1 p-6 lg:p-10 w-full overflow-y-auto custom-scrollbar">
-    <div class="max-w-[1000px] mx-auto space-y-6">
+    <div class="max-w-[1400px] mx-auto space-y-6">
 
         <!-- Cabeçalho do Perfil -->
         <div class="flex flex-col gap-6 md:flex-row md:items-center justify-between bg-surface-1 p-6 rounded-xl border border-hairline">

@@ -130,7 +130,7 @@ const submitOnlineTournament = async () => {
 
 <template>
   <div class="flex-1 p-6 lg:p-10 w-full">
-    <div class="max-w-2xl mx-auto flex flex-col gap-8">
+    <div class="max-w-4xl mx-auto flex flex-col gap-8">
 
         <section>
             <h1 class="font-display text-3xl lg:text-4xl font-black uppercase tracking-tight mb-2 text-ink">Criar um Torneio</h1>

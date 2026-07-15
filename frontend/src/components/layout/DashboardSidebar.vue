@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import {
   LayoutDashboard,
   Swords,
-  PlusCircle,
   Award,
   Trophy,
   Wallet,
@@ -17,6 +16,8 @@ import {
   LayoutGrid,
   ShieldAlert,
   ArrowUpFromLine,
+  Plus,
+  ChevronDown,
 } from '@lucide/vue'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
@@ -36,6 +37,38 @@ const authStore = useAuthStore()
 const walletStore = useWalletStore()
 const router = useRouter()
 const route = useRoute()
+
+// Botão único de criação rápida (espelha o FAB do mobile) — em vez de dois
+// itens fixos e destacados dentro da lista de navegação, que competiam
+// visualmente com os destinos normais (Desafios/Torneios já têm seu
+// próprio botão "Criar" na própria tela, então isso é só o atalho rápido).
+//
+// Fecha ao clicar fora via listener no document, não um backdrop visual: o
+// #app tem overflow-x-clip, que no Chromium cria stacking context próprio
+// (mesmo motivo do glow ambiente no App.vue ser teleportado pro body) — um
+// backdrop 'fixed' comum, mesmo com z-index alto, ficaria preso dentro
+// desse contexto e nunca cobriria de verdade a tela toda por cima da
+// sidebar. Sem elemento visual, sem esse problema.
+const showCreateMenu = ref(false)
+const createMenuRoot = ref<HTMLElement | null>(null)
+const closeCreateMenu = () => { showCreateMenu.value = false }
+
+const onDocumentClick = (e: MouseEvent) => {
+  if (createMenuRoot.value && !createMenuRoot.value.contains(e.target as Node)) {
+    closeCreateMenu()
+  }
+}
+watch(showCreateMenu, (open) => {
+  if (open) document.addEventListener('click', onDocumentClick, true)
+  else document.removeEventListener('click', onDocumentClick, true)
+})
+onBeforeUnmount(() => document.removeEventListener('click', onDocumentClick, true))
+
+const goCreate = (path: string) => {
+  closeCreateMenu()
+  closeSidebar()
+  router.push(path)
+}
 
 const fmtBRL = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
@@ -81,69 +114,89 @@ const closeSidebar = () => {
           <NotificationBell align="left" />
       </div>
 
+      <!-- Criar rápido: um botão só, fora da lista de navegação (não compete
+           com Desafios/Torneios), com um mini-menu de 2 opções — mesmo
+           padrão do "+" do bottom nav mobile. -->
+      <div ref="createMenuRoot" class="relative shrink-0 border-b border-hairline px-4 py-3">
+          <button
+            type="button"
+            @click="showCreateMenu = !showCreateMenu"
+            :aria-expanded="showCreateMenu"
+            class="relative z-10 flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 text-sm font-bold text-canvas transition-colors hover:bg-primary-hover"
+          >
+              <Plus :size="18" />
+              Criar
+              <ChevronDown :size="15" class="transition-transform" :class="showCreateMenu ? 'rotate-180' : ''" />
+          </button>
+
+          <Transition name="create-menu">
+            <div v-if="showCreateMenu" class="absolute inset-x-4 top-[calc(100%-4px)] z-10 overflow-hidden rounded-lg border border-hairline-strong bg-surface-2 shadow-card-premium">
+                <button type="button" @click="goCreate('/create-challenge')" class="flex w-full items-center gap-3 px-3.5 py-3 text-left text-sm font-semibold text-ink transition-colors hover:bg-surface-3">
+                    <Swords :size="17" class="text-primary" />
+                    Criar Desafio
+                </button>
+                <button type="button" @click="goCreate('/create-tournament')" class="flex w-full items-center gap-3 border-t border-hairline px-3.5 py-3 text-left text-sm font-semibold text-ink transition-colors hover:bg-surface-3">
+                    <Trophy :size="17" class="text-primary" />
+                    Criar Torneio
+                </button>
+            </div>
+          </Transition>
+      </div>
+
       <nav class="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar px-4 py-6">
           <Transition name="nav-slide" mode="out-in">
             <!-- Modo normal -->
             <div v-if="!isAdminSection" key="main" class="space-y-1">
                 <div class="px-2 pb-2 text-[10px] font-bold text-ink-subtle uppercase tracking-wider">Principal</div>
 
-                <router-link to="/dashboard" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors font-medium" active-class="bg-primary/10 text-primary" exact-active-class="bg-primary/10 text-primary">
+                <router-link to="/dashboard" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors font-medium" active-class="bg-primary/10 text-primary" exact-active-class="bg-primary/10 text-primary">
                     <LayoutDashboard :size="20" />
                     Painel
                 </router-link>
 
-                <router-link to="/challenges" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
+                <router-link to="/challenges" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
                     <Swords :size="20" />
                     Desafios
                 </router-link>
 
-                <router-link to="/create-challenge" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-primary bg-primary/5 hover:bg-primary/10 font-bold border border-primary/20" active-class="bg-primary/20">
-                    <PlusCircle :size="20" />
-                    Criar um Desafio
-                </router-link>
-
-                <router-link to="/tournaments" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
+                <router-link to="/tournaments" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
                     <Award :size="20" />
                     Torneios
                 </router-link>
 
-                <router-link to="/create-tournament" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-primary bg-primary/5 hover:bg-primary/10 font-bold border border-primary/20" active-class="bg-primary/20">
-                    <PlusCircle :size="20" />
-                    Criar Torneio Local
-                </router-link>
-
-                <router-link to="/ranking" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
+                <router-link to="/ranking" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
                     <Trophy :size="20" />
                     Classificação
                 </router-link>
 
-                <div class="px-2 pb-2 pt-6 text-[10px] font-bold text-ink-subtle uppercase tracking-wider">Finanças</div>
+                <div class="px-2 pb-2 pt-5 text-[10px] font-bold text-ink-subtle uppercase tracking-wider">Finanças</div>
 
-                <router-link to="/wallet" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
+                <router-link to="/wallet" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
                     <Wallet :size="20" />
                     Carteira
                 </router-link>
 
-                <div class="px-2 pb-2 pt-6 text-[10px] font-bold text-ink-subtle uppercase tracking-wider">Conta</div>
+                <div class="px-2 pb-2 pt-5 text-[10px] font-bold text-ink-subtle uppercase tracking-wider">Conta</div>
 
-                <router-link to="/settings" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
+                <router-link to="/settings" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
                     <Settings :size="20" />
                     Configurações
                 </router-link>
 
-                <router-link to="/referrals" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
+                <div class="flex cursor-not-allowed items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-ink-tertiary opacity-60">
                     <UserPlus :size="20" />
                     Indicação
-                </router-link>
+                    <span class="ml-auto rounded-full border border-hairline-strong bg-surface-3 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-ink-tertiary">Em breve</span>
+                </div>
 
-                <router-link to="/support" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
+                <router-link to="/support" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
                     <Headset :size="20" />
                     Suporte
                 </router-link>
 
                 <template v-if="authStore.isAdmin">
-                    <div class="px-2 pb-2 pt-6 text-[10px] font-bold text-ink-subtle uppercase tracking-wider">Administração</div>
-                    <router-link to="/admin" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium">
+                    <div class="px-2 pb-2 pt-5 text-[10px] font-bold text-ink-subtle uppercase tracking-wider">Administração</div>
+                    <router-link to="/admin" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium">
                         <ShieldCheck :size="20" />
                         Painel Admin
                     </router-link>
@@ -163,22 +216,22 @@ const closeSidebar = () => {
 
                 <div class="px-2 pb-2 text-[10px] font-bold text-ink-subtle uppercase tracking-wider">Administração</div>
 
-                <router-link to="/admin" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors font-medium" active-class="bg-primary/10 text-primary" exact-active-class="bg-primary/10 text-primary">
+                <router-link to="/admin" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors font-medium" active-class="bg-primary/10 text-primary" exact-active-class="bg-primary/10 text-primary">
                     <LayoutGrid :size="20" />
                     Visão Geral
                 </router-link>
 
-                <router-link to="/admin/disputes" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
+                <router-link to="/admin/disputes" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
                     <ShieldAlert :size="20" />
                     Disputas
                 </router-link>
 
-                <router-link to="/admin/support" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
+                <router-link to="/admin/support" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
                     <Headset :size="20" />
                     Suporte
                 </router-link>
 
-                <router-link to="/admin/withdrawals" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
+                <router-link to="/admin/withdrawals" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
                     <ArrowUpFromLine :size="20" />
                     Saques
                 </router-link>
@@ -235,5 +288,17 @@ const closeSidebar = () => {
 .nav-slide-leave-to {
   opacity: 0;
   transform: translateX(-28px);
+}
+
+.create-menu-enter-active {
+  transition: opacity 0.16s ease, transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.create-menu-leave-active {
+  transition: opacity 0.12s ease-in, transform 0.14s ease-in;
+}
+.create-menu-enter-from,
+.create-menu-leave-to {
+  opacity: 0;
+  transform: translateY(-6px) scale(0.98);
 }
 </style>

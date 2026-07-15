@@ -40,7 +40,7 @@ const tabsRight = computed<TabItem[]>(() => [
     title: 'Menu',
     icon: Menu,
     to: '/menu',
-    match: (p) => ['/menu', '/wallet', '/settings', '/referrals', '/support'].some((prefix) => p.startsWith(prefix)),
+    match: (p) => ['/menu', '/wallet', '/settings', '/support'].some((prefix) => p.startsWith(prefix)),
   },
 ])
 </script>

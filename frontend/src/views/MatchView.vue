@@ -291,7 +291,10 @@ const currentStatus = computed(() => statusMeta[challenge.value?.status as Statu
 </script>
 
 <template>
-  <div class="mx-auto w-full max-w-3xl space-y-6 px-6 py-8 lg:px-10">
+  <div
+    class="mx-auto w-full space-y-6 px-6 py-8 lg:px-10"
+    :class="challenge?.status === 'disputed' ? 'max-w-6xl' : 'max-w-4xl'"
+  >
 
     <div v-if="loading" class="flex items-center justify-center py-24">
       <svg class="h-8 w-8 animate-spin text-primary" fill="none" viewBox="0 0 24 24">
@@ -306,6 +309,14 @@ const currentStatus = computed(() => statusMeta[challenge.value?.status as Statu
         Voltar aos desafios
       </router-link>
 
+      <!-- No estado de disputa, empilha info (esquerda) e chat de mediação
+           (direita) lado a lado no desktop; nos demais estados, o grid vira
+           1 coluna só e o comportamento fica idêntico ao de antes. -->
+      <div
+        class="space-y-6"
+        :class="challenge.status === 'disputed' ? 'lg:grid lg:grid-cols-[1fr_420px] lg:items-start lg:gap-6 lg:space-y-0' : ''"
+      >
+      <div class="space-y-6">
       <!-- Hero: status + jogo + pote -->
       <div
         v-reveal
@@ -390,6 +401,7 @@ const currentStatus = computed(() => statusMeta[challenge.value?.status as Statu
             <span class="text-body-sm font-medium">Aguardando...</span>
           </div>
         </div>
+      </div>
       </div>
 
       <!-- Solicitações pra entrar: só o criador vê e decide (RLS já garante
@@ -603,6 +615,7 @@ const currentStatus = computed(() => statusMeta[challenge.value?.status as Statu
       <!-- Disputa -->
       <div v-if="challenge.status === 'disputed'" v-reveal="'140ms'">
         <DisputeChat :challenge-id="challengeId" />
+      </div>
       </div>
     </template>
 

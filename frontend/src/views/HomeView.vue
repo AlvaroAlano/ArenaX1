@@ -300,7 +300,7 @@ const heldDaysLeft = (c: Challenge): number | null => {
 </script>
 
 <template>
-  <div class="mx-auto w-full max-w-7xl space-y-8 p-6 lg:p-10">
+  <div class="mx-auto w-full max-w-[1600px] space-y-8 p-6 lg:p-10">
 
     <!-- ════ Skeleton de carregamento ════ -->
     <div v-if="loading" class="animate-pulse space-y-8">

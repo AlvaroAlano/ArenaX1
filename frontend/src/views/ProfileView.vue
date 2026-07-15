@@ -95,7 +95,7 @@ const ratingIconClass = computed(() => {
 </script>
 
 <template>
-  <div class="mx-auto w-full max-w-4xl space-y-6 p-6 lg:p-10">
+  <div class="mx-auto w-full max-w-6xl space-y-6 p-6 lg:p-10">
 
     <!-- Voltar pra onde quer que o usuário estivesse antes (lista de
          solicitações de um desafio, lobby, ranking...) — sempre router.back()

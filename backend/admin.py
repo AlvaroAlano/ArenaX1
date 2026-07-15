@@ -32,13 +32,24 @@ class RejectWithdrawRequest(BaseModel):
     reason: str
 
 
+class ResolveChallengeDisputeRequest(BaseModel):
+    winner_id: str
+
+
+class CancelChallengeDisputeRequest(BaseModel):
+    reason: str
+
+
 def _raise_from_rpc_error(e: Exception):
     message = getattr(e, "message", None) or str(e)
     if "NOT_FOUND" in message:
         status_code = 404
     elif "NOT_ALLOWED" in message:
         status_code = 403
-    elif any(code in message for code in ("MATCH_NOT_DISPUTED", "INVALID_WINNER", "TOURNAMENT_NOT_IN_PROGRESS", "INVALID_STATUS")):
+    elif any(code in message for code in (
+        "MATCH_NOT_DISPUTED", "CHALLENGE_NOT_DISPUTED", "INVALID_WINNER",
+        "TOURNAMENT_NOT_IN_PROGRESS", "INVALID_STATUS", "REASON_REQUIRED",
+    )):
         status_code = 400
     else:
         status_code = 500
@@ -204,6 +215,97 @@ def confirm_withdrawal(transaction_id: str, admin_user_id: str = Depends(get_cur
         result = supabase.rpc("fn_confirm_withdraw", {
             "p_transaction_id": transaction_id,
             "p_admin_id": admin_user_id,
+        }).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.get("/challenge-disputes")
+def list_challenge_disputes(status: str = "open", admin_user_id: str = Depends(get_current_admin_user_id)):
+    """Disputas de desafio 1v1 (challenge_id) — separado de GET /disputes, que
+    só cobre disputas de torneio online (tournament_match_id). Junta
+    disputes -> challenges -> profiles -> primeira mensagem (motivo) na mão,
+    mesmo estilo do resto deste arquivo."""
+    try:
+        disputes_res = supabase.table("disputes").select(
+            "id, challenge_id, status, resolution, created_at"
+        ).eq("status", status).not_.is_("challenge_id", "null").order("created_at", desc=True).execute()
+        disputes = disputes_res.data or []
+        if not disputes:
+            return []
+
+        challenge_ids = [d["challenge_id"] for d in disputes]
+        challenges_res = supabase.table("challenges").select(
+            "id, game, platform, bet_amount, creator_id, opponent_id, creator_result, opponent_result"
+        ).in_("id", challenge_ids).execute()
+        challenges_by_id = {c["id"]: c for c in (challenges_res.data or [])}
+
+        profile_ids = set()
+        for c in challenges_by_id.values():
+            if c.get("creator_id"):
+                profile_ids.add(c["creator_id"])
+            if c.get("opponent_id"):
+                profile_ids.add(c["opponent_id"])
+        profiles_res = supabase.table("profiles").select("id, username").in_("id", list(profile_ids)).execute()
+        profiles_by_id = {p["id"]: p for p in (profiles_res.data or [])}
+
+        dispute_ids = [d["id"] for d in disputes]
+        messages_res = supabase.table("dispute_messages").select(
+            "dispute_id, message, created_at"
+        ).in_("dispute_id", dispute_ids).order("created_at").execute()
+        first_message_by_dispute = {}
+        for m in (messages_res.data or []):
+            first_message_by_dispute.setdefault(m["dispute_id"], m["message"])
+
+        result = []
+        for d in disputes:
+            challenge = challenges_by_id.get(d["challenge_id"])
+            if not challenge:
+                continue
+            result.append({
+                "dispute_id": d["id"],
+                "challenge_id": d["challenge_id"],
+                "status": d["status"],
+                "resolution": d["resolution"],
+                "created_at": d["created_at"],
+                "game": challenge["game"],
+                "platform": challenge["platform"],
+                "bet_amount": challenge["bet_amount"],
+                "creator": {"id": challenge["creator_id"], **(profiles_by_id.get(challenge["creator_id"], {}))},
+                "opponent": {"id": challenge["opponent_id"], **(profiles_by_id.get(challenge["opponent_id"], {}))} if challenge.get("opponent_id") else None,
+                "creator_result": challenge["creator_result"],
+                "opponent_result": challenge["opponent_result"],
+                "reason": first_message_by_dispute.get(d["id"]),
+            })
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao carregar disputas de desafio: {str(e)}")
+
+
+@router.post("/challenge-disputes/{challenge_id}/resolve")
+def resolve_challenge_dispute(challenge_id: str, request: ResolveChallengeDisputeRequest, admin_user_id: str = Depends(get_current_admin_user_id)):
+    try:
+        result = supabase.rpc("fn_resolve_challenge_dispute", {
+            "p_challenge_id": challenge_id,
+            "p_winner_id": request.winner_id,
+        }).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.post("/challenge-disputes/{challenge_id}/cancel")
+def cancel_challenge_dispute(challenge_id: str, request: CancelChallengeDisputeRequest, admin_user_id: str = Depends(get_current_admin_user_id)):
+    try:
+        result = supabase.rpc("fn_cancel_challenge_dispute", {
+            "p_challenge_id": challenge_id,
+            "p_admin_id": admin_user_id,
+            "p_reason": request.reason,
         }).execute()
         return result.data
     except HTTPException:

@@ -91,7 +91,7 @@ const sendAnother = () => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-2xl space-y-6 p-6 md:p-10">
+  <div class="mx-auto max-w-3xl space-y-6 p-6 md:p-10">
     <!-- Cabeçalho -->
     <header class="space-y-1.5">
       <div class="flex items-center gap-2.5">

@@ -1,34 +1,78 @@
-# O Plano de Telas (UI/UX) do Novo Sistema
+# Telas do Sistema (real, `frontend/src/router/index.ts`)
 
-A arquitetura do front-end será dividida em 6 telas principais, desenhadas para fluir de forma lógica:
+> Atualizado em 15/07/2026. A versão anterior era um plano de 6 telas
+> escrito antes da maior parte do sistema existir — várias descrições não
+> batem mais com o fluxo real (ex.: desafio não tem "aceitar direto",
+> torneio de sofá e portal de admin nem existiam). Isto aqui é o
+> inventário real, agrupado por layout.
 
-## Tela 1: Dashboard (A Nova Home)
-- **Header:** Saldo atual em R$ bem visível e botão "Depositar / Sacar".
-- **Hero Section:** Um banner de destaque ("Pronto para o X1?").
-- **Feed Rápido:** Uma lista horizontal (carrossel) mostrando os últimos resultados ao vivo (Ex: "João ganhou R$ 20 de Pedro no EA FC 25"), gerando prova social.
-- **Ações Rápidas:** Botão gigante para "Criar Desafio".
+## Público (`PublicLayout` — sem login)
 
-## Tela 2: Desafios (O Lobby)
-- **Filtros Inteligentes:** Abas para "Meus Desafios", "Salas Abertas", "Em Andamento" e "Histórico".
-- **Cards de Partida:** Limpos (verde/azul). Mostram o valor da aposta, a plataforma, o botão de "Aceitar Desafio" e o botão de "Compartilhar (WhatsApp)".
-- **Ação:** Ao clicar em um desafio em andamento, abre-se a tela de "Reportar Resultado" (Botões grandes: "Eu Venci" ou "Eu Perdi").
+- **Landing (`/`):** hero com prêmio "ao vivo", barra de stats, desafios
+  abertos, "Como funciona" em 4 passos, torneios em destaque,
+  classificação, seção Torneio de Sofá, seção "Por que a ArenaX1"
+  (cards com tilt 3D), ferramentas grátis, FAQ curto, CTA final.
+- **Desafios (`/desafios`):** lobby público de desafios abertos (mesma
+  tela usada logado, mas sem ações que exigem conta).
+- **Torneios (`/torneios`, `/torneios/:id`):** listagem e detalhe de
+  torneios online pagos.
+- **Classificação (`/classificacao`):** ranking nacional.
+- **Como Funciona (`/como-funciona`):** passo a passo, regras de
+  validação/punição (ghosting, disputa, desconexão, ônus da prova) e
+  FAQ completo (20 perguntas, componente `FaqAccordion.vue`).
+- **Termos de Uso / Política de Privacidade (`/termos`, `/privacidade`):**
+  renderizam `termos-de-uso.md`/`politica-de-privacidade.md` direto da
+  raiz do repo via `marked` (`LegalView.vue`).
+- **Login / Cadastro (`/login`, `/register`):** cadastro por e-mail/senha
+  coleta CPF, telefone e data de nascimento (validados no backend — ver
+  `regras-do-sistema.md` §1) ou login/cadastro via Google (sem essa
+  verificação ainda).
 
-## Tela 3: Torneios (A Competição)
-- **Visualização em cards:** Com o número de vagas (Ex: 3/8 preenchidas), valor da inscrição (Ex: R$ 10) e Prêmio Total (Ex: R$ 70).
-- **Chaveamento (Bracket):** Dentro do torneio, uma visualização simples de chaveamento, estilo mata-mata.
+## Autenticado (`DashboardLayout`, `meta: requiresAuth`)
 
-## Tela 4: Classificação (Leaderboard)
-- Ranking focado nos "Reis do X1".
-- **Métricas principais:** Número de vitórias, Lucro total (opcional, pode ser oculto por privacidade) e a Nota de Fair Play (5 estrelas).
+- **Painel (`/dashboard`):** home logada.
+- **Carteira (`/wallet`):** saldo disponível vs. travado (com
+  detalhamento de onde vem cada real congelado), aba Depósito (breakdown
+  valor + taxa de R$0,99 + total, QR Pix real via Mercado Pago) e aba
+  Saque (chave Pix + valor, fica pendente até confirmação manual de
+  admin), extrato completo.
+- **Desafios (`/challenges`) / Criar Desafio (`/create-challenge`):**
+  mesmo lobby da versão pública + formulário de criação.
+- **Torneios (`/tournaments`) / Criar Torneio (`/create-tournament`):**
+  cobre tanto Torneio Online Pago quanto Torneio de Sofá (grátis,
+  presencial, participantes avulsos só por nome).
+- **Meus Torneios / Chaveamento (`/my-tournaments/:id`):** bracket do
+  Torneio de Sofá que o usuário está hospedando.
+- **Partida (`/match/:id`):** tela da partida em si — confirmar presença
+  ("Iniciar partida", 15 min), reportar resultado (Ganhei/Perdi),
+  reportar problema (motivo estruturado), chat direto com o oponente
+  (Supabase Realtime).
+- **Classificação (`/ranking`):** mesma tela pública, versão logada.
+- **Perfil (`/profile/:username`):** perfil público de um jogador
+  (Fair Play Rating, histórico, selo de abandono se aplicável).
+- **Configurações (`/settings`):** dados da conta, desativar/excluir
+  conta (dois fluxos distintos, ver `regras-do-sistema.md` §6).
+- **Menu (`/menu`):** versão em tela cheia do menu (substitui painel
+  deslizante no mobile).
+- **Suporte (`/support`, `/support/:id`):** abrir ticket e ver a
+  conversa/thread (mesma tela serve usuário e admin).
 
-## Tela 5: Carteira (O Motor Financeiro)
-- Tela exclusiva para o dinheiro.
-- **Aba Depósito:** Gera o QR Code Pix na tela com valores rápidos (R$ 10, R$ 20, R$ 50).
-- **Aba Saque:** Campo para colar a Chave Pix e botão de retirada (com indicação de saldo liberado).
-- **Extrato:** Histórico de "Aposta X", "Vitória Y", "Taxa da Plataforma".
+## Portal de Admin (dentro do `DashboardLayout`, requer `is_admin`)
 
-## Tela 6: Como Funciona & Regras
-- Uma versão simplificada e direta das regras da plataforma.
-- Explicando claramente o "Duplo Check".
-- Detalhando as punições por mentir o resultado.
-- Instruções de como acionar o "Tribunal do X1" (Suporte) em caso de disputas.
+- **Visão Geral (`/admin`):** métricas + atalhos com contador ao vivo
+  pras três filas abaixo.
+- **Disputas (`/admin/disputes`):** disputas de torneio online abertas,
+  aguardando decisão.
+- **Suporte (`/admin/support`):** fila de tickets de suporte por status.
+- **Saques (`/admin/withdrawals`):** fila de saques pendentes — confirmar
+  (já mandou o Pix manualmente) ou rejeitar com motivo (estorna o
+  usuário). Adicionado nesta atualização — o Mercado Pago não manda Pix
+  pra chave de terceiro via API, então esse fluxo é sempre manual.
+
+## O que ficou de fora do plano original e não existe
+
+- "Tribunal do X1" como conceito de suporte — virou sistema de ticket
+  normal (`support_tickets`), sem nome próprio na UI.
+- Card do Campeão / Roleta de Times / Roleta de Draft como ferramentas
+  standalone — hoje só existem como texto de marketing na landing, sem
+  tela ou endpoint próprio (ver lacuna anotada em `TODO.md`).
