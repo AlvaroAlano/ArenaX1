@@ -2,22 +2,77 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { supabase } from '@/services/supabase'
-import { User, Hash, Mail, Lock, Eye, EyeOff, Users, AlertCircle, CheckCircle2, LoaderCircle, Swords, Trophy, ShieldCheck, BadgeCheck } from '@lucide/vue'
+import { User, Hash, Mail, Lock, Eye, EyeOff, Users, AlertCircle, CheckCircle2, LoaderCircle, Swords, Trophy, ShieldCheck, BadgeCheck, IdCard, Phone, CalendarDays } from '@lucide/vue'
 import ResponsibleGamingNote from '@/components/ui/ResponsibleGamingNote.vue'
 
 const fullName = ref('')
 const username = ref('')
 const eaId = ref('')
 const email = ref('')
+const confirmEmail = ref('')
+const cpf = ref('')
+const phone = ref('')
+const birthDate = ref('')
 const password = ref('')
 const referralCode = ref('')
 const acceptedTerms = ref(false)
+const acceptedMarketing = ref(false)
 const showPassword = ref(false)
+
+/* Primeira camada de checagem de idade (Lei nº 15.211/2025) — bloqueia o
+   caso óbvio no próprio formulário. A validação de verdade é no backend
+   (trigger handle_new_user, ver backend/32_signup_age_cpf_validation.sql):
+   isso aqui é só pra dar feedback rápido, nunca é a única barreira. */
+const isAdult = (isoDate: string): boolean => {
+  if (!isoDate) return false
+  const birth = new Date(isoDate)
+  const today = new Date()
+  let age = today.getFullYear() - birth.getFullYear()
+  const m = today.getMonth() - birth.getMonth()
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--
+  return age >= 18
+}
+
+/* Mesmo algoritmo do fn_is_valid_cpf no backend (dígitos verificadores +
+   rejeita sequências óbvias tipo 111.111.111-11) — feedback imediato aqui,
+   a validação que realmente vale é a do trigger de cadastro. */
+const isValidCpf = (raw: string): boolean => {
+  const digits = raw.replace(/\D/g, '')
+  if (digits.length !== 11 || /^(\d)\1{10}$/.test(digits)) return false
+
+  const calcCheckDigit = (base: string, factorStart: number) => {
+    let sum = 0
+    for (let i = 0; i < base.length; i++) sum += Number(base[i]) * (factorStart - i)
+    const rem = sum % 11
+    return rem < 2 ? 0 : 11 - rem
+  }
+
+  const d1 = calcCheckDigit(digits.slice(0, 9), 10)
+  const d2 = calcCheckDigit(digits.slice(0, 10), 11)
+  return d1 === Number(digits[9]) && d2 === Number(digits[10])
+}
 
 const loading = ref(false)
 const googleLoading = ref(false)
 const errorMessage = ref('')
 const successMessage = ref('')
+
+/* O trigger handle_new_user (backend/32_signup_age_cpf_validation.sql) pode
+   rejeitar o cadastro por CPF duplicado/inválido ou idade — mas o Supabase
+   Auth às vezes embrulha a mensagem original num erro genérico de banco
+   ("Database error saving new user"), então tratamos os dois casos: se o
+   texto original vazar, mostramos ele traduzido; senão, um fallback claro
+   em vez do erro cru do Postgres. */
+const friendlySignupError = (raw: string): string => {
+  if (/UNDERAGE/i.test(raw)) return 'A ArenaX1 é restrita a maiores de 18 anos.'
+  if (/CPF_ALREADY_USED/i.test(raw)) return 'Este CPF já está cadastrado em outra conta.'
+  if (/INVALID_CPF/i.test(raw)) return 'CPF inválido. Confira os números digitados.'
+  if (/INVALID_BIRTH_DATE/i.test(raw)) return 'Data de nascimento inválida.'
+  if (/Database error saving new user/i.test(raw)) {
+    return 'Não foi possível concluir o cadastro. Confira seus dados (CPF, data de nascimento) e tente novamente.'
+  }
+  return raw
+}
 
 const router = useRouter()
 
@@ -39,8 +94,24 @@ const handleGoogleAuth = async () => {
 }
 
 const handleRegister = async () => {
-  if (!fullName.value || !username.value || !email.value || !password.value || !eaId.value) {
+  if (!fullName.value || !username.value || !email.value || !password.value || !eaId.value
+      || !cpf.value || !phone.value || !birthDate.value) {
     errorMessage.value = 'Preencha todos os campos obrigatórios.'
+    return
+  }
+
+  if (email.value.trim().toLowerCase() !== confirmEmail.value.trim().toLowerCase()) {
+    errorMessage.value = 'Os e-mails informados não coincidem.'
+    return
+  }
+
+  if (!isAdult(birthDate.value)) {
+    errorMessage.value = 'A ArenaX1 é restrita a maiores de 18 anos.'
+    return
+  }
+
+  if (!isValidCpf(cpf.value)) {
+    errorMessage.value = 'CPF inválido. Confira os números digitados.'
     return
   }
 
@@ -49,8 +120,8 @@ const handleRegister = async () => {
     return
   }
 
-  if (password.value.length < 6) {
-    errorMessage.value = 'A palavra-passe precisa ter pelo menos 6 caracteres.'
+  if (password.value.length < 8) {
+    errorMessage.value = 'A palavra-passe precisa ter pelo menos 8 caracteres.'
     return
   }
 
@@ -67,14 +138,18 @@ const handleRegister = async () => {
           username: username.value,
           full_name: fullName.value,
           ea_id: eaId.value,
-          referral_code: referralCode.value
+          referral_code: referralCode.value,
+          cpf: cpf.value,
+          phone: phone.value,
+          birth_date: birthDate.value,
+          accepted_marketing: acceptedMarketing.value
         },
         emailRedirectTo: `${window.location.origin}/login`
       }
     })
 
     if (error) {
-      errorMessage.value = error.message
+      errorMessage.value = friendlySignupError(error.message)
       return
     }
 
@@ -238,16 +313,70 @@ const handleRegister = async () => {
               />
             </div>
 
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div class="group relative">
+                <Mail :size="18" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-tertiary transition-colors group-focus-within:text-primary" />
+                <input
+                  v-model="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="Endereço de e-mail"
+                  required
+                  class="h-12 w-full rounded-lg border border-hairline bg-surface-1 pl-11 pr-4 text-body-sm text-ink placeholder-ink-tertiary outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary"
+                />
+              </div>
+
+              <div class="group relative">
+                <Mail :size="18" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-tertiary transition-colors group-focus-within:text-primary" />
+                <input
+                  v-model="confirmEmail"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="Confirmar e-mail"
+                  required
+                  class="h-12 w-full rounded-lg border border-hairline bg-surface-1 pl-11 pr-4 text-body-sm text-ink placeholder-ink-tertiary outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div class="group relative">
+                <IdCard :size="18" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-tertiary transition-colors group-focus-within:text-primary" />
+                <input
+                  v-model="cpf"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  placeholder="CPF"
+                  required
+                  class="h-12 w-full rounded-lg border border-hairline bg-surface-1 pl-11 pr-4 text-body-sm text-ink placeholder-ink-tertiary outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary"
+                />
+              </div>
+
+              <div class="group relative">
+                <Phone :size="18" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-tertiary transition-colors group-focus-within:text-primary" />
+                <input
+                  v-model="phone"
+                  type="tel"
+                  autocomplete="tel"
+                  placeholder="Telefone (com DDD)"
+                  required
+                  class="h-12 w-full rounded-lg border border-hairline bg-surface-1 pl-11 pr-4 text-body-sm text-ink placeholder-ink-tertiary outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary"
+                />
+              </div>
+            </div>
+
             <div class="group relative">
-              <Mail :size="18" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-tertiary transition-colors group-focus-within:text-primary" />
+              <CalendarDays :size="18" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-tertiary transition-colors group-focus-within:text-primary" />
               <input
-                v-model="email"
-                type="email"
-                autocomplete="email"
-                placeholder="Endereço de e-mail"
+                v-model="birthDate"
+                type="date"
+                autocomplete="bday"
+                placeholder="Data de nascimento"
                 required
                 class="h-12 w-full rounded-lg border border-hairline bg-surface-1 pl-11 pr-4 text-body-sm text-ink placeholder-ink-tertiary outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary"
               />
+              <span class="mt-1.5 block text-[11px] text-ink-tertiary">É preciso ter 18 anos ou mais para jogar na ArenaX1.</span>
             </div>
 
             <div class="group relative">
@@ -291,6 +420,17 @@ const handleRegister = async () => {
               </span>
             </label>
 
+            <label class="flex cursor-pointer items-start gap-3 py-1">
+              <input
+                type="checkbox"
+                v-model="acceptedMarketing"
+                class="mt-0.5 size-4 cursor-pointer rounded border-hairline-strong bg-surface-2 text-primary focus:ring-primary focus:ring-offset-canvas"
+              />
+              <span class="text-caption leading-relaxed text-ink-subtle">
+                Quero receber novidades sobre torneios e promoções (opcional).
+              </span>
+            </label>
+
             <button
               type="submit"
               :disabled="loading"
@@ -300,10 +440,6 @@ const handleRegister = async () => {
               {{ loading ? 'Criando conta...' : 'Criar uma conta' }}
             </button>
           </form>
-
-          <p class="mt-6 px-2 text-center text-[11px] leading-relaxed text-ink-tertiary">
-            Ao se registrar, você aceita receber novidades de torneios e comunicados da ArenaX1.
-          </p>
 
           <div class="mt-6 border-t border-hairline pt-6 text-center">
             <p class="text-caption text-ink-subtle">

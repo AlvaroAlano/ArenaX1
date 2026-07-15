@@ -11,6 +11,7 @@ type NotificationType =
   | 'tournament_open' | 'match_ready' | 'match_disputed' | 'tournament_prize'
   | 'tournament_cancelled' | 'dispute_resolved_win' | 'dispute_resolved_loss'
   | 'deposit_confirmed' | 'withdraw_completed'
+  | 'withdraw_pending' | 'withdraw_confirmed' | 'withdraw_rejected'
   | 'challenge_accepted' | 'challenge_result_pending' | 'challenge_win'
   | 'challenge_loss' | 'challenge_disputed' | 'challenge_expired'
   | 'challenge_join_requested' | 'challenge_request_accepted' | 'challenge_request_rejected'
@@ -101,7 +102,13 @@ const handleClick = (n: NotificationItem) => {
   }
   else if (n.challenge_id) router.push(`/match/${n.challenge_id}`)
   else if (n.tournament_id) router.push(n.match_id ? `/tournaments/${n.tournament_id}?match=${n.match_id}` : `/tournaments/${n.tournament_id}`)
-  else if (n.type === 'deposit_confirmed' || n.type === 'withdraw_completed') router.push('/wallet')
+  else if (
+    n.type === 'deposit_confirmed'
+    || n.type === 'withdraw_completed'
+    || n.type === 'withdraw_pending'
+    || n.type === 'withdraw_confirmed'
+    || n.type === 'withdraw_rejected'
+  ) router.push('/wallet')
 }
 
 function timeAgo(iso: string): string {
@@ -124,6 +131,9 @@ const ICONS: Record<NotificationType, any> = {
   dispute_resolved_loss: ThumbsDown,
   deposit_confirmed: ArrowDownCircle,
   withdraw_completed: ArrowUpCircle,
+  withdraw_pending: Hourglass,
+  withdraw_confirmed: ArrowUpCircle,
+  withdraw_rejected: XCircle,
   challenge_accepted: Swords,
   challenge_result_pending: Hourglass,
   challenge_win: Trophy,
@@ -147,6 +157,9 @@ const ICON_COLOR: Record<NotificationType, string> = {
   dispute_resolved_loss: 'text-semantic-error bg-semantic-error/10',
   deposit_confirmed: 'text-semantic-success bg-semantic-success/10',
   withdraw_completed: 'text-primary bg-primary/10',
+  withdraw_pending: 'text-amber-400 bg-amber-400/10',
+  withdraw_confirmed: 'text-semantic-success bg-semantic-success/10',
+  withdraw_rejected: 'text-semantic-error bg-semantic-error/10',
   challenge_accepted: 'text-primary bg-primary/10',
   challenge_result_pending: 'text-amber-400 bg-amber-400/10',
   challenge_win: 'text-semantic-success bg-semantic-success/10',

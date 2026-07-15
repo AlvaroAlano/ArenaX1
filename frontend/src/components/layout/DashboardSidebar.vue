@@ -16,6 +16,7 @@ import {
   ArrowLeft,
   LayoutGrid,
   ShieldAlert,
+  ArrowUpFromLine,
 } from '@lucide/vue'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
@@ -175,6 +176,11 @@ const closeSidebar = () => {
                 <router-link to="/admin/support" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
                     <Headset :size="20" />
                     Suporte
+                </router-link>
+
+                <router-link to="/admin/withdrawals" @click="closeSidebar" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors text-ink-subtle hover:bg-surface-2 hover:text-ink font-medium" active-class="bg-primary/10 text-primary">
+                    <ArrowUpFromLine :size="20" />
+                    Saques
                 </router-link>
             </div>
           </Transition>

@@ -86,6 +86,17 @@ const loadOpenTickets = async () => {
   }
 }
 
+// Saques pendentes de confirmação manual (Pix enviado fora do sistema).
+const pendingWithdrawalsCount = ref<number | null>(null)
+const loadPendingWithdrawals = async () => {
+  try {
+    const list = await api.get<any[]>('/api/admin/withdrawals?status=pending')
+    pendingWithdrawalsCount.value = list.length
+  } catch {
+    pendingWithdrawalsCount.value = null
+  }
+}
+
 const loadMetrics = async () => {
   loading.value = true
   loadError.value = ''
@@ -104,7 +115,7 @@ const loadMetrics = async () => {
     loading.value = false
   }
 }
-onMounted(() => { loadMetrics(); loadOpenTickets() })
+onMounted(() => { loadMetrics(); loadOpenTickets(); loadPendingWithdrawals() })
 
 const fmtBRL = (n: number) => `R$ ${(n ?? 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 const fmtNum = (n: number) => (n ?? 0).toLocaleString('pt-BR')
@@ -133,7 +144,7 @@ const disputasAbertasTotal = computed(() => {
         <h1 class="mt-2 font-display text-headline font-black uppercase tracking-tight text-ink">Visão Geral</h1>
         <p class="mt-1 text-body-sm text-ink-subtle">Dinheiro, desafios e torneios rodando na ArenaX1 agora.</p>
       </div>
-      <button @click="loadMetrics(); loadOpenTickets()" :disabled="loading" class="inline-flex w-fit items-center gap-2 rounded-xl border border-hairline-strong bg-surface-1 px-4 py-2.5 text-body-sm font-semibold text-ink-subtle transition-colors hover:bg-surface-2 disabled:opacity-60">
+      <button @click="loadMetrics(); loadOpenTickets(); loadPendingWithdrawals()" :disabled="loading" class="inline-flex w-fit items-center gap-2 rounded-xl border border-hairline-strong bg-surface-1 px-4 py-2.5 text-body-sm font-semibold text-ink-subtle transition-colors hover:bg-surface-2 disabled:opacity-60">
         <RefreshCw :size="15" :class="loading ? 'animate-spin' : ''" /> Atualizar
       </button>
     </div>
@@ -204,6 +215,31 @@ const disputasAbertasTotal = computed(() => {
               {{ openTicketsCount === null ? 'Ver tickets abertos'
                  : openTicketsCount > 0 ? `${openTicketsCount} ticket(s) em aberto esperando resposta`
                  : 'Nenhum ticket em aberto agora' }}
+            </span>
+          </span>
+        </span>
+        <ChevronRight :size="18" class="shrink-0 text-ink-tertiary" />
+      </button>
+
+      <!-- Atalho pra fila de saques manuais -->
+      <button
+        type="button"
+        @click="router.push('/admin/withdrawals')"
+        class="flex w-full items-center justify-between gap-3 rounded-2xl border p-5 text-left transition-colors"
+        :class="(pendingWithdrawalsCount ?? 0) > 0
+          ? 'border-amber-400/25 bg-amber-400/[0.06] hover:bg-amber-400/[0.1]'
+          : 'border-hairline bg-surface-1/60 hover:bg-surface-2'"
+      >
+        <span class="flex items-center gap-3">
+          <span class="grid size-10 place-items-center rounded-xl" :class="(pendingWithdrawalsCount ?? 0) > 0 ? 'bg-amber-400/15 text-amber-400' : 'bg-surface-3 text-ink-subtle'">
+            <ArrowUpFromLine :size="18" />
+          </span>
+          <span>
+            <span class="block font-bold text-ink">Saques via Pix</span>
+            <span class="block text-body-sm text-ink-subtle">
+              {{ pendingWithdrawalsCount === null ? 'Ver saques pendentes'
+                 : pendingWithdrawalsCount > 0 ? `${pendingWithdrawalsCount} saque(s) esperando envio manual`
+                 : 'Nenhum saque pendente agora' }}
             </span>
           </span>
         </span>

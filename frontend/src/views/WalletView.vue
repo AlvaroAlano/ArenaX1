@@ -22,11 +22,33 @@ const lockedBal = computed(() => wallet.value?.locked_balance ?? 0)
 const totalBal = computed(() => availableBal.value + lockedBal.value)
 const availablePct = computed(() => totalBal.value > 0 ? (availableBal.value / totalBal.value) * 100 : 100)
 
-// Formulário de Depósito
+// Formulário de Depósito — contrato espelha DepositOut do backend/pix.py.
+interface DepositPixData {
+  transaction_id: string
+  external_id: string
+  requested_amount: number
+  fee_amount: number
+  total_amount: number
+  copia_e_cola: string
+  qr_code_base64: string
+}
+
 const depositAmount = ref<number | null>(null)
 const generatingPix = ref(false)
-const pixData = ref<any>(null)
+const pixData = ref<DepositPixData | null>(null)
 const depositSuccess = ref(false)
+
+// import.meta só pode ser lido aqui no <script> — o compilador de template
+// do Vue rejeita "import.meta" direto numa expressão de v-if.
+const isDev = import.meta.env.DEV
+
+// Taxa de depósito via Pix (termos-de-uso.md, cláusula 4.4) — somada ao
+// valor pedido, mostrada antes de gerar a cobrança. Precisa bater com
+// DEPOSIT_FEE em backend/pix.py.
+const DEPOSIT_FEE = 0.99
+const depositTotal = computed(() =>
+  depositAmount.value && depositAmount.value > 0 ? +(depositAmount.value + DEPOSIT_FEE).toFixed(2) : 0
+)
 
 // Formulário de Saque
 const withdrawAmount = ref<number | null>(null)
@@ -97,7 +119,7 @@ const loadTransactions = async () => {
     .select('*')
     .eq('wallet_id', wallet.value.id)
     .order('created_at', { ascending: false })
-  
+
   transactions.value = txData || []
 }
 
@@ -114,7 +136,7 @@ const handleGeneratePix = async () => {
 
   generatingPix.value = true
   try {
-    pixData.value = await api.post('/api/pix/deposit', { amount: depositAmount.value })
+    pixData.value = await api.post<DepositPixData>('/api/pix/deposit', { amount: depositAmount.value })
   } catch (err: any) {
     toast.push(err.message, 'error')
   } finally {
@@ -131,14 +153,16 @@ const copyCopiaCola = () => {
 
 // Simular confirmação de pagamento para teste em desenvolvimento.
 // Usa a rota /dev/simulate-deposit (exige o login do próprio usuário) em vez
-// do /webhook real, que agora exige a assinatura do gateway de pagamento e
-// nunca deve receber segredos vindos do navegador.
+// do /webhook real, que agora exige a assinatura do Mercado Pago e nunca
+// deve receber segredos vindos do navegador. Importante: manda o valor
+// BRUTO (total_amount, valor + taxa) — é contra isso que a RPC valida;
+// o crédito na carteira sai líquido (sem a taxa) automaticamente.
 const simulatePaymentWebhook = async () => {
   if (!pixData.value?.external_id) return
   try {
     await api.post('/api/pix/dev/simulate-deposit', {
       external_id: pixData.value.external_id,
-      amount: pixData.value.amount,
+      amount: pixData.value.total_amount,
       status: 'completed'
     })
     depositSuccess.value = true
@@ -150,7 +174,8 @@ const simulatePaymentWebhook = async () => {
   }
 }
 
-// Realizar saque
+// Realizar saque — fica pendente até um admin confirmar o envio manual do
+// Pix (o Mercado Pago não manda Pix pra chave de terceiro via API).
 const handleWithdraw = async () => {
   if (!withdrawAmount.value || withdrawAmount.value <= 0) {
     withdrawError.value = 'Insira um valor válido.'
@@ -172,15 +197,15 @@ const handleWithdraw = async () => {
   withdrawSuccess.value = ''
 
   try {
-    const resData = await api.post<{ new_balance: number }>('/api/pix/withdraw', {
+    const resData = await api.post<{ new_balance: number; message: string }>('/api/pix/withdraw', {
       amount: withdrawAmount.value,
       pix_key: pixKey.value
     })
 
-    withdrawSuccess.value = 'Saque realizado com sucesso!'
+    withdrawSuccess.value = resData.message || 'Saque solicitado! Será processado em breve.'
     withdrawAmount.value = null
     pixKey.value = ''
-    
+
     // Atualizar carteira localmente caso o canal demore
     if (wallet.value) {
       wallet.value.balance = resData.new_balance
@@ -240,22 +265,22 @@ onUnmounted(() => {
 
 <template>
   <div class="flex-1 p-6 md:p-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
-    
+
     <!-- Lado Esquerdo: Painel de Ações Finanças (Depósito / Saque) -->
     <div class="lg:col-span-2 space-y-6">
-      
+
       <!-- Seção Card de Saldo Atual -->
       <div class="bg-surface-1 border border-hairline p-8 rounded-lg shadow-none relative overflow-hidden group">
 
         <div class="flex justify-between items-start">
           <div>
             <h2 class="text-ink-subtle text-caption font-semibold uppercase tracking-wider mb-2">Saldo Disponível para Jogo</h2>
-            <div v-if="loading" class="h-10 w-32 bg-[#262b35]  rounded-lg"></div>
+            <div v-if="loading" class="h-10 w-32 bg-surface-3 rounded-lg"></div>
             <div v-else class="text-4xl font-semibold text-ink">
               R$ {{ availableBal.toFixed(2) }}
             </div>
           </div>
-          <div class="h-12 w-12 rounded-lg bg-primary flex items-center justify-center shadow-none shadow-none/20 shrink-0">
+          <div class="h-12 w-12 rounded-lg bg-primary flex items-center justify-center shadow-none shrink-0">
             <svg class="h-6 w-6 text-canvas" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -297,16 +322,16 @@ onUnmounted(() => {
       <!-- Abas de Depósito e Saque -->
       <div class="bg-surface-1 border border-hairline rounded-lg overflow-hidden shadow-none ">
         <div class="flex border-b border-hairline">
-          <button 
+          <button
             @click="activeTab = 'deposit'"
-            :class="[activeTab === 'deposit' ? 'border-[#00f2fe] text-primary bg-surface-2' : 'border-transparent text-ink-subtle hover:text-ink']"
+            :class="[activeTab === 'deposit' ? 'border-primary text-primary bg-surface-2' : 'border-transparent text-ink-subtle hover:text-ink']"
             class="flex-1 py-4 text-center font-bold text-sm border-b-2 transition-all"
           >
             Depositar via Pix
           </button>
-          <button 
+          <button
             @click="activeTab = 'withdraw'"
-            :class="[activeTab === 'withdraw' ? 'border-[#00f2fe] text-primary bg-surface-2' : 'border-transparent text-ink-subtle hover:text-ink']"
+            :class="[activeTab === 'withdraw' ? 'border-primary text-primary bg-surface-2' : 'border-transparent text-ink-subtle hover:text-ink']"
             class="flex-1 py-4 text-center font-bold text-sm border-b-2 transition-all"
           >
             Sacar via Pix
@@ -316,17 +341,20 @@ onUnmounted(() => {
         <div class="p-6">
           <!-- CONTEÚDO DE DEPÓSITO -->
           <div v-if="activeTab === 'deposit'" class="space-y-6">
-            <p class="text-sm text-ink-subtle">Selecione um valor rápido ou digite o valor que deseja depositar para começar a jogar.</p>
+            <div>
+              <p class="text-sm text-ink-subtle">Selecione um valor rápido ou digite o valor que deseja depositar para começar a jogar.</p>
+              <p class="mt-1.5 text-caption text-ink-tertiary">Pagamento processado pelo Mercado Pago. O Pix cai na sua carteira automaticamente assim que aprovado.</p>
+            </div>
 
             <ResponsibleGamingNote variant="reminder" />
 
             <!-- Valores rápidos -->
             <div class="grid grid-cols-4 gap-3">
-              <button 
-                v-for="val in [10, 20, 50, 100]" 
+              <button
+                v-for="val in [10, 20, 50, 100]"
                 :key="val"
                 @click="selectAmount(val)"
-                :class="[depositAmount === val ? 'border-[#00f2fe] text-primary bg-[#00f2fe]/5' : 'border-hairline-strong text-ink hover:border-ink-subtle']"
+                :class="[depositAmount === val ? 'border-primary text-primary bg-primary/5' : 'border-hairline-strong text-ink hover:border-ink-subtle']"
                 class="border py-3 rounded-lg font-bold transition-all text-sm"
               >
                 R$ {{ val }}
@@ -336,15 +364,31 @@ onUnmounted(() => {
             <!-- Input personalizado -->
             <div class="space-y-2">
               <label class="block text-caption font-semibold text-ink-subtle uppercase tracking-wider">Outro Valor (R$)</label>
-              <input 
+              <input
                 v-model.number="depositAmount"
                 type="number"
                 placeholder="Valor mínimo R$ 10,00"
-                class="w-full bg-surface-2 border border-hairline-strong rounded-lg px-4 py-3 text-ink placeholder-[#515c6e] focus:outline-none focus:border-[#4facfe] transition-colors text-sm"
+                class="w-full bg-surface-2 border border-hairline-strong rounded-lg px-4 py-3 text-ink placeholder:text-ink-tertiary focus:outline-none focus:border-primary transition-colors text-sm"
               />
             </div>
 
-            <button 
+            <!-- Composição do valor: quanto se paga vs. quanto cai na carteira -->
+            <div v-if="depositTotal > 0" class="rounded-lg border border-hairline bg-surface-2 p-4 space-y-2 text-sm">
+              <div class="flex justify-between text-ink-subtle">
+                <span>Valor do depósito</span>
+                <span class="tabular-nums text-ink">R$ {{ depositAmount!.toFixed(2) }}</span>
+              </div>
+              <div class="flex justify-between text-ink-subtle">
+                <span>Taxa Pix</span>
+                <span class="tabular-nums text-ink">R$ {{ DEPOSIT_FEE.toFixed(2) }}</span>
+              </div>
+              <div class="flex justify-between border-t border-hairline pt-2 font-bold">
+                <span class="text-ink">Total a pagar</span>
+                <span class="tabular-nums text-primary">R$ {{ depositTotal.toFixed(2) }}</span>
+              </div>
+            </div>
+
+            <button
               @click="handleGeneratePix"
               :disabled="generatingPix"
               class="w-full bg-primary text-canvas font-bold py-3.5 px-4 rounded-lg shadow-none transition-all text-sm disabled:opacity-50"
@@ -355,23 +399,23 @@ onUnmounted(() => {
             <!-- Detalhes do Pix Gerado -->
             <div v-if="pixData" class="border border-hairline p-5 rounded-lg bg-surface-2 space-y-4 animate-fadeIn">
               <div class="flex flex-col md:flex-row items-center gap-6 justify-center">
-                <img :src="pixData.qr_code_url" alt="QR Code Pix" class="w-44 h-44 border-4 border-white rounded-lg" />
+                <img :src="'data:image/png;base64,' + pixData.qr_code_base64" alt="QR Code Pix" class="w-44 h-44 border-4 border-white rounded-lg" />
                 <div class="space-y-3 flex-1">
                   <h4 class="text-sm font-bold text-ink">Escaneie o QR Code ou copie o código abaixo:</h4>
-                  <button 
+                  <button
                     @click="copyCopiaCola"
-                    class="bg-surface-3 hover:bg-[#2e3543] border border-hairline-strong text-caption font-semibold py-2 px-3 rounded-lg text-primary transition-all flex items-center gap-1.5"
+                    class="bg-surface-3 hover:bg-surface-4 border border-hairline-strong text-caption font-semibold py-2 px-3 rounded-lg text-primary transition-all flex items-center gap-1.5"
                   >
                     Copiar Código Pix Copia e Cola
                   </button>
-                  <p class="text-caption text-ink-subtle">A compensação é instantânea. O saldo atualizará em tempo real.</p>
+                  <p class="text-caption text-ink-subtle">Total do Pix: <strong class="text-ink">R$ {{ pixData.total_amount.toFixed(2) }}</strong> · você recebe <strong class="text-ink">R$ {{ pixData.requested_amount.toFixed(2) }}</strong> na carteira. A compensação é automática, o saldo atualiza em tempo real.</p>
                 </div>
               </div>
 
-              <!-- Simular pagamento do Webhook (Somente Sandbox/Modo Teste) -->
-              <div class="border-t border-hairline pt-4 flex flex-col md:flex-row justify-between items-center gap-3">
+              <!-- Simular pagamento do Webhook (Somente Sandbox/Modo Teste, escondido em produção) -->
+              <div v-if="isDev" class="border-t border-hairline pt-4 flex flex-col md:flex-row justify-between items-center gap-3">
                 <span class="text-caption text-ink-muted font-semibold bg-surface-2 px-3 py-1 rounded-full">Modo de Teste</span>
-                <button 
+                <button
                   @click="simulatePaymentWebhook"
                   class="bg-surface-2 hover:bg-green-500/20 border border-hairline text-semantic-success text-caption font-bold py-2 px-4 rounded-lg transition-all"
                 >
@@ -388,25 +432,25 @@ onUnmounted(() => {
 
           <!-- CONTEÚDO DE SAQUE -->
           <div v-if="activeTab === 'withdraw'" class="space-y-5">
-            <p class="text-sm text-ink-subtle">Retire seu saldo ganho nos desafios Pix direto para a sua conta bancária sem taxas.</p>
-            
+            <p class="text-sm text-ink-subtle">Retire seu saldo ganho nos desafios direto para a sua chave Pix, sem taxas. O envio é conferido pela nossa equipe antes de sair, então pode levar um tempo até confirmar.</p>
+
             <div class="space-y-2">
               <label class="block text-caption font-semibold text-ink-subtle uppercase tracking-wider">Chave Pix (CPF, Celular, E-mail ou Aleatória)</label>
-              <input 
+              <input
                 v-model="pixKey"
                 type="text"
                 placeholder="Insira a chave do Pix"
-                class="w-full bg-surface-2 border border-hairline-strong rounded-lg px-4 py-3 text-ink placeholder-[#515c6e] focus:outline-none focus:border-[#4facfe] transition-colors text-sm"
+                class="w-full bg-surface-2 border border-hairline-strong rounded-lg px-4 py-3 text-ink placeholder:text-ink-tertiary focus:outline-none focus:border-primary transition-colors text-sm"
               />
             </div>
 
             <div class="space-y-2">
               <label class="block text-caption font-semibold text-ink-subtle uppercase tracking-wider">Valor para Sacar (R$)</label>
-              <input 
+              <input
                 v-model.number="withdrawAmount"
                 type="number"
                 placeholder="R$ 0,00"
-                class="w-full bg-surface-2 border border-hairline-strong rounded-lg px-4 py-3 text-ink placeholder-[#515c6e] focus:outline-none focus:border-[#4facfe] transition-colors text-sm"
+                class="w-full bg-surface-2 border border-hairline-strong rounded-lg px-4 py-3 text-ink placeholder:text-ink-tertiary focus:outline-none focus:border-primary transition-colors text-sm"
               />
             </div>
 
@@ -418,7 +462,7 @@ onUnmounted(() => {
               {{ withdrawSuccess }}
             </div>
 
-            <button 
+            <button
               @click="handleWithdraw"
               :disabled="processingWithdraw"
               class="w-full bg-surface-3 border border-hairline-strong hover:bg-surface-4 text-ink font-bold py-3.5 px-4 rounded-lg shadow-none transition-all text-sm disabled:opacity-50"
@@ -433,7 +477,7 @@ onUnmounted(() => {
     <!-- Lado Direito: Histórico de Transações (Extrato) -->
     <div class="bg-surface-1 border border-hairline p-6 rounded-lg shadow-none flex flex-col h-[550px] ">
       <h3 class="text-ink text-md font-bold mb-4">Extrato da Carteira</h3>
-      
+
       <div v-if="loading" class="flex-1 flex items-center justify-center">
         <svg class="animate-spin h-8 w-8 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -447,8 +491,8 @@ onUnmounted(() => {
       </div>
 
       <div v-else class="flex-1 overflow-y-auto space-y-3 pr-2 scrollbar">
-        <div 
-          v-for="tx in transactions" 
+        <div
+          v-for="tx in transactions"
           :key="tx.id"
           class="bg-surface-2 border border-hairline p-4 rounded-lg flex justify-between items-center hover:border-hairline-strong transition-colors"
         >
@@ -462,13 +506,15 @@ onUnmounted(() => {
               >
                 {{ txMeta(tx.type).label }}
               </span>
-              <span 
+              <span
                 :class="[
-                  tx.status === 'completed' ? 'bg-surface-2 text-semantic-success' : tx.status === 'pending' ? 'bg-surface-2 text-ink-muted' : 'bg-surface-2 text-ink-muted'
+                  tx.status === 'completed' ? 'bg-surface-2 text-semantic-success'
+                    : tx.status === 'pending' ? 'bg-surface-2 text-amber-400'
+                    : 'bg-surface-2 text-semantic-error'
                 ]"
                 class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full"
               >
-                {{ tx.status === 'completed' ? 'Sucesso' : tx.status === 'pending' ? 'Pendente' : 'Falhou' }}
+                {{ tx.status === 'completed' ? 'Sucesso' : tx.status === 'pending' ? 'Pendente' : 'Rejeitado' }}
               </span>
             </div>
             <p class="text-caption text-ink-subtle mt-1.5">{{ tx.description }}</p>
@@ -481,7 +527,7 @@ onUnmounted(() => {
             ]"
             class="text-sm font-semibold"
           >
-            {{ txMeta(tx.type).positive ? '+' : '' }}R$ {{ Math.abs(parseFloat(tx.amount)).toFixed(2) }}
+            {{ txMeta(tx.type).positive ? '+' : '' }}R$ {{ (Math.abs(parseFloat(tx.amount)) - (parseFloat(tx.fee_amount) || 0)).toFixed(2) }}
           </div>
         </div>
       </div>
@@ -498,7 +544,7 @@ onUnmounted(() => {
   background: transparent;
 }
 .scrollbar::-webkit-scrollbar-thumb {
-  background: #2e3543;
+  background: #3f4651;
   border-radius: 10px;
 }
 @keyframes fadeIn {

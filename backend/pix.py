@@ -1,7 +1,12 @@
+import hashlib
+import hmac
 import os
+import time
 import uuid
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Depends, Header
+
+import httpx
+from fastapi import APIRouter, HTTPException, Depends, Header, Request
 from pydantic import BaseModel
 from supabase import create_client, Client
 from dotenv import load_dotenv
@@ -13,23 +18,45 @@ load_dotenv()
 # Inicialização do Supabase Client com chave administrativa (service_role)
 supabase_url = os.getenv("SUPABASE_URL")
 supabase_service_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
-pix_webhook_secret = os.getenv("PIX_WEBHOOK_SECRET")
 
 if not supabase_url or not supabase_service_key:
     raise ValueError("Variáveis de ambiente do Supabase não configuradas no Backend.")
 
 supabase: Client = create_client(supabase_url, supabase_service_key)
 
+# Mercado Pago — depósito via Pix (recebimento). A API pública deles não
+# manda Pix pra chave de terceiro, então o saque (seção mais abaixo) NÃO
+# passa por aqui — fica pendente e um admin processa manualmente
+# (backend/admin.py, fn_confirm_withdraw/fn_reject_withdraw).
+MERCADO_PAGO_ACCESS_TOKEN = os.getenv("MERCADO_PAGO_ACCESS_TOKEN")
+MERCADO_PAGO_WEBHOOK_SECRET = os.getenv("MERCADO_PAGO_WEBHOOK_SECRET")
+BACKEND_PUBLIC_URL = os.getenv("BACKEND_PUBLIC_URL")
+
+# Taxa de depósito (termos-de-uso.md, cláusula 4.4): somada ao valor pedido
+# — quem pede depositar R$50 paga R$50,99 no Pix, e R$50,00 caem na carteira.
+DEPOSIT_FEE = 0.99
+
+_mp_client = httpx.Client(
+    base_url="https://api.mercadopago.com",
+    headers={"Authorization": f"Bearer {MERCADO_PAGO_ACCESS_TOKEN}"},
+    timeout=15.0,
+)
+
 router = APIRouter(prefix="/api/pix", tags=["Pix & Financeiro"])
+
 
 # Schemas Pydantic
 class DepositRequest(BaseModel):
     amount: float
 
+
 class WebhookPayload(BaseModel):
+    """Usado só pelo /dev/simulate-deposit — o /webhook real lê o corpo cru
+    (formato próprio do Mercado Pago), não este schema."""
     external_id: str
     amount: float
     status: str  # 'completed' ou 'failed'
+
 
 class WithdrawRequest(BaseModel):
     amount: float
@@ -40,14 +67,18 @@ class WithdrawRequest(BaseModel):
 class DepositOut(BaseModel):
     transaction_id: str
     external_id: str
-    amount: float
+    requested_amount: float
+    fee_amount: float
+    total_amount: float
     copia_e_cola: str
-    qr_code_url: str
+    qr_code_base64: str
+
 
 class WebhookOut(BaseModel):
     status: str
     message: str
     new_balance: Optional[float] = None
+
 
 class WithdrawOut(BaseModel):
     status: str
@@ -62,7 +93,7 @@ def _raise_from_rpc_error(e: Exception):
         status_code = 400
     elif "NOT_FOUND" in message:
         status_code = 404
-    elif "AMOUNT_MISMATCH" in message or "INVALID_AMOUNT" in message:
+    elif "AMOUNT_MISMATCH" in message or "INVALID_AMOUNT" in message or "INVALID_STATUS" in message:
         status_code = 400
     else:
         status_code = 500
@@ -71,10 +102,22 @@ def _raise_from_rpc_error(e: Exception):
     raise HTTPException(status_code=status_code, detail=detail)
 
 
+# PNG 1x1 transparente — só pra o <img> do QR não quebrar no mock de dev.
+_DEV_QR_PNG_BASE64 = (
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+)
+
+
 @router.post("/deposit", response_model=DepositOut)
 def create_deposit(request: DepositRequest, user_id: str = Depends(get_current_user_id)):
     if request.amount < 10:
         raise HTTPException(status_code=400, detail="O valor mínimo de depósito é R$ 10,00.")
+
+    is_production = os.getenv("APP_ENV", "development") == "production"
+    use_mp = bool(MERCADO_PAGO_ACCESS_TOKEN and BACKEND_PUBLIC_URL)
+
+    if is_production and not use_mp:
+        raise HTTPException(status_code=503, detail="Depósito via Pix temporariamente indisponível. Tente novamente em instantes.")
 
     try:
         # 1. Obter a carteira (wallet) do usuário
@@ -83,32 +126,82 @@ def create_deposit(request: DepositRequest, user_id: str = Depends(get_current_u
             raise HTTPException(status_code=404, detail="Carteira do usuário não encontrada.")
 
         wallet_id = wallet_res.data[0]["id"]
-        external_id = f"pix_{uuid.uuid4().hex[:12]}"
+        local_ref = f"pix_{uuid.uuid4().hex[:12]}"
 
-        # 2. Criar a transação pendente no banco
-        transaction_data = {
+        fee = DEPOSIT_FEE
+        total_charged = round(request.amount + fee, 2)
+
+        if use_mp:
+            # 2. E-mail do pagador — exigido pela API de pagamentos do Mercado Pago
+            try:
+                user_res = supabase.auth.admin.get_user_by_id(user_id)
+                payer_email = user_res.user.email
+            except Exception:
+                payer_email = None
+            if not payer_email:
+                raise HTTPException(status_code=500, detail="Não foi possível obter o e-mail da conta para gerar o Pix.")
+
+            # 3. Criar o pagamento Pix de verdade no Mercado Pago
+            mp_res = _mp_client.post(
+                "/v1/payments",
+                json={
+                    "transaction_amount": total_charged,
+                    "payment_method_id": "pix",
+                    "payer": {"email": payer_email},
+                    "external_reference": local_ref,
+                    "notification_url": f"{BACKEND_PUBLIC_URL}/api/pix/webhook",
+                    "description": f"Depósito ArenaX1 — R$ {request.amount:.2f} + taxa de R$ {fee:.2f}",
+                },
+                headers={"X-Idempotency-Key": local_ref},
+            )
+            if mp_res.status_code >= 300:
+                raise HTTPException(status_code=502, detail="Não foi possível gerar a cobrança Pix agora. Tente novamente em instantes.")
+
+            mp_payment = mp_res.json()
+            payment_external_id = str(mp_payment["id"])
+            transaction_data = mp_payment.get("point_of_interaction", {}).get("transaction_data", {})
+            copia_e_cola = transaction_data.get("qr_code")
+            qr_code_base64 = transaction_data.get("qr_code_base64")
+            if not copia_e_cola or not qr_code_base64:
+                raise HTTPException(status_code=502, detail="O Mercado Pago não retornou o QR Code Pix. Tente novamente.")
+            gateway = "mercadopago"
+        else:
+            # Dev sem token do Mercado Pago: gera cobrança mock com a mesma
+            # estrutura (taxa + total) pra testar UI e /dev/simulate-deposit.
+            payment_external_id = local_ref
+            copia_e_cola = (
+                f"00020126580014BR.GOV.BCB.PIX0136{local_ref}"
+                f"520400005303986540{total_charged:.2f}5802BR5913ARENAX1 DEV6009SAO PAULO62070503***6304ABCD"
+            )
+            qr_code_base64 = _DEV_QR_PNG_BASE64
+            gateway = "dev_mock"
+
+        # 4. Criar a transação pendente no banco.
+        # Com MP real, external_id = id do pagamento no Mercado Pago (o que o
+        # webhook e o GET /v1/payments/{id} devolvem). Em mock, usa o local_ref.
+        transaction_data_row = {
             "wallet_id": wallet_id,
             "type": "deposit",
-            "amount": request.amount,
+            "amount": total_charged,
+            "fee_amount": fee,
             "status": "pending",
-            "description": f"Depósito via Pix de R$ {request.amount:.2f}",
-            "external_id": external_id
+            "gateway": gateway,
+            "description": f"Depósito via Pix de R$ {request.amount:.2f} (+ taxa de R$ {fee:.2f})",
+            "external_id": payment_external_id,
         }
 
-        insert_res = supabase.table("transactions").insert(transaction_data).execute()
+        insert_res = supabase.table("transactions").insert(transaction_data_row).execute()
         if not insert_res.data:
             raise HTTPException(status_code=500, detail="Erro ao registrar transação no banco de dados.")
 
-        # 3. Gerar payload Pix Copia e Cola simulado
-        # Em produção, aqui seria feita a integração via API do gateway (ex: Asaas, Efí, etc.)
-        pix_payload = f"00020101021226870014br.gov.bcb.pix2565qencooamttkhemyftsrz{external_id}5204000053039865405{request.amount:.2f}5802BR5913ArenaX1%20Ltda6009Sao%20Paulo62070503***6304"
-
         return {
             "transaction_id": insert_res.data[0]["id"],
-            "external_id": external_id,
-            "amount": request.amount,
-            "copia_e_cola": pix_payload,
-            "qr_code_url": f"https://api.qrserver.com/v1/create-qr-code/?size=300x300&data={pix_payload}"
+            "external_id": payment_external_id,
+            "requested_amount": request.amount,
+            "fee_amount": fee,
+            "total_amount": total_charged,
+            "copia_e_cola": copia_e_cola,
+            "qr_code_base64": qr_code_base64,
         }
 
     except HTTPException:
@@ -117,21 +210,62 @@ def create_deposit(request: DepositRequest, user_id: str = Depends(get_current_u
         raise HTTPException(status_code=500, detail=f"Erro interno: {str(e)}")
 
 
-@router.post("/webhook", response_model=WebhookOut)
-def process_webhook(payload: WebhookPayload, x_webhook_secret: str = Header(default=None)):
-    # Endpoint server-to-server (gateway -> backend): não usa JWT de usuário,
-    # e sim um segredo compartilhado. Trocar por verificação de assinatura
-    # própria do gateway (Asaas/Efí/etc.) ao integrar o provedor real.
-    if not pix_webhook_secret or x_webhook_secret != pix_webhook_secret:
+def _verify_mp_signature(request_id: Optional[str], x_signature: Optional[str], data_id: Optional[str]) -> bool:
+    """Verifica a assinatura do webhook do Mercado Pago.
+
+    Formato documentado: header x-signature vem como "ts=<timestamp>,v1=<hash>".
+    O hash é HMAC-SHA256 de um manifest "id:{data_id};request-id:{request_id};ts:{ts};"
+    usando o segredo configurado no painel de integrações do Mercado Pago.
+    """
+    if not MERCADO_PAGO_WEBHOOK_SECRET or not x_signature or not data_id:
+        return False
+
+    parts = dict(p.split("=", 1) for p in x_signature.split(",") if "=" in p)
+    ts = parts.get("ts")
+    received_hash = parts.get("v1")
+    if not ts or not received_hash:
+        return False
+
+    manifest = f"id:{data_id};request-id:{request_id or ''};ts:{ts};"
+    expected_hash = hmac.new(
+        MERCADO_PAGO_WEBHOOK_SECRET.encode(), manifest.encode(), hashlib.sha256
+    ).hexdigest()
+
+    return hmac.compare_digest(expected_hash, received_hash)
+
+
+@router.post("/webhook")
+async def process_webhook(
+    request: Request,
+    x_signature: str = Header(default=None),
+    x_request_id: str = Header(default=None),
+):
+    # Endpoint server-to-server (Mercado Pago -> backend): autenticado pela
+    # assinatura HMAC própria do gateway, não por JWT de usuário.
+    body = await request.json()
+    data_id = str(body.get("data", {}).get("id") or request.query_params.get("data.id") or "")
+
+    if not _verify_mp_signature(x_request_id, x_signature, data_id):
         raise HTTPException(status_code=401, detail="Assinatura do webhook inválida.")
 
-    if payload.status != "completed":
-        raise HTTPException(status_code=400, detail="Status de pagamento inválido no webhook.")
+    if body.get("type") != "payment" or not data_id:
+        # Notificação de outro tipo de evento (ex: merchant_order) — ignora.
+        return {"status": "ignored"}
+
+    # Nunca confia em valor/status vindos do corpo do webhook — busca o
+    # pagamento de verdade na API do Mercado Pago antes de creditar.
+    mp_res = _mp_client.get(f"/v1/payments/{data_id}")
+    if mp_res.status_code >= 300:
+        raise HTTPException(status_code=502, detail="Não foi possível confirmar o pagamento no Mercado Pago.")
+
+    mp_payment = mp_res.json()
+    if mp_payment.get("status") != "approved":
+        return {"status": "ignored"}
 
     try:
         result = supabase.rpc("fn_process_pix_deposit_webhook", {
-            "p_external_id": payload.external_id,
-            "p_amount": payload.amount,
+            "p_external_id": data_id,
+            "p_amount": mp_payment.get("transaction_amount"),
         }).execute()
         return result.data
     except HTTPException:

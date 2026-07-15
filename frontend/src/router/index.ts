@@ -197,6 +197,13 @@ const router = createRouter({
           path: '/admin/support',
           name: 'admin-support',
           component: () => import('../views/AdminSupportView.vue')
+        },
+        {
+          // Fila de saques manuais: o Mercado Pago não envia Pix a chave de
+          // terceiro, então o admin confirma/rejeita aqui depois do envio real.
+          path: '/admin/withdrawals',
+          name: 'admin-withdrawals',
+          component: () => import('../views/AdminWithdrawalsView.vue')
         }
       ]
     }

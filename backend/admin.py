@@ -28,6 +28,10 @@ class SetTicketStatusRequest(BaseModel):
     status: str
 
 
+class RejectWithdrawRequest(BaseModel):
+    reason: str
+
+
 def _raise_from_rpc_error(e: Exception):
     message = getattr(e, "message", None) or str(e)
     if "NOT_FOUND" in message:
@@ -144,6 +148,77 @@ def set_support_ticket_status(ticket_id: str, request: SetTicketStatusRequest, a
             "p_ticket_id": ticket_id,
             "p_admin_id": admin_user_id,
             "p_status": request.status,
+        }).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.get("/withdrawals")
+def list_withdrawals(status: str = "pending", admin_user_id: str = Depends(get_current_admin_user_id)):
+    """Fila de saques pro admin processar manualmente (o Mercado Pago não manda
+    Pix pra chave de terceiro via API — ver pix.py). Junta transactions ->
+    wallets -> profiles na mão, mesmo estilo do GET /disputes acima."""
+    try:
+        tx_query = supabase.table("transactions").select(
+            "id, amount, pix_key, status, description, created_at, processed_at, failure_reason, wallet_id"
+        ).eq("type", "withdraw").order("created_at", desc=True)
+        if status in ("pending", "completed", "failed"):
+            tx_query = tx_query.eq("status", status)
+        transactions = tx_query.execute().data or []
+        if not transactions:
+            return []
+
+        wallet_ids = list({t["wallet_id"] for t in transactions})
+        wallets_res = supabase.table("wallets").select("id, user_id").in_("id", wallet_ids).execute()
+        user_id_by_wallet = {w["id"]: w["user_id"] for w in (wallets_res.data or [])}
+
+        profile_ids = list(set(user_id_by_wallet.values()))
+        profiles_res = supabase.table("profiles").select("id, username").in_("id", profile_ids).execute()
+        username_by_profile = {p["id"]: p["username"] for p in (profiles_res.data or [])}
+
+        result = []
+        for t in transactions:
+            profile_id = user_id_by_wallet.get(t["wallet_id"])
+            result.append({
+                "id": t["id"],
+                "amount": abs(float(t["amount"])),
+                "pix_key": t["pix_key"],
+                "status": t["status"],
+                "description": t["description"],
+                "created_at": t["created_at"],
+                "processed_at": t["processed_at"],
+                "failure_reason": t["failure_reason"],
+                "username": username_by_profile.get(profile_id, "?"),
+            })
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao carregar saques: {str(e)}")
+
+
+@router.post("/withdrawals/{transaction_id}/confirm")
+def confirm_withdrawal(transaction_id: str, admin_user_id: str = Depends(get_current_admin_user_id)):
+    try:
+        result = supabase.rpc("fn_confirm_withdraw", {
+            "p_transaction_id": transaction_id,
+            "p_admin_id": admin_user_id,
+        }).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
+
+
+@router.post("/withdrawals/{transaction_id}/reject")
+def reject_withdrawal(transaction_id: str, request: RejectWithdrawRequest, admin_user_id: str = Depends(get_current_admin_user_id)):
+    try:
+        result = supabase.rpc("fn_reject_withdraw", {
+            "p_transaction_id": transaction_id,
+            "p_admin_id": admin_user_id,
+            "p_reason": request.reason,
         }).execute()
         return result.data
     except HTTPException:
