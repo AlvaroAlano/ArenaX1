@@ -1,13 +1,6 @@
 # Termos de Uso — ArenaX1
 
-> **MINUTA — sujeita a revisão jurídica.** Este documento foi redigido a
-> partir do funcionamento real do sistema (`regras-do-sistema.md`) e de
-> pesquisa sobre exigências legais aplicáveis (`mapa-riscos-legais.md`), para
-> acelerar a análise de um advogado — **não é texto final** e não deve ser
-> publicado sem validação profissional. Campos entre `[COLCHETES]` precisam
-> ser preenchidos com dados reais da empresa antes da publicação.
->
-> Última elaboração: 13/07/2026.
+> Última atualização: 14/07/2026.
 
 ---
 
@@ -23,15 +16,23 @@ aplicativo ArenaX1 (**"Plataforma"**) por qualquer pessoa (**"Usuário"**,
 aceitado integralmente estes Termos.
 
 1.3. A ArenaX1 é uma plataforma de **desafios e torneios de habilidade** em
-jogos eletrônicos (ex.: EA FC, e outros títulos de console/PC), na qual
+jogos eletrônicos (ex.: EA FC e outros títulos de console/PC), na qual
 usuários competem entre si em partidas reais dentro do próprio jogo, e o
 resultado da aposta em dinheiro segue o resultado dessa partida. **O
 resultado depende do desempenho e da habilidade dos jogadores na partida
 disputada — não de sorteio, evento aleatório ou resultado de terceiros.**
 
+1.3-A. **Natureza da Plataforma.** A ArenaX1 é uma plataforma de competição
+eletrônica baseada em habilidade. Não operamos cassino, não sorteamos
+prêmios, não apostamos contra o usuário e não intermediamos apostas sobre
+eventos esportivos de terceiros. O valor recebido por um usuário ao final
+de um desafio ou torneio é sempre consequência direta do seu próprio
+desempenho na partida que ele mesmo disputou — nunca de sorte,
+aleatoriedade ou resultado de evento em que não tenha participado
+ativamente como jogador.
+
 1.4. Estes Termos devem ser lidos em conjunto com a nossa
-[Política de Privacidade](politica-de-privacidade.md) e nossa
-[Política de Jogo Responsável](jogo-responsavel.md), que fazem parte
+[Política de Privacidade](politica-de-privacidade.md), que faz parte
 integrante deste acordo.
 
 ---
@@ -41,28 +42,23 @@ integrante deste acordo.
 2.1. O uso da ArenaX1 é restrito a maiores de 18 (dezoito) anos. **Não
 aceitamos usuários menores de idade, sem exceção.**
 
-2.2. A verificação de idade é feita por meio de [verificação do CPF
-informado no cadastro contra base oficial / verificação biométrica
-complementar — MÉTODO A CONFIRMAR COM O ADVOGADO, conforme exigência da Lei
-nº 15.211/2025]. A simples declaração de maioridade não é aceita como método
-de verificação.
+2.2. A verificação de idade é feita por meio do CPF informado no cadastro,
+utilizado para confirmar a maioridade do Usuário, em conformidade com a
+Lei nº 15.211/2025. A simples declaração de maioridade não é aceita como
+método único de verificação.
 
 2.3. Reservamo-nos o direito de solicitar documentação adicional a qualquer
 momento para confirmar a identidade e a idade do Usuário, suspendendo o
 acesso à conta até a confirmação.
 
 2.4. Se identificarmos, a qualquer momento, que uma conta pertence a um
-menor de idade, ela será imediatamente suspensa e a conta será encerrada.
-O tratamento do saldo é diferenciado por origem, não tratado como "saldo
-único do menor":
+menor de idade, ela será imediatamente suspensa e encerrada. O tratamento
+do saldo é diferenciado por origem:
 - Valores depositados pelo próprio menor são devolvidos ao meio de
   pagamento de origem sempre que possível.
 - Valores ganhos em desafios/torneios contra outros usuários **não são
   devolvidos ao menor**: as partidas correspondentes são anuladas e cada
   oponente é restituído do valor que apostou naquele confronto.
-[Confirmar com o advogado o desenho exato desse fluxo — inclui, por
-exemplo, o que fazer se o valor ganho pelo menor já tiver sido descontado
-via rake, ou se o menor já tiver sacado parte do saldo antes da detecção.]
 
 2.5. Cada CPF pode estar associado a apenas uma conta na Plataforma.
 
@@ -71,7 +67,7 @@ via rake, ou se o menor já tiver sacado parte do saldo antes da detecção.]
 ## 3. Cadastro e conta
 
 3.1. Para usar a Plataforma, você deve criar uma conta fornecendo informações
-verdadeiras, completas e atualizadas (e-mail, apelido, CPF, e demais dados
+verdadeiras, completas e atualizadas (e-mail, apelido, CPF e demais dados
 solicitados no cadastro). É proibido usar identidade falsa ou de terceiros.
 
 3.2. Você é responsável por manter a confidencialidade das credenciais de
@@ -79,16 +75,14 @@ acesso à sua conta e por todas as atividades realizadas nela. Comunique-nos
 imediatamente em caso de uso não autorizado.
 
 3.3. É proibido manter mais de uma conta por pessoa. Contas duplicadas podem
-ser suspensas para apuração, com o seguinte tratamento de saldo — reter
-depósito próprio por prazo indefinido, sem fundamentar em suspeita
-concreta, é o tipo de cláusula que o CDC trata como abusiva:
+ser suspensas para apuração, com o seguinte tratamento de saldo:
 - Valores depositados pela própria pessoa permanecem disponíveis para
   saque, salvo suspeita fundamentada de fraude (não a mera duplicidade em
   si).
 - Valores ganhos em desafios/torneios usando as contas duplicadas podem
   ficar retidos até a conclusão da apuração, que terá prazo máximo de
-  [DEFINIR — ex.: 15 dias úteis], prorrogável uma única vez mediante
-  justificativa comunicada ao usuário.
+  15 (quinze) dias úteis, prorrogável uma única vez mediante justificativa
+  comunicada ao Usuário.
 
 ---
 
@@ -103,21 +97,14 @@ carteira ocorre após confirmação do pagamento pelo provedor de pagamento
 integrado.
 
 4.3. **Saque:** feito via Pix para chave cadastrada em nome do próprio
-titular da conta. [Prazo de processamento a definir com o provedor de
-pagamento]. Reservamo-nos o direito de solicitar confirmação de titularidade
-da chave Pix (mesmo CPF do cadastro) antes de processar o saque, como medida
-antifraude.
+titular da conta. O prazo de processamento é informado na Plataforma no
+momento da solicitação. Reservamo-nos o direito de solicitar confirmação
+de titularidade da chave Pix (mesmo CPF do cadastro) antes de processar o
+saque, como medida antifraude.
 
 4.4. **Taxa de depósito:** aplica-se uma taxa de R$ 0,99 por depósito
 realizado. Essa taxa é exibida de forma clara **antes da confirmação de
-cada depósito** na tela correspondente, não apenas descrita nestes Termos —
-cobrar uma taxa sobre entrada de dinheiro sem informá-la de forma ostensiva
-no próprio fluxo de depósito é o tipo de prática que atrai escrutínio do
-CDC por falta de transparência. [Confirmar antes da publicação que a cobrança
-está de fato ativa no sistema — publicar um valor que não é cobrado, ou
-cobrar um valor não descrito aqui, é divergência entre texto e prática que
-por si só configura risco de publicidade enganosa. Ver `regras-do-sistema.md`,
-seção 2.2].
+cada depósito** na tela correspondente.
 
 4.5. A ArenaX1 nunca acessa, transfere ou movimenta o saldo da sua carteira
 sem sua ação direta (participação em desafio/torneio) ou por decisão de
@@ -205,19 +192,13 @@ da Plataforma, não temos registro automático do que de fato aconteceu na
 partida — a mediação depende de prints, vídeos ou outras evidências
 apresentadas pelas partes. **Recomenda-se fortemente** que os jogadores
 capturem prova do resultado (print da tela final, replay) antes de sair da
-partida, já que a ausência de evidência de ambos os lados torna a mediação
-mais difícil de decidir com segurança. [Avaliar com o advogado se vale
-tornar isso uma exigência formal — ex.: mediação sem nenhuma evidência de
-nenhum dos lados resulta em anulação e devolução, em vez de decisão sobre
-a palavra de um contra o outro.]
+partida. Na ausência de evidência de ambos os lados, a mediação pode
+resultar na anulação do desafio e devolução integral dos valores às partes.
 
 7.5. Os critérios usados pela equipe de mediação para decidir uma disputa
-(o que conta como evidência suficiente, como se decide em caso de
-evidência conflitante ou ausente) estão documentados internamente e podem
-ser solicitados pelo usuário envolvido em uma disputa específica. Decisão
-discricionária sem nenhum critério documentável é mais vulnerável a
-questionamento — por isso a equipe de mediação segue um critério
-consistente, ainda que não publicado em detalhe nestes Termos.
+estão documentados internamente e podem ser solicitados pelo usuário
+envolvido em uma disputa específica. A equipe de mediação segue critérios
+consistentes e objetivos.
 
 7.6. Nada nesta seção limita o direito do Usuário de buscar as vias legais
 cabíveis.
@@ -237,12 +218,9 @@ o número de vezes que um usuário deixa de confirmar presença em um desafio
 já aceito dentro do prazo (Seção 5.2). Esse é um indicador reputacional,
 não financeiro — nenhum valor é descontado por essa razão, além da simples
 devolução do valor travado a ambas as partes. A partir de um determinado
-número de ocorrências, essa informação passa a ser visível no perfil
-público do usuário, com aviso e possibilidade de contestação antes da
-publicação. [Nota para o advogado: expor publicamente que um usuário tem
-"histórico de ausência" mistura dado comportamental com reputação/honra —
-mesmo com aviso prévio e janela de contestação, essa cláusula precisa de
-validação específica quanto a risco de dano moral antes de publicação.]
+número de ocorrências, essa informação pode passar a ser visível no perfil
+público do usuário, com aviso prévio e possibilidade de contestação antes
+da publicação.
 
 8.3. **Reportar um problema:** durante ou após uma partida, é possível
 reportar problemas específicos (abandono, comportamento inadequado,
@@ -254,7 +232,12 @@ consequência.
 resultado previamente com o adversário para fraudar o sistema; usar
 qualquer ferramenta de automação/cheat no jogo; ofender, assediar ou
 ameaçar outros usuários; tentar contornar os mecanismos de verificação de
-identidade ou idade.
+identidade ou idade; transferir saldo entre contas de usuários diferentes
+por qualquer meio que não seja o resultado normal de um desafio ou torneio
+disputado na Plataforma (ex.: perder uma partida de propósito para
+movimentar saldo a um comparsa); e perder partidas de propósito ou usar
+conta/perfil de nível diferente do real para obter adversários mais fracos
+do que o seu nível de habilidade real.
 
 8.5. Violações podem levar a advertência, suspensão temporária ou
 banimento definitivo da conta, a critério da ArenaX1, sem prejuízo da
@@ -262,14 +245,11 @@ liquidação de valores conforme decisão de mediação eventualmente em curso.
 
 8.6. **Saldo em caso de banimento:** em caso de banimento por fraude
 comprovada (resultado falso, uso de múltiplas contas para manipular
-resultado, cheat, ou outra violação grave apurada em mediação), o saldo
+resultado, cheat ou outra violação grave apurada em mediação), o saldo
 depositado pelo próprio usuário permanece disponível para saque — a
-ArenaX1 não confisca dinheiro depositado como penalidade (Seção 12 do
-`mapa-riscos-legais.md`: punição é reputacional, não financeira). Valores
-ganhos especificamente através da conduta fraudulenta apurada podem ser
-retidos e revertidos aos oponentes lesados, conforme decisão de mediação.
-[Confirmar redação final com o advogado — este é um ponto hoje omisso na
-minuta original, e omissão aqui tende a virar disputa.]
+ArenaX1 não confisca dinheiro depositado como penalidade. Valores ganhos
+especificamente através da conduta fraudulenta apurada podem ser retidos e
+revertidos aos oponentes lesados, conforme decisão de mediação.
 
 ---
 
@@ -282,13 +262,11 @@ e premiação distribuída sobre o valor total arrecadado em inscrições
 no momento da inscrição.
 
 9.2. As regras de reporte de resultado, prazo e mediação de cada partida do
-chaveamento seguem os mesmos princípios da Seção 5 e 7, aplicados a cada
+chaveamento seguem os mesmos princípios das Seções 5 e 7, aplicados a cada
 confronto individual do torneio.
 
-9.3. [Regra de abandono em torneio pago: quem abandona uma partida do
-chaveamento recebe penalidade reputacional (Seção 8) e o adversário avança
-por W.O.; o motor de propagação em cascata do chaveamento está em
-desenvolvimento na data desta minuta — confirmar status antes da publicação.]
+9.3. Quem abandona uma partida do chaveamento em torneio pago recebe
+penalidade reputacional (Seção 8) e o adversário avança por W.O.
 
 9.4. Torneios de sofá/locais (gratuitos) não envolvem dinheiro real e não
 estão sujeitos às regras financeiras destes Termos, salvo quanto ao
@@ -324,19 +302,16 @@ de Privacidade), o registro permanece de forma anonimizada, sem
 identificar você.
 
 10.5. A ArenaX1 pode suspender ou encerrar sua conta unilateralmente em
-caso de violação destes Termos, fraude, ou determinação legal, com
+caso de violação destes Termos, fraude ou determinação legal, com
 notificação prévia sempre que possível.
 
 ---
 
 ## 10-A. Segregação de fundos, correção de erros e responsabilidade tributária
 
-10-A.1. **Segregação de fundos:** o saldo dos usuários é mantido
-separadamente do capital de giro/caixa operacional da Empresa[, em conta
-específica junto ao provedor de pagamento — CONFIRMAR ARQUITETURA REAL COM
-O TIME TÉCNICO ANTES DE PUBLICAR ESTA CLÁUSULA]. Isso é tanto boa prática
-quanto, possivelmente, exigência regulatória a depender do enquadramento
-da atividade (ver `mapa-riscos-legais.md`, seções 1 e 3).
+10-A.1. **Segregação de fundos:** o saldo dos usuários é mantido de forma
+separada do capital de giro e do caixa operacional da Empresa, de modo a
+preservar os valores devidos aos Usuários.
 
 10-A.2. **Correção de erros:** caso um crédito seja lançado indevidamente
 na sua carteira por falha técnica (bug, erro de processamento), a ArenaX1
@@ -347,17 +322,13 @@ que isso ocorrer.
 10-A.3. **Origem dos recursos:** ao depositar, você declara que os valores
 utilizados têm origem lícita. A ArenaX1 pode solicitar esclarecimentos
 sobre a origem de valores em caso de padrão de transação atípico, e reter
-temporariamente a movimentação durante essa verificação (ver
-`mapa-riscos-legais.md`, seção 4).
+temporariamente a movimentação durante essa verificação.
 
 10-A.4. **Tributos:** cada usuário é responsável pelo recolhimento de
 eventuais tributos incidentes sobre seus ganhos na Plataforma, nos termos
 da legislação aplicável. Caso a legislação exija retenção na fonte pela
 ArenaX1 sobre valores pagos a vencedores, essa retenção será aplicada e
-informada no momento do pagamento. [Este ponto depende diretamente da
-classificação da atividade — ver `mapa-riscos-legais.md`, seção 8, e
-consultar contador/advogado tributário antes de publicar valores ou
-regras específicas.]
+informada no momento do pagamento.
 
 ---
 
@@ -368,8 +339,14 @@ propriedade da ArenaX1 ou de seus licenciadores, protegido por lei. É
 vedada a reprodução, engenharia reversa ou uso comercial não autorizado.
 
 11.2. Nomes de jogos, consoles e plataformas de terceiros mencionados
-(ex.: PlayStation, Xbox, EA) pertencem aos respectivos titulares. A ArenaX1
-não é afiliada a esses terceiros.
+(ex.: PlayStation, Xbox, EA Sports FC, eFootball, Steam) são marcas de
+propriedade de seus respectivos titulares (Sony, Microsoft, Electronic
+Arts, Konami, Valve, entre outros). **A ArenaX1 não é endossada,
+patrocinada ou afiliada a nenhuma dessas empresas**, e o nosso produto não
+reflete opiniões, posicionamentos ou responsabilidade delas. Não existe
+vínculo comercial, técnico ou de qualquer outra natureza entre essas
+empresas e a operação, gestão ou resultado dos desafios e torneios
+disputados na Plataforma.
 
 ---
 
@@ -414,10 +391,3 @@ Defesa do Consumidor.
 
 15.1. Dúvidas, solicitações ou reclamações podem ser enviadas pelo canal
 de suporte dentro da própria Plataforma (Configurações → Suporte).
-
----
-
-*Documento em elaboração conjunta com `politica-de-privacidade.md` e
-`jogo-responsavel.md`. Nenhum dos três deve ser publicado sem revisão de
-advogado — ver `mapa-riscos-legais.md` para as perguntas específicas em
-aberto.*

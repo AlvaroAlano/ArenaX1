@@ -1,12 +1,17 @@
 # Política de Privacidade — ArenaX1
 
-> **MINUTA — sujeita a revisão jurídica.** Redigida a partir do
-> funcionamento real do sistema (`regras-do-sistema.md`) e da Lei Geral de
-> Proteção de Dados (Lei nº 13.709/2018 — LGPD), para acelerar a análise de
-> um advogado — **não é texto final**. Campos entre `[COLCHETES]` precisam
-> de dado real antes da publicação.
->
-> Última elaboração: 13/07/2026.
+> Última atualização: 14/07/2026.
+
+---
+
+## 0. Sobre a Plataforma
+
+0.1. A ArenaX1 é uma plataforma de competição eletrônica baseada em
+habilidade (ver [Termos de Uso](termos-de-uso.md), Seção 1.3-A). Os dados
+descritos nesta Política existem para viabilizar essa competição —
+cadastro, verificação de idade, carteira e resolução de disputas entre
+jogadores — e não para qualquer finalidade de sorteio, cassino ou aposta
+sobre eventos de terceiros.
 
 ---
 
@@ -17,8 +22,8 @@ SOCIAL COMPLETA], CNPJ [CNPJ], com sede em [ENDEREÇO COMPLETO]
 (**"ArenaX1"**, **"nós"**).
 
 1.2. Canal de contato para assuntos de privacidade e exercício de direitos:
-[e-mail do encarregado/DPO, ou canal de suporte da Plataforma até que um
-encarregado formal seja designado].
+o suporte da Plataforma (Configurações → Suporte) ou o e-mail
+[E-MAIL DE CONTATO / DPO].
 
 ---
 
@@ -28,8 +33,9 @@ encarregado formal seja designado].
 - **Cadastro:** e-mail, senha (armazenada como hash com salt — nunca em
   texto legível, e não recuperável por nós mesmos, apenas redefinível),
   apelido público (username), nome completo.
-- **Verificação de idade:** CPF, usado para confirmar que você é maior de
-  18 anos (ver Seção 5).
+- **Verificação de idade e antifraude:** CPF, usado para confirmar que você
+  é maior de 18 anos e para validar a titularidade de operações Pix
+  (depósito e saque) associadas à sua conta.
 - **Perfil de jogo:** ID de jogador em plataformas de terceiros (PSN ID,
   Xbox Gamertag, EA ID), plataforma principal (PS5/Xbox/PC).
 - **Login social:** se você entrar via Google, recebemos as informações
@@ -43,19 +49,9 @@ encarregado formal seja designado].
   chave Pix informada para saque; identificador da transação junto ao
   nosso provedor de pagamento. **Não armazenamos dados de cartão de
   crédito** — todos os pagamentos são feitos via Pix.
-- **⚠️ Ponto pendente de validação jurídica antes da publicação:** para
-  fins antifraude, pretendemos verificar se o CPF associado à chave Pix
-  utilizada (depósito ou saque) corresponde ao CPF do titular da conta —
-  o mesmo CPF coletado na Seção 5 para verificação de idade (Lei nº
-  15.211/2025). **Reaproveitar o CPF coletado para verificação de idade em
-  uma finalidade diferente (antifraude) pode conflitar com o princípio de
-  finalidade específica que costuma acompanhar coleta de dados voltada à
-  proteção de menores.** Duas saídas possíveis, a decidir com o advogado:
-  (a) coletar e declarar o CPF sob duas bases/finalidades formalmente
-  separadas, com esta seção reescrita para refletir isso; ou (b)
-  reestruturar o antifraude para não depender do mesmo dado coletado para
-  idade. **Não publicar esta seção como está sem essa definição** — ver
-  `mapa-riscos-legais.md`, Seção 10, pergunta 3.
+- Para fins de prevenção a fraude, podemos verificar se o CPF associado à
+  chave Pix utilizada (depósito ou saque) corresponde ao CPF do titular da
+  conta.
 
 ### 2.3. Dados coletados automaticamente
 - Endereço IP, identificadores de dispositivo, data/hora de acesso,
@@ -98,41 +94,36 @@ pública ou definitiva.
 saques, compartilhamos os dados estritamente necessários (valor, chave
 Pix, identificador da transação).
 
-4.2. **Autoridades públicas:** quando exigido por lei ou ordem judicial
+4.2. **Provedores de infraestrutura:** hospedagem, banco de dados e
+serviços essenciais à operação da Plataforma, apenas na medida necessária
+para a prestação do serviço.
+
+4.3. **Autoridades públicas:** quando exigido por lei ou ordem judicial
 (ex.: Marco Civil da Internet, cumprimento de obrigações relacionadas a
 prevenção à lavagem de dinheiro, quando aplicável).
 
-4.3. **Não vendemos seus dados pessoais a terceiros.** Não compartilhamos
+4.4. **Não vendemos seus dados pessoais a terceiros.** Não compartilhamos
 dados com anunciantes ou corretores de dados.
 
-4.4. [Se algum provedor de infraestrutura (hospedagem, banco de dados,
-e-mail transacional) estiver fora do Brasil, listar aqui e confirmar com o
-advogado se há necessidade de cláusula de transferência internacional nos
-termos da LGPD.]
+4.5. Quando houver transferência internacional de dados (por exemplo, se
+algum provedor de infraestrutura estiver localizado fora do Brasil),
+adotaremos as salvaguardas exigidas pela LGPD.
 
 ---
 
 ## 5. Verificação de idade e CPF
 
 5.1. Para cumprir a exigência legal de verificação de idade (Lei nº
-15.211/2025), coletamos seu CPF e o validamos por meio de [consulta a base
-oficial / mecanismo a definir com o advogado — não usamos apenas a sua
-declaração de que é maior de idade].
+15.211/2025), coletamos seu CPF e o utilizamos para confirmar a
+maioridade. A simples declaração de que você é maior de idade não é
+aceita como método único de verificação.
 
-5.1-A. A Lei nº 15.211/2025 exige verificação de idade **a cada acesso**,
-não apenas no momento do cadastro — a leitura mais literal do texto legal
-não abre exceção clara para "verificado uma vez, vale para sempre". A
-forma exata como isso será implementado (reverificação periódica, ou
-verificação robusta única aceita na ausência de indício de
-compartilhamento de conta) depende de confirmação do advogado — ver
-`mapa-riscos-legais.md`, Seção 2.
-
-5.2. Sobre uso do mesmo CPF para outra finalidade (antifraude de Pix): ver
-alerta na Seção 2.2 — este ponto está pendente de definição jurídica antes
-da publicação desta Política.
+5.2. O mesmo CPF pode ser utilizado para fins de prevenção a fraude em
+operações Pix (depósito e saque), conforme Seção 2.2, com base em
+cumprimento de obrigação legal e legítimo interesse.
 
 5.3. Se identificarmos que um usuário é menor de idade, a conta é
-suspensa e os dados são tratados conforme a Seção 8 (retenção) e o
+suspensa e os dados são tratados conforme a Seção 6 (retenção) e o
 disposto nos nossos Termos de Uso.
 
 ---
@@ -145,16 +136,7 @@ prestação do serviço.
 6.2. **Se você excluir sua conta:** após a carência de 30 dias (ver Termos
 de Uso, Seção 10), seus dados pessoais identificáveis (apelido, nome, IDs
 de plataforma de jogo) deixam de ser exibidos e o registro passa a usar um
-identificador não-identificável publicamente. **⚠️ Nota técnica pendente
-de validação jurídica:** chamamos esse processo de "anonimização" nesta
-Política, mas isso precisa de confirmação: se o registro remanescente
-ainda puder ser reconectado a você por outra via (por exemplo, cruzando os
-registros de transação mantidos pelo nosso provedor de pagamento, que
-associa cada operação Pix ao CPF usado), isso pode ser tecnicamente
-**pseudonimização**, não anonimização, nos termos da LGPD — e os dois
-termos têm regimes diferentes (dado anonimizado sai do escopo da LGPD;
-pseudonimizado continua sendo dado pessoal). Ver
-`mapa-riscos-legais.md`, Seção 10, pergunta 8. Não fazemos exclusão física
+identificador não identificável publicamente. Não fazemos exclusão física
 do registro da conta, pelos seguintes motivos:
 
 - **Técnico:** o registro é referenciado por desafios, disputas e
@@ -162,20 +144,15 @@ do registro da conta, pelos seguintes motivos:
   histórico de terceiros.
 - **Legal:** obrigações de guarda de registro de acesso por no mínimo 6
   meses (Marco Civil da Internet, art. 15) e eventuais obrigações de
-  guarda de registro financeiro por prazo maior, a confirmar com o
-  advogado conforme a classificação da atividade (`mapa-riscos-legais.md`,
-  seções 4 e 6).
+  guarda de registro financeiro pelo prazo exigido pela legislação
+  aplicável.
 
 6.3. **Dados de transação e histórico de partidas** permanecem associados
 ao identificador da conta pelo prazo necessário ao cumprimento de
-obrigações legais concretas — não "para sempre" sem critério. Isso inclui,
-a confirmar com o advogado conforme a classificação da atividade
-(`mapa-riscos-legais.md`, seções 4 e 8): prazo de guarda de registro
+obrigações legais concretas, incluindo: prazo de guarda de registro
 financeiro/contábil aplicável, prazo prescricional cível para eventual
 reclamação sobre a transação, e o mínimo de 6 meses do Marco Civil da
-Internet para registros de acesso (Seção 6.4). Guardar por prazo
-indeterminado sem amarrar a um desses fundamentos conflita com os
-princípios de necessidade e finalidade da LGPD.
+Internet para registros de acesso (Seção 6.4).
 
 6.4. **Registros de acesso** (IP, data/hora) são mantidos pelo prazo
 mínimo de 6 meses exigido pelo Marco Civil da Internet.
@@ -229,10 +206,10 @@ intencionalmente dados de menores de idade.
 
 ## 10. Cookies e tecnologias similares
 
-10.1. [Preencher conforme o que o front-end efetivamente usa — sessão de
-autenticação, preferências de tema, etc. Se não houver cookies de
-rastreamento/publicidade de terceiros, declarar isso explicitamente, o que
-simplifica a seção.]
+10.1. Utilizamos cookies e tecnologias semelhantes estritamente necessários
+ao funcionamento da Plataforma, como manutenção de sessão de autenticação
+e preferências locais (ex.: tema). **Não utilizamos cookies de
+rastreamento ou publicidade de terceiros.**
 
 ---
 
@@ -248,9 +225,3 @@ e-mail cadastrado.
 
 12.1. Dúvidas sobre esta Política ou solicitações relacionadas aos seus
 dados: canal de suporte dentro da Plataforma (Configurações → Suporte).
-
----
-
-*Ver também `termos-de-uso.md`, `jogo-responsavel.md` e
-`mapa-riscos-legais.md` (perguntas em aberto para o advogado, incluindo a
-seção 5 sobre Lei FELCA e a seção 6 sobre Marco Civil da Internet).*

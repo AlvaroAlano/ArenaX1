@@ -94,6 +94,47 @@ erro factual. Corrigido abaixo, com a gravidade real nomeada.
   fantasy sports é diferente), mas confirma que o cenário está em movimento,
   não é uma foto parada. [BNLData — fantasy games](https://bnldata.com.br/camara-dos-deputados-aprova-marco-legal-para-a-industria-de-jogos-eletronicos-aprova-os-jogos-de-fantasia/)
 
+**Atualização de 14/07/2026 — a afirmação "100% habilidade" já está
+publicada nos Termos de Uso:** por decisão de produto, `termos-de-uso.md`
+(Seção 1.3-A) e `politica-de-privacidade.md` (Seção 0) agora declaram
+formalmente aos usuários que a ArenaX1 "não opera cassino, não sorteia
+prêmios... não intermedia apostas sobre eventos esportivos de terceiros" —
+posicionamento na linha do que outros operadores do mesmo nicho no mercado
+brasileiro já praticam publicamente. **Isso não resolve a Pergunta 1
+abaixo — aumenta a importância dela.** Uma afirmação formal e pública,
+feita a usuários, de que a atividade não é aposta perde sua utilidade de
+defesa e passa a pesar contra a empresa caso um juiz ou regulador conclua o
+contrário — "a empresa sabia que a classificação era juridicamente
+contestada e declarou o oposto aos usuários" é pior do que silêncio. Tratar
+a validação desta pergunta pelo advogado como bloqueador de lançar
+pagamento real com dinheiro real ficou mais urgente, não menos, depois
+dessa publicação.
+
+**Nota de mercado — operador comparável identificado no Brasil:** existe
+pelo menos um operador brasileiro (plataforma de recompensa por desempenho
+em jogos eletrônicos competitivos, com depósito/saque via Pix e KYC de
+documento) rodando desde 2022, sem indício público de shutdown ou processo.
+Isso é sinal de tolerância regulatória até aqui, não de aprovação jurídica.
+Revisão do Termos de Uso formal desse operador trouxe dois pontos úteis
+para a consulta:
+- O modelo dele **é peer-to-peer** (matchmaking automático empareia
+  "adversário do mesmo nível, no jogo e no valor apostado"), não
+  jogador-vs-casa como uma hipótese anterior deste documento havia
+  levantado — nesse ponto específico, estruturalmente parecido com o
+  desafio 1v1 da ArenaX1.
+- Mas o contrato dele inclui uma cláusula reservando à plataforma o direito
+  de **definir "multiplicadores" por evento "de acordo com a sua percepção
+  de probabilidade"**, variável por jogador — isto é, a própria plataforma
+  fixa odds, o que é estruturalmente mais próximo de aposta de quota fixa
+  (regime da Lei 14.790/2023) do que o "vencedor leva o pote" simples da
+  ArenaX1. Vale perguntar ao advogado se a ausência desse mecanismo de odds
+  no modelo da ArenaX1 é um fator que **reduz** a exposição comparada a
+  esse tipo de operador, ou se é irrelevante para a classificação.
+- A afirmação "baseado em habilidade" desse operador aparece na página de
+  marketing/FAQ, **não** como cláusula do Termos de Uso formal — reforça a
+  cautela já registrada na Seção 1.3-A do `termos-de-uso.md` sobre manter
+  ou não essa alegação dentro do contrato formal.
+
 **Perguntas para o advogado (reformuladas, mais diretas):**
 1. Dado que o precedente de habilidade mais citado protege o jogo mas não
    necessariamente a aposta em dinheiro sobre o resultado, e que a 14.852
