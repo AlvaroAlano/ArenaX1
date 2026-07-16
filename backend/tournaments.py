@@ -7,6 +7,7 @@ from supabase import create_client, Client
 from dotenv import load_dotenv
 
 from auth import get_current_user_id
+from catalog import ALLOWED_GAMES, validate_platform_and_game
 
 load_dotenv()
 
@@ -148,6 +149,8 @@ def _fetch_tournament_detail(tournament_id: str, host_id: str) -> dict:
 def create_tournament(request: TournamentCreateRequest, user_id: str = Depends(get_current_user_id)):
     if request.max_players not in (4, 8, 16):
         raise HTTPException(status_code=400, detail="O torneio precisa ter 4, 8 ou 16 jogadores.")
+    if request.game not in ALLOWED_GAMES:
+        raise HTTPException(status_code=400, detail=f"Jogo inválido. Escolha um de: {', '.join(sorted(ALLOWED_GAMES))}.")
     if len(request.participant_names) != request.max_players:
         raise HTTPException(status_code=400, detail="A quantidade de nomes não bate com o número de jogadores escolhido.")
     if any(not name.strip() for name in request.participant_names):
@@ -343,6 +346,10 @@ def create_online_tournament(request: OnlineTournamentCreateRequest, user_id: st
         raise HTTPException(status_code=400, detail="O torneio precisa ter 4, 8 ou 16 jogadores.")
     if request.entry_fee < 1:
         raise HTTPException(status_code=400, detail="A taxa de inscrição precisa ser de pelo menos R$ 1,00.")
+    try:
+        validate_platform_and_game(request.platform, request.game)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
     try:
         result = supabase.rpc("fn_create_online_tournament", {

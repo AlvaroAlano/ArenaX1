@@ -1,6 +1,7 @@
 import hashlib
 import hmac
 import os
+import re
 import time
 import uuid
 from typing import Optional
@@ -61,6 +62,45 @@ class WebhookPayload(BaseModel):
 class WithdrawRequest(BaseModel):
     amount: float
     pix_key: str
+
+
+_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+_UUID_RE = re.compile(r"^[0-9a-fA-F]{8}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{12}$")
+
+
+def _normalize_pix_key(raw: str) -> str:
+    """Valida e normaliza uma chave Pix contra os 5 tipos oficiais (CPF, CNPJ,
+    telefone, e-mail, chave aleatória/EVP). Como o saque é processado à mão por
+    um admin, uma chave vazia ou lixo trava o pagamento de um valor já debitado
+    (ACHADO-06). Levanta ValueError com mensagem amigável se não bater com
+    nenhum formato conhecido."""
+    key = (raw or "").strip()
+    if not key:
+        raise ValueError("Informe a chave Pix para o saque.")
+    if len(key) > 140:
+        raise ValueError("Chave Pix inválida (muito longa).")
+
+    # E-mail
+    if _EMAIL_RE.match(key):
+        return key.lower()
+    # Chave aleatória (EVP) — UUID com ou sem hifens
+    if _UUID_RE.match(key):
+        return key.lower()
+
+    digits = re.sub(r"\D", "", key)
+    # CPF (11) ou CNPJ (14) — devolve só os dígitos
+    if len(digits) in (11, 14) and digits == re.sub(r"[.\-/\s]", "", key):
+        return digits
+    # Telefone celular BR: +55 + DDD + 9 dígitos (12 ou 13 dígitos no total),
+    # aceitando com ou sem o +55 digitado.
+    if key.startswith("+") and 12 <= len(digits) <= 13:
+        return "+" + digits
+    if len(digits) in (10, 11) and digits == re.sub(r"[()\-\s]", "", key):
+        return "+55" + digits
+
+    raise ValueError(
+        "Chave Pix inválida. Use CPF, CNPJ, e-mail, telefone ou chave aleatória."
+    )
 
 
 # Schemas de resposta: fixam o contrato consumido pelo frontend.
@@ -305,11 +345,16 @@ def dev_simulate_deposit(payload: WebhookPayload, user_id: str = Depends(get_cur
 @router.post("/withdraw", response_model=WithdrawOut)
 def create_withdraw(request: WithdrawRequest, user_id: str = Depends(get_current_user_id)):
     try:
+        pix_key = _normalize_pix_key(request.pix_key)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    try:
         external_id = f"out_{uuid.uuid4().hex[:12]}"
         result = supabase.rpc("fn_withdraw", {
             "p_user_id": user_id,
             "p_amount": request.amount,
-            "p_pix_key": request.pix_key,
+            "p_pix_key": pix_key,
             "p_external_id": external_id,
         }).execute()
         return result.data

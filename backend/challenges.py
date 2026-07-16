@@ -6,6 +6,7 @@ from supabase import create_client, Client
 from dotenv import load_dotenv
 
 from auth import get_current_user_id, get_current_admin_user_id
+from catalog import validate_platform_and_game
 
 load_dotenv()
 
@@ -125,6 +126,11 @@ def _raise_from_rpc_error(e: Exception):
 def create_challenge(request: ChallengeCreateRequest, user_id: str = Depends(get_current_user_id)):
     if request.bet_amount < 1:
         raise HTTPException(status_code=400, detail="O valor da partida precisa ser de pelo menos R$ 1,00.")
+
+    try:
+        validate_platform_and_game(request.platform, request.game)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
     try:
         result = supabase.rpc("fn_create_challenge", {

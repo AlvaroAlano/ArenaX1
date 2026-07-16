@@ -1,6 +1,6 @@
 import os
 from fastapi import APIRouter, HTTPException, Depends
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from supabase import create_client, Client
 from dotenv import load_dotenv
 
@@ -29,7 +29,10 @@ class SetTicketStatusRequest(BaseModel):
 
 
 class RejectWithdrawRequest(BaseModel):
-    reason: str
+    # Motivo obrigatório: vira a notificação que o usuário recebe ("Motivo: ...")
+    # e o rastro de auditoria da recusa (ACHADO-07). Sem isso, o usuário era
+    # avisado da rejeição sem nenhuma explicação.
+    reason: str = Field(min_length=3, max_length=500)
 
 
 class ResolveChallengeDisputeRequest(BaseModel):
@@ -37,7 +40,7 @@ class ResolveChallengeDisputeRequest(BaseModel):
 
 
 class CancelChallengeDisputeRequest(BaseModel):
-    reason: str
+    reason: str = Field(min_length=3, max_length=500)
 
 
 def _raise_from_rpc_error(e: Exception):
@@ -440,11 +443,14 @@ def cancel_challenge_dispute(challenge_id: str, request: CancelChallengeDisputeR
 
 @router.post("/withdrawals/{transaction_id}/reject")
 def reject_withdrawal(transaction_id: str, request: RejectWithdrawRequest, admin_user_id: str = Depends(get_current_admin_user_id)):
+    reason = request.reason.strip()
+    if len(reason) < 3:
+        raise HTTPException(status_code=400, detail="Descreva o motivo da rejeição do saque.")
     try:
         result = supabase.rpc("fn_reject_withdraw", {
             "p_transaction_id": transaction_id,
             "p_admin_id": admin_user_id,
-            "p_reason": request.reason,
+            "p_reason": reason,
         }).execute()
         return result.data
     except HTTPException:
