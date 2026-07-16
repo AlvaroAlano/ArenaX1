@@ -6,7 +6,7 @@ from typing import List, Optional
 from supabase import create_client, Client
 from dotenv import load_dotenv
 
-from auth import get_current_user_id
+from auth import get_current_user_id, get_current_admin_user_id
 from catalog import ALLOWED_GAMES, validate_platform_and_game
 
 load_dotenv()
@@ -466,3 +466,18 @@ def get_online_tournament(tournament_id: str):
     except Exception:
         pass
     return _fetch_online_tournament_detail(tournament_id)
+
+
+@router.post("/online/process-match-timeouts")
+def process_tournament_match_timeouts(admin_user_id: str = Depends(get_current_admin_user_id)):
+    # Gatilho manual do job de timeout de partida de torneio (o agendamento
+    # normal é via pg_cron, ver 38_tournament_match_timeout.sql). Admin-only —
+    # útil pra testar ou se o pg_cron não estiver disponível no plano. Partidas
+    # 'ready' que passaram do prazo sem consenso viram 'disputed' (mediação).
+    try:
+        result = supabase.rpc("fn_process_tournament_match_timeouts", {}).execute()
+        return result.data
+    except HTTPException:
+        raise
+    except Exception as e:
+        _raise_from_rpc_error(e)
