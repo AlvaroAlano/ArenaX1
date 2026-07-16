@@ -8,6 +8,7 @@ from notifications import router as notifications_router
 from admin import router as admin_router
 from account import router as account_router
 from support import router as support_router
+from ratelimit import install_rate_limiting
 
 app = FastAPI(
     title="API de X1",
@@ -21,6 +22,12 @@ app = FastAPI(
 # cookies), então allow_credentials fica desligado.
 default_origins = "http://localhost:5173,http://127.0.0.1:5173"
 allowed_origins = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", default_origins).split(",") if o.strip()]
+
+# Rate limiting: registrado ANTES do CORS de propósito. No Starlette o último
+# middleware adicionado é o mais externo, então adicionar o CORS depois garante
+# que ele envolva tudo — inclusive uma resposta 429 do rate limiter ganha os
+# headers de CORS (senão o browser veria erro de CORS em vez do 429).
+install_rate_limiting(app)
 
 # Além da lista fixa, libera qualquer subdomínio *.vercel.app via regex —
 # a Vercel gera uma URL nova a cada deploy de preview, então travar só na
