@@ -195,6 +195,7 @@ def create_deposit(request: DepositRequest, user_id: str = Depends(get_current_u
                 headers={"X-Idempotency-Key": local_ref},
             )
             if mp_res.status_code >= 300:
+                print(f"[MP ERROR] POST /v1/payments status={mp_res.status_code} body={mp_res.text}")
                 raise HTTPException(status_code=502, detail="Não foi possível gerar a cobrança Pix agora. Tente novamente em instantes.")
 
             mp_payment = mp_res.json()
@@ -203,6 +204,7 @@ def create_deposit(request: DepositRequest, user_id: str = Depends(get_current_u
             copia_e_cola = transaction_data.get("qr_code")
             qr_code_base64 = transaction_data.get("qr_code_base64")
             if not copia_e_cola or not qr_code_base64:
+                print(f"[MP ERROR] resposta sem QR Code: {mp_payment}")
                 raise HTTPException(status_code=502, detail="O Mercado Pago não retornou o QR Code Pix. Tente novamente.")
             gateway = "mercadopago"
         else:
