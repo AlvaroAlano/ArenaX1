@@ -262,7 +262,7 @@ const closeSidebar = () => {
                   {{ authStore.user?.email?.charAt(0) || 'U' }}
               </div>
               <div class="flex-1 min-w-0">
-                  <p class="truncate text-sm font-bold text-ink">{{ authStore.user?.user_metadata?.username || 'Jogador' }}</p>
+                  <p class="truncate text-sm font-bold text-ink">{{ authStore.username || authStore.user?.user_metadata?.username || 'Jogador' }}</p>
                   <p class="truncate text-xs text-ink-subtle">{{ authStore.user?.email }}</p>
               </div>
           </div>

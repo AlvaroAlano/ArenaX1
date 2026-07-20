@@ -9,18 +9,25 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
   const loading = ref(true)
   const isAdmin = ref(false)
+  const username = ref<string | null>(null)
 
   // Leitura direta via Supabase (RLS de profiles permite select pra qualquer
   // autenticado) — is_admin decide se mostra a entrada "Administração" no menu
   // (o acesso de verdade é sempre reconferido no backend, /api/admin/*);
   // deletion_requested_at dispara o auto-cancelamento da exclusão ao logar.
+  // username fica aqui (em vez de cada componente buscar sozinho) pra Sidebar
+  // e Menu mostrarem o nome real — user_metadata.username só existe pra quem
+  // veio do cadastro por e-mail/senha, contas criadas de outro jeito (ex.:
+  // direto no painel do Supabase) não têm esse metadata e caíam sempre no
+  // fallback genérico "Jogador".
   async function loadProfileFlags(userId: string) {
     const { data } = await supabase
       .from('profiles')
-      .select('is_admin, deletion_requested_at, deactivated_at, anonymized_at')
+      .select('username, is_admin, deletion_requested_at, deactivated_at, anonymized_at')
       .eq('id', userId)
       .single()
     isAdmin.value = data?.is_admin || false
+    username.value = data?.username || null
 
     if (data?.anonymized_at) return
 
@@ -44,7 +51,7 @@ export const useAuthStore = defineStore('auth', () => {
     const { data } = await supabase.auth.getSession()
     user.value = data.session?.user || null
     if (user.value) await loadProfileFlags(user.value.id)
-    else isAdmin.value = false
+    else { isAdmin.value = false; username.value = null }
     loading.value = false
   }
 
@@ -53,13 +60,14 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = session?.user || null
     loading.value = false
     if (user.value) loadProfileFlags(user.value.id)
-    else isAdmin.value = false
+    else { isAdmin.value = false; username.value = null }
   })
 
   return {
     user,
     loading,
     isAdmin,
+    username,
     fetchSession
   }
 })
