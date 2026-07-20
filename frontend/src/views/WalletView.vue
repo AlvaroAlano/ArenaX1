@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/auth'
@@ -7,6 +7,7 @@ import { useToastStore } from '@/stores/toast'
 import { api } from '@/services/api'
 import { txMeta } from '@/utils/transactions'
 import ResponsibleGamingNote from '@/components/ui/ResponsibleGamingNote.vue'
+import { X } from '@lucide/vue'
 
 const authStore = useAuthStore()
 const toast = useToastStore()
@@ -151,6 +152,26 @@ const copyCopiaCola = () => {
   toast.push('Código Pix copiado para a área de transferência!', 'success')
 }
 
+// Fecha o modal do QR sem marcar sucesso — o Pix gerado continua válido,
+// só sai de foco (o usuário pode conferir o status depois no extrato).
+const closePixModal = () => {
+  pixData.value = null
+}
+
+// ESC fecha o modal do QR, igual ao ConfirmDialog global.
+const onPixModalKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape' && pixData.value) closePixModal()
+}
+
+// Trava o scroll do body enquanto o modal está aberto (evita "vazar" scroll
+// pro conteúdo atrás no mobile).
+watch(
+  () => !!pixData.value,
+  (open) => {
+    document.body.style.overflow = open ? 'hidden' : ''
+  }
+)
+
 // Simular confirmação de pagamento para teste em desenvolvimento.
 // Usa a rota /dev/simulate-deposit (exige o login do próprio usuário) em vez
 // do /webhook real, que agora exige a assinatura do Mercado Pago e nunca
@@ -251,15 +272,31 @@ const setupRealtime = () => {
     .subscribe()
 }
 
+// Se o Pix que está com o modal aberto for confirmado de verdade (webhook do
+// Mercado Pago → Realtime → loadTransactions), fecha o modal sozinho em vez
+// de deixar o usuário com um QR Code obsoleto na tela.
+watch(transactions, (list) => {
+  if (!pixData.value) return
+  const confirmed = list.find((t) => t.id === pixData.value!.transaction_id && t.status === 'completed')
+  if (confirmed) {
+    pixData.value = null
+    depositSuccess.value = true
+    depositAmount.value = null
+  }
+})
+
 onMounted(() => {
   loadData().then(() => {
     setupRealtime()
   })
+  window.addEventListener('keydown', onPixModalKeydown)
 })
 
 onUnmounted(() => {
   if (walletSub) supabase.removeChannel(walletSub)
   if (txSub) supabase.removeChannel(txSub)
+  window.removeEventListener('keydown', onPixModalKeydown)
+  document.body.style.overflow = ''
 })
 </script>
 
@@ -396,39 +433,87 @@ onUnmounted(() => {
               {{ generatingPix ? 'Gerando cobrança Pix...' : 'Gerar QR Code Pix' }}
             </button>
 
-            <!-- Detalhes do Pix Gerado -->
-            <div v-if="pixData" class="border border-hairline p-5 rounded-lg bg-surface-2 space-y-4 animate-fadeIn">
-              <div class="flex flex-col md:flex-row items-center gap-6 justify-center">
-                <img :src="'data:image/png;base64,' + pixData.qr_code_base64" alt="QR Code Pix" class="w-44 h-44 border-4 border-white rounded-lg" />
-                <div class="space-y-3 flex-1">
-                  <h4 class="text-sm font-bold text-ink">Escaneie o QR Code ou copie o código abaixo:</h4>
-                  <button
-                    @click="copyCopiaCola"
-                    class="bg-surface-3 hover:bg-surface-4 border border-hairline-strong text-caption font-semibold py-2 px-3 rounded-lg text-primary transition-all flex items-center gap-1.5"
-                  >
-                    Copiar Código Pix Copia e Cola
-                  </button>
-                  <p class="text-caption text-ink-subtle">Total do Pix: <strong class="text-ink">R$ {{ pixData.total_amount.toFixed(2) }}</strong> · você recebe <strong class="text-ink">R$ {{ pixData.requested_amount.toFixed(2) }}</strong> na carteira. A compensação é automática, o saldo atualiza em tempo real.</p>
-                </div>
-              </div>
-
-              <!-- Simular pagamento do Webhook (Somente Sandbox/Modo Teste, escondido em produção) -->
-              <div v-if="isDev" class="border-t border-hairline pt-4 flex flex-col md:flex-row justify-between items-center gap-3">
-                <span class="text-caption text-ink-muted font-semibold bg-surface-2 px-3 py-1 rounded-full">Modo de Teste</span>
-                <button
-                  @click="simulatePaymentWebhook"
-                  class="bg-surface-2 hover:bg-green-500/20 border border-hairline text-semantic-success text-caption font-bold py-2 px-4 rounded-lg transition-all"
-                >
-                  Simular Confirmação de Pagamento
-                </button>
-              </div>
-            </div>
-
             <!-- Sucesso de depósito -->
             <div v-if="depositSuccess" class="p-4 rounded-lg bg-surface-2 border border-hairline text-semantic-success text-sm font-semibold flex items-center justify-center gap-2">
               Depósito confirmado e creditado na sua carteira!
             </div>
           </div>
+
+          <!-- Modal do QR Code Pix: tela cheia/bottom-sheet no mobile, centralizado
+               no desktop — mesmo padrão do ConfirmDialog.vue. Abrir em modal (em vez
+               de inline na página) evita o problema de o usuário não rolar até o QR
+               e achar que nada aconteceu ao clicar em "Gerar QR Code". -->
+          <Teleport to="body">
+            <Transition name="confirm">
+              <div
+                v-if="pixData"
+                class="fixed inset-0 z-[10001] flex items-end justify-center sm:items-center sm:p-4"
+                @click.self="closePixModal"
+              >
+                <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="closePixModal"></div>
+                <div
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Pagamento via Pix"
+                  class="relative w-full sm:max-w-sm max-h-[92vh] overflow-y-auto rounded-t-2xl sm:rounded-2xl border border-hairline bg-surface-1 p-6 shadow-card-premium"
+                >
+                  <button
+                    type="button"
+                    @click="closePixModal"
+                    aria-label="Fechar"
+                    class="absolute right-4 top-4 grid size-8 place-items-center rounded-full text-ink-subtle hover:bg-surface-2 hover:text-ink transition-colors"
+                  >
+                    <X :size="18" />
+                  </button>
+
+                  <h3 class="font-display text-base font-bold text-ink pr-8">Pague com Pix para concluir</h3>
+                  <p class="mt-1 text-caption text-ink-subtle">Escaneie o QR Code com o app do seu banco ou copie o código abaixo.</p>
+
+                  <div class="mt-5 flex justify-center">
+                    <img
+                      :src="'data:image/png;base64,' + pixData.qr_code_base64"
+                      alt="QR Code Pix"
+                      class="w-52 h-52 border-4 border-white rounded-lg"
+                    />
+                  </div>
+
+                  <button
+                    @click="copyCopiaCola"
+                    class="mt-5 w-full bg-surface-2 hover:bg-surface-3 border border-hairline-strong text-body-sm font-semibold py-2.5 px-3 rounded-lg text-primary transition-all"
+                  >
+                    Copiar Código Pix Copia e Cola
+                  </button>
+
+                  <div class="mt-4 rounded-lg border border-hairline bg-surface-2 p-3.5 text-caption text-ink-subtle space-y-1">
+                    <div class="flex justify-between">
+                      <span>Total a pagar</span>
+                      <span class="tabular-nums font-semibold text-ink">R$ {{ pixData.total_amount.toFixed(2) }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>Cai na carteira</span>
+                      <span class="tabular-nums font-semibold text-ink">R$ {{ pixData.requested_amount.toFixed(2) }}</span>
+                    </div>
+                  </div>
+
+                  <p class="mt-4 flex items-center justify-center gap-1.5 text-caption text-ink-tertiary">
+                    <span class="size-1.5 rounded-full bg-semantic-success animate-pulse"></span>
+                    Aguardando pagamento — o saldo atualiza sozinho assim que aprovado.
+                  </p>
+
+                  <!-- Simular pagamento do Webhook (Somente Sandbox/Modo Teste, escondido em produção) -->
+                  <div v-if="isDev" class="mt-4 border-t border-hairline pt-4 flex flex-col items-center gap-2.5">
+                    <span class="text-caption text-ink-muted font-semibold bg-surface-2 px-3 py-1 rounded-full">Modo de Teste</span>
+                    <button
+                      @click="simulatePaymentWebhook"
+                      class="w-full bg-surface-2 hover:bg-green-500/20 border border-hairline text-semantic-success text-caption font-bold py-2 px-4 rounded-lg transition-all"
+                    >
+                      Simular Confirmação de Pagamento
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </Transition>
+          </Teleport>
 
           <!-- CONTEÚDO DE SAQUE -->
           <div v-if="activeTab === 'withdraw'" class="space-y-5">
@@ -553,5 +638,13 @@ onUnmounted(() => {
 }
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-out forwards;
+}
+.confirm-enter-active,
+.confirm-leave-active {
+  transition: opacity 0.2s ease;
+}
+.confirm-enter-from,
+.confirm-leave-to {
+  opacity: 0;
 }
 </style>
