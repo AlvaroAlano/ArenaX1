@@ -21,11 +21,26 @@ export const useAuthStore = defineStore('auth', () => {
   // direto no painel do Supabase) não têm esse metadata e caíam sempre no
   // fallback genérico "Jogador".
   async function loadProfileFlags(userId: string) {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('profiles')
       .select('username, is_admin, deletion_requested_at, deactivated_at, anonymized_at')
       .eq('id', userId)
       .single()
+
+    // Sessão órfã: o token do Supabase Auth ainda é válido no navegador, mas
+    // a conta foi apagada do banco por fora (ex.: limpeza de contas de teste)
+    // — PGRST116 = "nenhuma linha encontrada". Sem isso, o app renderizava um
+    // usuário "fantasma" (saldo zerado, nome genérico "Jogador", sem
+    // partidas) em vez de perceber que a conta não existe mais e desconectar.
+    if (error?.code === 'PGRST116') {
+      await supabase.auth.signOut()
+      user.value = null
+      isAdmin.value = false
+      username.value = null
+      useToastStore().push('Sua sessão expirou. Faça login novamente.', 'error', 6000)
+      return
+    }
+
     isAdmin.value = data?.is_admin || false
     username.value = data?.username || null
 
