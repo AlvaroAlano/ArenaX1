@@ -2,8 +2,12 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { supabase } from '@/services/supabase'
-import { User, Hash, Mail, Lock, Eye, EyeOff, Users, AlertCircle, CheckCircle2, LoaderCircle, Swords, Trophy, ShieldCheck, BadgeCheck, IdCard, Phone, CalendarDays } from '@lucide/vue'
+import { User, Hash, Mail, Lock, Eye, EyeOff, Users, AlertCircle, CheckCircle2, LoaderCircle, Swords, Trophy, ShieldCheck, BadgeCheck, IdCard, Phone } from '@lucide/vue'
 import ResponsibleGamingNote from '@/components/ui/ResponsibleGamingNote.vue'
+import DatePicker from '@/components/ui/DatePicker.vue'
+
+// Data máxima selecionável no calendário de nascimento — nunca no futuro.
+const todayIso = new Date().toISOString().slice(0, 10)
 
 const fullName = ref('')
 const username = ref('')
@@ -366,16 +370,8 @@ const handleRegister = async () => {
               </div>
             </div>
 
-            <div class="group relative">
-              <CalendarDays :size="18" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-tertiary transition-colors group-focus-within:text-primary" />
-              <input
-                v-model="birthDate"
-                type="date"
-                autocomplete="bday"
-                placeholder="Data de nascimento"
-                required
-                class="h-12 w-full rounded-lg border border-hairline bg-surface-1 pl-11 pr-4 text-body-sm text-ink placeholder-ink-tertiary outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary"
-              />
+            <div>
+              <DatePicker v-model="birthDate" :max="todayIso" placeholder="Data de nascimento" />
               <span class="mt-1.5 block text-[11px] text-ink-tertiary">É preciso ter 18 anos ou mais para jogar na ArenaX1.</span>
             </div>
 
