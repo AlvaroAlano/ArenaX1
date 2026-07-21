@@ -1,0 +1,16 @@
+name: Keep Render backend awake
+
+# O plano free do Render derruba o serviço depois de ~15 min sem requisição
+# (cold start de 30-60s na próxima chamada). Batendo a cada 10 min na raiz
+# (sem tocar Supabase, é só um health-check estático em main.py) evita isso.
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping backend
+        run: curl -sf --max-time 30 https://arenax1-backend.onrender.com/
